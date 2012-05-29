@@ -1,0 +1,20 @@
+This is a impossible mission, I think.
+
+I want to do this project by only myself.
+
+It's a:
+
+1. Customized linux OS.
+2. Using for server purpose.
+3. Storage manager/virtualizer.
+4. Hypervistor include Virtual-Machine runability.
+5. Cluster node support more then two nodes clustering mode.
+6. Replicator support synchronized or asynchronized data replication between nodes.
+7. Data receiver that support data replication from unix/linux/windows/macos.
+8. DR manager who manage data replicating process by operating the agents running on guest OS.
+9. Data deduplicator.
+10. Modulerized system, you can choose different functions to be involved.
+
+And finally, It's a web managed system.
+
+
