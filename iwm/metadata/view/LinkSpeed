@@ -1,0 +1,523 @@
+{
+    "id": "ExtBox1-ext-gen58033",
+    "type": "panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "layout": "border",
+        "title": "Network Bandwidth Monitor$",
+        "designer|userClassName": "LinkSpeed",
+        "designer|userAlias": "linkspeed"
+    },
+    "customConfigs": [],
+    "designerId": "666ee7cd-1cb4-49c7-93d0-c87c6ba811bf",
+    "$viewOrder": 15,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen60190",
+            "type": "toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "MyToolbar5",
+                "layout|region": "center",
+                "dock": "top"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen60395",
+                    "type": "slider",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "width": 400,
+                        "name": "interval",
+                        "value": 5,
+                        "fieldLabel": "Sample Rate$",
+                        "maxValue": 60,
+                        "minValue": 2,
+                        "designer|userClassName": "MySlider",
+                        "layout|flex": null
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen15663",
+                    "type": "tbspacer",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "width": 10,
+                        "designer|userClassName": "MySpacer",
+                        "layout|flex": null
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen11577",
+                    "type": "radiogroup",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "width": 240,
+                        "fieldLabel": null,
+                        "labelWidth": 80,
+                        "designer|userClassName": "MyRadioGroup",
+                        "layout|flex": null
+                    },
+                    "customConfigs": [],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen12464",
+                            "type": "radiofield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "name": "montype",
+                                "value": "received",
+                                "fieldLabel": null,
+                                "boxLabel": "Received",
+                                "inputValue": "received",
+                                "designer|userClassName": "MyRadio"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen11590",
+                            "type": "radiofield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "name": "montype",
+                                "value": "send",
+                                "fieldLabel": null,
+                                "boxLabel": "Sent",
+                                "checked": false,
+                                "inputValue": "sent",
+                                "designer|userClassName": "MyRadio"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen11598",
+                            "type": "radiofield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "name": "montype",
+                                "value": "both",
+                                "fieldLabel": null,
+                                "boxLabel": "Both",
+                                "checked": true,
+                                "inputValue": "both",
+                                "designer|userClassName": "MyRadio1"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen62241",
+                    "type": "cyclebutton",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "enableToggle": true,
+                        "showText": true,
+                        "designer|userClassName": "MyCycleButton",
+                        "layout|flex": null
+                    },
+                    "customConfigs": [],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen62253",
+                            "type": "menu",
+                            "reference": {
+                                "name": "menu",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "width": 120,
+                                "designer|userClassName": "MyMenu"
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen62260",
+                                    "type": "menucheckitem",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "start",
+                                        "text": "Start Monitor",
+                                        "checked": true,
+                                        "designer|userClassName": "MyCheckItem"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen62272",
+                                    "type": "menucheckitem",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "stop",
+                                        "text": "Stop Monitor",
+                                        "checked": false,
+                                        "designer|userClassName": "MyCheckItem1"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen56561",
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onCyclebuttonChange",
+                                "implHandler": [
+                                    "var chart = this.down('chart'),",
+                                    "    me = this,",
+                                    "    montype = me.down('toolbar radiogroup').getValue().montype,",
+                                    "    interval = me.down('slider').getValue();",
+                                    "if (item.getItemId() == 'start'){",
+                                    "    if (me.intr) clearInterval(me.intr);",
+                                    "    me.intr = null;",
+                                    "}else if (item.getItemId() == 'stop'){",
+                                    "    if (!me.iStore){",
+                                    "        me.iStore = chart.store;",
+                                    "        me.etimelast = 0;",
+                                    "        me.idata = [];",
+                                    "        me.iStore.load(function(records, oprate, result){",
+                                    "            //use origin designed series",
+                                    "            if (!result) return;",
+                                    "            var data = {etime: 0},",
+                                    "                idata = {etime: 0},",
+                                    "                series = [],",
+                                    "                ct = chart.ownerCt,",
+                                    "                fields =['etime'];",
+                                    "            for(var i=0; i<records.length; i++){",
+                                    "                var rec = records[i].data;",
+                                    "                switch(montype){",
+                                    "                    case 'sent':",
+                                    "                    data[rec.devname] = rec.send;",
+                                    "                    break;",
+                                    "                    case 'received':",
+                                    "                    data[rec.devname] = rec.recv;",
+                                    "                    break;",
+                                    "                    default:",
+                                    "                    data[rec.devname] = rec.total;",
+                                    "                }",
+                                    "                data[rec.devname] = rec.total;",
+                                    "                idata[rec.devname] = 1;",
+                                    "                fields.push(rec.devname);",
+                                    "                series.push({",
+                                    "                    type: 'line',",
+                                    "                    title: rec.devname,",
+                                    "                    axis: 'bottom',",
+                                    "                    xField: 'etime',",
+                                    "                    yField: [",
+                                    "                    rec.devname",
+                                    "                    ],",
+                                    "                    fill: false",
+                                    "                });",
+                                    "            }",
+                                    "            var store = Ext.create('Ext.data.JsonStore', {",
+                                    "                fields: fields,",
+                                    "                data: [{etime:0}]",
+                                    "            });",
+                                    "            var newchart = Ext.create('Ext.chart.Chart', {",
+                                    "                insetPadding: 20,",
+                                    "                store: store,",
+                                    "                region: 'center',",
+                                    "                axes: [",
+                                    "                {",
+                                    "                    type: 'Numeric',",
+                                    "                    grid: true,",
+                                    "                    position: 'left',",
+                                    "                    title: 'Speed (KB/s)',",
+                                    "                    adjustMaximumByMajorUnit: true",
+                                    "                },",
+                                    "                {",
+                                    "                    type: 'Category',",
+                                    "                    fields: [",
+                                    "                    'etime'",
+                                    "                    ],",
+                                    "                    label: {",
+                                    "                        rotate: {",
+                                    "                            degrees: 270",
+                                    "                        }",
+                                    "                    },",
+                                    "                    position: 'bottom',",
+                                    "                    title: 'Elapsed time  (seconds)'",
+                                    "                }",
+                                    "                ],",
+                                    "                series: series,",
+                                    "                legend: {}",
+                                    "            });",
+                                    "            ct.remove(chart);",
+                                    "            ct.add(newchart);",
+                                    "            me.store = newchart.store;",
+                                    "            me.lastdata = data;",
+                                    "        });",
+                                    "    }",
+                                    "",
+                                    "    var store = me.store?me.store:chart.store;",
+                                    "",
+                                    "    //strange, down('chart') will get old one!",
+                                    "    if (!me.intr){",
+                                    "        store.removeAll();",
+                                    "        me.etimelast = 0;",
+                                    "        me.idata = [];",
+                                    "        me.lastdata = null;",
+                                    "        me.intr = setInterval(function(){",
+                                    "            me.iStore.load(function(records, oprate, result){",
+                                    "                var data = {etime: me.etimelast},",
+                                    "                    idata = {etime: me.etimelast},",
+                                    "                    lastdata = me.lastdata;",
+                                    "                for(var i=0; i<records.length; i++){",
+                                    "                    var rec = records[i].data,",
+                                    "                        newtotal = 0,",
+                                    "                        oldtotal = lastdata?lastdata[rec.devname]:null;",
+                                    "                    switch(montype){",
+                                    "                        case 'sent':",
+                                    "                        newtotal = rec.send;",
+                                    "                        break;",
+                                    "                        case 'received':",
+                                    "                        newtotal = rec.recv;",
+                                    "                        break;",
+                                    "                        default:",
+                                    "                        newtotal = rec.total;",
+                                    "                    }",
+                                    "                    data[rec.devname] = newtotal;",
+                                    "                    if (!lastdata) continue;",
+                                    "                    idata[rec.devname] = (newtotal>oldtotal?newtotal-oldtotal:oldtotal-newtotal)/interval/1024;",
+                                    "                }",
+                                    "                me.etimelast += interval;",
+                                    "                me.lastdata = data;",
+                                    "                if (!lastdata) return;",
+                                    "                me.idata.push(idata);",
+                                    "                if (me.idata.length >60) me.idata.shift();",
+                                    "                var store = me.store?me.store:chart.store;",
+                                    "                store.loadData(me.idata);",
+                                    "            });",
+                                    "        }, interval*1000);   ",
+                                    "    }    ",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me",
+                                "designer|userClassName": "onCyclebuttonChange"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ExtBox1-ext-gen64687",
+            "type": "chart",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": null,
+                "animate": null,
+                "insetPadding": 20,
+                "store": "LinkSpeed",
+                "designer|userClassName": "LineChart1",
+                "layout|region": "center"
+            },
+            "customConfigs": [],
+            "iconCls": "icon-line-chart",
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen64698",
+                    "type": "numericaxis",
+                    "reference": {
+                        "name": "axes",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fields": null,
+                        "grid": "true",
+                        "label": null,
+                        "position": "left",
+                        "title": "Speed (KB/s)",
+                        "adjustMaximumByMajorUnit": true,
+                        "maximum": null,
+                        "minimum": null,
+                        "designer|userClassName": "MyNumericAxis"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen70583",
+                    "type": "lineseries",
+                    "reference": {
+                        "name": "series",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "eth0",
+                        "axis": "bottom",
+                        "xField": "etime",
+                        "yField": "['eth0']",
+                        "fill": false,
+                        "designer|userClassName": "MyLineSeries"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen11054",
+                    "type": "lineseries",
+                    "reference": {
+                        "name": "series",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "eth1",
+                        "axis": "bottom",
+                        "xField": "etime",
+                        "yField": "['eth1']",
+                        "fill": false,
+                        "designer|userClassName": "MyLineSeries"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen11167",
+                    "type": "lineseries",
+                    "reference": {
+                        "name": "series",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "eth2",
+                        "axis": "bottom",
+                        "xField": "etime",
+                        "yField": "['eth2']",
+                        "fill": false,
+                        "designer|userClassName": "MyLineSeries"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen8368",
+                    "type": "lineseries",
+                    "reference": {
+                        "name": "series",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "eth3",
+                        "axis": "bottom",
+                        "xField": "etime",
+                        "yField": "['eth3']",
+                        "fill": false,
+                        "designer|userClassName": "MyLineSeries"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen9023",
+                    "type": "chartlegend",
+                    "reference": {
+                        "name": "legend",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyLegend"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen9092",
+                    "type": "categoryaxis",
+                    "reference": {
+                        "name": "axes",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fields": "['etime']",
+                        "position": "bottom",
+                        "title": "Elapsed time(seconds)",
+                        "designer|userClassName": "MyCategoryAxis"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                }
+            ]
+        }
+    ]
+}

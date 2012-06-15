@@ -1,0 +1,19 @@
+{
+    "id": "ExtBox1-ext-gen25316",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "storeId": "MyJsonPStore8",
+        "model": "DiskList",
+        "data": "[{devname:'sda', hostid:'host1', hostdesc:'lsi sas adapter', capacity:'32GB', transmode:'SAS'}]",
+        "designer|userClassName": "DiskList"
+    },
+    "customConfigs": [],
+    "designerId": "2116519f-3e92-4474-a5a9-ed4339aa7414",
+    "$viewOrder": 7,
+    "expanded": true
+}

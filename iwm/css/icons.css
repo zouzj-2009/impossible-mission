@@ -1,0 +1,21 @@
+.whitebg {
+	background-color: white;
+	background-image: -moz-linear-gradient(center top , #FFFFFF, #F9F9F9 48%, #E2E2E2 52%, #E7E7E7);
+}
+.x-64-btn .diskmanager {
+	background: url(../images/diskmanager.64.png) center top !important;
+	height: 64px;
+	width:64px;
+}
+.x-64-btn .x-btn-inner {
+  padding-top: 56px;
+}
+
+img.btn{
+	border: 2px solid transparent;
+	cursor: pointer;
+}
+
+img.btnover {
+	border: 2px solid yellow;
+}

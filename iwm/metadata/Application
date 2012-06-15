@@ -1,0 +1,89 @@
+{
+    "id": "ExtBox1-ext-gen2293",
+    "type": "application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "NicInfo",
+            "IscsiConn",
+            "SysInfo",
+            "TargetList",
+            "LunMap",
+            "Access",
+            "VirtPortal",
+            "DiskList",
+            "HbaList",
+            "SysLog",
+            "etherspeed"
+        ],
+        "stores": [
+            "networkinfo",
+            "nicinfo",
+            "physicinfo",
+            "iscsiconn",
+            "sysinfo",
+            "targetlist",
+            "LunMap",
+            "Access",
+            "VirtPortal",
+            "DiskList",
+            "HbaList",
+            "SysLog",
+            "LinkSpeed"
+        ],
+        "views": [
+            "MyViewport",
+            "BigIconBtn",
+            "SystemInfo",
+            "NetworkSetting",
+            "iSCSISetting",
+            "DiskSetting",
+            "SystemMaintain",
+            "LunMap",
+            "NetMaskField",
+            "TargetListField",
+            "NetConfig",
+            "VirtPortal",
+            "DiskMgmt",
+            "SysMaintain",
+            "LinkSpeed",
+            "LinkSpeedBar",
+            "DataBind"
+        ],
+        "autoCreateViewport": true,
+        "name": "MyApp",
+        "controllers": [
+            "mainfunc"
+        ]
+    },
+    "customConfigs": [],
+    "designerId": "application",
+    "$viewOrder": 0,
+    "iconCls": "icon-application",
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen4488",
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "launch",
+                "implHandler": [
+                    "alert('aa');"
+                ],
+                "designer|userClassName": "launch"
+            },
+            "customConfigs": [],
+            "iconCls": "icon-basic-function",
+            "expanded": true
+        }
+    ]
+}
