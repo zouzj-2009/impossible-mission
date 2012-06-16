@@ -11,7 +11,7 @@
         "width": null,
         "designer|userClassName": "DataBind",
         "designer|userAlias": "databind",
-        "databind": "[{\nitemid:'mappinglist',\nautoLoad: true,\nloadParams:{\ncondition: 'abc=2'\n}\n}]"
+        "databind": null
     },
     "customConfigs": [
         {
@@ -21,8 +21,8 @@
         }
     ],
     "designerId": "49498605-3383-4224-98a8-672ea0a3423e",
-    "$viewOrder": 17,
-    "expanded": true,
+    "$viewOrder": 16,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen12311",
@@ -200,7 +200,7 @@
                     "        console.log('bind item '+cfg.itemid+' not found!');",
                     "        continue;",
                     "    }",
-                    "    var store = Ext.isFunction(dbc.getStore)?dbc.getStore():dbc.store;",
+                    "    var store = Ext.isFunction(dbc.getStore)?dbc.getStore(dbc):dbc.store;",
                     "    if (!store) {",
                     "        console.log('not store for item '+cfg.itemid+' config:'+cfg);",
                     "        continue;",

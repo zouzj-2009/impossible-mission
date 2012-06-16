@@ -14,7 +14,7 @@
  */
 
 Ext.define('MyApp.view.LunMap', {
-    extend: 'Ext.form.Panel',
+    extend: 'Ext.panel.Panel',
     alias: 'widget.lunmap',
     requires: [
         'MyApp.view.IpField',
@@ -23,12 +23,10 @@ Ext.define('MyApp.view.LunMap', {
         'MyApp.view.DataBind'
     ],
 
-    minHeight: 300,
     layout: {
         type: 'border'
     },
-    bodyPadding: 10,
-    title: 'LUN Map',
+    title: 'LunMap',
 
     initComponent: function() {
         var me = this;
@@ -155,151 +153,196 @@ Ext.define('MyApp.view.LunMap', {
                 },
                 {
                     xtype: 'container',
-                    minWidth: 280,
+                    minWidth: 290,
+                    padding: 5,
                     width: 150,
                     autoScroll: true,
                     region: 'west',
                     split: true,
                     items: [
                         {
-                            xtype: 'fieldset',
-                            padding: 5,
-                            collapsed: true,
-                            collapsible: true,
-                            title: 'Global Setting',
+                            xtype: 'form',
+                            getStore: function(component) {
+                                alert('wait...');
+                                var me = this;
+                                if (Ext.isObject(me.store)) return me.store;
+                                Ext.syncRequire('MyApp.model.glunmap');
+                                var store = Ext.create('Ext.data.Store', {
+                                    model: 'MyApp.model.glunmap',
+                                    storeId: 'glunmap',
+                                    autoLoad: false
+                                });
+                                store.on('load', function(){
+                                    var m = store.getAt(0);
+                                    if (!m) return;
+                                    me.loadRecord(m);
+                                });
+                                me.store = store;
+                                return store;
+
+                            },
+                            border: 0,
+                            itemId: 'glunmap',
+                            width: 282,
+                            activeItem: 0,
+                            layout: {
+                                type: 'auto'
+                            },
+                            bodyBorder: false,
+                            bodyCls: 'x-border-layout-ct',
                             items: [
-                                {
-                                    xtype: 'checkboxfield',
-                                    fieldLabel: 'LUN Map',
-                                    boxLabel: 'Enabled'
-                                },
                                 {
                                     xtype: 'fieldset',
                                     padding: 5,
-                                    width: 268,
                                     collapsed: true,
                                     collapsible: true,
-                                    title: 'Global CHAP Setting',
+                                    title: 'Global Setting',
                                     items: [
                                         {
-                                            xtype: 'textfield',
-                                            name: 'gtargetuser',
-                                            fieldLabel: 'Target User'
+                                            xtype: 'checkboxfield',
+                                            name: 'enabled',
+                                            fieldLabel: 'LUN Map',
+                                            boxLabel: 'Enabled'
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            inputType: 'password',
-                                            name: 'gtargetpass',
-                                            fieldLabel: 'Target Pass'
+                                            xtype: 'fieldset',
+                                            padding: 5,
+                                            collapsed: false,
+                                            collapsible: true,
+                                            title: 'Global CHAP Setting',
+                                            items: [
+                                                {
+                                                    xtype: 'textfield',
+                                                    name: 'gtargetuser',
+                                                    fieldLabel: 'Target User'
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    inputType: 'password',
+                                                    name: 'gtargetpass',
+                                                    fieldLabel: 'Target Pass'
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    name: 'ginitiatoruser',
+                                                    fieldLabel: 'Initiator User',
+                                                    regexText: 'invalid IP address'
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    inputType: 'password',
+                                                    name: 'ginitiatorpass',
+                                                    fieldLabel: 'Initiator Pass'
+                                                }
+                                            ]
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            name: 'ginitiatoruser',
-                                            fieldLabel: 'Initiator User',
-                                            regexText: 'invalid IP address'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            inputType: 'password',
-                                            name: 'ginitiatorpass',
-                                            fieldLabel: 'Initiator Pass'
+                                            xtype: 'button',
+                                            text: 'Save',
+                                            listeners: {
+                                                click: {
+                                                    fn: me.onButtonClick,
+                                                    scope: me
+                                                }
+                                            }
                                         }
                                     ]
-                                },
-                                {
-                                    xtype: 'button',
-                                    text: 'Save'
                                 }
                             ]
                         },
                         {
-                            xtype: 'fieldset',
-                            padding: 5,
-                            collapsed: false,
-                            collapsible: true,
-                            title: 'New Mapping',
+                            xtype: 'form',
+                            border: 0,
+                            itemId: 'newmap',
+                            width: 278,
+                            bodyCls: 'x-border-layout-ct',
                             items: [
                                 {
-                                    xtype: 'ipfield',
-                                    name: 'sourceip'
-                                },
-                                {
-                                    xtype: 'netmaskfield',
-                                    name: 'netmask'
-                                },
-                                {
-                                    xtype: 'targetlistfield',
-                                    name: 'targetid'
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    hidden: false,
-                                    name: 'access',
-                                    value: [
-                                        'RW'
-                                    ],
-                                    fieldLabel: 'Access',
-                                    allowBlank: false,
-                                    queryMode: 'local',
-                                    store: 'Access',
-                                    valueField: 'value'
-                                },
-                                {
                                     xtype: 'fieldset',
-                                    padding: 5,
-                                    width: 268,
-                                    collapsed: true,
-                                    collapsible: true,
-                                    title: 'Mapping CHAP Setting',
+                                    title: 'New Mapping',
                                     items: [
                                         {
-                                            xtype: 'textfield',
-                                            name: 'targetuser',
-                                            fieldLabel: 'Target User'
+                                            xtype: 'ipfield',
+                                            name: 'sourceip'
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            inputType: 'password',
-                                            name: 'targetpass',
-                                            fieldLabel: 'Target Pass'
+                                            xtype: 'netmaskfield',
+                                            name: 'netmask'
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            name: 'initiatoruser',
-                                            fieldLabel: 'Initiator User'
+                                            xtype: 'targetlistfield',
+                                            name: 'targetid'
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            inputType: 'password',
-                                            name: 'initiatorpass',
-                                            fieldLabel: 'Initiator Pass'
+                                            xtype: 'combobox',
+                                            hidden: false,
+                                            name: 'access',
+                                            value: [
+                                                'RW'
+                                            ],
+                                            fieldLabel: 'Access',
+                                            allowBlank: false,
+                                            queryMode: 'local',
+                                            store: 'Access',
+                                            valueField: 'value'
+                                        },
+                                        {
+                                            xtype: 'fieldset',
+                                            padding: 5,
+                                            width: 268,
+                                            collapsed: true,
+                                            collapsible: true,
+                                            title: 'Mapping CHAP Setting',
+                                            items: [
+                                                {
+                                                    xtype: 'textfield',
+                                                    name: 'targetuser',
+                                                    fieldLabel: 'Target User'
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    inputType: 'password',
+                                                    name: 'targetpass',
+                                                    fieldLabel: 'Target Pass'
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    name: 'initiatoruser',
+                                                    fieldLabel: 'Initiator User'
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    inputType: 'password',
+                                                    name: 'initiatorpass',
+                                                    fieldLabel: 'Initiator Pass'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'add',
+                                            margin: 5,
+                                            minWidth: 80,
+                                            autoWidth: true,
+                                            text: 'Add New ...',
+                                            listeners: {
+                                                click: {
+                                                    fn: me.onAddClick,
+                                                    scope: me
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            text: 'Update',
+                                            listeners: {
+                                                click: {
+                                                    fn: me.onUpdateClick,
+                                                    scope: me
+                                                }
+                                            }
                                         }
                                     ]
-                                },
-                                {
-                                    xtype: 'button',
-                                    itemId: 'add',
-                                    margin: 5,
-                                    minWidth: 80,
-                                    autoWidth: true,
-                                    text: 'Add New ...',
-                                    formBind: true,
-                                    listeners: {
-                                        click: {
-                                            fn: me.onAddClick,
-                                            scope: me
-                                        }
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    text: 'Update',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onUpdateClick,
-                                            scope: me
-                                        }
-                                    }
                                 }
                             ]
                         }
@@ -314,6 +357,10 @@ Ext.define('MyApp.view.LunMap', {
                             loadParams: {
                                 condition: 'abc=2'
                             }
+                        },
+                        {
+                            itemid: 'glunmap',
+                            autoLoad: true
                         }
                     ],
                     region: 'east'
@@ -340,7 +387,7 @@ Ext.define('MyApp.view.LunMap', {
 
     onGridpanelSelectionChange: function(tablepanel, selections, options) {
         if (selections.length>=1){
-            this.loadRecord(selections[0]);
+            this.down('#newmap').loadRecord(selections[0]);
             this.down('#delete').enable();
         }else{
             this.down('#delete').disable();
@@ -349,11 +396,25 @@ Ext.define('MyApp.view.LunMap', {
 
     },
 
+    onButtonClick: function(button, e, options) {
+        var form = this.down('#glunmap').getForm(),
+            store = this.down('#glunmap').store;
+        if (!store) return;
+        if (form.isValid()){
+            var v = form.getFieldValues(true),
+                m = form.getRecord();
+            if (!m) return;
+            for(var e in v) m.set(e, v[e]);
+            store.sync();
+        }
+    },
+
     onAddClick: function(button, e, options) {
 
-        var store = this.down('gridpanel').store;
-        if (this.getForm().isValid()){
-            var v = this.getForm().getFieldValues();
+        var form = this.down('#newmap').getForm(),
+            store = this.down('gridpanel').store;
+        if (form.isValid()){
+            var v = form.getFieldValues();
             var m = store.add(v);
             for(var i=0;i<m.length;i++) m[i].phantom = true;
             store.sync();
@@ -362,10 +423,11 @@ Ext.define('MyApp.view.LunMap', {
     },
 
     onUpdateClick: function(button, e, options) {
-        var store = this.down('gridpanel').store;
-        if (this.getForm().isValid()){
-            var v = this.getForm().getFieldValues(true),
-                m = this.getForm().getRecord();
+        var form = this.down('#newmap').getForm(),
+            store = this.down('gridpanel').store;
+        if (form.isValid()){
+            var v = form.getFieldValues(true),
+                m = form.getRecord();
             if (!m) return;
             for(var e in v) m.set(e, v[e]);
             store.sync();

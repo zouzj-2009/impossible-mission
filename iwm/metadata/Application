@@ -18,7 +18,8 @@
             "DiskList",
             "HbaList",
             "SysLog",
-            "etherspeed"
+            "etherspeed",
+            "glunmap"
         ],
         "stores": [
             "networkinfo",
@@ -43,7 +44,6 @@
             "iSCSISetting",
             "DiskSetting",
             "SystemMaintain",
-            "LunMap",
             "NetMaskField",
             "TargetListField",
             "NetConfig",
@@ -52,7 +52,8 @@
             "SysMaintain",
             "LinkSpeed",
             "LinkSpeedBar",
-            "DataBind"
+            "DataBind",
+            "LunMap"
         ],
         "autoCreateViewport": true,
         "name": "MyApp",

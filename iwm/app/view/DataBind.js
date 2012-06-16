@@ -23,15 +23,6 @@ Ext.define('MyApp.view.DataBind', {
         var me = this;
 
         Ext.applyIf(me, {
-            databind: [
-                {
-                    itemid: 'mappinglist',
-                    autoLoad: true,
-                    loadParams: {
-                        condition: 'abc=2'
-                    }
-                }
-            ],
             listeners: {
                 afterrender: {
                     fn: me.onContainerAfterRender,
@@ -209,7 +200,7 @@ Ext.define('MyApp.view.DataBind', {
                 console.log('bind item '+cfg.itemid+' not found!');
                 continue;
             }
-            var store = Ext.isFunction(dbc.getStore)?dbc.getStore():dbc.store;
+            var store = Ext.isFunction(dbc.getStore)?dbc.getStore(dbc):dbc.store;
             if (!store) {
                 console.log('not store for item '+cfg.itemid+' config:'+cfg);
                 continue;

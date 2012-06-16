@@ -14,8 +14,8 @@
     },
     "customConfigs": [],
     "designerId": "110df611-400a-4ab8-90bb-097dc36687c1",
-    "$viewOrder": 16,
-    "expanded": true,
+    "$viewOrder": 15,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen4335",
@@ -259,7 +259,7 @@
             },
             "customConfigs": [],
             "iconCls": "icon-line-chart",
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen4419",

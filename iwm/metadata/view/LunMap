@@ -1,6 +1,6 @@
 {
-    "id": "ExtBox1-ext-gen16895",
-    "type": "form",
+    "id": "ExtBox1-ext-gen163536",
+    "type": "panel",
     "reference": {
         "name": "items",
         "type": "array"
@@ -8,24 +8,15 @@
     "codeClass": null,
     "userConfig": {
         "height": null,
-        "minHeight": 300,
         "width": null,
         "layout": "border",
-        "bodyPadding": 10,
-        "title": "LUN Map",
+        "title": "LunMap",
         "designer|userClassName": "LunMap",
-        "designer|userAlias": "lunmap",
-        "model": null
+        "designer|userAlias": "lunmap"
     },
-    "customConfigs": [
-        {
-            "group": "(Custom Properties)",
-            "name": "model",
-            "type": "string"
-        }
-    ],
-    "designerId": "807f021e-da84-4122-b6db-c9757604dd2c",
-    "$viewOrder": 7,
+    "customConfigs": [],
+    "designerId": "31c39387-772c-4393-a015-cd5be86defd7",
+    "$viewOrder": 17,
     "expanded": true,
     "cn": [
         {
@@ -210,7 +201,7 @@
                         "fn": "onGridpanelSelectionChange",
                         "implHandler": [
                             "if (selections.length>=1){",
-                            "    this.loadRecord(selections[0]);",
+                            "    this.down('#newmap').loadRecord(selections[0]);",
                             "    this.down('#delete').enable();",
                             "}else{",
                             "    this.down('#delete').disable();",
@@ -457,54 +448,83 @@
             "codeClass": null,
             "userConfig": {
                 "itemId": null,
-                "minWidth": 280,
+                "minWidth": 290,
+                "padding": 5,
                 "width": 150,
                 "autoScroll": true,
                 "designer|userClassName": "MyContainer14",
                 "layout|region": "west",
-                "layout|split": true
+                "layout|split": true,
+                "dock": null
             },
             "customConfigs": [],
             "expanded": true,
             "cn": [
                 {
-                    "id": "ExtBox1-ext-gen17001",
-                    "type": "fieldset",
+                    "id": "ExtBox1-ext-gen5082",
+                    "type": "form",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "padding": 5,
-                        "width": null,
-                        "collapsed": true,
-                        "collapsible": true,
-                        "title": "Global Setting",
-                        "designer|userClassName": "MyFieldSet"
+                        "border": 0,
+                        "height": null,
+                        "itemId": "glunmap",
+                        "minHeight": null,
+                        "width": 282,
+                        "activeItem": 0,
+                        "layout": "auto",
+                        "bodyBorder": false,
+                        "bodyCls": "x-border-layout-ct",
+                        "bodyPadding": null,
+                        "bodyStyle": null,
+                        "title": null,
+                        "designer|userClassName": "MyForm10"
                     },
                     "customConfigs": [],
                     "expanded": true,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen66099",
-                            "type": "checkboxfield",
+                            "id": "ExtBox1-ext-gen7188",
+                            "type": "basicfunction",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "itemId": null,
-                                "fieldLabel": "LUN Map",
-                                "boxLabel": "Enabled",
-                                "designer|userClassName": "MyCheckbox1"
+                                "fn": "getStore",
+                                "designer|params": [
+                                    "component"
+                                ],
+                                "implHandler": [
+                                    "alert('wait...');",
+                                    "var me = this;",
+                                    "if (Ext.isObject(me.store)) return me.store;",
+                                    "Ext.syncRequire('MyApp.model.glunmap');",
+                                    "var store = Ext.create('Ext.data.Store', {",
+                                    "    model: 'MyApp.model.glunmap',",
+                                    "    storeId: 'glunmap',",
+                                    "    autoLoad: false",
+                                    "});",
+                                    "store.on('load', function(){",
+                                    "    var m = store.getAt(0);",
+                                    "    if (!m) return;",
+                                    "    me.loadRecord(m);",
+                                    "});",
+                                    "me.store = store;",
+                                    "return store;",
+                                    ""
+                                ],
+                                "designer|userClassName": "getStore"
                             },
                             "customConfigs": [],
                             "expanded": true
                         },
                         {
-                            "id": "ExtBox1-ext-gen70030",
+                            "id": "ExtBox1-ext-gen24302",
                             "type": "fieldset",
                             "reference": {
                                 "name": "items",
@@ -513,18 +533,18 @@
                             "codeClass": null,
                             "userConfig": {
                                 "padding": 5,
-                                "width": 268,
+                                "width": null,
                                 "collapsed": true,
                                 "collapsible": true,
-                                "title": "Global CHAP Setting",
-                                "designer|userClassName": "MyFieldSet"
+                                "title": "Global Setting",
+                                "designer|userClassName": "MyFieldSet12"
                             },
                             "customConfigs": [],
                             "expanded": true,
                             "cn": [
                                 {
-                                    "id": "ExtBox1-ext-gen64220",
-                                    "type": "textfield",
+                                    "id": "ExtBox1-ext-gen66099",
+                                    "type": "checkboxfield",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
@@ -532,185 +552,187 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "itemId": null,
-                                        "name": "gtargetuser",
-                                        "fieldLabel": "Target User",
-                                        "regex": null,
-                                        "regexText": null,
-                                        "designer|userClassName": "MyTextField"
+                                        "name": "enabled",
+                                        "fieldLabel": "LUN Map",
+                                        "boxLabel": "Enabled",
+                                        "designer|userClassName": "MyCheckbox1"
                                     },
                                     "customConfigs": [],
                                     "expanded": true
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen71683",
-                                    "type": "textfield",
+                                    "id": "ExtBox1-ext-gen70030",
+                                    "type": "fieldset",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "itemId": null,
-                                        "inputType": "password",
-                                        "name": "gtargetpass",
-                                        "fieldLabel": "Target Pass",
-                                        "regex": null,
-                                        "regexText": null,
-                                        "designer|userClassName": "MyTextField"
+                                        "padding": 5,
+                                        "width": null,
+                                        "collapsed": false,
+                                        "collapsible": true,
+                                        "title": "Global CHAP Setting",
+                                        "designer|userClassName": "MyFieldSet"
                                     },
                                     "customConfigs": [],
-                                    "expanded": true
+                                    "expanded": false,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen64220",
+                                            "type": "textfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "name": "gtargetuser",
+                                                "fieldLabel": "Target User",
+                                                "regex": null,
+                                                "regexText": null,
+                                                "designer|userClassName": "MyTextField"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen71683",
+                                            "type": "textfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "inputType": "password",
+                                                "name": "gtargetpass",
+                                                "fieldLabel": "Target Pass",
+                                                "regex": null,
+                                                "regexText": null,
+                                                "designer|userClassName": "MyTextField"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen71833",
+                                            "type": "textfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "name": "ginitiatoruser",
+                                                "fieldLabel": "Initiator User",
+                                                "regex": null,
+                                                "regexText": "invalid IP address",
+                                                "designer|userClassName": "MyTextField"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen71984",
+                                            "type": "textfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "inputType": "password",
+                                                "name": "ginitiatorpass",
+                                                "fieldLabel": "Initiator Pass",
+                                                "regex": null,
+                                                "regexText": null,
+                                                "designer|userClassName": "MyTextField"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen71833",
-                                    "type": "textfield",
+                                    "id": "ExtBox1-ext-gen74524",
+                                    "type": "button",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "itemId": null,
-                                        "name": "ginitiatoruser",
-                                        "fieldLabel": "Initiator User",
-                                        "regex": null,
-                                        "regexText": "invalid IP address",
-                                        "designer|userClassName": "MyTextField"
+                                        "width": null,
+                                        "text": "Save",
+                                        "designer|userClassName": "MyButton14"
                                     },
                                     "customConfigs": [],
-                                    "expanded": true
-                                },
-                                {
-                                    "id": "ExtBox1-ext-gen71984",
-                                    "type": "textfield",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "itemId": null,
-                                        "inputType": "password",
-                                        "name": "ginitiatorpass",
-                                        "fieldLabel": "Initiator Pass",
-                                        "regex": null,
-                                        "regexText": null,
-                                        "designer|userClassName": "MyTextField"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
+                                    "expanded": true,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen24688",
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onButtonClick",
+                                                "implHandler": [
+                                                    "var form = this.down('#glunmap').getForm(),",
+                                                    "    store = this.down('#glunmap').store;",
+                                                    "if (!store) return;",
+                                                    "if (form.isValid()){",
+                                                    "    var v = form.getFieldValues(true),",
+                                                    "        m = form.getRecord();",
+                                                    "    if (!m) return;",
+                                                    "    for(var e in v) m.set(e, v[e]);",
+                                                    "    store.sync();",
+                                                    "}"
+                                                ],
+                                                "name": "click",
+                                                "scope": "me",
+                                                "designer|userClassName": "onButtonClick"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
                                 }
                             ]
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen74524",
-                            "type": "button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "text": "Save",
-                                "designer|userClassName": "MyButton14"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
                         }
                     ]
                 },
                 {
-                    "id": "ExtBox1-ext-gen64216",
-                    "type": "fieldset",
+                    "id": "ExtBox1-ext-gen8233",
+                    "type": "form",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "padding": 5,
-                        "width": null,
-                        "collapsed": false,
-                        "collapsible": true,
-                        "title": "New Mapping",
-                        "designer|userClassName": "MyFieldSet1"
+                        "border": 0,
+                        "itemId": "newmap",
+                        "width": 278,
+                        "bodyCls": "x-border-layout-ct",
+                        "bodyPadding": null,
+                        "bodyStyle": null,
+                        "title": null,
+                        "designer|userClassName": "MyForm11"
                     },
                     "customConfigs": [],
                     "expanded": true,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen4833",
-                            "type": "linkedinstance",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "name": "sourceip"
-                            },
-                            "customConfigs": [],
-                            "iconCls": "icon-linkedinstance",
-                            "expanded": true,
-                            "masterInstanceId": "ucmpIpField"
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen6991",
-                            "type": "linkedinstance",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "name": "netmask"
-                            },
-                            "customConfigs": [],
-                            "iconCls": "icon-linkedinstance",
-                            "expanded": true,
-                            "masterInstanceId": "ExtBox1-ext-gen64225"
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen10348",
-                            "type": "linkedinstance",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "name": "targetid"
-                            },
-                            "customConfigs": [],
-                            "iconCls": "icon-linkedinstance",
-                            "expanded": true,
-                            "masterInstanceId": "ucmpTargetListField"
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen64235",
-                            "type": "combobox",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "hidden": false,
-                                "itemId": null,
-                                "name": "access",
-                                "value": "['RW']",
-                                "fieldLabel": "Access",
-                                "allowBlank": false,
-                                "queryMode": "local",
-                                "store": "Access",
-                                "valueField": "value",
-                                "designer|userClassName": "MyComboBox"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen76711",
+                            "id": "ExtBox1-ext-gen126259",
                             "type": "fieldset",
                             "reference": {
                                 "name": "items",
@@ -718,188 +740,281 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "padding": 5,
-                                "width": 268,
-                                "collapsed": true,
-                                "collapsible": true,
-                                "title": "Mapping CHAP Setting",
-                                "designer|userClassName": "MyFieldSet"
+                                "title": "New Mapping",
+                                "designer|userClassName": "MyFieldSet13"
                             },
                             "customConfigs": [],
                             "expanded": true,
                             "cn": [
                                 {
-                                    "id": "ExtBox1-ext-gen76716",
-                                    "type": "textfield",
+                                    "id": "ExtBox1-ext-gen4833",
+                                    "type": "linkedinstance",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "name": "sourceip"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ucmpIpField"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen6991",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "netmask"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ExtBox1-ext-gen64225"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen10348",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "targetid"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ucmpTargetListField"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen64235",
+                                    "type": "combobox",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "hidden": false,
                                         "itemId": null,
-                                        "name": "targetuser",
-                                        "fieldLabel": "Target User",
-                                        "regex": null,
-                                        "regexText": null,
-                                        "designer|userClassName": "MyTextField"
+                                        "name": "access",
+                                        "value": "['RW']",
+                                        "fieldLabel": "Access",
+                                        "allowBlank": false,
+                                        "queryMode": "local",
+                                        "store": "Access",
+                                        "valueField": "value",
+                                        "designer|userClassName": "MyComboBox"
                                     },
                                     "customConfigs": [],
                                     "expanded": true
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen76722",
-                                    "type": "textfield",
+                                    "id": "ExtBox1-ext-gen76711",
+                                    "type": "fieldset",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "itemId": null,
-                                        "inputType": "password",
-                                        "name": "targetpass",
-                                        "fieldLabel": "Target Pass",
-                                        "regex": null,
-                                        "regexText": null,
-                                        "designer|userClassName": "MyTextField"
+                                        "padding": 5,
+                                        "width": 268,
+                                        "collapsed": true,
+                                        "collapsible": true,
+                                        "title": "Mapping CHAP Setting",
+                                        "designer|userClassName": "MyFieldSet"
                                     },
                                     "customConfigs": [],
-                                    "expanded": true
+                                    "expanded": false,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen76716",
+                                            "type": "textfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "name": "targetuser",
+                                                "fieldLabel": "Target User",
+                                                "regex": null,
+                                                "regexText": null,
+                                                "designer|userClassName": "MyTextField"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen76722",
+                                            "type": "textfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "inputType": "password",
+                                                "name": "targetpass",
+                                                "fieldLabel": "Target Pass",
+                                                "regex": null,
+                                                "regexText": null,
+                                                "designer|userClassName": "MyTextField"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen76728",
+                                            "type": "textfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "name": "initiatoruser",
+                                                "fieldLabel": "Initiator User",
+                                                "regex": null,
+                                                "regexText": null,
+                                                "designer|userClassName": "MyTextField"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen76734",
+                                            "type": "textfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "inputType": "password",
+                                                "name": "initiatorpass",
+                                                "fieldLabel": "Initiator Pass",
+                                                "regex": null,
+                                                "regexText": null,
+                                                "designer|userClassName": "MyTextField"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen76728",
-                                    "type": "textfield",
+                                    "id": "ExtBox1-ext-gen64245",
+                                    "type": "button",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "itemId": null,
-                                        "name": "initiatoruser",
-                                        "fieldLabel": "Initiator User",
-                                        "regex": null,
-                                        "regexText": null,
-                                        "designer|userClassName": "MyTextField"
+                                        "itemId": "add",
+                                        "margin": 5,
+                                        "minWidth": 80,
+                                        "autoWidth": true,
+                                        "text": "Add New ...",
+                                        "designer|userClassName": "MyButton"
                                     },
                                     "customConfigs": [],
-                                    "expanded": true
+                                    "expanded": true,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen64249",
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onAddClick",
+                                                "implHandler": [
+                                                    "",
+                                                    "var form = this.down('#newmap').getForm(),",
+                                                    "    store = this.down('gridpanel').store;",
+                                                    "if (form.isValid()){",
+                                                    "    var v = form.getFieldValues();",
+                                                    "    var m = store.add(v);",
+                                                    "    for(var i=0;i<m.length;i++) m[i].phantom = true;",
+                                                    "    store.sync();",
+                                                    "}",
+                                                    ""
+                                                ],
+                                                "name": "click",
+                                                "scope": "me",
+                                                "designer|userClassName": "onAddClick"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen76734",
-                                    "type": "textfield",
+                                    "id": "ExtBox1-ext-gen5441",
+                                    "type": "button",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "itemId": null,
-                                        "inputType": "password",
-                                        "name": "initiatorpass",
-                                        "fieldLabel": "Initiator Pass",
-                                        "regex": null,
-                                        "regexText": null,
-                                        "designer|userClassName": "MyTextField"
+                                        "height": null,
+                                        "text": "Update",
+                                        "designer|userClassName": "MyButton29"
                                     },
                                     "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen64245",
-                            "type": "button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "itemId": "add",
-                                "margin": 5,
-                                "minWidth": 80,
-                                "autoWidth": true,
-                                "text": "Add New ...",
-                                "designer|userClassName": "MyButton",
-                                "formBind": true
-                            },
-                            "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen64249",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onAddClick",
-                                        "implHandler": [
-                                            "",
-                                            "var store = this.down('gridpanel').store;",
-                                            "if (this.getForm().isValid()){",
-                                            "    var v = this.getForm().getFieldValues();",
-                                            "    var m = store.add(v);",
-                                            "    for(var i=0;i<m.length;i++) m[i].phantom = true;",
-                                            "    store.sync();",
-                                            "}",
-                                            ""
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onAddClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen5441",
-                            "type": "button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "text": "Update",
-                                "designer|userClassName": "MyButton29"
-                            },
-                            "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen6510",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onUpdateClick",
-                                        "implHandler": [
-                                            "var store = this.down('gridpanel').store;",
-                                            "if (this.getForm().isValid()){",
-                                            "    var v = this.getForm().getFieldValues(true),",
-                                            "        m = this.getForm().getRecord();",
-                                            "    if (!m) return;",
-                                            "    for(var e in v) m.set(e, v[e]);",
-                                            "    store.sync();",
-                                            "}",
-                                            ""
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onUpdateClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
+                                    "expanded": true,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen6510",
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onUpdateClick",
+                                                "designer|params": [
+                                                    "a"
+                                                ],
+                                                "implHandler": [
+                                                    "var form = this.down('#newmap').getForm(),",
+                                                    "    store = this.down('gridpanel').store;",
+                                                    "if (form.isValid()){",
+                                                    "    var v = form.getFieldValues(true),",
+                                                    "        m = form.getRecord();",
+                                                    "    if (!m) return;",
+                                                    "    for(var e in v) m.set(e, v[e]);",
+                                                    "    store.sync();",
+                                                    "}",
+                                                    ""
+                                                ],
+                                                "name": "click",
+                                                "scope": "me",
+                                                "designer|userClassName": "onUpdateClick"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -916,7 +1031,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "databind": "[{\nitemid:'mappinglist',\nautoLoad: true,\nloadParams:{\ncondition: 'abc=2'\n}\n}]",
+                "databind": "[{\nitemid:'mappinglist',\nautoLoad: true,\nloadParams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nautoLoad: true\n}]",
                 "layout|region": "east"
             },
             "customConfigs": [],

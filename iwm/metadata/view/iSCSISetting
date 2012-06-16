@@ -35,20 +35,18 @@
             "expanded": true,
             "cn": [
                 {
-                    "id": "ExtBox1-ext-gen70477",
+                    "id": "ExtBox1-ext-gen167066",
                     "type": "linkedinstance",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
-                    "userConfig": {
-                        "itemId": "lunmap"
-                    },
+                    "userConfig": {},
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",
                     "expanded": true,
-                    "masterInstanceId": "ExtBox1-ext-gen16895"
+                    "masterInstanceId": "ExtBox1-ext-gen163536"
                 },
                 {
                     "id": "ExtBox1-ext-gen82781",

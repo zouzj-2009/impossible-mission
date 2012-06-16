@@ -164,20 +164,6 @@
             },
             "customConfigs": [],
             "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen27765",
-            "type": "uuidgenerator",
-            "reference": {
-                "name": "idgen",
-                "type": "object"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "designer|userClassName": "MyUUIDGenerator1"
-            },
-            "customConfigs": [],
-            "expanded": true
         }
     ]
 }

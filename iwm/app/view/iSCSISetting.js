@@ -38,8 +38,7 @@ Ext.define('MyApp.view.iSCSISetting', {
                     region: 'center',
                     items: [
                         {
-                            xtype: 'lunmap',
-                            itemId: 'lunmap'
+                            xtype: 'lunmap'
                         },
                         {
                             xtype: 'virtportal'
