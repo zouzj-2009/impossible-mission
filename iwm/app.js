@@ -19,7 +19,7 @@ Ext.Loader.setConfig({
 
 Ext.application({
     models: [
-        'NicInfo',
+        'netconfig',
         'IscsiConn',
         'SysInfo',
         'TargetList',
@@ -34,7 +34,7 @@ Ext.application({
     ],
     stores: [
         'networkinfo',
-        'nicinfo',
+        'netconfig',
         'physicinfo',
         'iscsiconn',
         'sysinfo',

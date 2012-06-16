@@ -41,7 +41,7 @@ Ext.define('MyApp.view.NetConfig', {
                     preventHeader: false,
                     title: 'NIC & IP Address',
                     titleCollapse: false,
-                    store: 'nicinfo',
+                    store: 'netconfig',
                     region: 'center',
                     split: true,
                     viewConfig: {

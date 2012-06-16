@@ -17,10 +17,10 @@ Ext.define('MyApp.view.LunMap', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.lunmap',
     requires: [
+        'MyApp.view.DataBinder',
         'MyApp.view.IpField',
         'MyApp.view.NetMaskField',
-        'MyApp.view.TargetListField',
-        'MyApp.view.DataBinder'
+        'MyApp.view.TargetListField'
     ],
 
     layout: {
@@ -33,6 +33,32 @@ Ext.define('MyApp.view.LunMap', {
 
         Ext.applyIf(me, {
             items: [
+                {
+                    xtype: 'databinder',
+                    databind: [
+                        {
+                            itemid: 'mappinglist',
+                            autoload: true,
+                            progress: {
+                                create: 'newin'
+                            },
+                            bindform: 'newmap',
+                            loadparams: {
+                                condition: 'abc=2'
+                            }
+                        },
+                        {
+                            itemid: 'glunmap',
+                            host: '127.0.0.1',
+                            model: 'glunmap',
+                            progress: {
+                                localmask: true
+                            },
+                            autoload: true
+                        }
+                    ],
+                    region: 'east'
+                },
                 {
                     xtype: 'gridpanel',
                     itemId: 'mappinglist',
@@ -292,32 +318,6 @@ Ext.define('MyApp.view.LunMap', {
                             ]
                         }
                     ]
-                },
-                {
-                    xtype: 'databinder',
-                    databind: [
-                        {
-                            itemid: 'mappinglist',
-                            autoload: true,
-                            progress: {
-                                create: 'newin'
-                            },
-                            bindform: 'newmap',
-                            loadparams: {
-                                condition: 'abc=2'
-                            }
-                        },
-                        {
-                            itemid: 'glunmap',
-                            host: '127.0.0.1',
-                            model: 'glunmap',
-                            progress: {
-                                localmask: true
-                            },
-                            autoload: true
-                        }
-                    ],
-                    region: 'east'
                 }
             ]
         });

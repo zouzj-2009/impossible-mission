@@ -17,6 +17,7 @@ Ext.define('MyApp.view.SystemInfo', {
     extend: 'Ext.container.Container',
     alias: 'widget.sysinfo',
     requires: [
+        'MyApp.view.DataBinder',
         'MyApp.view.LinkSpeedBar'
     ],
 
@@ -32,12 +33,32 @@ Ext.define('MyApp.view.SystemInfo', {
         Ext.applyIf(me, {
             items: [
                 {
+                    xtype: 'databinder',
+                    databind: [
+                        {
+                            itemid: 'sysinfo',
+                            autoload: true
+                        },
+                        {
+                            itemid: 'netconfig',
+                            model: 'netconfig',
+                            autoload: true
+                        },
+                        {
+                            itemid: 'iscsiconn',
+                            autoload: true
+                        }
+                    ],
+                    region: 'west'
+                },
+                {
                     xtype: 'tabpanel',
-                    activeTab: 2,
+                    activeTab: 1,
                     region: 'center',
                     items: [
                         {
                             xtype: 'gridpanel',
+                            itemId: 'iscsiconn',
                             title: 'iSCSI连接',
                             store: 'iscsiconn',
                             viewConfig: {
@@ -84,13 +105,31 @@ Ext.define('MyApp.view.SystemInfo', {
                                     dataIndex: 'writespeed',
                                     text: 'Writespeed'
                                 }
+                            ],
+                            dockedItems: [
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'delete',
+                                            text: 'disconnect'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'refresh'
+                                        }
+                                    ]
+                                }
                             ]
                         },
                         {
                             xtype: 'gridpanel',
                             height: 109,
+                            itemId: 'netconfig',
                             title: '网卡设定',
-                            store: 'networkinfo',
                             viewConfig: {
 
                             },
@@ -125,10 +164,29 @@ Ext.define('MyApp.view.SystemInfo', {
                                     dataIndex: 'broadcast',
                                     text: 'Broadcast'
                                 }
+                            ],
+                            dockedItems: [
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'delete',
+                                            text: 'delete'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'refresh'
+                                        }
+                                    ]
+                                }
                             ]
                         },
                         {
                             xtype: 'gridpanel',
+                            itemId: 'sysinfo',
                             title: '系统信息',
                             store: 'sysinfo',
                             viewConfig: {
@@ -148,7 +206,21 @@ Ext.define('MyApp.view.SystemInfo', {
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'note',
+                                    flex: 1,
                                     text: 'Note'
+                                }
+                            ],
+                            dockedItems: [
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'refresh'
+                                        }
+                                    ]
                                 }
                             ]
                         },

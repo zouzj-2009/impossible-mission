@@ -91,7 +91,7 @@ Ext.define('MyApp.view.DataBinder', {
                 continue;
             }
             var store = Ext.isFunction(dbc.getStore)?dbc.getStore(dbc):dbc.store;
-            if (!store) {
+            if (!store || store.storeId == 'ext-empty-store') {
                 if (!cfg.model){
                     console.log('not store/model for item '+cfg.itemid+' config:'+cfg);
                     continue;
@@ -104,7 +104,8 @@ Ext.define('MyApp.view.DataBinder', {
                 }else dbc.store = cfg.store;
                 store = cfg.store;
             }
-            alert('binding ...');
+            console.log('binding '+cfg.itemid);
+            console.log(cfg);
             cfg.store = cfg.store;
             cfg.dbc = dbc;
             if (dbc.isXType('grid')){
@@ -354,7 +355,7 @@ Ext.define('MyApp.view.DataBinder', {
         //don't override designed behavior.
         if (sm && !cfg.ignore.selectionchange){
             grid.on('selectionchange', function(grid, selections, options){
-                if (selections.length>=1){
+                if (selections.length>=1 && this.down('#delete')){
                     this.down('#delete').enable();
                 }else{
                     this.down('#delete').disable();
@@ -476,10 +477,10 @@ Ext.define('MyApp.view.DataBinder', {
     },
 
     createStore: function(dbc, cfg, binder) {
-        alert('wait create db ...');
+        console.log('create db '+cfg.model+' for '+cfg.itemid);
         var app = 'MyApp';
         //create store by cfg.model
-        if (Ext.isObject(dbc.store)) return dbc.store;
+        //if (Ext.isObject(dbc.store)) return dbc.store;
         Ext.syncRequire(app+'.model.'+cfg.model);
         var store = Ext.create('Ext.data.Store', {
             model: app+'.model.'+cfg.model,
@@ -493,7 +494,7 @@ Ext.define('MyApp.view.DataBinder', {
         dbc.loadRecord(m);
         });
         */
-        dbc.store = store;
+        if (dbc.isXType('grid')) dbc.reconfigure(store);else dbc.store = store;
         return store;
     },
 

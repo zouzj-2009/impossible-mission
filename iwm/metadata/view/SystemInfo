@@ -16,8 +16,25 @@
     "customConfigs": [],
     "designerId": "13967b33-2221-4a18-91c2-98dbd3a1badf",
     "$viewOrder": 2,
-    "expanded": false,
+    "expanded": true,
     "cn": [
+        {
+            "id": "ExtBox1-ext-gen174171",
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "databind": "[{\"itemid\":\"sysinfo\", autoload:true},{\"itemid\":\"netconfig\",\nmodel:'netconfig', autoload:true},{\"itemid\":\"iscsiconn\", autoload:true}]",
+                "layout|region": "west"
+            },
+            "customConfigs": [],
+            "iconCls": "icon-linkedinstance",
+            "expanded": true,
+            "masterInstanceId": "ucmpDataBinder"
+        },
         {
             "id": "ExtBox1-ext-gen4171",
             "type": "tabpanel",
@@ -28,12 +45,12 @@
             "codeClass": null,
             "userConfig": {
                 "title": null,
-                "activeTab": 2,
+                "activeTab": 1,
                 "designer|userClassName": "MyTabPanel1",
                 "layout|region": "center"
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen17739",
@@ -44,12 +61,13 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "itemId": "iscsiconn",
                         "title": "iSCSI连接",
                         "store": "iscsiconn",
                         "designer|userClassName": "MyGridPanel1"
                     },
                     "customConfigs": [],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen17791",
@@ -207,6 +225,57 @@
                             "customConfigs": [],
                             "iconCls": "icon-tab-bar",
                             "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen185389",
+                            "type": "toolbar",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|userClassName": "MyToolbar7",
+                                "dock": "top"
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen185709",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "delete",
+                                        "text": "disconnect",
+                                        "designer|userClassName": "MyButton30",
+                                        "layout|flex": null
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen186077",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "refresh",
+                                        "text": "refresh",
+                                        "designer|userClassName": "MyButton31",
+                                        "layout|flex": null
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
                         }
                     ]
                 },
@@ -220,12 +289,13 @@
                     "codeClass": null,
                     "userConfig": {
                         "height": 109,
+                        "itemId": "netconfig",
                         "title": "网卡设定",
-                        "store": "networkinfo",
+                        "store": null,
                         "designer|userClassName": "MyGridPanel"
                     },
                     "customConfigs": [],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen14313",
@@ -351,6 +421,57 @@
                             "customConfigs": [],
                             "iconCls": "icon-tab-bar",
                             "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen187231",
+                            "type": "toolbar",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|userClassName": "MyToolbar8",
+                                "dock": "top"
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen186999",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "delete",
+                                        "text": "delete",
+                                        "designer|userClassName": "MyButton30",
+                                        "layout|flex": null
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen188247",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "refresh",
+                                        "text": "refresh",
+                                        "designer|userClassName": "MyButton31",
+                                        "layout|flex": null
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
                         }
                     ]
                 },
@@ -363,13 +484,14 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "itemId": "sysinfo",
                         "title": "系统信息",
                         "store": "sysinfo",
                         "designer|userClassName": "MyGridPanel2",
                         "dock": null
                     },
                     "customConfigs": [],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen18752",
@@ -427,6 +549,7 @@
                             "codeClass": null,
                             "userConfig": {
                                 "dataIndex": "note",
+                                "flex": 1,
                                 "text": "Note",
                                 "designer|userClassName": "MyColumn23"
                             },
@@ -447,6 +570,40 @@
                             "customConfigs": [],
                             "iconCls": "icon-tab-bar",
                             "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen187528",
+                            "type": "toolbar",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|userClassName": "MyToolbar9",
+                                "dock": "top"
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen189359",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "refresh",
+                                        "text": "refresh",
+                                        "designer|userClassName": "MyButton31",
+                                        "layout|flex": null
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
                         }
                     ]
                 },

@@ -8,7 +8,7 @@
     "codeClass": null,
     "userConfig": {
         "models": [
-            "NicInfo",
+            "netconfig",
             "IscsiConn",
             "SysInfo",
             "TargetList",
@@ -23,7 +23,7 @@
         ],
         "stores": [
             "networkinfo",
-            "nicinfo",
+            "netconfig",
             "physicinfo",
             "iscsiconn",
             "sysinfo",

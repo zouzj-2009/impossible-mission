@@ -26,7 +26,7 @@
     ],
     "designerId": "0cb07030-ef49-489e-a10f-eedd0b0b4b82",
     "$viewOrder": 10,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen13211",
@@ -42,14 +42,14 @@
                 "preventHeader": false,
                 "title": "NIC & IP Address",
                 "titleCollapse": false,
-                "store": "nicinfo",
+                "store": "netconfig",
                 "designer|userClassName": "MyGridPanel",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen13224",

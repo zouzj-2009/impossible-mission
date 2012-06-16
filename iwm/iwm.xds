@@ -100,11 +100,11 @@
         },
         "f8a27a84-e464-4246-b5bc-1e946a60fb43": {
             "paths": [
-                "metadata/store/nicinfo",
-                "app/store/override/nicinfo.js",
-                "app/store/nicinfo.js"
+                "metadata/store/netconfig",
+                "app/store/override/netconfig.js",
+                "app/store/netconfig.js"
             ],
-            "className": "nicinfo"
+            "className": "netconfig"
         },
         "623ded20-ef5b-4998-b79a-d8f2841a5a40": {
             "paths": [
@@ -116,11 +116,11 @@
         },
         "1be95902-c2f2-411e-bf90-79ada55fd27a": {
             "paths": [
-                "metadata/model/NicInfo",
-                "app/model/override/NicInfo.js",
-                "app/model/NicInfo.js"
+                "metadata/model/netconfig",
+                "app/model/override/netconfig.js",
+                "app/model/netconfig.js"
             ],
-            "className": "NicInfo"
+            "className": "netconfig"
         },
         "c9173de0-136f-449e-87d3-bf4fdbadd498": {
             "paths": [

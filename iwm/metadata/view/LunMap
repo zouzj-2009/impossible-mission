@@ -16,9 +16,26 @@
     },
     "customConfigs": [],
     "designerId": "31c39387-772c-4393-a015-cd5be86defd7",
-    "$viewOrder": 17,
+    "$viewOrder": 16,
     "expanded": true,
     "cn": [
+        {
+            "id": "ExtBox1-ext-gen34027",
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "databind": "[{\nitemid:'mappinglist',\nautoload: true,\nprogress:{create:'newin'},\nbindform:'newmap',\nloadparams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nhost:'127.0.0.1',\nmodel:'glunmap',\nprogress:{localmask:true},\nautoload: true\n}]",
+                "layout|region": "east"
+            },
+            "customConfigs": [],
+            "iconCls": "icon-linkedinstance",
+            "expanded": true,
+            "masterInstanceId": "ucmpDataBinder"
+        },
         {
             "id": "ExtBox1-ext-gen16899",
             "type": "gridpanel",
@@ -365,7 +382,7 @@
                 "dock": null
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen5082",
@@ -800,23 +817,6 @@
                     ]
                 }
             ]
-        },
-        {
-            "id": "ExtBox1-ext-gen34027",
-            "type": "linkedinstance",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "databind": "[{\nitemid:'mappinglist',\nautoload: true,\nprogress:{create:'newin'},\nbindform:'newmap',\nloadparams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nhost:'127.0.0.1',\nmodel:'glunmap',\nprogress:{localmask:true},\nautoload: true\n}]",
-                "layout|region": "east"
-            },
-            "customConfigs": [],
-            "iconCls": "icon-linkedinstance",
-            "expanded": true,
-            "masterInstanceId": "ucmpDataBinder"
         }
     ]
 }

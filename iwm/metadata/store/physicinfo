@@ -8,7 +8,7 @@
     "codeClass": null,
     "userConfig": {
         "storeId": "physicinfo",
-        "model": "NicInfo",
+        "model": "netconfig",
         "designer|userClassName": "physicinfo"
     },
     "customConfigs": [],

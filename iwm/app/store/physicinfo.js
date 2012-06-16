@@ -16,7 +16,7 @@
 Ext.define('MyApp.store.physicinfo', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.NicInfo'
+        'MyApp.model.netconfig'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.physicinfo', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'physicinfo',
-            model: 'MyApp.model.NicInfo'
+            model: 'MyApp.model.netconfig'
         }, cfg)]);
     }
 });
