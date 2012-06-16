@@ -65,11 +65,6 @@ Ext.define('MyApp.view.LunMap', {
                                     xtype: 'button',
                                     itemId: 'refresh',
                                     text: 'Refresh'
-                                },
-                                {
-                                    xtype: 'container',
-                                    itemId: 'processstatus',
-                                    flex: 1
                                 }
                             ]
                         }

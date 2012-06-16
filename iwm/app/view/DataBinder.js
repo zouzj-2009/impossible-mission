@@ -99,15 +99,21 @@ Ext.define('MyApp.view.DataBinder', {
             }
             alert('binding ...');
             cfg.store = cfg.store;
-            cfg.dbc = cfg.dbc;
+            cfg.dbc = dbc;
             if (dbc.isXType('grid')){
                 cfg.bindtype = 'grid';
+                //default progress container, if no '>#progressstatus'
+                cfg.defpc = dbc.down('>toolbar')?dbc.down('>toolbar'):dbc;
                 me.bindGrid(dbc, store, cfg);
-                if (cfg.bindform && dbc.up().down('#'+cfg.bindform)){
+                var form = null;
+                if (cfg.bindform && (form = dbc.up().down('#'+cfg.bindform))){
+                    //form.action using form as default progressor
+                    cfg.deffpc = form;
                     cfg.bindtype = 'gridform';
-                    me.bindGridForm(dbc, dbc.up().down('#'+cfg.bindform), store, cfg);
+                    me.bindGridForm(dbc, form, store, cfg);
                 }
             }else if (dbc.isXType('form')){
+                cfg.defpc = dbc;
                 cfg.bindtype = 'form';
                 me.bindForm(dbc, store, cfg);
             }
@@ -129,6 +135,7 @@ Ext.define('MyApp.view.DataBinder', {
         //binder scope
         var binder = this,
             c = binder.ownerCt,
+            dbc = cfg.dbc,
             pcfg = cfg.pcfg||{},
             ptype = pcfg[operation.action]||pcfg.type,
             domask = ptype != pcfg.type && (!pcfg || !pcfg.noMask || cfg.maskid),
@@ -170,8 +177,12 @@ Ext.define('MyApp.view.DataBinder', {
             }
             return;
         }else{
-            pc = c.down('#processstatus');
-            if (!pc) pc = Ext.getCmp('processstatus');
+            pc = dbc.down('#processstatus');
+            if (!pc){
+                if (cfg.deffpc && (operation.action == 'update' || operation.action == 'create')){
+                    pc = cfg.deffpc;
+                }else if (cfg.defpc) pc = cfg.defpc; else pc = Ext.getCmp('processstatus');
+            }
             //don't need!
             if (!pc) return;
         }
