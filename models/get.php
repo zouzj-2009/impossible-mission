@@ -22,7 +22,7 @@ if ($act == 'read'){
 		}
 		$data = $output[data];
 	}
-	if (1){
+	if (0){
 		if ($_REQUEST['seqid']) sleep(2);
 		if ($_REQUEST['seqid'] >= 2)
 			$output=array(success=>true, data=>$data, msg=>'server job done.');

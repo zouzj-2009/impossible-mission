@@ -54,7 +54,7 @@ Ext.define('MyApp.view.DataBinder', {
         // keepproxy: don't override the proxy, just keep it in.
         // keepreader:use proxy's origin reader instead of create one.
         // keepwriter:use proxy's origin writer instead of create one.
-        // ignore:    object, key as event name want to skip band. 
+        // ignore:    object, key as event name or itemid.click want to skip bind. 
         // autoload:  load data after bind
         // lodaparams:params for reload/lode store.
         // progress:  object for configurating the progress indicator, valid key:
@@ -75,7 +75,7 @@ Ext.define('MyApp.view.DataBinder', {
                 host: serverip?serverip:'localhost',
                 proto: 'http',
                 port: '80',
-                pcfg: dbconfig[i].progress?dbcofnig[i].progress:dbconfig.progress,
+                pcfg: dbconfig[i].progress?dbconfig[i].progress:dbconfig.progress,
                 binder: me
             }),
             dbc = c.down('#'+cfg.itemid);
@@ -108,16 +108,17 @@ Ext.define('MyApp.view.DataBinder', {
                     me.bindGridForm(dbc, dbc.up().down('#'+cfg.bindform), store, cfg);
                 }
             }else if (dbc.isXType('form')){
-                cfg.bindType = 'form';
-                me.bindForm(dbc, dbc, cfg);
+                cfg.bindtype = 'form';
+                me.bindForm(dbc, store, cfg);
             }
             if (cfg.keepproxy) continue; //or replace proxy indeed?
             cfg = Ext.applyIf(cfg,{
-                url: 'models/get.php?mid='+store.storeId,
+                url: 'models/get.php?mid='+(store.modelId?store.modelId:store.storeId),
                 storeid: store.storeId,
                 store: store
             });
             me.bindProxy(store, cfg);
+            dbc.dbConfig = cfg;
         }
 
     },
@@ -130,7 +131,7 @@ Ext.define('MyApp.view.DataBinder', {
             c = binder.ownerCt,
             pcfg = cfg.pcfg||{},
             ptype = pcfg[operation.action]||pcfg.type,
-            domask = !pcfg || !pcfg.noMask || cfg.maskid,
+            domask = ptype != pcfg.type && (!pcfg || !pcfg.noMask || cfg.maskid),
             pend = response?(!response.pending): true,
             title = response&&response.pending?response.pending.title:Ext.String.capitalize(operation.action+' '+cfg.storeid),
             msg = response&&response.pending?response.pending.msg:'Please waiting ...',    
@@ -140,7 +141,7 @@ Ext.define('MyApp.view.DataBinder', {
             pc = null;
         if (ptype != 'newin' && pcfg && pcfg.id) pc = Ext.getCmp(pcfg.id);
         else if (ptype != 'newin' && pcfg && pcfg.itemid) pc = c.down('#'+pcfg.itemid);
-        else if (pcfg && pcfg.newin){
+        else if (pcfg && ptype == 'newin'){
             if (!pend && !pcfg.msgwin){
                 //create new win
                 pcfg.msgwin = Ext.Msg.progress(title, msg, pendingtext);
@@ -155,9 +156,13 @@ Ext.define('MyApp.view.DataBinder', {
                         Ext.defer(pcfg.msgwin.close, 1000, pcfg.msgwin);
                         pcfg.msgwin = null;
                     }else{//todo, msg prompt box!
-                        pcfg.msgwin.close();
+                        pcfg.msgwin.updateProgress(1, 'Done, fail!(100%)', donetext);
+                        pcfg.msgwin.on('close', function(win, options){
+                            Ext.Msg.alert(title, donetext);
+                        });
+                        Ext.defer(pcfg.msgwin.close, 1000, pcfg.msgwin);
                         pcfg.msgwin = null;
-                        Exg.Msg.alert(title, donetext);
+                        //Ext.Msg.alert(title, donetext);
                     }
                 }else if (pcfg.msgwin){
                     pcfg.msgwin.updateProgress(number, pendingtext, msg);
@@ -413,18 +418,20 @@ Ext.define('MyApp.view.DataBinder', {
         });
         //for progress indicator
         store.getProxy().on('exception', binder.processErrors, binder, cfg);
-        store.reloadParams = cfg.loadParams?{params:cfg.loadParams}:{};
-        if (store.autoLoad||cfg.autoLoad) store.load(store.reloadParams);
+        store.reloadParams = cfg.loadparams?{params:cfg.loadparams}:{};
+        if (store.autoLoad||cfg.autoload) store.load(store.reloadparams);
 
     },
 
     createStore: function(dbc, cfg, binder) {
-        alert('wait...');
+        alert('wait create db ...');
+        var app = 'MyApp';
         //create store by cfg.model
         if (Ext.isObject(dbc.store)) return dbc.store;
-        Ext.syncRequire('MyApp.model.'+cfg.model);
+        Ext.syncRequire(app+'.model.'+cfg.model);
         var store = Ext.create('Ext.data.Store', {
-            model: cfg.model,
+            model: app+'.model.'+cfg.model,
+            modelId: cfg.model,
             autoLoad: false
         });
         /* should be done in bindGrid/bindForm/bindGridFrom...
@@ -436,6 +443,17 @@ Ext.define('MyApp.view.DataBinder', {
         */
         dbc.store = store;
         return store;
+    },
+
+    getReloadParams: function(dbc) {
+        if (!dbc.store) return {};
+        return dbc.store.reloadParams;
+    },
+
+    setReloadParams: function(dbc, params, append) {
+        if (!dbc.store) return;
+        dbc.store.reloadParams = append?Ext.apply(dbc.store.reloadParams, params):params;
+
     }
 
 });

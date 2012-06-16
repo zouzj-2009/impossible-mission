@@ -170,14 +170,6 @@
             ],
             "className": "TargetList"
         },
-        "807f021e-da84-4122-b6db-c9757604dd2c": {
-            "paths": [
-                "metadata/view/LunMap",
-                "app/view/override/LunMap.js",
-                "app/view/LunMap.js"
-            ],
-            "className": "LunMap"
-        },
         "b6026780-f473-4f7e-87e3-aa2911fedde3": {
             "paths": [
                 "metadata/model/LunMap",
@@ -370,18 +362,34 @@
         },
         "49498605-3383-4224-98a8-672ea0a3423e": {
             "paths": [
-                "metadata/view/DataBind",
-                "app/view/override/DataBind.js",
-                "app/view/DataBind.js"
+                "metadata/view/DataBinder",
+                "app/view/override/DataBinder.js",
+                "app/view/DataBinder.js"
             ],
-            "className": "DataBind"
+            "className": "DataBinder"
+        },
+        "9976b10b-5362-4406-9408-a5693b3da5f4": {
+            "paths": [
+                "metadata/model/glunmap",
+                "app/model/override/glunmap.js",
+                "app/model/glunmap.js"
+            ],
+            "className": "glunmap"
+        },
+        "31c39387-772c-4393-a015-cd5be86defd7": {
+            "paths": [
+                "metadata/view/LunMap",
+                "app/view/override/LunMap.js",
+                "app/view/LunMap.js"
+            ],
+            "className": "LunMap"
         }
     },
     "expandedState": {
         "data": true,
         "model": true,
         "component": true,
-        "controller": false,
+        "controller": true,
         "resource": true
     }
 }

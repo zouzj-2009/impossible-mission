@@ -554,9 +554,11 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "itemId": "update",
                                         "width": null,
                                         "text": "Save",
-                                        "designer|userClassName": "MyButton14"
+                                        "designer|userClassName": "MyButton14",
+                                        "formBind": true
                                     },
                                     "customConfigs": [],
                                     "expanded": true
@@ -824,13 +826,13 @@
             },
             "codeClass": null,
             "userConfig": {
-                "databind": "[{\nitemid:'mappinglist',\nautoload: true,\nbindform:'newmap',\nloadparams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nmodel:'glunmap',\nautoload: true\n}]",
+                "databind": "[{\nitemid:'mappinglist',\nautoload: true,\nprogress:{create:'newin'},\nbindform:'newmap',\nloadparams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nhost:'127.0.0.1',\nmodel:'glunmap',\nautoload: true\n}]",
                 "layout|region": "east"
             },
             "customConfigs": [],
             "iconCls": "icon-linkedinstance",
             "expanded": true,
-            "masterInstanceId": "ExtBox1-ext-gen10116"
+            "masterInstanceId": "ucmpDataBinder"
         }
     ]
 }

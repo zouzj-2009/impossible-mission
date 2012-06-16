@@ -201,7 +201,9 @@ Ext.define('MyApp.view.LunMap', {
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Save'
+                                            itemId: 'update',
+                                            text: 'Save',
+                                            formBind: true
                                         }
                                     ]
                                 }
@@ -302,6 +304,9 @@ Ext.define('MyApp.view.LunMap', {
                         {
                             itemid: 'mappinglist',
                             autoload: true,
+                            progress: {
+                                create: 'newin'
+                            },
                             bindform: 'newmap',
                             loadparams: {
                                 condition: 'abc=2'
@@ -309,6 +314,7 @@ Ext.define('MyApp.view.LunMap', {
                         },
                         {
                             itemid: 'glunmap',
+                            host: '127.0.0.1',
                             model: 'glunmap',
                             autoload: true
                         }

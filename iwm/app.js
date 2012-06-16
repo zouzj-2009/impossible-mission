@@ -29,7 +29,8 @@ Ext.application({
         'DiskList',
         'HbaList',
         'SysLog',
-        'etherspeed'
+        'etherspeed',
+        'glunmap'
     ],
     stores: [
         'networkinfo',
@@ -54,7 +55,6 @@ Ext.application({
         'iSCSISetting',
         'DiskSetting',
         'SystemMaintain',
-        'LunMap',
         'NetMaskField',
         'TargetListField',
         'NetConfig',
@@ -63,7 +63,8 @@ Ext.application({
         'SysMaintain',
         'LinkSpeed',
         'LinkSpeedBar',
-        'DataBind'
+        'DataBinder',
+        'LunMap'
     ],
     autoCreateViewport: true,
     name: 'MyApp',
