@@ -52,7 +52,7 @@
             "SysMaintain",
             "LinkSpeed",
             "LinkSpeedBar",
-            "DataBind",
+            "DataBinder",
             "LunMap"
         ],
         "autoCreateViewport": true,

@@ -20,7 +20,7 @@ Ext.define('MyApp.view.LunMap', {
         'MyApp.view.IpField',
         'MyApp.view.NetMaskField',
         'MyApp.view.TargetListField',
-        'MyApp.view.DataBind'
+        'MyApp.view.DataBinder'
     ],
 
     layout: {
@@ -59,24 +59,12 @@ Ext.define('MyApp.view.LunMap', {
                                     xtype: 'button',
                                     disabled: true,
                                     itemId: 'delete',
-                                    text: 'Delete',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onDeleteClick,
-                                            scope: me
-                                        }
-                                    }
+                                    text: 'Delete'
                                 },
                                 {
                                     xtype: 'button',
                                     itemId: 'refresh',
-                                    text: 'Refresh',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onRefreshClick,
-                                            scope: me
-                                        }
-                                    }
+                                    text: 'Refresh'
                                 },
                                 {
                                     xtype: 'container',
@@ -86,12 +74,6 @@ Ext.define('MyApp.view.LunMap', {
                             ]
                         }
                     ],
-                    listeners: {
-                        selectionchange: {
-                            fn: me.onGridpanelSelectionChange,
-                            scope: me
-                        }
-                    },
                     columns: [
                         {
                             xtype: 'gridcolumn',
@@ -162,25 +144,6 @@ Ext.define('MyApp.view.LunMap', {
                     items: [
                         {
                             xtype: 'form',
-                            getStore: function(component) {
-                                alert('wait...');
-                                var me = this;
-                                if (Ext.isObject(me.store)) return me.store;
-                                Ext.syncRequire('MyApp.model.glunmap');
-                                var store = Ext.create('Ext.data.Store', {
-                                    model: 'MyApp.model.glunmap',
-                                    storeId: 'glunmap',
-                                    autoLoad: false
-                                });
-                                store.on('load', function(){
-                                    var m = store.getAt(0);
-                                    if (!m) return;
-                                    me.loadRecord(m);
-                                });
-                                me.store = store;
-                                return store;
-
-                            },
                             border: 0,
                             itemId: 'glunmap',
                             width: 282,
@@ -238,13 +201,7 @@ Ext.define('MyApp.view.LunMap', {
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Save',
-                                            listeners: {
-                                                click: {
-                                                    fn: me.onButtonClick,
-                                                    scope: me
-                                                }
-                                            }
+                                            text: 'Save'
                                         }
                                     ]
                                 }
@@ -325,22 +282,13 @@ Ext.define('MyApp.view.LunMap', {
                                             minWidth: 80,
                                             autoWidth: true,
                                             text: 'Add New ...',
-                                            listeners: {
-                                                click: {
-                                                    fn: me.onAddClick,
-                                                    scope: me
-                                                }
-                                            }
+                                            formBind: true
                                         },
                                         {
                                             xtype: 'button',
+                                            itemId: 'update',
                                             text: 'Update',
-                                            listeners: {
-                                                click: {
-                                                    fn: me.onUpdateClick,
-                                                    scope: me
-                                                }
-                                            }
+                                            formBind: true
                                         }
                                     ]
                                 }
@@ -349,18 +297,20 @@ Ext.define('MyApp.view.LunMap', {
                     ]
                 },
                 {
-                    xtype: 'databind',
+                    xtype: 'databinder',
                     databind: [
                         {
                             itemid: 'mappinglist',
-                            autoLoad: true,
-                            loadParams: {
+                            autoload: true,
+                            bindform: 'newmap',
+                            loadparams: {
                                 condition: 'abc=2'
                             }
                         },
                         {
                             itemid: 'glunmap',
-                            autoLoad: true
+                            model: 'glunmap',
+                            autoload: true
                         }
                     ],
                     region: 'east'
@@ -369,70 +319,6 @@ Ext.define('MyApp.view.LunMap', {
         });
 
         me.callParent(arguments);
-    },
-
-    onDeleteClick: function(button, e, options) {
-        var records = this.down('gridpanel').getSelectionModel().getSelection(),
-            store = this.down('gridpanel').store;
-        store.remove(records);
-        store.sync({operation:{debug:'abc'}});
-
-
-    },
-
-    onRefreshClick: function(button, e, options) {
-        this.reloaded = true;
-        this.down('gridpanel').store.load({params: {condition:'abc=1'}});
-    },
-
-    onGridpanelSelectionChange: function(tablepanel, selections, options) {
-        if (selections.length>=1){
-            this.down('#newmap').loadRecord(selections[0]);
-            this.down('#delete').enable();
-        }else{
-            this.down('#delete').disable();
-        }
-
-
-    },
-
-    onButtonClick: function(button, e, options) {
-        var form = this.down('#glunmap').getForm(),
-            store = this.down('#glunmap').store;
-        if (!store) return;
-        if (form.isValid()){
-            var v = form.getFieldValues(true),
-                m = form.getRecord();
-            if (!m) return;
-            for(var e in v) m.set(e, v[e]);
-            store.sync();
-        }
-    },
-
-    onAddClick: function(button, e, options) {
-
-        var form = this.down('#newmap').getForm(),
-            store = this.down('gridpanel').store;
-        if (form.isValid()){
-            var v = form.getFieldValues();
-            var m = store.add(v);
-            for(var i=0;i<m.length;i++) m[i].phantom = true;
-            store.sync();
-        }
-
-    },
-
-    onUpdateClick: function(button, e, options) {
-        var form = this.down('#newmap').getForm(),
-            store = this.down('gridpanel').store;
-        if (form.isValid()){
-            var v = form.getFieldValues(true),
-                m = form.getRecord();
-            if (!m) return;
-            for(var e in v) m.set(e, v[e]);
-            store.sync();
-        }
-
     }
 
 });

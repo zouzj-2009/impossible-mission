@@ -41,7 +41,7 @@
                 "layout|split": true
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen16912",
@@ -102,34 +102,7 @@
                                 "layout|flex": null
                             },
                             "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen16964",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onDeleteClick",
-                                        "implHandler": [
-                                            "var records = this.down('gridpanel').getSelectionModel().getSelection(),",
-                                            "    store = this.down('gridpanel').store;",
-                                            "store.remove(records);",
-                                            "store.sync({operation:{debug:'abc'}});",
-                                            "",
-                                            ""
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onDeleteClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
+                            "expanded": true
                         },
                         {
                             "id": "ExtBox1-ext-gen16970",
@@ -146,30 +119,7 @@
                                 "layout|flex": null
                             },
                             "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen16976",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onRefreshClick",
-                                        "implHandler": [
-                                            "this.reloaded = true;",
-                                            "this.down('gridpanel').store.load({params: {condition:'abc=1'}});"
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onRefreshClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
+                            "expanded": true
                         },
                         {
                             "id": "ExtBox1-ext-gen60525",
@@ -188,33 +138,6 @@
                             "expanded": true
                         }
                     ]
-                },
-                {
-                    "id": "ExtBox1-ext-gen16983",
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onGridpanelSelectionChange",
-                        "implHandler": [
-                            "if (selections.length>=1){",
-                            "    this.down('#newmap').loadRecord(selections[0]);",
-                            "    this.down('#delete').enable();",
-                            "}else{",
-                            "    this.down('#delete').disable();",
-                            "}",
-                            "",
-                            ""
-                        ],
-                        "name": "selectionchange",
-                        "scope": "me",
-                        "designer|userClassName": "onGridpanelSelectionChange"
-                    },
-                    "customConfigs": [],
-                    "expanded": true
                 },
                 {
                     "id": "ExtBox1-ext-gen80904",
@@ -458,7 +381,7 @@
                 "dock": null
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen5082",
@@ -486,43 +409,6 @@
                     "customConfigs": [],
                     "expanded": true,
                     "cn": [
-                        {
-                            "id": "ExtBox1-ext-gen7188",
-                            "type": "basicfunction",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "fn": "getStore",
-                                "designer|params": [
-                                    "component"
-                                ],
-                                "implHandler": [
-                                    "alert('wait...');",
-                                    "var me = this;",
-                                    "if (Ext.isObject(me.store)) return me.store;",
-                                    "Ext.syncRequire('MyApp.model.glunmap');",
-                                    "var store = Ext.create('Ext.data.Store', {",
-                                    "    model: 'MyApp.model.glunmap',",
-                                    "    storeId: 'glunmap',",
-                                    "    autoLoad: false",
-                                    "});",
-                                    "store.on('load', function(){",
-                                    "    var m = store.getAt(0);",
-                                    "    if (!m) return;",
-                                    "    me.loadRecord(m);",
-                                    "});",
-                                    "me.store = store;",
-                                    "return store;",
-                                    ""
-                                ],
-                                "designer|userClassName": "getStore"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
                         {
                             "id": "ExtBox1-ext-gen24302",
                             "type": "fieldset",
@@ -673,38 +559,7 @@
                                         "designer|userClassName": "MyButton14"
                                     },
                                     "customConfigs": [],
-                                    "expanded": true,
-                                    "cn": [
-                                        {
-                                            "id": "ExtBox1-ext-gen24688",
-                                            "type": "basiceventbinding",
-                                            "reference": {
-                                                "name": "listeners",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "fn": "onButtonClick",
-                                                "implHandler": [
-                                                    "var form = this.down('#glunmap').getForm(),",
-                                                    "    store = this.down('#glunmap').store;",
-                                                    "if (!store) return;",
-                                                    "if (form.isValid()){",
-                                                    "    var v = form.getFieldValues(true),",
-                                                    "        m = form.getRecord();",
-                                                    "    if (!m) return;",
-                                                    "    for(var e in v) m.set(e, v[e]);",
-                                                    "    store.sync();",
-                                                    "}"
-                                                ],
-                                                "name": "click",
-                                                "scope": "me",
-                                                "designer|userClassName": "onButtonClick"
-                                            },
-                                            "customConfigs": [],
-                                            "expanded": true
-                                        }
-                                    ]
+                                    "expanded": true
                                 }
                             ]
                         }
@@ -930,41 +785,11 @@
                                         "minWidth": 80,
                                         "autoWidth": true,
                                         "text": "Add New ...",
-                                        "designer|userClassName": "MyButton"
+                                        "designer|userClassName": "MyButton",
+                                        "formBind": true
                                     },
                                     "customConfigs": [],
-                                    "expanded": true,
-                                    "cn": [
-                                        {
-                                            "id": "ExtBox1-ext-gen64249",
-                                            "type": "basiceventbinding",
-                                            "reference": {
-                                                "name": "listeners",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "fn": "onAddClick",
-                                                "implHandler": [
-                                                    "",
-                                                    "var form = this.down('#newmap').getForm(),",
-                                                    "    store = this.down('gridpanel').store;",
-                                                    "if (form.isValid()){",
-                                                    "    var v = form.getFieldValues();",
-                                                    "    var m = store.add(v);",
-                                                    "    for(var i=0;i<m.length;i++) m[i].phantom = true;",
-                                                    "    store.sync();",
-                                                    "}",
-                                                    ""
-                                                ],
-                                                "name": "click",
-                                                "scope": "me",
-                                                "designer|userClassName": "onAddClick"
-                                            },
-                                            "customConfigs": [],
-                                            "expanded": true
-                                        }
-                                    ]
+                                    "expanded": true
                                 },
                                 {
                                     "id": "ExtBox1-ext-gen5441",
@@ -976,45 +801,13 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "height": null,
+                                        "itemId": "update",
                                         "text": "Update",
-                                        "designer|userClassName": "MyButton29"
+                                        "designer|userClassName": "MyButton29",
+                                        "formBind": true
                                     },
                                     "customConfigs": [],
-                                    "expanded": true,
-                                    "cn": [
-                                        {
-                                            "id": "ExtBox1-ext-gen6510",
-                                            "type": "basiceventbinding",
-                                            "reference": {
-                                                "name": "listeners",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "fn": "onUpdateClick",
-                                                "designer|params": [
-                                                    "a"
-                                                ],
-                                                "implHandler": [
-                                                    "var form = this.down('#newmap').getForm(),",
-                                                    "    store = this.down('gridpanel').store;",
-                                                    "if (form.isValid()){",
-                                                    "    var v = form.getFieldValues(true),",
-                                                    "        m = form.getRecord();",
-                                                    "    if (!m) return;",
-                                                    "    for(var e in v) m.set(e, v[e]);",
-                                                    "    store.sync();",
-                                                    "}",
-                                                    ""
-                                                ],
-                                                "name": "click",
-                                                "scope": "me",
-                                                "designer|userClassName": "onUpdateClick"
-                                            },
-                                            "customConfigs": [],
-                                            "expanded": true
-                                        }
-                                    ]
+                                    "expanded": true
                                 }
                             ]
                         }
@@ -1031,7 +824,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "databind": "[{\nitemid:'mappinglist',\nautoLoad: true,\nloadParams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nautoLoad: true\n}]",
+                "databind": "[{\nitemid:'mappinglist',\nautoload: true,\nbindform:'newmap',\nloadparams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nmodel:'glunmap',\nautoload: true\n}]",
                 "layout|region": "east"
             },
             "customConfigs": [],

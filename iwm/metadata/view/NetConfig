@@ -26,7 +26,7 @@
     ],
     "designerId": "0cb07030-ef49-489e-a10f-eedd0b0b4b82",
     "$viewOrder": 10,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen13211",
@@ -367,7 +367,7 @@
                         "designer|userClassName": "MyFieldSet"
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen26407",
@@ -471,7 +471,7 @@
                         "designer|userClassName": "MyFieldSet1"
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen38087",
