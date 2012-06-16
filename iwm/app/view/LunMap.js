@@ -311,6 +311,9 @@ Ext.define('MyApp.view.LunMap', {
                             itemid: 'glunmap',
                             host: '127.0.0.1',
                             model: 'glunmap',
+                            progress: {
+                                localmask: true
+                            },
                             autoload: true
                         }
                     ],

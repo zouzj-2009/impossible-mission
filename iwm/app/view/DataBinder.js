@@ -57,6 +57,11 @@ Ext.define('MyApp.view.DataBinder', {
         // ignore:    object, key as event name or itemid.click want to skip bind. 
         // autoload:  load data after bind
         // lodaparams:params for reload/lode store.
+        // failpolicy:object for config actions after operation fail.
+        //     read:      when read fail, default: nothing.
+        //     update:    when update fail, default: reload.
+        //     destroy:   when destroy fail, default: reload.
+        //     create:    when create fail, default: destroy.
         // progress:  object for configurating the progress indicator, valid key:
         //     id:        the indicator show in getCmp(id), must be a container, #processstatus is default.
         //     itemid:    the indicator show in dbc.down(#itemid), must be a container, #processstatus is default, and this prior to 'id'.
@@ -66,12 +71,14 @@ Ext.define('MyApp.view.DataBinder', {
         //     update:    $type, specify indicator for updateing.
         //     create:    $type, specify indicator for creating.
         //     destroy:   $type, specify indicator for destroy.
+        //     nomaks:    true, for don't show masking.
         if (!dbconfig) return;
 
         for(var i=0;i<dbconfig.length;i++){
             var cfg = Ext.applyIf(dbconfig[i], {
                 ignore: {},
-                timeout: 30000,
+                failpolicy: {},
+                timeout: 300000,
                 host: serverip?serverip:'localhost',
                 proto: 'http',
                 port: '80',
@@ -118,8 +125,9 @@ Ext.define('MyApp.view.DataBinder', {
                 me.bindForm(dbc, store, cfg);
             }
             if (cfg.keepproxy) continue; //or replace proxy indeed?
+            cfg.modelId = store.modelId?store.modelId:store.storeId;
             cfg = Ext.applyIf(cfg,{
-                url: 'models/get.php?mid='+(store.modelId?store.modelId:store.storeId),
+                url: 'models/get.php?mid='+cfg.modelId,
                 storeid: store.storeId,
                 store: store
             });
@@ -138,7 +146,7 @@ Ext.define('MyApp.view.DataBinder', {
             dbc = cfg.dbc,
             pcfg = cfg.pcfg||{},
             ptype = pcfg[operation.action]||pcfg.type,
-            domask = ptype != pcfg.type && (!pcfg || !pcfg.noMask || cfg.maskid),
+            domask = ptype != 'newin' && !pcfg.nomask && (!pcfg || !pcfg.noMask || cfg.maskid),
             pend = response?(!response.pending): true,
             title = response&&response.pending?response.pending.title:Ext.String.capitalize(operation.action+' '+cfg.storeid),
             msg = response&&response.pending?response.pending.msg:'Please waiting ...',    
@@ -191,7 +199,8 @@ Ext.define('MyApp.view.DataBinder', {
                 cfg.mask.hide(c).destroy();
                 cfg.mask = null;
             }else if (!pend && !cfg.mask){
-                var mask = cfg.maskid?c.down('#'+cfg.maskid):c;
+                //mask priority: pcfg.maskid, c, dbc(if localmask)
+                var mask = pcfg.maskid?c.down('#'+pcfg.maskid):(pcfg.localmask?dbc:c);
                 if (!mask) mask = c;
                 cfg.mask = new Ext.LoadMask(mask, {msg:title+' ...'});
                 cfg.mask.show(mask);
@@ -208,7 +217,7 @@ Ext.define('MyApp.view.DataBinder', {
         }else{
             var ppc = pc.down('progressbar');
             if (!ppc && !pend){
-                ppc = Ext.create('Ext.ProgressBar',{});
+                ppc = Ext.create('Ext.ProgressBar',{flex:1});
                 pc.add(ppc);
             }
             if (pend && ppc){
@@ -276,6 +285,38 @@ Ext.define('MyApp.view.DataBinder', {
                 if (operation.action == 'destroy') 
                 options.store.add(operation.records);
                 */
+                //fail policy
+                var fp = cfg.failpolicy[operation.action];
+                if (!fp){//get default value for different action
+                    switch(operation.action){
+                        case 'create':
+                        fp = 'destroy';
+                        break;
+                        case 'update':
+                        fp = 'askdelete';
+                        break;
+                        case 'destroy':
+                        fp = 'reload';
+                        break;
+                    }
+                    if (!fp) return;
+                }
+                switch(fp){
+                    case 'destroy':
+                    cfg.store.remove(operation.records);
+                    break;
+                    case 'reload':
+                    cfg.store.load(cfg.store.reloadParams);
+                    break;
+                    case 'reload': //'askdelete':
+                    Ext.Msg.confirm(
+                    'Confirm Deletion', 
+                    'Data '+cfg.modelId+' '+operation.action+' fail, delete the trash data?',
+                    function (btn){
+                        if (btn == 'yes') cfg.store.remove(operation.records);
+                    });
+                    break;
+                }
             }
         }catch(e){
             alert(e);

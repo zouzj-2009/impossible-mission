@@ -41,7 +41,7 @@
                 "layout|split": true
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen16912",
@@ -365,7 +365,7 @@
                 "dock": null
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen5082",
@@ -810,7 +810,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "databind": "[{\nitemid:'mappinglist',\nautoload: true,\nprogress:{create:'newin'},\nbindform:'newmap',\nloadparams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nhost:'127.0.0.1',\nmodel:'glunmap',\nautoload: true\n}]",
+                "databind": "[{\nitemid:'mappinglist',\nautoload: true,\nprogress:{create:'newin'},\nbindform:'newmap',\nloadparams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nhost:'127.0.0.1',\nmodel:'glunmap',\nprogress:{localmask:true},\nautoload: true\n}]",
                 "layout|region": "east"
             },
             "customConfigs": [],

@@ -160,16 +160,22 @@ Ext.define('MyApp.view.LinkSpeedBar', {
         if (item.getItemId() == 'start'){
             if (me.intr) clearInterval(me.intr);
             me.intr = null;
+            if (me.mask) me.mask.hide().destroy();
+            me.mask = null;
         }else if (item.getItemId() == 'stop'){
             if (!me.intr){
                 me.idata = [];
                 me.lastdata = null;
                 me.xstore = chart.store;
+                me.mask = new Ext.LoadMask(chart, 'please wait for a while ...');
+                me.mask.show();
+                me.loadcount = 0;
                 me.intr = setInterval(function(){
-                    me.xstore.load(function(records, oprate, result){
-                        if (!result) return;
+                    me.xstore.load(
+                    function(records, oprate, result){
                         var data = [],
                             idata = {data:[]};
+                        if (!result) return;
                         for(var i=0; i<records.length; i++){
                             var rec = records[i].data,
                                 last = me.lastdata?me.lastdata[rec.devname]:null;
@@ -185,6 +191,11 @@ Ext.define('MyApp.view.LinkSpeedBar', {
                         me.lastdata = data;
                         if (idata.data.length) me.xstore.loadData(idata.data);
                         else me.xstore.removeAll();
+                        me.loadcount ++;
+                        if (me.mask && me.loadcount>1){
+                            me.mask.hide().destroy();
+                            me.mask = null;
+                        }
                     });
                 }, interval*1000);   
             }    
