@@ -41,6 +41,9 @@ Ext.define('MyApp.view.SystemInfo', {
                         },
                         {
                             itemid: 'netconfig',
+                            host: '192.253.253.166',
+                            port: 88,
+                            mid: 'host',
                             model: 'netconfig',
                             autoload: true
                         },

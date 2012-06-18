@@ -27,7 +27,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "databind": "[{\"itemid\":\"sysinfo\", autoload:true},{\"itemid\":\"netconfig\",\nmodel:'netconfig', autoload:true},{\"itemid\":\"iscsiconn\", autoload:true}]",
+                "databind": "[{\"itemid\":\"sysinfo\", autoload:true},{\"itemid\":\"netconfig\",\nhost:'192.253.253.166',\nport:88,\nmid:'host',\nmodel:'netconfig', \nautoload:true},{\"itemid\":\"iscsiconn\", autoload:true}]",
                 "layout|region": "west"
             },
             "customConfigs": [],

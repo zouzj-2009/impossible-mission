@@ -51,6 +51,7 @@ Ext.define('MyApp.view.DataBinder', {
         // port:
         // rdonly:    true/false, if true, onely load method supported.
         // store:     storeObject for override the current one.
+        // mid:       remote model id. default=modelId or storeId.
         // keepproxy: don't override the proxy, just keep it in.
         // keepreader:use proxy's origin reader instead of create one.
         // keepwriter:use proxy's origin writer instead of create one.
@@ -127,8 +128,9 @@ Ext.define('MyApp.view.DataBinder', {
             }
             if (cfg.keepproxy) continue; //or replace proxy indeed?
             cfg.modelId = store.modelId?store.modelId:store.storeId;
+            cfg.mid = cfg.mid||cfg.modelId;
             cfg = Ext.applyIf(cfg,{
-                url: 'models/get.php?mid='+cfg.modelId,
+                url: 'models/get.php?mid='+cfg.mid+'&debug=global:DBG',
                 storeid: store.storeId,
                 store: store
             });
@@ -149,7 +151,7 @@ Ext.define('MyApp.view.DataBinder', {
             ptype = pcfg[operation.action]||pcfg.type,
             domask = ptype != 'newin' && !pcfg.nomask && (!pcfg || !pcfg.noMask || cfg.maskid),
             pend = response?(!response.pending): true,
-            title = response&&response.pending?response.pending.title:Ext.String.capitalize(operation.action+' '+cfg.storeid),
+            title = response&&response.pending?response.pending.title:Ext.String.capitalize(operation.action+' '+cfg.modelId),
             msg = response&&response.pending?response.pending.msg:'Please waiting ...',    
             number = response&&response.pending?response.pending.number:(operation.seq/(operation.seqmax?operation.seqmax:10)),
             pendingtext = response&&response.pending?response.pending.text:title+' '+Ext.util.Format.number(number, '0.00')+'%',
@@ -274,7 +276,7 @@ Ext.define('MyApp.view.DataBinder', {
             if (response.pending){
                 binder.updateProgressComponent(cfg, response, operation);
                 Ext.applyIf(operation, {params:{}, seq:0});
-                Ext.apply(operation.params, {seqid: ++operation.seq});
+                Ext.apply(operation.params, {seqid: ++operation.seq, jobid: response.pending.jobid, pending:Ext.encode(response.pending)});
                 cfg.store.getProxy().doRequest(operation, operation.origincallback, operation.originscope);
             }else{//fail
                 binder.updateProgressComponent(cfg, response, operation);
@@ -376,7 +378,8 @@ Ext.define('MyApp.view.DataBinder', {
         var ref = grid.down('#refresh');
         if (ref && !cfg.ignore.refresh){
             ref.on('click', function(button, event, options){
-                store.load(store.reloadParams);
+                var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams.params);
+                store.load({params:params});
             });
         }
     },
@@ -471,8 +474,8 @@ Ext.define('MyApp.view.DataBinder', {
         });
         //for progress indicator
         store.getProxy().on('exception', binder.processErrors, binder, cfg);
-        store.reloadParams = cfg.loadparams?{params:cfg.loadparams}:{};
-        if (store.autoLoad||cfg.autoload) store.load(store.reloadparams);
+        store.reloadParams = cfg.loadparams?{params:cfg.loadparams}:{params:{}};
+        if (store.autoLoad||cfg.autoload) store.load(store.reloadParams);
 
     },
 
