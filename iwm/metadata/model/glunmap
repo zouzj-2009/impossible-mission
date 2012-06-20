@@ -7,7 +7,8 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userClassName": "glunmap"
+        "designer|userClassName": "glunmap",
+        "designer|userAlias": "glunmap"
     },
     "customConfigs": [],
     "designerId": "9976b10b-5362-4406-9408-a5693b3da5f4",

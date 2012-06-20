@@ -19,23 +19,6 @@
     "expanded": true,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen174171",
-            "type": "linkedinstance",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "databind": "[{\"itemid\":\"sysinfo\", autoload:true},{\"itemid\":\"netconfig\",\nhost:'192.253.253.166',\nport:88,\nmid:'host',\nmodel:'netconfig', \nautoload:true},{\"itemid\":\"iscsiconn\", autoload:true}]",
-                "layout|region": "west"
-            },
-            "customConfigs": [],
-            "iconCls": "icon-linkedinstance",
-            "expanded": true,
-            "masterInstanceId": "ucmpDataBinder"
-        },
-        {
             "id": "ExtBox1-ext-gen4171",
             "type": "tabpanel",
             "reference": {
@@ -67,7 +50,7 @@
                         "designer|userClassName": "MyGridPanel1"
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen17791",
@@ -295,7 +278,7 @@
                         "designer|userClassName": "MyGridPanel"
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen14313",
@@ -491,7 +474,7 @@
                         "dock": null
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen18752",

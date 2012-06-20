@@ -63,13 +63,13 @@ Ext.application({
         'SysMaintain',
         'LinkSpeed',
         'LinkSpeedBar',
-        'DataBinder',
         'LunMap'
     ],
     autoCreateViewport: true,
     name: 'MyApp',
     controllers: [
-        'mainfunc'
+        'DBinder',
+        'MainMenu'
     ],
 
     launch: function() {

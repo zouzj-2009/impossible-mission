@@ -15,7 +15,7 @@
     "customConfigs": [],
     "designerId": "c4225a9f-0a16-4f21-a0a6-9f036f492228",
     "$viewOrder": 0,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen3154",
@@ -33,7 +33,7 @@
                 "layout|region": "north"
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen4912",
@@ -134,7 +134,7 @@
             "userConfig": {
                 "id": "content",
                 "padding": "20px 20px 20px 100px",
-                "activeItem": 0,
+                "activeItem": 2,
                 "layout": "card",
                 "designer|userClassName": "MyContainer2",
                 "designer|userAlias": "mycontainer2",

@@ -17,7 +17,6 @@ Ext.define('MyApp.view.SystemInfo', {
     extend: 'Ext.container.Container',
     alias: 'widget.sysinfo',
     requires: [
-        'MyApp.view.DataBinder',
         'MyApp.view.LinkSpeedBar'
     ],
 
@@ -32,28 +31,6 @@ Ext.define('MyApp.view.SystemInfo', {
 
         Ext.applyIf(me, {
             items: [
-                {
-                    xtype: 'databinder',
-                    databind: [
-                        {
-                            itemid: 'sysinfo',
-                            autoload: true
-                        },
-                        {
-                            itemid: 'netconfig',
-                            host: '192.253.253.166',
-                            port: 88,
-                            mid: 'host',
-                            model: 'netconfig',
-                            autoload: true
-                        },
-                        {
-                            itemid: 'iscsiconn',
-                            autoload: true
-                        }
-                    ],
-                    region: 'west'
-                },
                 {
                     xtype: 'tabpanel',
                     activeTab: 1,

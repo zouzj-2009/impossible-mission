@@ -72,7 +72,7 @@ Ext.define('MyApp.view.MyViewport', {
                     xtype: 'container',
                     id: 'content',
                     padding: '20px 20px 20px 100px',
-                    activeItem: 0,
+                    activeItem: 2,
                     layout: {
                         type: 'card'
                     },

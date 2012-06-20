@@ -60,11 +60,11 @@
         },
         "9e4fb2fe-2107-4c8e-947e-b88044a7a23a": {
             "paths": [
-                "metadata/controller/mainfunc",
-                "app/controller/override/mainfunc.js",
-                "app/controller/mainfunc.js"
+                "metadata/controller/DBinder",
+                "app/controller/override/DBinder.js",
+                "app/controller/DBinder.js"
             ],
-            "className": "mainfunc"
+            "className": "DBinder"
         },
         "df441dd0-1722-44e9-a5b0-7b14e51e8917": {
             "paths": [
@@ -360,14 +360,6 @@
             ],
             "className": "LinkSpeedBar"
         },
-        "49498605-3383-4224-98a8-672ea0a3423e": {
-            "paths": [
-                "metadata/view/DataBinder",
-                "app/view/override/DataBinder.js",
-                "app/view/DataBinder.js"
-            ],
-            "className": "DataBinder"
-        },
         "9976b10b-5362-4406-9408-a5693b3da5f4": {
             "paths": [
                 "metadata/model/glunmap",
@@ -383,13 +375,21 @@
                 "app/view/LunMap.js"
             ],
             "className": "LunMap"
+        },
+        "f1f29fd6-c384-4dc8-8c23-ea89658d8ed7": {
+            "paths": [
+                "metadata/controller/MainMenu",
+                "app/controller/override/MainMenu.js",
+                "app/controller/MainMenu.js"
+            ],
+            "className": "MainMenu"
         }
     },
     "expandedState": {
-        "data": true,
-        "model": true,
-        "component": true,
+        "data": false,
+        "model": false,
+        "component": false,
         "controller": true,
-        "resource": true
+        "resource": false
     }
 }

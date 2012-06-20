@@ -15,6 +15,7 @@
 
 Ext.define('MyApp.model.glunmap', {
     extend: 'Ext.data.Model',
+    alias: 'model.glunmap',
 
     fields: [
         {

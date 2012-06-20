@@ -17,7 +17,6 @@ Ext.define('MyApp.view.LunMap', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.lunmap',
     requires: [
-        'MyApp.view.DataBinder',
         'MyApp.view.IpField',
         'MyApp.view.NetMaskField',
         'MyApp.view.TargetListField'
@@ -34,32 +33,6 @@ Ext.define('MyApp.view.LunMap', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'databinder',
-                    databind: [
-                        {
-                            itemid: 'mappinglist',
-                            autoload: true,
-                            progress: {
-                                create: 'newin'
-                            },
-                            bindform: 'newmap',
-                            loadparams: {
-                                condition: 'abc=2'
-                            }
-                        },
-                        {
-                            itemid: 'glunmap',
-                            host: '127.0.0.1',
-                            model: 'glunmap',
-                            progress: {
-                                localmask: true
-                            },
-                            autoload: true
-                        }
-                    ],
-                    region: 'east'
-                },
-                {
                     xtype: 'gridpanel',
                     itemId: 'mappinglist',
                     hideCollapseTool: false,
@@ -70,6 +43,10 @@ Ext.define('MyApp.view.LunMap', {
                     store: 'LunMap',
                     region: 'center',
                     split: true,
+                    databind: {
+                        bindform: 'newmap',
+                        autoload: true
+                    },
                     viewConfig: {
 
                     },
@@ -174,6 +151,11 @@ Ext.define('MyApp.view.LunMap', {
                             },
                             bodyBorder: false,
                             bodyCls: 'x-border-layout-ct',
+                            databind: {
+                                maskxtype: null,
+                                model: 'glunmap',
+                                autoload: true
+                            },
                             items: [
                                 {
                                     xtype: 'fieldset',

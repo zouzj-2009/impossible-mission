@@ -20,23 +20,6 @@
     "expanded": true,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen34027",
-            "type": "linkedinstance",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "databind": "[{\nitemid:'mappinglist',\nautoload: true,\nprogress:{create:'newin'},\nbindform:'newmap',\nloadparams:{\ncondition: 'abc=2'\n}\n},{\nitemid:'glunmap',\nhost:'127.0.0.1',\nmodel:'glunmap',\nprogress:{localmask:true},\nautoload: true\n}]",
-                "layout|region": "east"
-            },
-            "customConfigs": [],
-            "iconCls": "icon-linkedinstance",
-            "expanded": true,
-            "masterInstanceId": "ucmpDataBinder"
-        },
-        {
             "id": "ExtBox1-ext-gen16899",
             "type": "gridpanel",
             "reference": {
@@ -55,9 +38,16 @@
                 "designer|userClassName": "MyGridPanel",
                 "layout|collapseMode": null,
                 "layout|region": "center",
-                "layout|split": true
+                "layout|split": true,
+                "databind": "{bindform:'newmap',\nautoload:true}"
             },
-            "customConfigs": [],
+            "customConfigs": [
+                {
+                    "group": "(Custom Properties)",
+                    "name": "databind",
+                    "type": "object"
+                }
+            ],
             "expanded": false,
             "cn": [
                 {
@@ -382,7 +372,7 @@
                 "dock": null
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen5082",
@@ -405,10 +395,17 @@
                         "bodyPadding": null,
                         "bodyStyle": null,
                         "title": null,
-                        "designer|userClassName": "MyForm10"
+                        "designer|userClassName": "MyForm10",
+                        "databind": "{\"maskxtype\":null,\nmodel:'glunmap',\nautoload:true}"
                     },
-                    "customConfigs": [],
-                    "expanded": true,
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen24302",
@@ -427,7 +424,7 @@
                                 "designer|userClassName": "MyFieldSet12"
                             },
                             "customConfigs": [],
-                            "expanded": true,
+                            "expanded": false,
                             "cn": [
                                 {
                                     "id": "ExtBox1-ext-gen66099",
@@ -584,10 +581,17 @@
                         "bodyPadding": null,
                         "bodyStyle": null,
                         "title": null,
-                        "designer|userClassName": "MyForm11"
+                        "designer|userClassName": "MyForm11",
+                        "databind": null
                     },
-                    "customConfigs": [],
-                    "expanded": true,
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen126259",
