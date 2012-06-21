@@ -36,10 +36,10 @@
                 "titleCollapse": false,
                 "store": "LunMap",
                 "designer|userClassName": "MyGridPanel",
+                "databind": "{bindform:'newmap',\nprogress:{\ncreate:'newin'\n},\nautoload:true}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
-                "layout|split": true,
-                "databind": "{bindform:'newmap',\nautoload:true}"
+                "layout|split": true
             },
             "customConfigs": [
                 {

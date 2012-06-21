@@ -168,7 +168,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "itemId": "network"
+                        "itemId": "network",
+                        "databind": null
                     },
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",

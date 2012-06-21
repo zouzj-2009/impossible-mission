@@ -30,6 +30,9 @@ Ext.define('MyApp.view.NetworkSetting', {
         var me = this;
 
         Ext.applyIf(me, {
+            databind: {
+                
+            },
             items: [
                 {
                     xtype: 'netconfig',

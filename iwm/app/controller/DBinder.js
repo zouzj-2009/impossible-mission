@@ -42,7 +42,7 @@ Ext.define('MyApp.controller.DBinder', {
         //grid's default mask selector is up('form').
         if (databind.progress){
             Ext.applyIf(databind.progress, {
-                maskxtype: panel
+                maskxtype: 'panel'
             });
         }else{
             databind.progress = {maskxtype: 'panel'};
@@ -56,6 +56,20 @@ Ext.define('MyApp.controller.DBinder', {
             if (!form) return;
             me.bindGridForm(c, form, c.store, c.databinded);
         }
+    },
+
+    onGridpanelActivate: function(abstractcomponent, options) {
+        var c = abstractcomponent,
+            store = c.store;
+        if (!store) return;
+        if (!c.databinded) return;
+        if (c.databinded.autoloaded) return;
+        if (store.isLoading()) return;
+        store.load(store.reloadParams);
+        if (c.down('>toolbar>#refresh')){//has refresh, don't load again
+            c.databinded.autoloaded = true;
+        }
+
     },
 
     updateProgressComponent: function(cfg, response, operation) {
@@ -393,7 +407,10 @@ Ext.define('MyApp.controller.DBinder', {
         //for progress indicator
         store.getProxy().on('exception', binder.processErrors, binder, cfg);
         store.reloadParams = cfg.loadparams?{params:cfg.loadparams}:{params:{}};
-        if (store.autoLoad||cfg.autoload) store.load(store.reloadParams);
+        if (store.autoLoad||cfg.autoload){
+            store.load(store.reloadParams);
+            cfg.autoloaded = true;
+        }
 
     },
 
@@ -539,7 +556,7 @@ Ext.define('MyApp.controller.DBinder', {
     },
 
     bindGroup: function(component, databinds, serverip, rebind) {
-        alert('bind group for '+component.getXType());
+        //alert('bind group for '+component.getXType());
         //bind data proxy for component and all it's children specified by itemid.
         var me = this;//controller.
         if (!component) return;
@@ -574,7 +591,8 @@ Ext.define('MyApp.controller.DBinder', {
                 afterrender: this.onFormAfterRender
             },
             "gridpanel": {
-                afterrender: this.onGridpanelAfterRender
+                afterrender: this.onGridpanelAfterRender,
+                activate: this.onGridpanelActivate
             }
         });
 

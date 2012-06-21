@@ -1,55 +1,33 @@
 <?php
-$act = $_REQUEST['_act'];
+$env = getenv('MODTEST');
+if ($env){
+	$env = explode(',', $env);
+	print_r($env);
+	$_REQUEST['_act'] = $env[0];
+	$_REQUEST['mid'] = $env[1];
+}
+$action = $_REQUEST['_act'];
 $mid = strtolower($_REQUEST['mid']);
-if (!$mid) $mid = 'host';
 $data = array();
-$records = $_REQUEST['records'];
-if ($act == 'read'){
-	exec("sqlite3 --header sqlitedb 'SELECT rowid,* FROM $mid'", $out, $status);
-	if ($status){
-		$output = array(success=>false);
-	}else{
-		$rows = explode('|', $out[0]);
-		array_shift($out);
-		$output = array(success=>true, data=>array());
-		foreach($out as $line){
-			$row = array();
-			$raw = explode('|', $line);
-			foreach($rows as $i=>$col){
-				$row[$col] = $raw[$i];		
-			}
-			$output[data][] = $row;
-		}
-		$data = $output[data];
-	}
-	if (0){
-		if ($_REQUEST['seqid']) sleep(2);
-		if ($_REQUEST['seqid'] >= 2)
-			$output=array(success=>true, data=>$data, msg=>'server job done.');
-		else
-			$output=array(success=>false, pending=>array(
-				seq=>$_REQUEST['seqid'],
-				msg=>'big job pending...'.$_REQUEST['seqid'],
-				text=>'server doing '.$_REQUEST['_act'].' '.($_REQUEST['seqid']/2*100).'%',
-				title=>'Server Doing Title',
-				number=>$_REQUEST['seqid']/2));
-	}
-}else{
-	if ($_REQUEST['seqid']) sleep(2);
-	$count = 2;
-	if (0 || $_REQUEST['seqid'] >= $count)
-		$output=array(success=>false, msg=>'server job fail.');
-	else
-		$output=array(success=>false, pending=>array(
-			seq=>$_REQUEST['seqid'],
-			msg=>'big job pending...'.$_REQUEST['seqid'],
-			text=>'server doing '.$_REQUEST['_act'].' '.($_REQUEST['seqid']/$count*100).'%',
-			title=>'Server Doing Title',
-			number=>$_REQUEST['seqid']/$count
-		));
+$records = json_decode(stripslashes($_REQUEST['records']), true);
+$params = $_REQUEST;
+$callback = $_REQUEST['callback'];
+foreach(explode(',', 'seqid,callback,mid,_act,PHPSESSID') as $key){
+	unset($params[$key]);
 }
 
-$callback = $_REQUEST['callback'];
+$modname="MOD_db";
+if (file_exists("../models/mod.$mid.php")){
+	include_once("../models/mod.$mid.php");
+	$modname = "MOD_$mid";
+}else{
+	include_once("../models/mod.db.php");
+}
+$mod = new $modname($mid);
+if ($env){
+	print_r($mod);
+}
+$output = $mod->$action($params, $records);
 
 //start output
 if ($callback) {

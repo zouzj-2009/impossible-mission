@@ -41,6 +41,9 @@ Ext.define('MyApp.view.SystemInfo', {
                             itemId: 'iscsiconn',
                             title: 'iSCSI连接',
                             store: 'iscsiconn',
+                            databind: {
+                                
+                            },
                             viewConfig: {
 
                             },
@@ -110,6 +113,9 @@ Ext.define('MyApp.view.SystemInfo', {
                             height: 109,
                             itemId: 'netconfig',
                             title: '网卡设定',
+                            databind: {
+                                model: 'netconfig'
+                            },
                             viewConfig: {
 
                             },
@@ -169,6 +175,9 @@ Ext.define('MyApp.view.SystemInfo', {
                             itemId: 'sysinfo',
                             title: '系统信息',
                             store: 'sysinfo',
+                            databind: {
+                                autoload: true
+                            },
                             viewConfig: {
 
                             },

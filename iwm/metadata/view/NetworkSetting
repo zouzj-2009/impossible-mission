@@ -11,12 +11,19 @@
         "width": 400,
         "layout": "border",
         "designer|userClassName": "NetworkSetting",
-        "designer|userAlias": "networksetting"
+        "designer|userAlias": "networksetting",
+        "databind": "{}"
     },
-    "customConfigs": [],
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "databind",
+            "type": "object"
+        }
+    ],
     "designerId": "df441dd0-1722-44e9-a5b0-7b14e51e8917",
     "$viewOrder": 3,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen44769",

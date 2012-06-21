@@ -47,9 +47,16 @@
                         "itemId": "iscsiconn",
                         "title": "iSCSI连接",
                         "store": "iscsiconn",
-                        "designer|userClassName": "MyGridPanel1"
+                        "designer|userClassName": "MyGridPanel1",
+                        "databind": "{}"
                     },
-                    "customConfigs": [],
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
                     "expanded": false,
                     "cn": [
                         {
@@ -275,9 +282,16 @@
                         "itemId": "netconfig",
                         "title": "网卡设定",
                         "store": null,
-                        "designer|userClassName": "MyGridPanel"
+                        "designer|userClassName": "MyGridPanel",
+                        "databind": "{model:'netconfig'}"
                     },
-                    "customConfigs": [],
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
                     "expanded": false,
                     "cn": [
                         {
@@ -471,9 +485,16 @@
                         "title": "系统信息",
                         "store": "sysinfo",
                         "designer|userClassName": "MyGridPanel2",
-                        "dock": null
+                        "dock": null,
+                        "databind": "{\"autoload\":true}"
                     },
-                    "customConfigs": [],
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
                     "expanded": false,
                     "cn": [
                         {

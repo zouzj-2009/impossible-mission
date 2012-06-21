@@ -41,12 +41,15 @@ Ext.define('MyApp.view.LunMap', {
                     title: 'Current Setting',
                     titleCollapse: false,
                     store: 'LunMap',
-                    region: 'center',
-                    split: true,
                     databind: {
                         bindform: 'newmap',
+                        progress: {
+                            create: 'newin'
+                        },
                         autoload: true
                     },
+                    region: 'center',
+                    split: true,
                     viewConfig: {
 
                     },

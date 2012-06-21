@@ -571,7 +571,10 @@
                     "//for progress indicator",
                     "store.getProxy().on('exception', binder.processErrors, binder, cfg);",
                     "store.reloadParams = cfg.loadparams?{params:cfg.loadparams}:{params:{}};",
-                    "if (store.autoLoad||cfg.autoload) store.load(store.reloadParams);",
+                    "if (store.autoLoad||cfg.autoload){",
+                    "    store.load(store.reloadParams);",
+                    "    cfg.autoloaded = true;",
+                    "}",
                     ""
                 ],
                 "designer|userClassName": "bindProxy"
@@ -748,9 +751,9 @@
                     "}",
                     "",
                     "if (store){//just replace with old",
-                    "if (Ext.isFunction(dbc.bindStore)){",
-                    "    dbc.bindStore(store);",
-                    "}else dbc.store = store;",
+                    "    if (Ext.isFunction(dbc.bindStore)){",
+                    "        dbc.bindStore(store);",
+                    "    }else dbc.store = store;",
                     "}",
                     "",
                     "if (!store){",
@@ -785,8 +788,8 @@
                     "cfg.modelId = store.modelId?store.modelId:store.storeId;",
                     "cfg.mid = cfg.mid||cfg.modelId;",
                     "cfg = Ext.applyIf(cfg, {",
-                    "    url: 'models/get.php?mid='+cfg.mid+'&debug=global:DBG',",
-                    "    storeid: store.storeId",
+                    "url: 'models/get.php?mid='+cfg.mid+'&debug=global:DBG',",
+                    "storeid: store.storeId",
                     "});",
                     "me.bindProxy(store, cfg);",
                     "dbc.databinded = cfg;"
@@ -813,7 +816,7 @@
                     "rebind"
                 ],
                 "implHandler": [
-                    "alert('bind group for '+component.getXType());",
+                    "//alert('bind group for '+component.getXType());",
                     "//bind data proxy for component and all it's children specified by itemid.",
                     "var me = this;//controller.",
                     "if (!component) return;",
@@ -895,7 +898,7 @@
                     "//grid's default mask selector is up('form').",
                     "if (databind.progress){",
                     "    Ext.applyIf(databind.progress, {",
-                    "        maskxtype: panel",
+                    "        maskxtype: 'panel'",
                     "    });",
                     "}else{",
                     "    databind.progress = {maskxtype: 'panel'};",
@@ -915,6 +918,38 @@
                 "designer|targetType": "Ext.grid.Panel",
                 "designer|controlQuery": "gridpanel",
                 "designer|userClassName": "onGridpanelAfterRender"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6011",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onGridpanelActivate",
+                "implHandler": [
+                    "var c = abstractcomponent,",
+                    "    store = c.store;",
+                    "if (!store) return;",
+                    "if (!c.databinded) return;",
+                    "if (c.databinded.autoloaded) return;",
+                    "if (store.isLoading()) return;",
+                    "store.load(store.reloadParams);",
+                    "if (c.down('>toolbar>#refresh')){//has refresh, don't load again",
+                    "    c.databinded.autoloaded = true;",
+                    "}",
+                    ""
+                ],
+                "name": "activate",
+                "scope": "me",
+                "designer|targetType": "Ext.grid.Panel",
+                "designer|controlQuery": "gridpanel",
+                "designer|userClassName": "onGridpanelActivate"
             },
             "customConfigs": [],
             "expanded": true
