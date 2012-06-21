@@ -31,8 +31,8 @@ function format_keys_and_values($array, $keys, &$perror, $values=null){
 	$r = array();
 	foreach($array as $k=>$v){
 		$newkey = $keys[$k]?$keys[$k]:$k;
+		$r[$newkey] = $v;
 		if (!$values){
-			$r[$newkey] = $v;
 			continue;
 		}//get new values;
 		$pconfig = $values[$k]?$values[$k]:$values[$newkey];
@@ -41,7 +41,10 @@ function format_keys_and_values($array, $keys, &$perror, $values=null){
 		$newvalue = PHARSER::pharse_type($lines, $pconfig, $perror);
 		$r[$newkey]  = $newvalue;
 		//can overwrite the $newkey by $newvalues
-		if ($pconfig[mergeup]) $r = array_merge($r, $newvalue);
+		if ($pconfig[mergeup]){
+			$r[$newkey] = $v;
+			$r = array_merge($r, $newvalue);
+		}
 	}
 	return $r;
 }
@@ -77,10 +80,20 @@ function get_field_names($row, $pconfig, &$perror){
 	return $r;
 }
 
-function p_record_in_one_line($line, $pconfig, &$perror){
+function p_record_in_one_line(&$in, $pconfig, &$perror){
 //valid config key:
+//ignore: 	regexp, skiped lines
 //fieldsep:	regexp, for fields seprate in line
 //fieldnames:	string, 'name1,name2,name3...', define value name, see@get_field_names;
+	$line = false;
+	if (is_array($in)){
+		while($in){
+			$line = array_shift($in);
+			if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
+			break;
+		}
+		if (!$line) return array();
+	}else $line = $in;
 	$fieldsep = $pconfig[fieldsep];
 	$fieldnames = $pconfig[fieldnames] = is_array($pconfig[fieldnames])?$pconfig[fieldnames]:explode(",", $pconfig[fieldnames]);
 	if (!$fieldsep){
@@ -122,9 +135,18 @@ function p_one_record_per_line(&$in, $pconfig, &$perror){
 	return $r;
 }
 
-function p_keyvalues_in_one_line($line, $pconfig, &$perror){
+function p_keyvalues_in_one_line(&$in, $pconfig, &$perror){
 //valid config key:
 //matcher:	regexp, (key).*(value)
+	$line = false;
+	if (is_array($in)){
+		while($in){
+			$line = array_shift($in);
+			if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
+			break;
+		}
+		if (!$line) return array();
+	}else $line = $in;
 	if (!$pconfig[matcher]) $pconfig[matcher] = '/(.*)/=/(.*)/';
 	$r = array();
 	if (preg_match_all($pconfig[matcher], $line, $m)){
@@ -229,6 +251,7 @@ function p_records_span_lines(&$in, $pconfig, &$perror){
 		}
 	}
 	if ($cur_record){
+		if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $perror, $pconfig[newvalues]);
 		if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
 		else $r[] = $cur_record;	//add full record
 	}

@@ -4,7 +4,7 @@ include_once('../models/pharser.php');
 class MOD_netconfig extends MOD_db{
 
 function read($params, $records){
-	$r = PHARSER::pharse_cmd("(busybox ifconfig -a|sed 's/UP\|RUNNING\|MULTICAST/\1:true/g')", array(
+	$r = PHARSER::pharse_cmd("(busybox ifconfig -a|sed 's/UP\|RUNNING\|MULTICAST/\\0:true/g')", array(
 		//pharse config:
 /*
 eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15  
@@ -25,6 +25,25 @@ eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15
 		fieldsmode=>array(
 			type=>'keyvalues_span_lines',
 			matcher=>'/(Link encap:|HWaddr |inet addr:|Bcast:|Mask:|inet6 addr: |MTU:|RX bytes:|TX bytes:|UP:|RUNNING:|MULTICAST:)([^ ]*)/'
+		),
+		newkeys=>array(
+			'record_id'=>'dev', 'Link encap'=>'link', 'HWaddr'=>'mac', 'inet addr'=>'ipaddress', 'Bcast'=>'broadcast', 
+			'inet6 addr'=>'ipv6address', 'Mask'=>'netmask', 'MTU'=>'mtu', 'UP'=>'isup', 'MULTICAST'=>'ismulticast', 
+			'RX bytes'=>'rxbytes', 'TX bytes'=>'txbytes'
+		),
+		newvalues=>array(
+			'dev'=>array(
+				type=>'record_in_one_line',
+				fieldsep=>'/:/',
+				fieldnames=>'physicdevice,alias',
+				mergeup=>true,
+			),
+			'ipv6address'=>array(
+				type=>'record_in_one_line',
+				fieldsep=>'/\//',
+				fieldnames=>'ipv6address,ipv6prefix',
+				mergeup=>true,
+			)
 		)
 	), $presult, $cmdresult, $raw, $trace);
 	if ($presult){
