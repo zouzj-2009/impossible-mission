@@ -19,11 +19,12 @@ eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15
 */
 		type=>'records_span_lines',
 		recordstart=>'/^eth|^lo|^vm|^wlan/',
+		recordid=>'/^(eth[^ ]*|lo|vm[^ ]*|wlan[^ ]*) /',
 		recordend=>'/^ *$/',
 		fieldstype=>'simple',
 		fieldsmode=>array(
 			type=>'keyvalues_span_lines',
-			matcher=>'/(Link encap:|HWaddr |inet addr:|Bcast:|Mask:|inet6 addr:|MTU:|RX bytes:|TX bytes:|UP:|RUNNING:|MULTICAST:)([^ ])*/'
+			matcher=>'/(Link encap:|HWaddr |inet addr:|Bcast:|Mask:|inet6 addr: |MTU:|RX bytes:|TX bytes:|UP:|RUNNING:|MULTICAST:)([^ ]*)/'
 		)
 	), $presult, $cmdresult, $raw, $trace);
 	if ($presult){

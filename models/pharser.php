@@ -1,12 +1,12 @@
 <?php
 class PHARSER{
-function pharse_type($in, $pconfig, &$perror){
+function pharse_type(&$in, $pconfig, &$perror){
 	$type = $pconfig[type];
 	if (!method_exists('PHARSER', "p_$type")){
 		$perror = "type $type not supported!";
 		return array();
 	}
-	return call_user_func("PHARSER::p_$type", $in, $pconfig, $perror);
+	return call_user_func("PHARSER::p_$type", &$in, $pconfig, $perror);
 }
 
 function pharse_cmd($cmd, $pconfig, &$perror, &$cmdresult=null, &$raw=null, &$trace=null){
@@ -19,6 +19,31 @@ function pharse_cmd($cmd, $pconfig, &$perror, &$cmdresult=null, &$raw=null, &$tr
 	}
 	if (!$pconfig) return $out;	//directly out;
 	return PHARSER::pharse_type($out, $pconfig, $perror);
+}
+
+function format_keys_and_values($array, $keys, &$perror, $values=null){
+//change $array's key to new names if specified in $keys
+//change $array's value to new by pconfig specified in $values.
+//common pconfig key:
+//newkeys:	array of (<old key>=><new key>), format keys.
+//newvalues:	array of (<old key|new key>=>array(pconfig)), to pharse the value again.
+//mergeup:	merge new values array to parent after get newvalues.
+	$r = array();
+	foreach($array as $k=>$v){
+		$newkey = $keys[$k]?$keys[$k]:$k;
+		if (!$values){
+			$r[$newkey] = $v;
+			continue;
+		}//get new values;
+		$pconfig = $values[$k]?$values[$k]:$values[$newkey];
+		if (!$pconfig) continue;
+		$lines = array($v);
+		$newvalue = PHARSER::pharse_type($lines, $pconfig, $perror);
+		$r[$newkey]  = $newvalue;
+		//can overwrite the $newkey by $newvalues
+		if ($pconfig[mergeup]) $r = array_merge($r, $newvalue);
+	}
+	return $r;
 }
 
 function get_field_names($row, $pconfig, &$perror){
@@ -65,10 +90,11 @@ function p_record_in_one_line($line, $pconfig, &$perror){
 	$r = preg_split($fieldsep, $line);
 	if (!$fieldnames) return $r;
 	$r = PHARSER::get_field_names($r, $pconfig, $perror);
+	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $perror, $pconfig[newvalues]);
 	return $r;
 }
 
-function p_one_record_per_line($in, $pconfig, &$perror){
+function p_one_record_per_line(&$in, $pconfig, &$perror){
 //valid config key:
 //ignore:	regexp, lines to be skiped.
 //fieldsep:	regexp, for fields seprate in line
@@ -83,7 +109,10 @@ function p_one_record_per_line($in, $pconfig, &$perror){
 	}
 	while($in){
 		$line = array_shift($in);
-		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)) break;
+		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)){
+			array_unshift($in, $line);
+			break;
+		}
 		if ($ignore && preg_match($ignore, $line)){
 			if (getenv("MODETEST")){echo "skip $line by $ignore\n";}
 			continue;
@@ -99,32 +128,36 @@ function p_keyvalues_in_one_line($line, $pconfig, &$perror){
 	if (!$pconfig[matcher]) $pconfig[matcher] = '/(.*)/=/(.*)/';
 	$r = array();
 	if (preg_match_all($pconfig[matcher], $line, $m)){
-		foreach($m as $match){
-			$r[trim($match[0], " :")] = trim($match[1]);
+		foreach($m[1] as $i=>$key){
+			$r[trim($key, " :")] = trim($m[2][$i]);
 		}	
 	}
+	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $perror, $pconfig[newvalues]);
 	return $r;
 }
 
-function p_keyvalues_span_lines($in, $pconfig, &$perror){
+function p_keyvalues_span_lines(&$in, $pconfig, &$perror){
 //valid config key:
 //matcher:	regexp, (key).*(value)
 	$r = array();
 	$ignore = $pconfig[ignore];
 	while($in){
 		$line = array_shift($in);
-		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)) break;
+		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)){
+			array_unshift($in, $line);
+			break;
+		}
 		if ($ignore && preg_match($ignore, $line)){
 			if (getenv("MODETEST")){echo "skip $line by $ignore\n";}
 			continue;
 		}
-		$kv = PHARSER::p_record_in_one_line($line, $pconfig, $perror);
+		$kv = PHARSER::p_keyvalues_in_one_line($line, $pconfig, $perror);
 		$r = array_merge($r, $kv);
 	}
 	return $r;
 }
 
-function p_records_span_lines($in, $pconfig, &$perror){
+function p_records_span_lines(&$in, $pconfig, &$perror){
 //valid config key:
 //ignore:	regexp, matched line will not be pharsed.
 //recordignore: regexp, matched line will be ignored only when record alread start.
@@ -138,7 +171,7 @@ function p_records_span_lines($in, $pconfig, &$perror){
 //	mergeup:	[true|false]: merge value to fater, other than store in a group array.
 //
 	$r = array();
-	if (!$recordstart){
+	if (!$pconfig[recordstart]){
 		$perror = __FUNCTION__.' missing [recordstart] config';
 		return $r;
 	}
@@ -147,14 +180,17 @@ function p_records_span_lines($in, $pconfig, &$perror){
 	$cur_id	= false;
 	while($in){
 		$line = array_shift($in);
-		if (preg_match($ignore, $line)) continue;
+		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
 		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)){
 			//pharse end by parent ending token.
+			array_unshift($in, $line);
 			break;
 		}
-		if (preg_match($pconfig[recordstart], $line)){
+		if (preg_match($pconfig[recordstart], $line, $m)){
+			array_unshift($in, preg_replace($pconfig[recordstart], ' @@@@@@@@ ', $line));
 			$started = true;
 			if ($cur_record){
+				if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $perror, $pconfig[newvalues]);
 				if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
 				else $r[] = $cur_record;	//add full record
 			}
@@ -163,9 +199,10 @@ function p_records_span_lines($in, $pconfig, &$perror){
 		}
 		$cur_record = array();
 		if (!$started) continue;
-		if (preg_match($recordignore, $line)) continue;
-		if ($pconfig[recordid] && preg_match($pconfig[recordid], $line, $m)){
-			$cur_id = $m[0][0];	//firstmatch and firstpattern	
+		if ($pconfig[recordignore] && preg_match($pconfig[recordignore], $line)) continue;
+		//only first line contain the recordid, should in sub lines?
+		if ($pconfig[recordid] && preg_match_all($pconfig[recordid], $line, $m)){
+			$cur_id = trim($m[1][0], " :");	//firstmatch and firstpattern	
 			$cur_record[record_id] = $cur_id;
 		}
 		if ($pconfig[recordend] && preg_match($pconfig[recordend], $line)){
@@ -184,7 +221,7 @@ function p_records_span_lines($in, $pconfig, &$perror){
 		//		$gpconfig[fieldsmode][startline] = $n; //type maybe cross lines!
 				$gpconfig[fieldsmode][parentend] = $pconfig[recordstart];
 				$fields = PHARSER::pharse_type($in, $gpconfig[fieldsmode], $perror);
-				if ($pgconfig[fieldsmode][mergeup])
+				if ($gpconfig[fieldsmode][mergeup])
 					$cur_record = array_merge($cur_record, $fields);
 				else
 					$cur_record[$group] = $fields;
