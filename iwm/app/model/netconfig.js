@@ -34,6 +34,12 @@ Ext.define('MyApp.model.netconfig', {
         },
         {
             name: 'broadcast'
+        },
+        {
+            name: 'rxbytes'
+        },
+        {
+            name: 'txbytes'
         }
     ]
 });

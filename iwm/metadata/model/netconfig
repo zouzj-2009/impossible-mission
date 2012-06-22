@@ -12,7 +12,7 @@
     "customConfigs": [],
     "designerId": "1be95902-c2f2-411e-bf90-79ada55fd27a",
     "$viewOrder": 0,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen47667",
@@ -100,6 +100,36 @@
             "userConfig": {
                 "name": "broadcast",
                 "designer|userClassName": "MyField5"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen4959",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "rxbytes",
+                "designer|userClassName": "MyField71"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen5179",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "txbytes",
+                "designer|userClassName": "MyField72"
             },
             "customConfigs": [],
             "expanded": true

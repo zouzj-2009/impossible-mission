@@ -3,15 +3,24 @@ include_once('../models/mod.db.php');
 include_once('../models/pharser.php');
 class MOD_lunmap extends MOD_db{
 
+var $pconfigs = array(
+	'getlunmap'=>array(
+		//cmd=>"cat /proc/scsi_target/iscsi_target/lunmapping", 
+		cmd=>'cat /tmp/lunmap',
+		pconfig=>array(
+			//pharse config:
+			type=>'one_record_per_line',
+			ignore=>'/^ *$|^ena|^dis/',
+			fieldsep=>'/  */',
+			fieldnames=>'_ignore_,sourceip,_,netmask,,targetid,access'
+		)
+	),	
+);
+
 function read($params, $records){
 //	$r = PHARSER::pharse_cmd("cat /proc/scsi_target/iscsi_target/lunmapping", array(
-	$r = PHARSER::pharse_cmd("cat /tmp/lunmap", array(
-		//pharse config:
-		type=>'one_record_per_line',
-		ignore=>'/^ *$|^ena|^dis/',
-		fieldsep=>'/  */',
-		fieldnames=>'_ignore_,sourceip,_,netmask,,targetid,access'
-	), $presult, $cmdresult, $raw, $trace);
+	$cmd = $this->pconfigs[getlunmap];
+	$r = PHARSER::pharse_cmd($cmd[cmd],$cmd[pconfig], $presult, $cmdresult, $raw, $trace);
 	if ($presult){
 		return array(
 			success=>false,

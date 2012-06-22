@@ -21,7 +21,6 @@ Ext.define('MyApp.view.SystemInfo', {
     ],
 
     height: 400,
-    width: 400,
     layout: {
         type: 'border'
     },
@@ -56,6 +55,7 @@ Ext.define('MyApp.view.SystemInfo', {
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'initiator',
+                                    flex: 1,
                                     text: 'Initiator'
                                 },
                                 {
@@ -119,6 +119,24 @@ Ext.define('MyApp.view.SystemInfo', {
                             viewConfig: {
 
                             },
+                            dockedItems: [
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'delete',
+                                            text: 'delete'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'refresh'
+                                        }
+                                    ]
+                                }
+                            ],
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
@@ -137,6 +155,7 @@ Ext.define('MyApp.view.SystemInfo', {
                                 },
                                 {
                                     xtype: 'gridcolumn',
+                                    width: 169,
                                     dataIndex: 'ipv6address',
                                     text: 'Ipv6address'
                                 },
@@ -149,24 +168,16 @@ Ext.define('MyApp.view.SystemInfo', {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'broadcast',
                                     text: 'Broadcast'
-                                }
-                            ],
-                            dockedItems: [
+                                },
                                 {
-                                    xtype: 'toolbar',
-                                    dock: 'top',
-                                    items: [
-                                        {
-                                            xtype: 'button',
-                                            itemId: 'delete',
-                                            text: 'delete'
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            itemId: 'refresh',
-                                            text: 'refresh'
-                                        }
-                                    ]
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'rxbytes',
+                                    text: 'Rxbytes'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'txbytes',
+                                    text: 'Txbytes'
                                 }
                             ]
                         },
