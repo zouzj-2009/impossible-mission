@@ -27,8 +27,8 @@ eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15
 		),
 		newkeys=>array(
 			'record_id'=>'dev', 'Link encap'=>'link', 'HWaddr'=>'mac', 'inet addr'=>'ipaddress', 'Bcast'=>'broadcast', 
-			'inet6 addr'=>'ipv6address', 'Mask'=>'netmask', 'MTU'=>'mtu', 'UP'=>'isup', 'MULTICAST'=>'ismulticast', 
-			'RX bytes'=>'rxbytes', 'TX bytes'=>'txbytes'
+			'inet6 addr'=>'ipv6address', 'Mask'=>'netmask', 'MTU'=>'mtu', 'UP'=>'is_up', 'MULTICAST'=>'multicast', 
+			'RUNNING'=>'running', 'RX bytes'=>'rxbytes', 'TX bytes'=>'txbytes'
 		),
 		newvalues=>array(
 			'dev'=>array(

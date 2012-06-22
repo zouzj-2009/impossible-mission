@@ -19,6 +19,8 @@ var $pconfigs = array(
 	),	
 */
 );
+var $tableread = null;	//table or view for reading
+var $tablewrite = null; //table for create/update/destroy
 var $synctodb = array(); //sync configuration
 var $defaultcmds = array(
 	read=>null,
@@ -69,17 +71,33 @@ function callmod($modname, $action, $params, $records, $simpleresult=true){
 	return $r[success];
 }
 
+//subclass advice:
+//If has db, use before_read to change or add params. use after_read to fix result.
+//IF has not db, use do_read/cmd to get info. usually, no before/after_read needed, all in do_read.
+//don't overwrite this method generally.
 function read($params, $records){
 	$cmd = $this->defaultcmds[read];
-	if (!$cmd){//dbonly
-		return parent::read($params, $records);
-	}
-	$pconfig = $this->pconfigs[$cmd];
 	$msg = null;
 	try{
-		$r = PHARSER::pharse_cmd($pconfig, $params, $cmdresult);
-		if ($this->synctodb){
-			$msg = $this->syncdb($r, $this->synctodb);
+		if (method_exists($this, 'before_read')){
+			$this->before_read($params, $records);	
+		}
+		if (!$cmd && !method_exists($this, 'do_read')){//dbonly
+			$r = parent::read($params, $records);
+		}else{
+			$pconfig = $this->pconfigs[$cmd];
+			if ($cmd){//get read result by cmd
+				$r = PHARSER::pharse_cmd($pconfig, $params, $cmdresult);
+			}else{// get read result by do_read of sub_classes
+				$r = $this->do_read($params, $records);
+			}
+			//todo: howto
+			if ($this->synctodb){
+				$msg = $this->syncdb($r, 'read', $this->synctodb);
+			}
+		}
+		if (method_exists($this, 'after_read')){
+			$r = $this->after_read($params, $r[data], $records);	
 		}
 	}catch(Exception $e){
 		return array(
@@ -94,8 +112,59 @@ function read($params, $records){
 	);
 }
 
+//subclass advice:
+//If has db, use before_update to validate the change, or do real change.
+//	if partically fail, the params should carry out the failed records(_failed_records_), and records has been modifed as validated records.
+//	and params[_skip_do_update_]/params[_skip_after_update_] tell what to do next
+//	or an exception was thrown.
+//IF has not db, use do_update/cmd to make change. usually, no before_update/after_update needed, all in do_update.
+//don't overwrite this method generally.
 function update($params, $records){
-	return MOD_db::pending_test($params, $records);
+	$cmd = $this->defaultcmds[update];
+	$msg = null;
+	$old_records = null;
+	try{
+		if ($this->tablewrite){//has db
+			$old_records = parent::read($params, $records, $this->tablewrite);
+		}
+		if (method_exists($this, 'before_update')){
+			$this->before_update($params, $records, $old_records);	
+		}
+		if (!$cmd && !method_exists($this, 'do_update')){//dbonly
+			//can be skipped by set an empty do_update function in subclass
+			parent::update($params, $records);	 
+		}else{
+			$pconfig = $this->pconfigs[$cmd];
+			if ($cmd){//get update result by cmd
+				$r = PHARSER::pharse_cmd($pconfig, $params, $cmdresult);
+				if (!$cmdresult){
+					throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
+				}
+			}else{// get update result by do_update of sub_classes
+				$this->do_update($params, $records, $old_records);
+			}
+			//todo: howto
+			if ($this->synctodb){
+				$msg = $this->syncdb($r, 'update', $this->synctodb);
+			}
+		}
+		if (method_exists($this, 'after_update')){
+			$this->after_update($params, $records, $old_records);	
+		}
+	}catch(Exception $e){
+		return array(
+			success=>false,
+			msg=>$e->getMessage(),
+			failed=>$params[_failed_records_],
+			old=>$old_records,
+			updated=>$records,
+		);
+	}
+	return array(
+		success=>true,
+		msg=>$msg?$msg:"$this->mid update done.",
+		data=>$old_records,
+	);
 }
 
 function destroy($params, $records){

@@ -12,7 +12,7 @@ $data = array();
 $records = json_decode(stripslashes($env?trim(getenv('records'), '"'):$_REQUEST['records']), true);
 $params = !$env?$_REQUEST:json_decode(stripslashes(trim(getenv('params'), '"')), true);
 $callback = $_REQUEST['callback'];
-foreach(explode(',', 'seqid,callback,mid,_act,PHPSESSID') as $key){
+foreach(explode(',', 'seqid,callback,PHPSESSID') as $key){
 	unset($params[$key]);
 }
 
