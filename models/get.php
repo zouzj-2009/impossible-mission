@@ -11,7 +11,6 @@ $mid = strtolower($_REQUEST['mid']);
 $data = array();
 $records = json_decode(stripslashes($env?trim(getenv('records'), '"'):$_REQUEST['records']), true);
 $params = !$env?$_REQUEST:json_decode(stripslashes(trim(getenv('params'), '"')), true);
-print_r($params);
 $callback = $_REQUEST['callback'];
 foreach(explode(',', 'seqid,callback,mid,_act,PHPSESSID') as $key){
 	unset($params[$key]);

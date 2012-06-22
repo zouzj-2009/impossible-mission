@@ -26,6 +26,9 @@ var $defaultcmds = array(
 
 function getmod($modname, $newinstance=false){
 	global $__caches;
+	if (!$modname){
+		throw new Exception(get_class($this).' call getmod without modname.');
+	}
 	$mod = $__caches[mod][$modname];
 	if (!$newinstance && $mod){
 		$mod->caller = $this;
@@ -43,8 +46,18 @@ function getmod($modname, $newinstance=false){
 	return $mod;
 }
 
+
+function callcmd($cmd, $args=array(), &$data=null){
+//call internal cmd in pconfigs
+	if (!$this->pconfigs[$cmd]) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
+	$pconfig = $this->pconfigs[$cmd];
+	$r = PHARSER::pharse_cmd($pconfig, $args, $cmdresult);
+	if ($data !== null) $data = $r;
+	return $cmdresult;
+}
+
 //todo: call mod on other server!
-function callmod_remote($server, $auth, $modname, $action, $params, $records, $simpleresult=true){
+function callmod_remote($serverconfig, $modname, $action, $params, $records, $simpleresult=true){
 }
 
 function callmod($modname, $action, $params, $records, $simpleresult=true){
@@ -61,17 +74,18 @@ function read($params, $records){
 	if (!$cmd){//dbonly
 		return parent::read($params, $records);
 	}
-	$pcmd = $this->pconfigs[$cmd];
-	$r = PHARSER::pharse_cmd($pcmd[cmd],$pcmd[pconfig], $presult, $cmdresult, $raw, $trace);
-	if ($presult){
+	$pconfig = $this->pconfigs[$cmd];
+	$msg = null;
+	try{
+		$r = PHARSER::pharse_cmd($pconfig, $params, $cmdresult);
+		if ($this->synctodb){
+			$msg = $this->syncdb($r, $this->synctodb);
+		}
+	}catch(Exception $e){
 		return array(
 			success=>false,
-			msg=>"pharse cmd result error: $presult"
+			msg=>$e->getMessage(),
 		);
-	}
-	$msg = null;
-	if ($this->synctodb){
-		$msg = $this->syncdb($r, $this->synctodb);
 	}
 	return array(
 		success=>true,

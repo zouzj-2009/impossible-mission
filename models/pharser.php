@@ -1,27 +1,27 @@
 <?php
 class PHARSER{
-function pharse_type(&$in, $pconfig, &$perror){
+function pharse_type(&$in, $pconfig){
 	$type = $pconfig[type];
 	if (!method_exists('PHARSER', "p_$type")){
-		$perror = "type $type not supported!";
-		return array();
+		throw new Exception(__FUNCTION__." type $type not supported!");
 	}
-	return call_user_func("PHARSER::p_$type", &$in, $pconfig, $perror);
+	return call_user_func("PHARSER::p_$type", &$in, $pconfig);
 }
 
-function pharse_cmd($cmd, $pconfig, &$perror, &$cmdresult=null, &$raw=null, &$trace=null){
-	exec($cmd, $out, $retvar);
-	if ($cmdresult) $cmdresult = $retvar;
-	if ($raw) $raw = $out;
-	$perror = null;
+function pharse_cmd($pconfig, $args, &$cmdresult, &$raw=null){
+	//todo: using executer to do $pcmd[cmd] with $args
+	exec($pconfig[cmd], $out, $retvar);
+
+	$cmdresult = $retvar;
+	if ($raw!==null) $raw = $out;
 	if (!$retvar && $pconfig['errpharse']){
-		return PHARSER::pharse_type($out, $pconfig['errpharse'], $perror);
+		return PHARSER::pharse_type($out, $pconfig['errpharse']);
 	}
-	if (!$pconfig) return $out;	//directly out;
-	return PHARSER::pharse_type($out, $pconfig, $perror);
+	if (!$pconfig[type]) return $out;	//directly out;
+	return PHARSER::pharse_type($out, $pconfig);
 }
 
-function format_keys_and_values($array, $keys, &$perror, $values=null){
+function format_keys_and_values($array, $keys, $values=null){
 //change $array's key to new names if specified in $keys
 //change $array's value to new by pconfig specified in $values.
 //common pconfig key:
@@ -38,7 +38,7 @@ function format_keys_and_values($array, $keys, &$perror, $values=null){
 		$pconfig = $values[$k]?$values[$k]:$values[$newkey];
 		if (!$pconfig) continue;
 		$lines = array($v);
-		$newvalue = PHARSER::pharse_type($lines, $pconfig, $perror);
+		$newvalue = PHARSER::pharse_type($lines, $pconfig);
 		$r[$newkey]  = $newvalue;
 		//can overwrite the $newkey by $newvalues
 		if ($pconfig[mergeup]){
@@ -49,7 +49,7 @@ function format_keys_and_values($array, $keys, &$perror, $values=null){
 	return $r;
 }
 
-function get_field_names($row, $pconfig, &$perror){
+function get_field_names($row, $pconfig){
 //valid config key:
 //some special name:	_value_:	use field value as field name,
 //			_ignore_:	ignore this field in result array, null or '_' have same effect.
@@ -71,7 +71,7 @@ function get_field_names($row, $pconfig, &$perror){
 			$fname = $m[0][0];
 			$ftype = $m[0][1];
 			$pconfig[$name][type] = $ftype;
-			$r[$fname] = PHARSER::pharse_type($v, $pconfig[$name], $perror);
+			$r[$fname] = PHARSER::pharse_type($v, $pconfig[$name]);
 			continue;
 		}
 		//not internal field name
@@ -80,7 +80,7 @@ function get_field_names($row, $pconfig, &$perror){
 	return $r;
 }
 
-function p_record_in_one_line(&$in, $pconfig, &$perror){
+function p_record_in_one_line(&$in, $pconfig){
 //valid config key:
 //ignore: 	regexp, skiped lines
 //fieldsep:	regexp, for fields seprate in line
@@ -97,17 +97,16 @@ function p_record_in_one_line(&$in, $pconfig, &$perror){
 	$fieldsep = $pconfig[fieldsep];
 	$fieldnames = $pconfig[fieldnames] = is_array($pconfig[fieldnames])?$pconfig[fieldnames]:explode(",", $pconfig[fieldnames]);
 	if (!$fieldsep){
-		$perror = __FUNCTION__.' missing [fieldsep] config.';
-		return $r;
+		throw new Exception(__FUNCTION__.' missing [fieldsep] config.');
 	}
 	$r = preg_split($fieldsep, $line);
 	if (!$fieldnames) return $r;
-	$r = PHARSER::get_field_names($r, $pconfig, $perror);
-	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $perror, $pconfig[newvalues]);
+	$r = PHARSER::get_field_names($r, $pconfig);
+	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues]);
 	return $r;
 }
 
-function p_one_record_per_line(&$in, $pconfig, &$perror){
+function p_one_record_per_line(&$in, $pconfig){
 //valid config key:
 //ignore:	regexp, lines to be skiped.
 //fieldsep:	regexp, for fields seprate in line
@@ -117,7 +116,7 @@ function p_one_record_per_line(&$in, $pconfig, &$perror){
 	$fieldsep = $pconfig[fieldsep];
 	$pconfig[fieldnames] = is_array($pconfig[fieldnames])?$pconfig[fieldnames]:explode(",", $pconfig[fieldnames]);
 	if (!$fieldsep){
-		$perror = __FUNCTION__.' missing [fieldsep] config.';
+		throw new Exception(__FUNCTION__.' missing [fieldsep] config.');
 		return $r;
 	}
 	while($in){
@@ -130,12 +129,12 @@ function p_one_record_per_line(&$in, $pconfig, &$perror){
 			if (getenv("MODETEST")){echo "skip $line by $ignore\n";}
 			continue;
 		}
-		$r[] = PHARSER::p_record_in_one_line($line, $pconfig, $perror);
+		$r[] = PHARSER::p_record_in_one_line($line, $pconfig);
 	}
 	return $r;
 }
 
-function p_keyvalues_in_one_line(&$in, $pconfig, &$perror){
+function p_keyvalues_in_one_line(&$in, $pconfig){
 //valid config key:
 //matcher:	regexp, (key).*(value)
 	$line = false;
@@ -154,11 +153,11 @@ function p_keyvalues_in_one_line(&$in, $pconfig, &$perror){
 			$r[trim($key, " :")] = trim($m[2][$i]);
 		}	
 	}
-	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $perror, $pconfig[newvalues]);
+	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues]);
 	return $r;
 }
 
-function p_keyvalues_span_lines(&$in, $pconfig, &$perror){
+function p_keyvalues_span_lines(&$in, $pconfig){
 //valid config key:
 //matcher:	regexp, (key).*(value)
 	$r = array();
@@ -173,13 +172,13 @@ function p_keyvalues_span_lines(&$in, $pconfig, &$perror){
 			if (getenv("MODETEST")){echo "skip $line by $ignore\n";}
 			continue;
 		}
-		$kv = PHARSER::p_keyvalues_in_one_line($line, $pconfig, $perror);
+		$kv = PHARSER::p_keyvalues_in_one_line($line, $pconfig);
 		$r = array_merge($r, $kv);
 	}
 	return $r;
 }
 
-function p_records_span_lines(&$in, $pconfig, &$perror){
+function p_records_span_lines(&$in, $pconfig){
 //valid config key:
 //ignore:	regexp, matched line will not be pharsed.
 //recordignore: regexp, matched line will be ignored only when record alread start.
@@ -194,8 +193,7 @@ function p_records_span_lines(&$in, $pconfig, &$perror){
 //
 	$r = array();
 	if (!$pconfig[recordstart]){
-		$perror = __FUNCTION__.' missing [recordstart] config';
-		return $r;
+		throw new Exception(__FUNCTION__.' missing [recordstart] config');
 	}
 	$started = false;
 	$cur_record = false;
@@ -234,7 +232,7 @@ function p_records_span_lines(&$in, $pconfig, &$perror){
 		if ($pconfig[fieldstype] == 'simple'){//just single line
 		//	$pconfig[fieldsmode][startline] = $n; //type maybe cross lines!
 			$pconfig[fieldsmode][parentend] = $pconfig[recordstart];
-			$fields = PHARSER::pharse_type($in, $pconfig[fieldsmode], $perror);
+			$fields = PHARSER::pharse_type($in, $pconfig[fieldsmode]);
 			$cur_record = array_merge($cur_record, $fields);
 		}else{ //for mixed models, try each group
 			foreach($pconfig[fieldsmode] as $group=>$gpconfig){
@@ -242,7 +240,7 @@ function p_records_span_lines(&$in, $pconfig, &$perror){
 				//try this group;
 		//		$gpconfig[fieldsmode][startline] = $n; //type maybe cross lines!
 				$gpconfig[fieldsmode][parentend] = $pconfig[recordstart];
-				$fields = PHARSER::pharse_type($in, $gpconfig[fieldsmode], $perror);
+				$fields = PHARSER::pharse_type($in, $gpconfig[fieldsmode]);
 				if ($gpconfig[fieldsmode][mergeup])
 					$cur_record = array_merge($cur_record, $fields);
 				else
@@ -251,16 +249,16 @@ function p_records_span_lines(&$in, $pconfig, &$perror){
 		}
 	}
 	if ($cur_record){
-		if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $perror, $pconfig[newvalues]);
+		if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
 		if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
 		else $r[] = $cur_record;	//add full record
 	}
 	return $r;
 }
-function p_one_record_span_lines($in, $pconfig, &$perror){
+function p_one_record_span_lines($in, $pconfig){
 //valid config key:
 //same as records_span_lines
-	$r = PHARSER::p_records_span_lines($in, $pconfig, &$perror);
+	$r = PHARSER::p_records_span_lines($in, $pconfig);
 	return array_shift($r);
 }
 

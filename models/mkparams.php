@@ -1,6 +1,6 @@
 <?php
 echo 'params="'.addslashes(json_encode(array(
-	id=>1,
-	abc=>2,
+	_mod=>'netconfig',
+	_cmd=>'ifconfig',
 ))).'"'."\n";
 ?>

@@ -1,10 +1,9 @@
 <?php
-include_once('../models/mod.db.php');
-include_once('../models/pharser.php');
-class MOD_netconfig extends MOD_db{
-
-function read($params, $records){
-	$r = PHARSER::pharse_cmd("(busybox ifconfig -a|sed 's/UP\|RUNNING\|MULTICAST/\\0:true/g')", array(
+include_once('../models/mod.base.php');
+class MOD_netconfig extends MOD_base{
+var $pconfigs = array(
+	'ifconfig'=>array(
+		cmd=>"(busybox ifconfig -a|sed 's/UP\|RUNNING\|MULTICAST/\\0:true/g')", 
 		//pharse config:
 /*
 eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15  
@@ -43,47 +42,12 @@ eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15
 				fieldsep=>'/\//',
 				fieldnames=>'ipv6address,ipv6prefix',
 				mergeup=>true,
-			)
-		)
-	), $presult, $cmdresult, $raw, $trace);
-	if ($presult){
-		return array(
-			success=>false,
-			msg=>"pharse cmd result error: $presult"
-		);
-	}
-	return array(
-		success=>true,
-		data=>$r
-	);
-}
+			),
+		),
+	),
+);
 
-function update($params, $records){
-	return MOD_db::pending_test($params, $records);
-}
-function destroy($params, $records){
-	return MOD_db::pending_test($params, $records);
-}
-function create($params, $records){
-	return MOD_db::pending_test($params, $records);
-}
-
-function pending_test($params, $records){
-	global $_REQUEST;
-	$count = 2;
-	if ($_REQUEST['seqid']) sleep(2);
-	if (0 || $_REQUEST['seqid'] >= $count)
-		$output=array(success=>false, msg=>'server job fail.');
-	else
-		$output=array(success=>false, pending=>array(
-			seq=>$_REQUEST['seqid'],
-			msg=>'big job pending...'.$_REQUEST['seqid'],
-			text=>'server doing '.$_REQUEST['_act'].' '.($_REQUEST['seqid']/$count*100).'%',
-			title=>'Server Doing Title',
-			number=>$_REQUEST['seqid']/$count
-			));
-	return $output;
-}
+var $defaultcmds=array(read=>'ifconfig');
 
 }
 ?>
