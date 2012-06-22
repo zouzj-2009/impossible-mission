@@ -2,15 +2,16 @@
 $env = getenv('MODTEST');
 if ($env){
 	$env = explode(',', $env);
-	print_r($env);
+	//print_r($env);
 	$_REQUEST['_act'] = $env[0];
 	$_REQUEST['mid'] = $env[1];
 }
 $action = $_REQUEST['_act'];
 $mid = strtolower($_REQUEST['mid']);
 $data = array();
-$records = json_decode(stripslashes($_REQUEST['records']), true);
-$params = $_REQUEST;
+$records = json_decode(stripslashes($env?trim(getenv('records'), '"'):$_REQUEST['records']), true);
+$params = !$env?$_REQUEST:json_decode(stripslashes(trim(getenv('params'), '"')), true);
+print_r($params);
 $callback = $_REQUEST['callback'];
 foreach(explode(',', 'seqid,callback,mid,_act,PHPSESSID') as $key){
 	unset($params[$key]);
@@ -25,7 +26,6 @@ if (file_exists("../models/mod.$mid.php")){
 }
 $mod = new $modname($mid);
 if ($env){
-	print_r($mod);
 }
 $output = $mod->$action($params, $records);
 
@@ -36,5 +36,13 @@ if ($callback) {
 } else {
     header('Content-Type: application/x-json');
     echo json_encode($output);
+}
+if ($env){
+	echo "\n\nparams:\n";
+	print_r($params);
+	echo "\n\nrecords:\n";
+	print_r($records);
+	echo "\n\noutput:\n";
+	print_r($output);
 }
 ?>

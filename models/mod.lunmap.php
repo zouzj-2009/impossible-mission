@@ -1,7 +1,6 @@
 <?php
-include_once('../models/mod.db.php');
-include_once('../models/pharser.php');
-class MOD_lunmap extends MOD_db{
+include_once('../models/mod.base.php');
+class MOD_lunmap extends MOD_base{
 
 var $pconfigs = array(
 	'getlunmap'=>array(
@@ -17,21 +16,7 @@ var $pconfigs = array(
 	),	
 );
 
-function read($params, $records){
-//	$r = PHARSER::pharse_cmd("cat /proc/scsi_target/iscsi_target/lunmapping", array(
-	$cmd = $this->pconfigs[getlunmap];
-	$r = PHARSER::pharse_cmd($cmd[cmd],$cmd[pconfig], $presult, $cmdresult, $raw, $trace);
-	if ($presult){
-		return array(
-			success=>false,
-			msg=>"pharse cmd result error: $presult"
-		);
-	}
-	return array(
-		success=>true,
-		data=>$r
-	);
-}
+var $defaultcmds=array(read=>'getlunmap');
 
 function update($params, $records){
 	return MOD_db::pending_test($params, $records);

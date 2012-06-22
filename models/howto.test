@@ -1,0 +1,6 @@
+
+1. modify mkrecords.php
+2. modify mkparams.php
+3. export `php mkrecords.php`
+4. export `php mkparams.php`
+5. env "MODTEST=read,lunmap" php get.php
