@@ -6,10 +6,18 @@ var $if;
 var $obj;
 var $path;
 var $failmsg;
+var $modname;
+var $jid;
 
-var $msgsignal = null;
+var $msgsignal = array();
+var $msgpoolcount = 3;
+var $msgindex = 0;
 var $unread = array(); //unreadmsgs;
+var $msgdone;
+var $datadone;
 function __construct($type, $modname, $jid){
+	$this->modname = $modname;
+	$this->jid = $jid;
 	$ifname = "mod.$modname.j$jid";
 	$this->if = $ifname;
 	$this->obj = $ifname;
@@ -21,16 +29,25 @@ function __construct($type, $modname, $jid){
 			$this->path,
 			$this->if
 		);
+		$this->msgdone = new DbusSignal(
+			$this->dbus,
+			$this->path,
+			$this->if,	
+			"done"
+		);
 		return;
 	}else{
 		$this->dbus = new Dbus( Dbus::BUS_SESSION, true );
 		$this->dbus->requestName($this->if);
-		$this->msgsignal = new DbusSignal(
-			$this->dbus,
-			$this->path,
-			$this->if,	
-			'msg'
-		);
+		
+		for($i=0;$i<$this->msgpoolcount;$i++){
+			$this->msgsignal[$i] = new DbusSignal(
+				$this->dbus,
+				$this->path,
+				$this->if,	
+				"msg$i"
+			);
+		}
 		$this->dbus->registerObject($this->obj, $this->if, 'DBConnector');
 	}
 }
@@ -57,8 +74,10 @@ function sendMsg($data){
 	//$this->msgsignal->send(count($this->unreal.length)-1); //just send cound
 //	$this->msgsignal->send(); //just send cound
 	$data[timestamp] = microtime(true);
-	$this->msgsignal->send(serialize($data));
-	if(getenv("MODTEST")) print_r($data);
+//	echo "send msg via $this->msgindex\n";
+	$this->msgsignal[$this->msgindex++]->send(serialize($data));
+	$this->msgindex %= $this->msgpoolcount;
+//	if(getenv("MODTEST")) print_r($data);
 }
  
 /*
@@ -74,7 +93,86 @@ function readMsg($index, $remove=true){
 }
 */
 
-function watch($signals, $maxtimeout=0, $if=null){
+function waitDone($data, $timeount=null){
+	$this->datadone = $data;
+	if ($timeout === null) $timeout = 5000;
+	return $this->watchx('done', $timeout, $this->if, null, $this->datadone);
+}
+
+function ackDone($data){
+	$this->msgdone->send($this->modname.".".$this->jid);
+}
+
+
+function watchx($signals=null, $maxtimeout=0, $if=null, $tm_callbck=null, $tmdata=null){
+	if (!$signals){
+		$signals = 'msg0';
+		for($i=1;$i<$this->msgpoolcount;$i++) $signals .= ",msg$i";
+	}
+	$signals = explode(",", $signals);
+	$if = $if?$if:$this->if;
+	try{
+		$this->dbus->addWatch($if);
+		$timeout = 0;
+		while (true) {
+			$sa = $this->dbus->waitLoopx(1000);
+/*
+			if (!$sa){
+				$timeout += 1000;
+				if ($maxtimeout && $timeout >$maxtimeout){
+					throw new Exception("timeout($timeout).");
+				}
+				continue;
+			}
+*/
+			$output = '';
+			$out = array();
+			if ($sa)
+			foreach($sa as $s){
+				foreach($signals as $signal){
+					if ($s->matches($if, $signal)) {
+						$o = $s->getData();
+						if ($o){
+							$r = unserialize($o);
+							if ($r === false) throw new Exception("unformatted data.");
+							if ($r[timestamp]) $r[ipctime] = microtime(true)-$r[timestamp];
+							$r[msgid] = $signal;
+							$out[] = $r;
+							$output .= $r[output];
+							//if (!($r[pending])) return $r;
+						}
+						//return $o;
+					}
+				}
+			}
+			if ($out){
+				if (count($out)>1){
+					print_r($out);
+				}
+				$out[count($out)-1][output] = $output;
+				return $out[count($out)-1];
+			}else{
+				$timeout += 1000;
+				if ($tm_callbck){
+					$this->$tm_callback($tmdata);
+				}
+				if ($maxtimeout && $timeout >$maxtimeout){
+					throw new Exception("timeout($timeout).");
+				}
+				continue;
+			}
+		}
+	}catch(Exception $e){
+		$this->failmsg = $e->getMessage();
+	}
+	return false;
+}
+
+function watch($signals=null, $maxtimeout=0, $if=null){
+	if (!$signals){
+		$signals = 'msg0';
+		for($i=1;$i<$this->msgpoolcount;$i++) $signals .= ",msg$i";
+	}
 	$signals = explode(",", $signals);
 	$if = $if?$if:$this->if;
 	try{
@@ -83,7 +181,7 @@ function watch($signals, $maxtimeout=0, $if=null){
 		while (true) {
 			$s = $this->dbus->waitLoop(1000);
 			if (!$s){
-				$timeout += 5;
+				$timeout += 1000;
 				if ($maxtimeout && $timeout >$maxtimeout){
 					throw new Exception("timeout($timeout).");
 				}
@@ -93,10 +191,11 @@ function watch($signals, $maxtimeout=0, $if=null){
 				if ($s->matches($if, $signal)) {
 					$o = $s->getData();
 					if ($o){
-						$s = unserialize($o);
-						if ($s === false) throw new Exception("unformatted data.");
-						if ($s[timestamp]) $s[ipctime] = microtime(true)-$s[timestamp];
-						return $s;
+						$r = unserialize($o);
+						if ($r === false) throw new Exception("unformatted data.");
+						if ($r[timestamp]) $r[ipctime] = microtime(true)-$r[timestamp];
+						$r[msgid] = $signal;
+						return $r;
 					}
 					return $o;
 				}

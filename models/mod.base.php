@@ -64,7 +64,7 @@ function callmod_remote($serverconfig, $modname, $action, $params, $records, $si
 }
 
 function callmod($modname, $action, $params, $records, $simpleresult=true){
-	$mod = $this->getmode($modname);
+	$mod = $this->getmod($modname);
 	$r = $mod->$action($params, $records);
 	if (!$simpleresult) return $r;
 	if ($action == 'read') return $r[data];

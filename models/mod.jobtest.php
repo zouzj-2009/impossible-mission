@@ -6,8 +6,9 @@ var $useservice=array(read=>true);
 function read($params, $records){
 	$count = 0;
 	while (++$count < 20){
-		$this->sendPending("Running 5 x $count seconds ...", null, $count/20);
-		sleep(5);
+		echo "runing 5x$count\n";
+		$this->sendPending("Running 5 x $count seconds ...", $count/20);
+		for($i =0; $i<10; $i++) $this->callmod('netconfig', 'read', $params, $records);
 	}
 	$r = array(
 		success=>true,
