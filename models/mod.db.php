@@ -2,6 +2,13 @@
 class MOD_db{
 
 var $mid;
+var $useservice=array(read=>false, create=>false, update=>false, destroy=>false);
+
+function run_as_service($params, $records){
+	$act = $params[_act];
+	return $this->useservice[$act];
+}
+
 function __construct($mid){
 	$this->mid = $mid;
 }

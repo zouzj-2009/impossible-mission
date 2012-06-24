@@ -26,6 +26,7 @@ var $defaultcmds = array(
 	read=>null,
 );
 
+
 function getmod($modname, $newinstance=false){
 	global $__caches;
 	if (!$modname){
