@@ -9,6 +9,7 @@ function read($params, $records){
 		echo "runing 5x$count\n";
 		$this->sendPending("Running 5 x $count seconds ...", $count/20);
 		for($i =0; $i<10; $i++) $this->callmod('netconfig', 'read', $params, $records);
+		//sleep(2);
 	}
 	$r = array(
 		success=>true,
