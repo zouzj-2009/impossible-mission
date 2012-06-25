@@ -1,7 +1,7 @@
 <?php
 include_once("../models/dbconnector.php");
 declare(ticks=1);
-$debugon = false;
+$debugon = true;
 $env = getenv('MODTEST');
 $preq = getenv("_PREQ_");
 if ($env){
@@ -54,6 +54,7 @@ try{
 		$mod->sendPending("$mid $action xstarted ...", 0);
 		//usleep(200);
 		$output = $mod->$action($params, $records);
+		usleep(200);
 		$mod->sendDone($output);
 		ob_end_flush();
 	}else{
@@ -101,7 +102,7 @@ try{
 					),
 				);
 				//system("../models/fork.sh php ../models/get.php $mid $action $jid");
-				system("/usr/local/bin/php.bak/php-cgi ../models/get.php service $mid $action $jid >/dev/null 2>/dev/null&");
+				system("/usr/bin/php ../models/get.php service $mid $action $jid >/dev/null 2>/dev/null&");
 				if ($env){
 					echo "_PREQ_=\"".addslashes($preq)."\"\n";
 				}
@@ -112,27 +113,17 @@ try{
 			if ($env){
 				echo "wait pending for $mid.$action.$jid ...\n";
 			}
-			$dif = "mod.$mid.j$jid";
-			$dpath = "/mod/$mid/j$jid";
-			$dbus = new Dbus( Dbus::BUS_SESSION );
-			$dbus->addWatch( "mod.$mid.j$jid" );
-			$output = null;
-			$timeout = 180000;
-			while (true) {
-				$s = $dbus->waitLoop(1000);
-				if (!$s) continue;
-				if (!$s->matches("mod.$mid.j$jid", "msg")) continue;
-				$output = unserialize($s->getData());
-				break;
-			}
+			$dbus = new DBConnector('CLIENT', $mid, $jid);
+			$output = $dbus->watch();
 			if (!$output){
 				$output = array(
 					success=>false,
-					msg=>"dbus fail",
+					msg=>$dbus->failmsg,
 				);
 			}
-			if ($output && !$output[pending]){
+			if (!$output[pending]){
 				if ($env) echo "send ack done.\n";
+				$dbus->ackDone($output);
 			}
 			if ($env){ echo $output[output]; }
 		}
@@ -143,7 +134,6 @@ try{
 		msg=>$e->getMessage(),
 	);
 }
-if ($env) die("done\n");
 //start output
 if ($callback) {
     header('Content-Type: text/javascript');

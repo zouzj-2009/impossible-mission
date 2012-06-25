@@ -13,7 +13,6 @@ function __construct($mid, $jobid=null){
 		if (!$_dbconnector_){
 			$this->dbconnector = $_dbconnector_ = new DBConnector('SERVER', $mid, $jobid);
 		}
-print_r($this->dbconnector);
 		$this->lastpending = array(
 			msg=>null,
 			title=>str_replace("MOD_", "", get_class($this)).".".$jobid,
@@ -65,7 +64,7 @@ function sendDone($result){
 		return;
 	}
 	$result[output] = $this->getOutput();
-	//$this->dbconnector->sendMsg($result);
+	$this->dbconnector->sendMsg($result);
 	$this->dbconnector->waitDone($result);
 }
 
