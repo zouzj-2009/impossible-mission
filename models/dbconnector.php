@@ -1,6 +1,7 @@
 <?php
+
 class DBConnector{
-var $dbus;
+static $dbus;
 var $proxy;
 var $if;
 var $obj;
@@ -10,11 +11,12 @@ var $modname;
 var $jid;
 
 var $msgsignal = array();
-var $msgpoolcount = 3;
+var $msgpoolcount = 1;
 var $msgindex = 0;
 var $unread = array(); //unreadmsgs;
 var $msgdone;
 var $datadone;
+static $lastsend;
 function __construct($type, $modname, $jid){
 	$this->modname = $modname;
 	$this->jid = $jid;
@@ -29,15 +31,8 @@ function __construct($type, $modname, $jid){
 			$this->path,
 			$this->if
 		);
-		$this->msgdone = new DbusSignal(
-			$this->dbus,
-			$this->path,
-			$this->if,	
-			"done"
-		);
-		return;
 	}else{
-		$this->dbus = new Dbus( Dbus::BUS_SESSION, true );
+		$this->dbus = new Dbus( Dbus::BUS_SESSION );
 		$this->dbus->requestName($this->if);
 		
 		for($i=0;$i<$this->msgpoolcount;$i++){
@@ -50,6 +45,12 @@ function __construct($type, $modname, $jid){
 		}
 		$this->dbus->registerObject($this->obj, $this->if, 'DBConnector');
 	}
+	$this->msgdone = new DbusSignal(
+		$this->dbus,
+		$this->path,
+		$this->if,	
+		"done"
+	);
 }
 
 /*
@@ -70,12 +71,14 @@ static function _readMsg($index, $remove=true){
 
 //server functions
 function sendMsg($data){
+	if (!$data) throw new Exception("NULL DATA!!!!!");
+	$this->lastsend = serialize($data);
 //	$this->unread[] = serialize($data);
 	//$this->msgsignal->send(count($this->unreal.length)-1); //just send cound
 //	$this->msgsignal->send(); //just send cound
 	$data[timestamp] = microtime(true);
 //	echo "send msg via $this->msgindex\n";
-	$this->msgsignal[$this->msgindex++]->send(serialize($data));
+	$this->msgsignal[$this->msgindex++]->send($this->lastsend);
 	$this->msgindex %= $this->msgpoolcount;
 //	if(getenv("MODTEST")) print_r($data);
 }
@@ -93,22 +96,34 @@ function readMsg($index, $remove=true){
 }
 */
 
+function resendDone($data){
+	echo "resend done.\n";
+	$this->lastsend = serialize($data);
+	$this->msgdone->send($this->lastsend);
+}
 function waitDone($data, $timeount=null){
-	$this->datadone = $data;
 	if ($timeout === null) $timeout = 5000;
-	return $this->watchx('done', $timeout, $this->if, null, $this->datadone);
+	if ($this->watch('done', $timeout, $this->if, 'resendDone', $data)){
+		echo "Done acked.\n";
+		exit(0);
+	}else{
+		echo "Done withou ack.\n";
+		exit(1);
+	}
 }
 
 function ackDone($data){
-	$this->msgdone->send($this->modname.".".$this->jid);
+	$this->lastsend = serialize($this->modname.".".$this->jid);
+	$this->msgdone->send($this->lastsend);
 }
 
 
-function watchx($signals=null, $maxtimeout=0, $if=null, $tm_callbck=null, $tmdata=null){
+function watchx($signals=null, $maxtimeout=0, $if=null, $tm_callback=null, $tmdata=array()){
 	if (!$signals){
-		$signals = 'msg0';
-		for($i=1;$i<$this->msgpoolcount;$i++) $signals .= ",msg$i";
+		$signals = 'done,';
+		for($i=0;$i<$this->msgpoolcount;$i++) $signals .= ",msg$i";
 	}
+echo "watch singals:$signals\n";
 	$signals = explode(",", $signals);
 	$if = $if?$if:$this->if;
 	try{
@@ -153,7 +168,7 @@ function watchx($signals=null, $maxtimeout=0, $if=null, $tm_callbck=null, $tmdat
 				return $out[count($out)-1];
 			}else{
 				$timeout += 1000;
-				if ($tm_callbck){
+				if ($tm_callback){
 					$this->$tm_callback($tmdata);
 				}
 				if ($maxtimeout && $timeout >$maxtimeout){
@@ -168,9 +183,9 @@ function watchx($signals=null, $maxtimeout=0, $if=null, $tm_callbck=null, $tmdat
 	return false;
 }
 
-function watch($signals=null, $maxtimeout=0, $if=null){
+function watch($signals=null, $maxtimeout=0, $if=null, $tm_callback=null, $tmdata=array()){
 	if (!$signals){
-		$signals = 'msg0';
+		$signals = 'done,msg0';
 		for($i=1;$i<$this->msgpoolcount;$i++) $signals .= ",msg$i";
 	}
 	$signals = explode(",", $signals);
@@ -182,6 +197,7 @@ function watch($signals=null, $maxtimeout=0, $if=null){
 			$s = $this->dbus->waitLoop(1000);
 			if (!$s){
 				$timeout += 1000;
+				if ($tm_callback) $this->$tm_callback($tmdata);
 				if ($maxtimeout && $timeout >$maxtimeout){
 					throw new Exception("timeout($timeout).");
 				}

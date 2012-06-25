@@ -8,18 +8,15 @@ var $lastflushtime = 0;
 var $begintime = 0;
 
 function __construct($mid, $jobid=null){
-	global $_dbconnector_;
 	if ($jobid){
-		if (!$_dbconnector_){
-			$this->dbconnector = $_dbconnector_ = new DBConnector('SERVER', $mid, $jobid);
-		}
+		$this->dbconnector = new DBConnector('SERVER', $mid, $jobid);
 		$this->lastpending = array(
 			msg=>null,
 			title=>str_replace("MOD_", "", get_class($this)).".".$jobid,
 			number=>0,
 		);
+		$this->begintime = microtime(true);
 	}
-	$this->begintime = microtime(true);
 	parent::__construct($mid);
 }
 
@@ -63,8 +60,9 @@ function sendDone($result){
 		print_r($result);
 		return;
 	}
-	$result[output] = $this->getOutput();
-	$this->dbconnector->sendMsg($result);
+	$out = $this->getOutput();
+	$result = array_merge($result, $out);
+	//$this->dbconnector->sendMsg($result);
 	$this->dbconnector->waitDone($result);
 }
 
