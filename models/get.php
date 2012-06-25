@@ -102,7 +102,7 @@ try{
 					),
 				);
 				//system("../models/fork.sh php ../models/get.php $mid $action $jid");
-				system("/usr/local/bin/php.bak/php-cgi ../models/get.php service $mid $action $jid >/dev/null 2>/dev/null&");
+				system("/usr/bin/php ../models/get.php service $mid $action $jid >/dev/null 2>/dev/null&");
 				if ($env){
 					echo "_PREQ_=\"".addslashes($preq)."\"\n";
 				}
@@ -132,8 +132,10 @@ try{
 			$dbus = new Dbus( Dbus::BUS_SESSION );
 			$dbus->addWatch( "mod.$mid.j$jid" );
 			$output = null;
-			$timeout = 180000;
-			while (true && !$output) {
+			$timeout = 60000;
+			$t = 0;
+			while ($t<$timeout && !$output) {
+			if (0){
 				$s = $dbus->waitLoopx(1000);
 				if (!$s) continue;
 				foreach($s as $signal){
@@ -142,6 +144,15 @@ try{
 					$output = unserialize($signal->getData());
 					break;
 				}
+			}else{
+				$signal = $dbus->waitLoop(1000);
+				$t += 1000;
+				if (!$signal) continue;
+				if (!$signal->matches("mod.$mid.j$jid", "msg0")
+					&& !$signal->matches("mod.$mid.j$jid", "done")) continue;
+				$output = unserialize($signal->getData());
+				break;
+			}
 			}
 			if (!$output){
 				$output = array(
@@ -157,10 +168,11 @@ try{
 					'done'
 				);
 				$donesignal->send(serialize($output));
-				if ($env) echo "send ack done.\n";
-				print_r($output);
-			}
-			if ($env){ print_r ($output[output]); }
+				if ($env){
+					echo "send ack done.\n";
+					print_r($output);
+				}
+			}else if ($env){ print_r ($output[output]); }
 		}
 	}
 }catch(Exception $e){
