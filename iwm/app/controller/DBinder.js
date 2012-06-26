@@ -72,112 +72,12 @@ Ext.define('MyApp.controller.DBinder', {
 
     },
 
-    updateProgressComponent: function(cfg, response, operation) {
-        //todo: lazy dispear progress
-        //todo: mask the action component
-        //binder scope
-        var binder = this,
-            c = cfg.container,
-            dbc = cfg.dbc,
-            pcfg = cfg.pcfg||{},
-            ptype = pcfg[operation.action]||pcfg.type,
-            domask = ptype != 'newin' && !pcfg.nomask && (!pcfg || !pcfg.noMask || cfg.maskid),
-            pend = response?(!response.pending): true,
-            title = response&&response.pending?response.pending.title:Ext.String.capitalize(operation.action+' '+cfg.modelId),
-            msg = response&&response.pending?response.pending.msg:'Please waiting ...',    
-            number = response&&response.pending?response.pending.number:(operation.seq/(operation.seqmax?operation.seqmax:10)),
-            pendingtext = response&&response.pending?response.pending.text:title+' '+Ext.util.Format.number(number, '0.00')+'%',
-            donetext = response&&response.msg?response.msg:title+' done.',
-            pc = null;
-        if (ptype != 'newin' && pcfg && pcfg.id) pc = Ext.getCmp(pcfg.id);
-        else if (ptype != 'newin' && pcfg && pcfg.itemid) pc = c.down('#'+pcfg.itemid);
-        else if (pcfg && ptype == 'newin'){
-            if (!pend && !pcfg.msgwin){
-                //create new win
-                pcfg.msgwin = Ext.Msg.progress(title, msg, pendingtext);
-                if (pcfg.msgwin.minWidth < 400){
-                    Ext.getClass(pcfg.msgwin).prototype.minWidth = 400;
-                    pcfg.msgwin.setWidth(400);
-                }
-            }else{
-                if (pend && pcfg.msgwin){
-                    if (response && response.success){
-                        pcfg.msgwin.updateProgress(1, 'Complete(100%)', donetext);
-                        Ext.defer(pcfg.msgwin.close, 1000, pcfg.msgwin);
-                        pcfg.msgwin = null;
-                    }else{//todo, msg prompt box!
-                        pcfg.msgwin.updateProgress(1, 'Done, fail!(100%)', donetext);
-                        pcfg.msgwin.on('close', function(win, options){
-                            Ext.Msg.alert(title, donetext);
-                        });
-                        Ext.defer(pcfg.msgwin.close, 1000, pcfg.msgwin);
-                        pcfg.msgwin = null;
-                        //Ext.Msg.alert(title, donetext);
-                    }
-                }else if (pcfg.msgwin){
-                    pcfg.msgwin.updateProgress(number, pendingtext, msg);
-                }
-            }
-            return;
-        }else{
-            pc = dbc.down('#processstatus');
-            if (!pc){
-                if (cfg.deffpc && (operation.action == 'update' || operation.action == 'create')){
-                    pc = cfg.deffpc;
-                }else if (cfg.defpc) pc = cfg.defpc; else pc = Ext.getCmp('processstatus');
-            }
-            //don't need!
-            if (!pc) return;
-        }
-        if (domask){//do mask
-            if (pend && cfg.mask){
-                cfg.mask.hide(c).destroy();
-                cfg.mask = null;
-            }else if (!pend && !cfg.mask){
-                //mask priority: pxfg.maskxtype, pcfg.maskid, c, dbc(if localmask)
-                var mask = pcfg.maskxtype?dbc.up(pcfg.maskxtype):(pcfg.maskid?c.down('#'+pcfg.maskid):(pcfg.localmask?dbc:c));
-                if (!mask) mask = c;
-                cfg.mask = new Ext.LoadMask(mask, {msg:title+' ...'});
-                cfg.mask.show(mask);
-            }
-        }
-        if (pcfg && ptype == 'text'){
-            //todo: class of this text, 
-            if (pend){
-                pc.getEl().setHTML('<a class="x-progress-text">'+donetext+'</a>');
-                Ext.defer(pc.getEl().setHTML(''), 1000, pc.getEl(), ['']);
-            }else{
-                pc.getEl().setHTML('<a class="x-progress-text">'+pendingtext+'</a>');
-            }
-        }else{
-            var ppc = pc.down('progressbar');
-            if (!ppc && !pend){
-                ppc = Ext.create('Ext.ProgressBar',{flex:1});
-                pc.add(ppc);
-            }
-            if (pend && ppc){
-                ppc.updateProgress(1, donetext, true);
-                if (response && response.success){
-                    Ext.defer(pc.remove, 1000, pc, [ppc, true]);
-                }else{
-                    ppc.getEl().on('click', function(){
-                        Ext.Msg.alert(title, donetext, function(){
-                            Ext.defer(pc.remove, 1000, pc, [ppc, true]);
-                        });
-                    });
-                }
-            }else if (ppc) {
-                ppc.updateProgress(number, pendingtext, true);
-            }
-        }
-    },
-
     processLoad: function(store, records, successful, cfg) {
         //called by onProxyRead, when data loaded, update progress indicator.
         //binder scope
         var binder = this;
         if (!successful) return true;//updated by proxyErrors
-        binder.updateProgressComponent(cfg, {success:successful}, {action:'read', seq:10, seqmax:10});
+        binder.application.fireEvent('indicatorchange', cfg, {success:successful}, {action:'read', seq:10, seqmax:10});
 
     },
 
@@ -188,7 +88,7 @@ Ext.define('MyApp.controller.DBinder', {
         //binder scope
         var binder = this;
         if(!operation.wasSuccessful()) alert('write fail!');
-        binder.updateProgressComponent(cfg, operation.response, operation);
+        binder.application.fireEvent('indicatorchange', cfg, operation.response, operation);
 
     },
 
@@ -200,13 +100,13 @@ Ext.define('MyApp.controller.DBinder', {
             //todo:when batch op,say create/destroy if create fail, ...
             alert('Fatal error, operation.'+operation.action+' no response! error:'+operation.error);
             //todo: try to continue when first op in batch fail at 'callbackxxx not found'
-            binder.updateProgressComponent(cfg, {success:false, msg:'proxy '+operation.error}, operation);
+            binder.application.fireEvent('indicatorchange', cfg, {success:false, msg:'proxy '+operation.error}, operation);
             return;
         }
         try{
             //todo: interactive C/S
             if (response.pending){
-                binder.updateProgressComponent(cfg, response, operation);
+                binder.application.fireEvent('indicatorchange', cfg, response, operation);
                 Ext.applyIf(operation, {params:{}, seq:0});
                 var params = Ext.applyIf({seqid: ++operation.seq, jid: response.pending.jid, pending:Ext.encode(response.pending)}, operation.params);
                 operation.params = params;
@@ -214,7 +114,7 @@ Ext.define('MyApp.controller.DBinder', {
             }else{//fail
                 //why, the operation of new action not cleaned?
                 delete operation.params.pending;
-                binder.updateProgressComponent(cfg, response, operation);
+                binder.application.fireEvent('indicatorchange', cfg, response, operation);
                 //how about update/destroy?
                 //todo: check more, phantom or sth. else?
                 //maybe problem is phantom when add(v);

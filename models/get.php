@@ -80,7 +80,8 @@ try{
 			}
 			$mod = new $modname($mid);
 			if (is_a($mod, 'MOD_servable') && $mod->run_as_service($params, $records)){
-				$jid =  md5($modname.$action.date('D M j G:i:s T Y'));
+		//		$jid =  md5($modname.$action.date('D M j G:i:s T Y'));
+				$jid = 'abcd';
 				$preq = serialize(array(
 					action=>$action,
 					mid=>$mid,
@@ -129,13 +130,13 @@ try{
 */
 			$dif = "mod.$mid.j$jid";
 			$dpath = "/mod/$mid/j$jid";
-			$dbus = new Dbus( Dbus::BUS_SESSION );
+			$dbus = new Dbus( Dbus::BUS_SYSTEM );
 			$dbus->addWatch( "mod.$mid.j$jid" );
 			$output = null;
 			$timeout = 60000;
 			$t = 0;
 			while ($t<$timeout && !$output) {
-			if (0){
+			if (1){
 				$s = $dbus->waitLoopx(1000);
 				if (!$s) continue;
 				foreach($s as $signal){
@@ -180,6 +181,7 @@ try{
 		success=>false,
 		msg=>$e->getMessage(),
 	);
+	if ($env) print_r($output);
 }
 if ($env) die("done\n");
 //start output

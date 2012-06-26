@@ -18,6 +18,7 @@ Ext.define('MyApp.view.Viewport', {
     renderTo: Ext.getBody(),
     requires: [
         'MyApp.view.MyViewport',
-        'MyApp.view.LinkSpeed'
+        'MyApp.view.LinkSpeed',
+        'MyApp.view.Messager'
     ]
 });

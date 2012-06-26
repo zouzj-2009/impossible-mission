@@ -69,7 +69,10 @@ Ext.application({
     name: 'MyApp',
     controllers: [
         'DBinder',
-        'MainMenu'
+        'MainMenu',
+        'MaskDBClick',
+        'DataIndiacator',
+        'EventManager'
     ],
 
     launch: function() {

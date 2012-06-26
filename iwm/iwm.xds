@@ -383,6 +383,38 @@
                 "app/controller/MainMenu.js"
             ],
             "className": "MainMenu"
+        },
+        "c2fb7ffa-7ed4-434d-bd9a-ce5d2701b1c9": {
+            "paths": [
+                "metadata/controller/MaskDBClick",
+                "app/controller/override/MaskDBClick.js",
+                "app/controller/MaskDBClick.js"
+            ],
+            "className": "MaskDBClick"
+        },
+        "72f5b038-2a46-4bc5-98dd-ef7e2199976b": {
+            "paths": [
+                "metadata/controller/DataIndiacator",
+                "app/controller/override/DataIndiacator.js",
+                "app/controller/DataIndiacator.js"
+            ],
+            "className": "DataIndiacator"
+        },
+        "bc030210-7ccc-4aad-9499-f2187633c77e": {
+            "paths": [
+                "metadata/controller/EventManager",
+                "app/controller/override/EventManager.js",
+                "app/controller/EventManager.js"
+            ],
+            "className": "EventManager"
+        },
+        "b1fcd016-113e-4d54-a07b-958b3f59b6ba": {
+            "paths": [
+                "metadata/view/Messager",
+                "app/view/override/Messager.js",
+                "app/view/Messager.js"
+            ],
+            "className": "Messager"
         }
     },
     "expandedState": {

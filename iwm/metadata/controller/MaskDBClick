@@ -1,0 +1,47 @@
+{
+    "id": "ExtBox1-ext-gen5410",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "MaskDBClick",
+        "designer|userAlias": "maskdbclick"
+    },
+    "customConfigs": [],
+    "designerId": "c2fb7ffa-7ed4-434d-bd9a-ce5d2701b1c9",
+    "$viewOrder": 0,
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen4596",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onComponentShow",
+                "implHandler": [
+                    "var c = abstractcomponent;",
+                    "//alert(c.getXType());",
+                    "c.getEl().on('click', function(e, t, o){",
+                    "    Ext.Msg.confirm(\"debug on ...\", function(b){",
+                    "        alert(b);",
+                    "    });",
+                    "});"
+                ],
+                "name": "show",
+                "scope": "me",
+                "designer|targetType": "Ext.Component",
+                "designer|controlQuery": "loadmask",
+                "designer|userClassName": "onComponentShow"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

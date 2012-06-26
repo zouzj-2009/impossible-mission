@@ -25,15 +25,15 @@ function __construct($type, $modname, $jid){
 	$this->obj = $ifname;
 	$this->path = "/".str_replace('.', '/', $ifname);
 	if ($type == 'CLIENT'){
-		$this->dbus = new Dbus( Dbus::BUS_SESSION );
+		$this->dbus = new Dbus( Dbus::BUS_SYSTEM );
 		$this->proxy = $this->dbus->createProxy( 
 			$this->if,
 			$this->path,
 			$this->if
 		);
 	}else{
-		$this->dbus = new Dbus( Dbus::BUS_SESSION );
-		$this->dbus->requestName($this->if);
+		$this->dbus = new Dbus( Dbus::BUS_SYSTEM );
+//		$this->dbus->requestName($this->if);
 		
 		for($i=0;$i<$this->msgpoolcount;$i++){
 			$this->msgsignal[$i] = new DbusSignal(
