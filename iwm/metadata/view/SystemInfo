@@ -33,7 +33,7 @@
                 "layout|region": "center"
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen17739",
@@ -293,7 +293,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen14313",
@@ -500,6 +500,20 @@
                                 "dataIndex": "txbytes",
                                 "text": "Txbytes",
                                 "designer|userClassName": "MyColumn56"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen5408",
+                            "type": "checkboxselectionmodel",
+                            "reference": {
+                                "name": "selModel",
+                                "type": "object"
+                            },
+                            "codeClass": "Ext.selection.CheckboxModel",
+                            "userConfig": {
+                                "designer|userClassName": "MyCheckboxSelectionModel4"
                             },
                             "customConfigs": [],
                             "expanded": true

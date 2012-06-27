@@ -1,7 +1,9 @@
 <?php
+@ob_start();
+ob_implicit_flush(true);
 include_once("../models/dbconnector.php");
 declare(ticks=1);
-$debugon = false;
+$debugon = true;
 $env = getenv('MODTEST');
 $preq = getenv("_PREQ_");
 if ($env){
@@ -43,8 +45,6 @@ try{
 		}else{
 			include_once("../models/mod.db.php");
 		}
-		@ob_start();
-		ob_implicit_flush(true);
 		echo "start service of $mid.$action@$jid ...\n";
 		if ($debugon){
 			print_r($preq);
@@ -69,6 +69,8 @@ try{
 		}
 
 		$jid=$_REQUEST['jid'];
+		@ob_start();
+		ob_implicit_flush(true);
 		//todo: do security check, or will be DOSed!
 		if (!$jid){//todo: service maybe exit before we request, so check existense must be done.
 			$modname="MOD_db";
@@ -183,6 +185,8 @@ try{
 	);
 	if ($env) print_r($output);
 }
+$output[output] = ob_get_flush();
+@ob_end_clean();
 //start output
 if ($callback) {
     header('Content-Type: text/javascript');

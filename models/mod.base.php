@@ -4,8 +4,8 @@ include_once('../models/pharser.php');
 class MOD_base extends MOD_db{
 
 var $caller;
-var $pconfigs = array(
 /* sample
+static $pconfigs = array(
 	'getlunmap'=>array(
 		//cmd=>"cat /proc/scsi_target/iscsi_target/lunmapping", 
 		cmd=>'cat /tmp/lunmap',
@@ -17,15 +17,17 @@ var $pconfigs = array(
 			fieldnames=>'_ignore_,sourceip,_,netmask,,targetid,access'
 		)
 	),	
-*/
 );
+*/
 var $tableread = null;	//table or view for reading
 var $tablewrite = null; //table for create/update/destroy
 var $synctodb = array(); //sync configuration
 var $defaultcmds = array(
 	read=>null,
 );
-
+var $batchsupport = array(// false|true|'one_by_one'
+	update=>true, create=>'one_by_one', destroy=>true,
+);
 function check_need_vars($arr, $needles, $title='read params'){
 	$k = explode(",", $needles);
 	foreach($k as $key) if (!isset($arr[$key])) throw new Exception(get_class($this)." $title need $needles, but $key not set.");
@@ -54,13 +56,32 @@ function getmod($modname, $newinstance=false){
 }
 
 
+function get_pconfig($class, $cmd)
+{
+	if (is_object($class)) $modname = get_class($class); else $modname = $class;
+	$pconfigs = $modname::$pconfigs;
+	$pconfig = $pconfigs[$cmd];
+	$refcmd = $pconfig['refcmd'];
+	if (!$refcmd) return $pconfig;
+	$r = explode('::', $refcmd);
+	$rconfig = null;
+	if (count($r)==2){
+		$rconfig = $this->get_pconfig($r[0], $r[1]); //can get from other class, rescurively
+	}else{
+		$rconfig = $pconfigs[$refcmd];
+	}	
+	if (!$rconfig) throw new Exception("$cmd's reference cmd $refcmd's pharser config not exists!");
+	$pconfig = array_merge($rconfig, $pconfig);
+	return $pconfig;
+}
+
 function callcmd($cmd, $args=array(), &$data=null){
 //call internal cmd in pconfigs
-	if (!$this->pconfigs[$cmd]) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
-	$pconfig = $this->pconfigs[$cmd];
-	$r = PHARSER::pharse_cmd($pconfig, $args, $cmdresult);
+	if (!$this->get_pconfig($this, $cmd)) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
+	$pconfig = $this->get_pconfig($this, $cmd);
+	$r = PHARSER::pharse_cmd($cmd, $pconfig, $args, $cmderror);
 	if ($data !== null) $data = $r;
-	return $cmdresult;
+	return $cmderror;
 }
 
 //todo: call mod on other server!
@@ -82,6 +103,7 @@ function callmod($modname, $action, $params, $records, $simpleresult=true){
 //don't overwrite this method generally.
 function read($params, $records){
 	$cmd = $this->defaultcmds[read];
+	$pconfig = $this->get_pconfig($this, $cmd);
 	$msg = null;
 	try{
 		if (method_exists($this, 'before_read')){
@@ -90,9 +112,8 @@ function read($params, $records){
 		if (!$cmd && !method_exists($this, 'do_read')){//dbonly
 			$r = parent::read($params, $records);
 		}else{
-			$pconfig = $this->pconfigs[$cmd];
 			if ($cmd){//get read result by cmd
-				$r = PHARSER::pharse_cmd($pconfig, $params, $cmdresult);
+				$r = PHARSER::pharse_cmd($cmd, $pconfig, $params, $cmderror);
 			}else{// get read result by do_read of sub_classes
 				$r = $this->do_read($params, $records);
 			}
@@ -102,7 +123,7 @@ function read($params, $records){
 			}
 		}
 		if (method_exists($this, 'after_read')){
-			$r = $this->after_read($params, $r[data], $records);	
+			$r = $this->after_read($params, $r, $records);	
 		}
 	}catch(Exception $e){
 		return array(
@@ -127,57 +148,250 @@ function read($params, $records){
 function update($params, $records){
 	$cmd = $this->defaultcmds[update];
 	$msg = null;
-	$old_records = null;
+	$old_records = array();
 	try{
+		if (!$this->batchsupport['update'] && count($records)>1) 
+			throw new Exception("batch update not support, but ".count($records)." are supplied.");
+		if (!$records)//so, the destroy has to do read before destroy records.
+			throw new Exception("update, but null records supplied.");
 		if ($this->tablewrite){//has db
 			$old_records = parent::read($params, $records, $this->tablewrite);
 		}
 		if (method_exists($this, 'before_update')){
-			$this->before_update($params, $records, $old_records);	
-		}
-		if (!$cmd && !method_exists($this, 'do_update')){//dbonly
-			//can be skipped by set an empty do_update function in subclass
-			parent::update($params, $records);	 
-		}else{
-			$pconfig = $this->pconfigs[$cmd];
-			if ($cmd){//get update result by cmd
-				$r = PHARSER::pharse_cmd($pconfig, $params, $cmdresult);
-				if (!$cmdresult){
-					throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
-				}
-			}else{// get update result by do_update of sub_classes
-				$this->do_update($params, $records, $old_records);
+			$next = $this->before_update($params, $records, $old_records);	
+			if ($next == 'return'){
+				return array(
+					success=>true, //if false, exp was thrown already.
+					old=>$old_records,
+					data=>$records,
+				);
 			}
-			//todo: howto
-			if ($this->synctodb){
-				$msg = $this->syncdb($r, 'update', $this->synctodb);
+		}
+		if ($this->batchsupport['update'] == 'one_by_one'){
+			//old_records mustbe same index as records!
+			foreach($records as $i=>$record){
+				$old = $old_records[$i];
+				if (!$cmd && !method_exists($this, 'do_update')){//dbonly
+					//can be skipped by set an empty do_update function in subclass
+					parent::update($params, $record, $old);	 
+				}else{
+					$pconfig = $this->get_pconfig($this, $cmd);
+					$oldx = array();
+					if (is_array($old)) foreach($old as $k=>$v) $oldx["old_$k"] = $v;
+					$p = $params;
+					$p = array_merge($p, $record, $oldx);
+					if ($cmd){//get update result by cmd
+						$r = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						if ($cmderror){
+							throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
+						}
+					}else{// get update result by do_update of sub_classes
+						$this->do_update($params, $record, $old);
+					}
+				}
+			}
+		}else{//do it batchly
+			if (!$cmd && !method_exists($this, 'do_destroy')){//dbonly
+				//can be skipped by set an empty do_update function in subclass
+				parent::update($params, $records, $old_records);	 
+			}else{
+				//cmd has to be one_by_one!
+				if ($cmd){//get update result by cmd
+					foreach($records as $record){
+						$old = $old_records[$i];
+						$oldx = array();
+						if (is_array($old)) foreach($old as $k=>$v) $oldx["old_$k"] = $v;
+						$p = $params;
+						$p = array_merge($p, $record, $oldx);
+						$r = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						if ($cmderror){
+							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
+						}
+					}
+				}else{// get update result by do_update of sub_classes
+					$this->do_destroy($params, $records, $old_records);
+				}
 			}
 		}
 		if (method_exists($this, 'after_update')){
-			$this->after_update($params, $records, $old_records);	
+			$this->after_destroy($params, $records, $old_records);	
 		}
-	}catch(Exception $e){
+	}catch(Exception $e){//rollback?
 		return array(
 			success=>false,
 			msg=>$e->getMessage(),
-			failed=>$params[_failed_records_],
+			data=>$records,
 			old=>$old_records,
-			updated=>$records,
 		);
 	}
 	return array(
 		success=>true,
 		msg=>$msg?$msg:"$this->mid update done.",
-		data=>$old_records,
+		data=>$records,
+		old=>$old_records,
 	);
 }
 
 function destroy($params, $records){
-	return MOD_db::pending_test($params, $records);
+	$cmd = $this->defaultcmds[destroy];
+	$msg = null;
+	$next = 'continue';
+	$old_records = $records;
+	try{
+		if (!$this->batchsupport['destroy'] && count($records)>1) 
+			throw new Exception("batch destroy not support, but ".count($records)." are supplied.");
+		if (!$records)//so, the destroy has to do read before destroy records.
+			throw new Exception("destroy, but null records supplied.");
+		if (method_exists($this, 'before_destroy')){
+			$next = $this->before_destroy($params, $records);	
+			if ($next == 'return'){
+				return array(
+					success=>true,
+					msg=>$msg?$msg:"$this->mid destroy done.",
+					data=>$old_records,
+				);
+			}
+		}
+		if ($this->batchsupport['destroy'] == 'one_by_one'){
+			foreach($records as $record){
+				$old = $record;
+				if (!$cmd && !method_exists($this, 'do_destroy')){//dbonly
+					//can be skipped by set an empty do_update function in subclass
+					parent::destroy($params, $record);	 
+				}else{
+					$pconfig = $this->get_pconfig($this, $cmd);
+					$p = $params;
+					$p = array_merge($p, $record);
+					if ($cmd){//get destroy result by cmd
+						$r = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						if ($cmderror){
+							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
+						}
+					}else{// get destroy result by do_destroy of sub_classes
+						$this->do_destroy($params, $record);
+					}
+				}
+			}
+		}else{//do it batchly
+			if (!$cmd && !method_exists($this, 'do_destroy')){//dbonly
+				//can be skipped by set an empty do_destroy function in subclass
+				parent::destroy($params, $records);	 
+			}else{
+				//cmd has to be one_by_one!
+				if ($cmd){//get destroy result by cmd
+					foreach($records as $record){
+						$p = $params;
+						$p = array_merge($p, $record);
+						$r = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						if ($cmderror){
+							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
+						}
+					}
+				}else{// get destroy result by do_destroy of sub_classes
+					$this->do_destroy($params, $records);
+				}
+			}
+		}
+		if (method_exists($this, 'after_destroy')){
+			$this->after_destroy($params, $old_records);	
+		}
+	}catch(Exception $e){
+		return array(
+			success=>false,
+			msg=>$e->getMessage(),
+			old=>$old_records,
+		);
+	}
+	return array(
+		success=>true,
+		msg=>$msg?$msg:"$this->mid destroy done.",
+		data=>$old_records,
+	);
 }
 
 function create($params, $records){
-	return MOD_db::pending_test($params, $records);
+	$cmd = $this->defaultcmds[create];
+	$msg = null;
+	$next = 'continue';
+	$new_records = array();
+	try{
+		if (!$this->batchsupport['create'] && count($records)>1) 
+			throw new Exception("batch create not support, but ".count($records)." are supplied.");
+		if (!$records)
+			throw new Exception("create, but null records supplied.");
+		if (method_exists($this, 'before_create')){
+			$next = $this->before_create($params, $records, $new_records);	
+			if ($next == 'return'){
+				return array(
+					success=>true,
+					msg=>$msg?$msg:"$this->mid create done.",
+					data=>$new_records,
+				);
+			}
+		}
+		if ($this->batchsupport['create'] == 'one_by_one'){
+			foreach($records as $record){
+				$old = $record;
+				if (!$cmd && !method_exists($this, 'do_create')){//dbonly
+					//can be skipped by set an empty do_create function in subclass
+					//send new_records(just created) for reference!
+					parent::create($params, $record, $new_record, $new_records);	 
+				}else{
+					$pconfig = $this->get_pconfig($this, $cmd);
+					$p = $params;
+					$last_created = $new_records[count($new_records)-1];
+					$lastx = array();
+					if ($last_created) foreach($last_created as $k=>$v) $lastx["last_$k"]=$v;
+					$p = array_merge($p, $record, $lastx);
+					if ($cmd){//get create result by cmd
+						$new_record = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						if ($cmderror){
+							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
+						}
+					}else{// get create result by do_destroy of sub_classes
+						$this->do_create($params, $record, $new_record, $new_records);
+					}
+				}
+				$new_records[] = $new_record;
+			}
+		}else{//do it batchly
+			if (!$cmd && !method_exists($this, 'do_create')){//dbonly
+				//can be skipped by set an empty do_create function in subclass
+				parent::create($params, $records, $new_records);	 
+			}else{
+				//cmd has to be one_by_one!
+				if ($cmd){//get create result by cmd
+					foreach($records as $record){
+						$pconfig = $this->get_pconfig($this, $cmd);
+						$p = $params;
+						$last_created = $new_records[count($new_records)-1];
+						$lastx = array();
+						if ($last_created) foreach($last_created as $k=>$v) $lastx["last_$k"]=$v;
+						$p = array_merge($p, $record, $lastx);
+						$new_record = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						if ($cmderror){
+							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
+						}
+					}
+				}else{// get create result by do_create of sub_classes
+					$this->do_create($params, $records, $new_records);
+				}
+			}
+		}
+		if (method_exists($this, 'after_create')){
+			$this->after_create($params, $old_records);	
+		}
+	}catch(Exception $e){
+		return array(
+			success=>false,
+			msg=>$e->getMessage(),
+		);
+	}
+	return array(
+		success=>true,
+		msg=>$msg?$msg:"$this->mid create done.",
+		data=>$new_records,
+	);
 }
 
 function pending_test($params, $records){

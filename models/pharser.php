@@ -1,5 +1,18 @@
 <?php
 class PHARSER{
+
+static $default_error_pharser = array(
+	type=>'one_record_span_lines',
+	recordstart=>'/^#### error msg begin ####/',
+	endoutx=>'/^#### error msg end ####/',
+	fieldtype=>'simple',
+	fieldmode=>array(
+		type=>'just_output',
+		name=>'msg',
+		ignore=>'/^#### error msg begin ####/',
+	),
+);
+
 function pharse_type(&$in, $pconfig){
 	$type = $pconfig[type];
 	if (!method_exists('PHARSER', "p_$type")){
@@ -8,13 +21,24 @@ function pharse_type(&$in, $pconfig){
 	return call_user_func("PHARSER::p_$type", &$in, $pconfig);
 }
 
-function pharse_cmd($pconfig, $args, &$cmdresult, &$raw=null){
+function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$raw=null){
+	$cmd = $pconfig[cmd];
+	if ($pconfig[commargs]) $args = array_merge($pconfig[commonargs], $args);
+	if (is_array($args)){
+		foreach($args as $k=>$v){ $cmd = preg_replace("/%$k%/", $v, $cmd); }
+	}
 	//todo: using executer to do $pcmd[cmd] with $args
-	exec($pconfig[cmd], $out, $retvar);
+	exec($cmd, $out, $retvar);
 
+	echo "$name: $cmd return $retvar\n";
 	$cmdresult = $retvar;
 	if ($raw!==null) $raw = $out;
-	if (!$retvar && $pconfig['errpharse']){
+	if (!$pconfig['errpharse'] &&!$pconfig['skiperror']){
+		//default error pharse
+		$pconfig['errpharse'] = PHARSER::$default_error_pharser;
+	}
+//	non 0 is error
+	if ($retvar && $pconfig['errpharse']){
 		return PHARSER::pharse_type($out, $pconfig['errpharse']);
 	}
 	if (!$pconfig[type]) return $out;	//directly out;
@@ -93,6 +117,31 @@ function get_field_names($row, $pconfig){
 		$r[$name] = $v;
 	}
 	return $r;
+}
+
+function p_just_output(&$in, $pconfig){
+//valid config key:
+//name: 	return keyname of output,
+//ignore: 	regexp, skiped lines
+//endout:	end of the msg, this line included
+//endoutx:	endo of the msg, this line not included
+	$o = '';
+	while ($in){
+		$line = array_shift($in);
+		if ($pconfig[endoutx] && preg_match($pconfig[endoutx], $line)) break;
+		if ($pconfig[endout] && preg_match($pconfig[endout], $line)){
+			$o .= $line."\n";
+			break;
+		}
+		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)){
+			array_unshift($in, $line);
+			break;
+		}
+		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
+		$o .= $line."\n";
+	}
+	if (!$pconfig[name]) return $o;
+	return array($pconfig[name]=>$o);
 }
 
 function p_record_in_one_line(&$in, $pconfig){

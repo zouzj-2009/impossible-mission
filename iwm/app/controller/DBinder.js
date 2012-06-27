@@ -113,7 +113,7 @@ Ext.define('MyApp.controller.DBinder', {
                 cfg.store.getProxy().doRequest(operation, operation.origincallback, operation.originscope);
             }else{//fail
                 //why, the operation of new action not cleaned?
-                delete operation.params.pending;
+                if (operation.params && operation.params.pending) delete operation.params.pending;
                 binder.application.fireEvent('indicatorchange', cfg, response, operation);
                 //how about update/destroy?
                 //todo: check more, phantom or sth. else?

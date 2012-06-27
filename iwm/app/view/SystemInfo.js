@@ -179,7 +179,10 @@ Ext.define('MyApp.view.SystemInfo', {
                                     dataIndex: 'txbytes',
                                     text: 'Txbytes'
                                 }
-                            ]
+                            ],
+                            selModel: Ext.create('Ext.selection.CheckboxModel', {
+
+                            })
                         },
                         {
                             xtype: 'gridpanel',

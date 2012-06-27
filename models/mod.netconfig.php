@@ -1,9 +1,39 @@
 <?php
 include_once('../models/mod.base.php');
 class MOD_netconfig extends MOD_base{
-var $pconfigs = array(
+static $pconfigs = array(
+	'addconfig'=>array(
+		cmd=>'(
+	#add ipaddress for %dev% %ipaddress%
+	if [ ! -z "%netmask%" ];then
+		busybox ifconfig %dev% %ipaddress% netmask %netmask%
+	else
+		busybox ifconfig %dev% %ipaddress%
+	fi
+	ret=$?
+	busybox ifconfig %dev%
+	exit $ret
+)',
+		refcmd=>'MOD_netconfig::ifconfig', //use ifconfig's pharser config!
+	),
+	'updconfig'=>array(
+		cmd=>'(
+	#update ipaddress from %old_ipaddress% to %ipaddress%
+	if [ ! -z "%netmask%" ];then
+		busybox ifconfig %dev% %ipaddress% netmask %netmask%
+	else
+		busybox ifconfig %dev% %ipaddress%
+	fi
+)',
+	),
+	'delconfig'=>array(
+		cmd=>'(
+	busybox ifconfig %dev% down
+	exit $?
+)',
+	),
 	'ifconfig'=>array(
-		cmd=>"(busybox ifconfig -a|sed 's/UP\|RUNNING\|MULTICAST/\\0:true/g')", 
+		cmd=>'(busybox ifconfig -a|sed "s/UP\|RUNNING\|MULTICAST/\0:true/g"; exit $PIPSTATUS)', 
 		//pharse config:
 /*
 eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15  
@@ -51,7 +81,7 @@ eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15
 	),
 );
 
-var $defaultcmds=array(read=>'ifconfig');
+var $defaultcmds=array(read=>'ifconfig', destroy=>'delconfig', update=>'updconfig', create=>'addconfig');
 
 }
 ?>

@@ -44,6 +44,9 @@ Ext.define('MyApp.view.NetConfig', {
                     store: 'netconfig',
                     region: 'center',
                     split: true,
+                    databind: {
+                        
+                    },
                     viewConfig: {
 
                     },
