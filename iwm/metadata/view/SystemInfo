@@ -16,7 +16,7 @@
     "customConfigs": [],
     "designerId": "13967b33-2221-4a18-91c2-98dbd3a1badf",
     "$viewOrder": 2,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen4171",
@@ -284,7 +284,7 @@
                         "title": "网卡设定",
                         "store": null,
                         "designer|userClassName": "MyGridPanel",
-                        "databind": "{model:'netconfig',\nmid:'jobtest'}"
+                        "databind": "{model:'netconfig'}"
                     },
                     "customConfigs": [
                         {

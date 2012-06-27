@@ -114,8 +114,7 @@ Ext.define('MyApp.view.SystemInfo', {
                             itemId: 'netconfig',
                             title: '网卡设定',
                             databind: {
-                                model: 'netconfig',
-                                mid: 'jobtest'
+                                model: 'netconfig'
                             },
                             viewConfig: {
 

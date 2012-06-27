@@ -183,7 +183,6 @@ try{
 	);
 	if ($env) print_r($output);
 }
-if ($env) die("done\n");
 //start output
 if ($callback) {
     header('Content-Type: text/javascript');
@@ -192,7 +191,7 @@ if ($callback) {
     header('Content-Type: application/x-json');
     echo json_encode($output);
 }
-if (0&& $env){
+if ($env){
 	echo "\n\nparams:\n";
 	print_r($params);
 	echo "\n\nrecords:\n";

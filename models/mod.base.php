@@ -26,6 +26,10 @@ var $defaultcmds = array(
 	read=>null,
 );
 
+function check_need_vars($arr, $needles, $title='read params'){
+	$k = explode(",", $needles);
+	foreach($k as $key) if (!isset($arr[$key])) throw new Exception(get_class($this)." $title need $needles, but $key not set.");
+}
 
 function getmod($modname, $newinstance=false){
 	global $__caches;

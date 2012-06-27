@@ -3,12 +3,12 @@ include_once('../models/mod.base.php');
 class MOD_modcmd extends MOD_base{
 
 function read($params, $records){
-
 //valid params:
 //	_mod:	mod name
 //	_cmd:	cmd defined in mod's pconfig
 //	_retvalue:	true for return origin cmd return value instead of printed string.
 
+	$this->check_need_vars($params, '_cmd,_mod');
 	try{
 		$mod = $this->getmod($params[_mod]);
 		$data = array();

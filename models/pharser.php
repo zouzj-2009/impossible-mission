@@ -21,6 +21,21 @@ function pharse_cmd($pconfig, $args, &$cmdresult, &$raw=null){
 	return PHARSER::pharse_type($out, $pconfig);
 }
 
+function check_skip_record($array, $skipconfig){
+//check for record's key through skipconfig, if match ,{} return.
+	foreach($array as $k=>$v){
+		if (array_key_exists($k, $skipconfig)){
+			$skip = false;
+			foreach($skipconfig[$k] as $skipv){
+				if ($skipv == $v) return false;
+			}
+			if ($skip) continue;
+		}
+		$r[$k] = $v;
+	}
+	return true;
+}
+
 function format_keys_and_values($array, $keys, $values=null){
 //change $array's key to new names if specified in $keys
 //change $array's value to new by pconfig specified in $values.
@@ -210,7 +225,7 @@ function p_records_span_lines(&$in, $pconfig){
 			array_unshift($in, preg_replace($pconfig[recordstart], ' @@@@@@@@ ', $line));
 			$started = true;
 			if ($cur_record){
-				if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $perror, $pconfig[newvalues]);
+				if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
 				if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
 				else $r[] = $cur_record;	//add full record
 			}
@@ -252,6 +267,14 @@ function p_records_span_lines(&$in, $pconfig){
 		if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
 		if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
 		else $r[] = $cur_record;	//add full record
+	}
+	if ($pconfig[skiprecord]){
+		$t = array();
+		foreach($r as $record){
+			if (!PHARSER::check_skip_record($record, $pconfig[skiprecord])) continue;
+			$t[] = $record;
+		}
+		return $t;
 	}
 	return $r;
 }
