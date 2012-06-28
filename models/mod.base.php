@@ -79,6 +79,10 @@ function get_pconfig($class, $cmd)
 	return $pconfig;
 }
 
+function log($level, $log){
+	echo "LOG@$level $log";
+}
+
 function callcmd($cmd, &$cmderror, &$params, &$records, &$extra=null){
 //call internal cmd in pconfigs
 //extra args using array('prefix'=>array_data or 'key'=>value);
@@ -99,7 +103,14 @@ function callcmd($cmd, &$cmderror, &$params, &$records, &$extra=null){
 		if (is_array($v)) foreach($v as $name=>$value) $p[$k."_".$name] = $value;
 		else $p[$name] = $value;
 	}
-	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderror, $mod);
+	$logs = array();
+	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderror, $mod, $logs);
+	if ($logs){
+		foreach($logs as $log){
+			$level = str_replace("LOG@", '', $log[record_id]);
+			$this->log($level, $log['log']);
+		}
+	}
 	return $r;
 }
 
@@ -137,7 +148,7 @@ function read($params, $records){
 			$r = parent::read($params, $records);
 		}else{
 			if ($cmd){//get read result by cmd
-				$r = $this->callcmd($cmd, $cmderror, $params);
+				$r = $this->callcmd($cmd, $cmderror, $params, $records);
 			}else{// get read result by do_read of sub_classes
 				$r = $this->do_read($params, $records);
 			}
@@ -156,6 +167,7 @@ function read($params, $records){
 		);
 	}
 	//kick out unused old records if indeed
+	if ($params[_readold])
 	if ($records && $this->readold){
 		$old = array();
 		foreach($records as $i=>$record){
@@ -189,7 +201,7 @@ function update($params, $records){
 			throw new Exception("update, but null records supplied.");
 		if ($this->readold){
 			if ($this->tablewrite) $r = parent::read($params, $records, $this->tablewrite);
-			else $r = $this->read($params, $records);
+			else $r = $this->read(array_merge($params,array(_readold=>true)), $records);
 			if ($r[success]) $old_records = $r[data];
 		}
 		if (method_exists($this, 'before_update')){

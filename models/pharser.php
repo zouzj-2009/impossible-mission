@@ -3,14 +3,30 @@ class PHARSER{
 
 static $default_error_pharser = array(
 	type=>'one_record_span_lines',
-	recordstart=>'/^#### error msg begin ####/',
-	endoutx=>'/^#### error msg end ####/',
-	fieldtype=>'simple',
-	fieldmode=>array(
+	recordstart=>'/^#@ERROR@[A-Z0-9]+ /',
+	recordid=>'/^#@(ERROR@[A-Z0-9]+) /',
+	recordend=>'/^ *$|^#ERROREND/',
+	fieldstype=>'simple',
+	fieldsmode=>array(
 		type=>'just_output',
 		name=>'msg',
-		ignore=>'/^#### error msg begin ####/',
+		strip=>'/ @@@@@@@@ /',
+		//endoutx=>'/^#### error msg end ####/',
 	),
+);
+
+static $default_log_pharser = array(
+	type=>'records_span_lines',
+	recordstart=>'/^#@LOG@[A-Z0-9]+ /',
+	recordid=>'/^#@(LOG@[A-Z0-9]+) /',
+	recordend=>'/^ *$|^#@LOGEND/',
+	fieldstype=>'simple',
+	fieldsmode=>array(
+		type=>'just_output',
+		name=>'log',
+		strip=>'/ @@@@@@@@ /',
+	),
+	//islogpconfig=>true,
 );
 
 function pharse_type(&$in, $pconfig){
@@ -21,7 +37,7 @@ function pharse_type(&$in, $pconfig){
 	return call_user_func("PHARSER::p_$type", &$in, $pconfig);
 }
 
-function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$raw=null){
+function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null){
 	$cmd = $pconfig[cmd];
 	if ($pconfig[commargs]) $args = array_merge($pconfig[commonargs], $args);
 	if (is_array($args)){
@@ -35,11 +51,20 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$raw=null){
 	if ($raw!==null) $raw = $out;
 	if (!$pconfig['errpharse'] &&!$pconfig['skiperror']){
 		//default error pharse
-		$pconfig['errpharse'] = PHARSER::$default_error_pharser;
+		$pconfig['errpharser'] = PHARSER::$default_error_pharser;
+	}
+	if (!$pconfig['logpharser'] && !$pconfig['skiplog']){
+		$pconfig['logpharser'] = PHARSER::$default_log_pharser;
+	}
+	if ($pconfig['logpharser']){
+		if ($log!==null){
+			$o = $out;
+			$log = PHARSER::pharse_type($o, $pconfig['logpharser']);
+		}
 	}
 //	non 0 is error
 	if ($retvar && $pconfig['errpharse']){
-		return PHARSER::pharse_type($out, $pconfig['errpharse']);
+		return PHARSER::pharse_type($out, $pconfig['errpharser']);
 	}
 	if (!$pconfig[type]) return $out;	//directly out;
 	return PHARSER::pharse_type($out, $pconfig);
@@ -125,6 +150,7 @@ function p_just_output(&$in, $pconfig){
 //ignore: 	regexp, skiped lines
 //endout:	end of the msg, this line included
 //endoutx:	endo of the msg, this line not included
+//strip:	stips this pattern
 	$o = '';
 	while ($in){
 		$line = array_shift($in);
@@ -133,13 +159,15 @@ function p_just_output(&$in, $pconfig){
 			$o .= $line."\n";
 			break;
 		}
-		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)){
+		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
+			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
 			array_unshift($in, $line);
 			break;
 		}
 		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
 		$o .= $line."\n";
 	}
+	if ($pconfig[strip]) $o = preg_replace($pconfig[strip], '', $o);
 	if (!$pconfig[name]) return $o;
 	return array($pconfig[name]=>$o);
 }
@@ -185,7 +213,8 @@ function p_one_record_per_line(&$in, $pconfig){
 	}
 	while($in){
 		$line = array_shift($in);
-		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)){
+		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
+			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
 			array_unshift($in, $line);
 			break;
 		}
@@ -228,7 +257,8 @@ function p_keyvalues_span_lines(&$in, $pconfig){
 	$ignore = $pconfig[ignore];
 	while($in){
 		$line = array_shift($in);
-		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)){
+		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
+			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
 			array_unshift($in, $line);
 			break;
 		}
@@ -265,14 +295,22 @@ function p_records_span_lines(&$in, $pconfig){
 	while($in){
 		$line = array_shift($in);
 		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
-		if ($pconfig[parentend] && preg_match($pconfig[parentend], $line)){
-			//pharse end by parent ending token.
+		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
+			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
 			array_unshift($in, $line);
 			break;
+		}
+		$changerecord = false;
+		if ($pconfig[recordend] && preg_match($pconfig[recordend], $line)){
+			$started = false;	//ended, but this line maybe also need pharse
+			$changerecord = true;
 		}
 		if (preg_match($pconfig[recordstart], $line, $m)){
 			array_unshift($in, preg_replace($pconfig[recordstart], ' @@@@@@@@ ', $line));
 			$started = true;
+			$changerecord = true;
+		}
+		if ($changerecord){
 			if ($cur_record){
 				if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
 				if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
@@ -289,13 +327,11 @@ function p_records_span_lines(&$in, $pconfig){
 			$cur_id = trim($m[1][0], " :");	//firstmatch and firstpattern	
 			$cur_record[record_id] = $cur_id;
 		}
-		if ($pconfig[recordend] && preg_match($pconfig[recordend], $line)){
-			$started = false;	//ended, but this line maybe also need pharse
-		}
 		//this line is a valid record line
 		if ($pconfig[fieldstype] == 'simple'){//just single line
 		//	$pconfig[fieldsmode][startline] = $n; //type maybe cross lines!
-			$pconfig[fieldsmode][parentend] = $pconfig[recordstart];
+			$pconfig[fieldsmode][parentend] = $pconfig[recordend];
+			$pconfig[fieldsmode][parentstart] = $pconfig[recordstart];
 			$fields = PHARSER::pharse_type($in, $pconfig[fieldsmode]);
 			$cur_record = array_merge($cur_record, $fields);
 		}else{ //for mixed models, try each group
@@ -303,7 +339,8 @@ function p_records_span_lines(&$in, $pconfig){
 				if (!preg_match($gpconfig[matcher], $line)) continue;
 				//try this group;
 		//		$gpconfig[fieldsmode][startline] = $n; //type maybe cross lines!
-				$gpconfig[fieldsmode][parentend] = $pconfig[recordstart];
+				$gpconfig[fieldsmode][parentend] = $pconfig[recordend];
+				$gpconfig[fieldsmode][parentstart] = $pconfig[recordstart];
 				$fields = PHARSER::pharse_type($in, $gpconfig[fieldsmode]);
 				if ($gpconfig[fieldsmode][mergeup])
 					$cur_record = array_merge($cur_record, $fields);

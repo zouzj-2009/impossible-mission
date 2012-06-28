@@ -4,7 +4,7 @@ class MOD_netconfig extends MOD_base{
 static $pconfigs = array(
 	'addconfig'=>array(
 		cmd=>'(
-	#add ipaddress for %dev% %ipaddress%
+	echo "#@LOG@INFO add ipaddress for %dev% %ipaddress%\n"
 	if [ ! -z "%netmask%" ];then
 		busybox ifconfig %dev% %ipaddress% netmask %netmask%
 	else
@@ -18,7 +18,7 @@ static $pconfigs = array(
 	),
 	'updconfig'=>array(
 		cmd=>'(
-	#update ipaddress from %old_ipaddress% to %ipaddress%
+	echo "#@LOG@INFO update ipaddress from %old_ipaddress% to %ipaddress%\n"
 	if [ ! -z "%netmask%" ];then
 		busybox ifconfig %dev% %ipaddress% netmask %netmask%
 	else
@@ -28,6 +28,7 @@ static $pconfigs = array(
 	),
 	'delconfig'=>array(
 		cmd=>'(
+	echo "#@LOG@INFO del ipaddress for %dev%\n"
 	busybox ifconfig %dev% down
 	exit $?
 )',
