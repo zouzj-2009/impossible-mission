@@ -29,6 +29,27 @@ var $batchsupport = array(// false|true|'one_by_one'
 	update=>true, create=>'one_by_one', destroy=>true,
 );
 var $readold = array('id'); 	//using this keys as read before update key indexes
+
+static $savechangeconfig = array(
+	tablename=>'sysconfig', //table for store changing config data.
+	autocreate=>true,	//auto create records for not-existed update.
+	//configuration data will be stored in sysconfig or other table
+	//if in 'sysconfig' table, these fields will be used, and operation will be done by mod.base
+	//mod:		name of the mod, also uniqid of configuation data
+	//lastboot:	value of lastbootup config, will using read after bootup
+	//lastshutdown:	value of lastshutdow(stored before shutdown)
+	//last:		value of last change
+	//current:	value of current setting
+);
+
+function savechanges($action, $params, $changed, $oldif){
+	$new = $this->read();//get all and store it!
+	//todo:
+	// subclass can using parent::savechanges to get all readed data
+	return $new;	
+}
+	
+
 function check_need_vars($arr, $needles, $title='read params'){
 	$k = explode(",", $needles);
 	foreach($k as $key) if (!isset($arr[$key])) throw new Exception(get_class($this)." $title need $needles, but $key not set.");
@@ -207,6 +228,7 @@ function update($params, $records){
 		if (method_exists($this, 'before_update')){
 			$next = $this->before_update($params, $records, $old_records);	
 			if ($next == 'return'){
+				$this->savechanges('update', $params, $records, $old_records);
 				return array(
 					success=>true, //if false, exp was thrown already.
 					old=>$old_records,
@@ -256,6 +278,7 @@ function update($params, $records){
 		if (method_exists($this, 'after_update')){
 			$this->after_update($params, $records, $old_records);	
 		}
+		$this->savechanges('update', $params, $records, $old_records);
 	}catch(Exception $e){//rollback?
 		return array(
 			success=>false,
@@ -285,6 +308,7 @@ function destroy($params, $records){
 		if (method_exists($this, 'before_destroy')){
 			$next = $this->before_destroy($params, $records);	
 			if ($next == 'return'){
+				$this->savechanges('destroy', $params, $records, array());
 				return array(
 					success=>true,
 					msg=>$msg?$msg:"$this->mid destroy done.",
@@ -330,6 +354,7 @@ function destroy($params, $records){
 		if (method_exists($this, 'after_destroy')){
 			$this->after_destroy($params, $old_records);	
 		}
+		$this->savechanges('destroy', $params, $records, array());
 	}catch(Exception $e){
 		return array(
 			success=>false,
@@ -357,6 +382,7 @@ function create($params, $records){
 		if (method_exists($this, 'before_create')){
 			$next = $this->before_create($params, $records, $new_records);	
 			if ($next == 'return'){
+				$this->savechanges('create', $params, $new_records, array());
 				return array(
 					success=>true,
 					msg=>$msg?$msg:"$this->mid create done.",
@@ -397,6 +423,7 @@ function create($params, $records){
 						if ($cmderror){
 							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
 						}
+						$new_records[] = $new_record;
 					}
 				}else{// get create result by do_create of sub_classes
 					$this->do_create($params, $records, $new_records);
@@ -406,6 +433,7 @@ function create($params, $records){
 		if (method_exists($this, 'after_create')){
 			$this->after_create($params, $old_records);	
 		}
+		$this->savechanges('create', $params, $new_records, array());
 	}catch(Exception $e){
 		return array(
 			success=>false,
