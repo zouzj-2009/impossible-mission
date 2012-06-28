@@ -178,6 +178,7 @@ function update($params, $records){
 	$db = $this->opendb(true);
 	$sets = $this->get_update_sets($records);
 	$table = $this->mid;
+	if ($params[_writetable]) $table = $params[_writetable];
 	$cond = $params[_condition];
 	if (!$cond) $cond = $this->get_cond_from_records($records, $params);
 	if ($cond)
@@ -204,6 +205,7 @@ function destroy($params, $records){
 	$db = $this->opendb(true);
 	$cond = $params[_condition];
 	$table = $this->mid;
+	if ($params[_writetable]) $table = $params[_writetable];
 	if ($cond) $sql = "DELETE FROM $table WHERE $cond";
 	else{
 		if (!$params[_confirm]) throw new Exception("destroy all data in $table, need confirm!");
@@ -228,6 +230,7 @@ function destroy($params, $records){
 function create($params, $records){
 	$db = $this->opendb(true);
 	$table = $this->mid;
+	if ($params[_writetable]) $table = $params[_writetable];
 	$values = $this->get_create_values($records, $cols);
 	$sql ="INSERT INTO ".$tablename." ($cols) VALUES ($values)";
 	$newrecord = $table;

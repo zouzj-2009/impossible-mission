@@ -30,7 +30,7 @@ var $batchsupport = array(// false|true|'one_by_one'
 );
 var $readold = array('id'); 	//using this keys as read before update key indexes
 
-static $savechangeconfig = array(
+var $savechangeconfig = array(
 	tablename=>'sysconfig', //table for store changing config data.
 	autocreate=>true,	//auto create records for not-existed update.
 	//configuration data will be stored in sysconfig or other table
@@ -43,8 +43,28 @@ static $savechangeconfig = array(
 );
 
 function savechanges($action, $params, $changed, $oldif){
-	$new = $this->read();//get all and store it!
-	//todo:
+	$new = $this->read(array());//get all and store it!
+	$mod = $this->mid;
+	$old = array_shift($this->dbquery("SELECT rowid,* FROM sysconfig WHERE mod='$mod'"));
+	if (!$old){
+		if (!$this->savechangeconfig[autocreate]) throw new Exception("sysconfig.$mod not found, autocreate was hibited neither.");
+		$r = array(
+			mod=>$mod,
+			'current'=>serialize($new),
+			'currenttime'=>date('Y-m-d H:i:s', time()),
+		);
+		parent::create(array(_writetable=>'sysconfig'), $r);
+		return $new;
+	}
+	$r = array(
+		rowid=>$old[rowid],
+		mod=>$mod,
+		last=>$old['current'],
+		lasttime=>$old['currenttime'],
+		'current'=>serialize($new),
+		'currenttime'=>date('Y-m-d H:i:s', time()),
+	);
+	parent::update(array(_writeable=>'sysconfig'), $r);
 	// subclass can using parent::savechanges to get all readed data
 	return $new;	
 }
@@ -278,7 +298,9 @@ function update($params, $records){
 		if (method_exists($this, 'after_update')){
 			$this->after_update($params, $records, $old_records);	
 		}
-		$this->savechanges('update', $params, $records, $old_records);
+		if ($cmd || method_exists($this, 'do_update')){
+			$this->savechanges('update', $params, $records, $old_records);
+		}
 	}catch(Exception $e){//rollback?
 		return array(
 			success=>false,
@@ -354,7 +376,9 @@ function destroy($params, $records){
 		if (method_exists($this, 'after_destroy')){
 			$this->after_destroy($params, $old_records);	
 		}
-		$this->savechanges('destroy', $params, $records, array());
+		if ($cmd || method_exists($this, 'do_destroy')){
+			$this->savechanges('destroy', $params, $records, array());
+		}
 	}catch(Exception $e){
 		return array(
 			success=>false,
@@ -433,7 +457,9 @@ function create($params, $records){
 		if (method_exists($this, 'after_create')){
 			$this->after_create($params, $old_records);	
 		}
-		$this->savechanges('create', $params, $new_records, array());
+		if ($cmd || method_exists($this, 'do_create')){
+			$this->savechanges('create', $params, $new_records, array());
+		}
 	}catch(Exception $e){
 		return array(
 			success=>false,
