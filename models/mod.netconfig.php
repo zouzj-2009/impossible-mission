@@ -81,7 +81,8 @@ eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15
 	),
 );
 
-var $defaultcmds=array(read=>'ifconfig', destroy=>'delconfig', update=>'updconfig', create=>'addconfig');
+var $defaultcmds = array(read=>'ifconfig', destroy=>'delconfig', update=>'updconfig', create=>'addconfig');
+var $readold = array('dev');
 
 }
 ?>

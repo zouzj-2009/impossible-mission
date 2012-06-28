@@ -28,6 +28,7 @@ var $defaultcmds = array(
 var $batchsupport = array(// false|true|'one_by_one'
 	update=>true, create=>'one_by_one', destroy=>true,
 );
+var $readold = array('id'); 	//using this keys as read before update key indexes
 function check_need_vars($arr, $needles, $title='read params'){
 	$k = explode(",", $needles);
 	foreach($k as $key) if (!isset($arr[$key])) throw new Exception(get_class($this)." $title need $needles, but $key not set.");
@@ -94,7 +95,7 @@ function callcmd($cmd, &$cmderror, &$params, &$records, &$extra=null){
 	if (!$pconfig) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
 	$p = $params;
 	$p = array_merge($p, $records);
-	if (is_array($extra)) foreach($extra as $k=>$v){
+	if ($extra && is_array($extra)) foreach($extra as $k=>$v){
 		if (is_array($v)) foreach($v as $name=>$value) $p[$k."_".$name] = $value;
 		else $p[$name] = $value;
 	}
@@ -115,6 +116,12 @@ function callmod($modname, $action, $params, $records, $simpleresult=true){
 	return $r[success];
 }
 
+function getid(&$record){
+//return value by $this->readold configed keys
+	$v = '';
+	foreach($this->readold as $k) $v .= $record[$k];
+	return $v;
+}
 //subclass advice:
 //If has db, use before_read to change or add params. use after_read to fix result.
 //IF has not db, use do_read/cmd to get info. usually, no before/after_read needed, all in do_read.
@@ -148,6 +155,15 @@ function read($params, $records){
 			msg=>$e->getMessage(),
 		);
 	}
+	//kick out unused old records if indeed
+	if ($records && $this->readold){
+		$old = array();
+		foreach($records as $i=>$record){
+			$v = $this->getid($record);
+			foreach($r as $got) if ($v == $this->getid($got)){ $old[$i] = $got; break; }
+		}
+		$r = $old;
+	}
 	return array(
 		success=>true,
 		data=>$r,
@@ -171,8 +187,10 @@ function update($params, $records){
 			throw new Exception("batch update not support, but ".count($records)." are supplied.");
 		if (!$records)//so, the destroy has to do read before destroy records.
 			throw new Exception("update, but null records supplied.");
-		if ($this->tablewrite){//has db
-			$old_records = parent::read($params, $records, $this->tablewrite);
+		if ($this->readold){
+			if ($this->tablewrite) $r = parent::read($params, $records, $this->tablewrite);
+			else $r = $this->read($params, $records);
+			if ($r[success]) $old_records = $r[data];
 		}
 		if (method_exists($this, 'before_update')){
 			$next = $this->before_update($params, $records, $old_records);	
