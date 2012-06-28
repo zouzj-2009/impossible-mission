@@ -415,6 +415,14 @@
                 "app/view/Messager.js"
             ],
             "className": "Messager"
+        },
+        "6e90f8b6-3d8b-4b6c-9e28-fed12aa68561": {
+            "paths": [
+                "metadata/model/dnsgw",
+                "app/model/override/dnsgw.js",
+                "app/model/dnsgw.js"
+            ],
+            "className": "dnsgw"
         }
     },
     "expandedState": {

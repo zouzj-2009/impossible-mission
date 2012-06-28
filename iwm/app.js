@@ -30,7 +30,8 @@ Ext.application({
         'HbaList',
         'SysLog',
         'etherspeed',
-        'glunmap'
+        'glunmap',
+        'dnsgw'
     ],
     stores: [
         'networkinfo',

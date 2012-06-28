@@ -270,6 +270,15 @@ Ext.define('MyApp.controller.DBinder', {
                 }
             });
         }
+
+        var ref = form.down('#refresh');
+        if (ref && !cfg.ignore.refresh){
+            ref.on('click', function(button, event, options){
+                var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams);
+                store.load({params:params});
+            });
+        }
+
     },
 
     bindProxy: function(store, cfg) {

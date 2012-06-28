@@ -23,7 +23,7 @@ Ext.define('MyApp.store.netconfig', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: true,
+            autoLoad: false,
             storeId: 'netconfig',
             model: 'MyApp.model.netconfig',
             data: [

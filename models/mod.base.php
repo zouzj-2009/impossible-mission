@@ -234,7 +234,7 @@ function update($params, $records){
 				}
 			}
 		}else{//do it batchly
-			if (!$cmd && !method_exists($this, 'do_destroy')){//dbonly
+			if (!$cmd && !method_exists($this, 'do_update')){//dbonly
 				//can be skipped by set an empty do_update function in subclass
 				parent::update($params, $records, $old_records);	 
 			}else{
@@ -245,16 +245,16 @@ function update($params, $records){
 						$extra = array(old=>$old);
 						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
-							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
+							throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
 						}
 					}
 				}else{// get update result by do_update of sub_classes
-					$this->do_destroy($params, $records, $old_records);
+					$this->do_update($params, $records, $old_records);
 				}
 			}
 		}
 		if (method_exists($this, 'after_update')){
-			$this->after_destroy($params, $records, $old_records);	
+			$this->after_update($params, $records, $old_records);	
 		}
 	}catch(Exception $e){//rollback?
 		return array(

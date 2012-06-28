@@ -29,11 +29,18 @@ static $default_log_pharser = array(
 	//islogpconfig=>true,
 );
 
+function debug($tag, $info){
+	echo "$tag: ";
+	if (is_array($info)) print_r($info);
+	else echo "$info\n";
+}
+
 function pharse_type(&$in, $pconfig){
 	$type = $pconfig[type];
 	if (!method_exists('PHARSER', "p_$type")){
 		throw new Exception(__FUNCTION__." type $type not supported!");
 	}
+	if ($pconfig[debug]) PHARSER::debug("pharsing type", $type);
 	return call_user_func("PHARSER::p_$type", &$in, $pconfig);
 }
 
@@ -42,6 +49,8 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null){
 	if ($pconfig[commargs]) $args = array_merge($pconfig[commonargs], $args);
 	if (is_array($args)){
 		foreach($args as $k=>$v){ $cmd = str_replace("%$k%", $v, $cmd); }
+		//seach unsupplied keys
+		$cmd = preg_replace("/%[^ ]+%/", '', $cmd);
 	}
 	//todo: using executer to do $pcmd[cmd] with $args
 	exec($cmd, $out, $retvar);
@@ -56,6 +65,8 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null){
 	if (!$pconfig['logpharser'] && !$pconfig['skiplog']){
 		$pconfig['logpharser'] = PHARSER::$default_log_pharser;
 	}
+	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- config ------------------');
+	if ($pconfig[debug]) PHARSER::debug("$name.pconfig", $pconfig);
 	if ($pconfig['logpharser']){
 		if ($log!==null){
 			$o = $out;
@@ -63,20 +74,26 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null){
 		}
 	}
 //	non 0 is error
+	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd output---------------');
+	if ($pconfig[debug]) PHARSER::debug("$name.output", $out);
 	if ($retvar && $pconfig['errpharse']){
 		return PHARSER::pharse_type($out, $pconfig['errpharser']);
 	}
 	if (!$pconfig[type]) return $out;	//directly out;
+	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- pharser trace -----------');
 	return PHARSER::pharse_type($out, $pconfig);
 }
 
-function check_skip_record($array, $skipconfig){
+function check_skip_record($array, $skipconfig, $debug=false){
 //check for record's key through skipconfig, if match ,{} return.
 	foreach($array as $k=>$v){
 		if (array_key_exists($k, $skipconfig)){
 			$skip = false;
 			foreach($skipconfig[$k] as $skipv){
-				if ($skipv == $v) return false;
+				if ($skipv == $v){
+					if ($debug) PHARSER::debug(__FUNCTION__." skip record[".implode(",", $skipconfig)."]", $array);
+					return false;
+				}
 			}
 			if ($skip) continue;
 		}
@@ -102,6 +119,7 @@ function format_keys_and_values($array, $keys, $values=null){
 		$pconfig = $values[$k]?$values[$k]:$values[$newkey];
 		if (!$pconfig) continue;
 		$lines = array($v);
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." format value[$newkey=$lines], using pconfig", $pconfig);
 		$newvalue = PHARSER::pharse_type($lines, $pconfig);
 		$r[$newkey]  = $newvalue;
 		//can overwrite the $newkey by $newvalues
@@ -154,17 +172,26 @@ function p_just_output(&$in, $pconfig){
 	$o = '';
 	while ($in){
 		$line = array_shift($in);
-		if ($pconfig[endoutx] && preg_match($pconfig[endoutx], $line)) break;
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
+		if ($pconfig[endoutx] && preg_match($pconfig[endoutx], $line)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [endoutx]", $pconfig[endoutx]);
+			break;
+		}
 		if ($pconfig[endout] && preg_match($pconfig[endout], $line)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [endout]", $pconfig[endout]);
 			$o .= $line."\n";
 			break;
 		}
 		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
 			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [parentstart|parentend]", $pconfig[parentstart]."|".$pconfig[parentend]);
 			array_unshift($in, $line);
 			break;
 		}
-		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
+		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
+			continue;
+		}
 		$o .= $line."\n";
 	}
 	if ($pconfig[strip]) $o = preg_replace($pconfig[strip], '', $o);
@@ -181,7 +208,12 @@ function p_record_in_one_line(&$in, $pconfig){
 	if (is_array($in)){
 		while($in){
 			$line = array_shift($in);
-			if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
+ 
+			if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)){
+				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
+				continue;
+			}
 			break;
 		}
 		if (!$line) return array();
@@ -213,13 +245,15 @@ function p_one_record_per_line(&$in, $pconfig){
 	}
 	while($in){
 		$line = array_shift($in);
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
 		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
 			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [parentstart|parentend]", $pconfig[parentstart]."|".$pconfig[parentend]);
 			array_unshift($in, $line);
 			break;
 		}
 		if ($ignore && preg_match($ignore, $line)){
-			if (getenv("MODETEST")){echo "skip $line by $ignore\n";}
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
 			continue;
 		}
 		$r[] = PHARSER::p_record_in_one_line($line, $pconfig);
@@ -234,7 +268,11 @@ function p_keyvalues_in_one_line(&$in, $pconfig){
 	if (is_array($in)){
 		while($in){
 			$line = array_shift($in);
-			if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
+			if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)){
+				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
+				continue;
+			}
 			break;
 		}
 		if (!$line) return array();
@@ -242,11 +280,13 @@ function p_keyvalues_in_one_line(&$in, $pconfig){
 	if (!$pconfig[matcher]) $pconfig[matcher] = '/(.*)/=/(.*)/';
 	$r = array();
 	if (preg_match_all($pconfig[matcher], $line, $m)){
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [matcher=".$pconfig[matcher]."]", $m);
 		foreach($m[1] as $i=>$key){
 			$r[trim($key, " :")] = trim($m[2][$i]);
 		}	
 	}
 	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues]);
+	if ($pconfig[arrayret]) return array($r);
 	return $r;
 }
 
@@ -255,20 +295,25 @@ function p_keyvalues_span_lines(&$in, $pconfig){
 //matcher:	regexp, (key).*(value)
 	$r = array();
 	$ignore = $pconfig[ignore];
+	$arrayret = $pconfig[arrayret];
+	$pconfig[arrayret] = false;
 	while($in){
 		$line = array_shift($in);
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
 		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
 			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [parentstart|parentend]", $pconfig[parentstart]."|".$pconfig[parentend]);
 			array_unshift($in, $line);
 			break;
 		}
-		if ($ignore && preg_match($ignore, $line)){
-			if (getenv("MODETEST")){echo "skip $line by $ignore\n";}
+		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
 			continue;
 		}
 		$kv = PHARSER::p_keyvalues_in_one_line($line, $pconfig);
 		$r = array_merge($r, $kv);
 	}
+	if ($arrayret) return array($r);
 	return $r;
 }
 
@@ -294,24 +339,32 @@ function p_records_span_lines(&$in, $pconfig){
 	$cur_id	= false;
 	while($in){
 		$line = array_shift($in);
-		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)) continue;
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
+		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
+			continue;
+		}
 		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
 			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [parentstart|parentend]", $pconfig[parentstart]."|".$pconfig[parentend]);
 			array_unshift($in, $line);
 			break;
 		}
 		$changerecord = false;
 		if ($pconfig[recordend] && preg_match($pconfig[recordend], $line)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [recordend]", $pconfig[recordend]);
 			$started = false;	//ended, but this line maybe also need pharse
 			$changerecord = true;
 		}
 		if (preg_match($pconfig[recordstart], $line, $m)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [recordstart]", $pconfig[recordstart]);
 			array_unshift($in, preg_replace($pconfig[recordstart], ' @@@@@@@@ ', $line));
 			$started = true;
 			$changerecord = true;
 		}
 		if ($changerecord){
 			if ($cur_record){
+				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got new record(unformated)", $cur_record);
 				if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
 				if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
 				else $r[] = $cur_record;	//add full record
@@ -321,9 +374,13 @@ function p_records_span_lines(&$in, $pconfig){
 		}
 		$cur_record = array();
 		if (!$started) continue;
-		if ($pconfig[recordignore] && preg_match($pconfig[recordignore], $line)) continue;
+		if ($pconfig[recordignore] && preg_match($pconfig[recordignore], $line)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [recordignore]", $pconfig[recordignore]);
+			continue;
+		}
 		//only first line contain the recordid, should in sub lines?
 		if ($pconfig[recordid] && preg_match_all($pconfig[recordid], $line, $m)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [recordid=".$pconfig[recordid]."]", $m);
 			$cur_id = trim($m[1][0], " :");	//firstmatch and firstpattern	
 			$cur_record[record_id] = $cur_id;
 		}
@@ -332,15 +389,22 @@ function p_records_span_lines(&$in, $pconfig){
 		//	$pconfig[fieldsmode][startline] = $n; //type maybe cross lines!
 			$pconfig[fieldsmode][parentend] = $pconfig[recordend];
 			$pconfig[fieldsmode][parentstart] = $pconfig[recordstart];
+			//$pconfig[fieldsmode][debug] = $pconfig[debug];
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." simple fields [pconfig]", $pconfig[fieldsmode]);
 			$fields = PHARSER::pharse_type($in, $pconfig[fieldsmode]);
 			$cur_record = array_merge($cur_record, $fields);
 		}else{ //for mixed models, try each group
 			foreach($pconfig[fieldsmode] as $group=>$gpconfig){
-				if (!preg_match($gpconfig[matcher], $line)) continue;
+				if (!preg_match($gpconfig[matcher], $line)){
+					if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [recordignore]", $pconfig[recordignore]);
+					continue;
+				}
 				//try this group;
 		//		$gpconfig[fieldsmode][startline] = $n; //type maybe cross lines!
 				$gpconfig[fieldsmode][parentend] = $pconfig[recordend];
 				$gpconfig[fieldsmode][parentstart] = $pconfig[recordstart];
+				//$gpconfig[fieldsmode][debug] = $pconfig[debug];
+				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." $group fields [pconfig]", $gpconfig[fieldsmode]);
 				$fields = PHARSER::pharse_type($in, $gpconfig[fieldsmode]);
 				if ($gpconfig[fieldsmode][mergeup])
 					$cur_record = array_merge($cur_record, $fields);
@@ -357,18 +421,22 @@ function p_records_span_lines(&$in, $pconfig){
 	if ($pconfig[skiprecord]){
 		$t = array();
 		foreach($r as $record){
-			if (!PHARSER::check_skip_record($record, $pconfig[skiprecord])) continue;
+			if (!PHARSER::check_skip_record($record, $pconfig[skiprecord], $pconfig[debug])) continue;
 			$t[] = $record;
 		}
 		return $t;
 	}
 	return $r;
 }
-function p_one_record_span_lines($in, $pconfig){
+function p_one_record_span_lines(&$in, $pconfig){
 //valid config key:
 //same as records_span_lines
+	if ($pconfig[debug]) PHARSER::debug("pharser using type", "records_span_lines");
+	$pconfig[recordstart] = '/^##@!!!1234567890/';
+	$firstline = '##@!!!1234567890'; //fake recordstart
+	array_unshift($in,  $firstline); 
 	$r = PHARSER::p_records_span_lines($in, $pconfig);
-	return array_shift($r);
+	return $r;
 }
 
 //end of class

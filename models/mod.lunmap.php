@@ -8,13 +8,11 @@ static $pconfigs = array(
 		cmd=>'(
 	cat /tmp/lunmap
 )',
-		pconfig=>array(
-			//pharse config:
-			type=>'one_record_per_line',
-			ignore=>'/^ *$|^ena|^dis/',
-			fieldsep=>'/  */',
-			fieldnames=>'_ignore_,sourceip,_,netmask,,targetid,access'
-		)
+		//pharse config:
+		type=>'one_record_per_line',
+		ignore=>'/^ *$|^ena|^dis/',
+		fieldsep=>'/  */',
+		fieldnames=>'_ignore_,sourceip,_,netmask,,targetid,access'
 	),	
 );
 

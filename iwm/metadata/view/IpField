@@ -10,7 +10,7 @@
         "itemId": null,
         "name": null,
         "fieldLabel": "IPAddress",
-        "regex": "/^([1-9][0-9]{0,2})+\\.([1-9][0-9]{0,2})+\\.([1-9][0-9]{0,2})+\\.([1-9][0-9]{0,2})+$/",
+        "regex": "/^([1-9][0-9]{0,2})+\\.([0-9][0-9]{0,2})+\\.([0-9][0-9]{0,2})+\\.([1-9][0-9]{0,2})+$/",
         "regexText": "invalid IP address",
         "designer|userClassName": "IpField",
         "designer|userAlias": "ipfield"

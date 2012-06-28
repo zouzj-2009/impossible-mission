@@ -42,11 +42,12 @@ Ext.define('MyApp.view.NetConfig', {
                     title: 'NIC & IP Address',
                     titleCollapse: false,
                     store: 'netconfig',
+                    databind: {
+                        bindform: 'nic',
+                        autoload: 'true'
+                    },
                     region: 'center',
                     split: true,
-                    databind: {
-                        
-                    },
                     viewConfig: {
 
                     },
@@ -62,34 +63,16 @@ Ext.define('MyApp.view.NetConfig', {
                                     xtype: 'button',
                                     disabled: true,
                                     itemId: 'delete',
-                                    text: 'Delete',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onDeleteClick,
-                                            scope: me
-                                        }
-                                    }
+                                    text: 'Delete'
                                 },
                                 {
                                     xtype: 'button',
                                     itemId: 'refresh',
-                                    text: 'Refresh',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onRefreshClick,
-                                            scope: me
-                                        }
-                                    }
+                                    text: 'Refresh'
                                 }
                             ]
                         }
                     ],
-                    listeners: {
-                        selectionchange: {
-                            fn: me.onGridpanelSelectionChange,
-                            scope: me
-                        }
-                    },
                     columns: [
                         {
                             xtype: 'gridcolumn',
@@ -125,91 +108,106 @@ Ext.define('MyApp.view.NetConfig', {
                 },
                 {
                     xtype: 'container',
-                    minWidth: 280,
-                    width: 150,
+                    minWidth: 290,
+                    width: 290,
                     autoScroll: true,
                     region: 'west',
                     split: true,
                     items: [
                         {
-                            xtype: 'fieldset',
-                            padding: 5,
-                            collapsed: true,
-                            collapsible: true,
-                            title: 'GW & DNS',
+                            xtype: 'form',
+                            border: 0,
+                            itemId: 'global',
+                            bodyCls: 'x-border-layout-ct',
+                            databind: {
+                                model: 'dnsgw',
+                                autoload: true,
+                                reloadonactive: true
+                            },
                             items: [
                                 {
-                                    xtype: 'ipfield',
-                                    name: 'defualtgateway1',
-                                    fieldLabel: 'Default GW1'
-                                },
-                                {
-                                    xtype: 'ipfield',
-                                    name: 'defualtgateway2',
-                                    fieldLabel: 'Default GW2'
-                                },
-                                {
-                                    xtype: 'ipfield',
-                                    name: 'dns1',
-                                    fieldLabel: 'DNS1'
-                                },
-                                {
-                                    xtype: 'ipfield',
-                                    name: 'dns2',
-                                    fieldLabel: 'DNS2'
-                                },
-                                {
-                                    xtype: 'button',
-                                    text: 'Save'
+                                    xtype: 'fieldset',
+                                    padding: 5,
+                                    collapsed: true,
+                                    collapsible: true,
+                                    title: 'GW & DNS',
+                                    items: [
+                                        {
+                                            xtype: 'ipfield',
+                                            name: 'defgw1',
+                                            fieldLabel: 'Default GW1'
+                                        },
+                                        {
+                                            xtype: 'ipfield',
+                                            name: 'defgw2',
+                                            fieldLabel: 'Default GW2'
+                                        },
+                                        {
+                                            xtype: 'ipfield',
+                                            name: 'dns1',
+                                            fieldLabel: 'DNS1'
+                                        },
+                                        {
+                                            xtype: 'ipfield',
+                                            name: 'dns2',
+                                            fieldLabel: 'DNS2'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'update',
+                                            text: 'Save'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'Refresh'
+                                        }
+                                    ]
                                 }
                             ]
                         },
                         {
-                            xtype: 'fieldset',
-                            padding: 5,
-                            collapsed: false,
-                            collapsible: true,
-                            title: 'IP Address Configuration',
+                            xtype: 'form',
+                            border: 0,
+                            itemId: 'nic',
+                            bodyCls: 'x-border-layout-ct',
                             items: [
                                 {
-                                    xtype: 'combobox',
-                                    name: 'dev',
-                                    fieldLabel: 'Device',
-                                    anchor: '100%'
-                                },
-                                {
-                                    xtype: 'ipfield',
-                                    name: 'ipaddress'
-                                },
-                                {
-                                    xtype: 'netmaskfield',
-                                    name: 'netmask'
-                                },
-                                {
-                                    xtype: 'button',
-                                    itemId: 'add',
-                                    margin: 5,
-                                    minWidth: 80,
-                                    autoWidth: true,
-                                    text: 'Add New',
-                                    formBind: true,
-                                    listeners: {
-                                        click: {
-                                            fn: me.onAddClick,
-                                            scope: me
+                                    xtype: 'fieldset',
+                                    padding: 5,
+                                    collapsed: false,
+                                    collapsible: true,
+                                    title: 'IP Address Configuration',
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            name: 'dev',
+                                            fieldLabel: 'Device',
+                                            anchor: '100%'
+                                        },
+                                        {
+                                            xtype: 'ipfield',
+                                            name: 'ipaddress'
+                                        },
+                                        {
+                                            xtype: 'netmaskfield',
+                                            name: 'netmask'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'add',
+                                            margin: 5,
+                                            minWidth: 80,
+                                            autoWidth: true,
+                                            text: 'Add New',
+                                            formBind: true
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'update',
+                                            text: 'Update'
                                         }
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    itemId: 'update',
-                                    text: 'Update',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onUpdateClick,
-                                            scope: me
-                                        }
-                                    }
+                                    ]
                                 }
                             ]
                         }
@@ -219,55 +217,6 @@ Ext.define('MyApp.view.NetConfig', {
         });
 
         me.callParent(arguments);
-    },
-
-    onDeleteClick: function(button, e, options) {
-        var records = this.down('gridpanel').getSelectionModel().getSelection();
-        this.down('gridpanel').store.remove(records);
-    },
-
-    onRefreshClick: function(button, e, options) {
-        this.reloaded = true;
-        this.down('gridpanel').store.load();
-    },
-
-    onGridpanelSelectionChange: function(tablepanel, selections, options) {
-        if (selections.length==1){
-            this.loadRecord(selections[0]);
-            this.down('#delete').enable();
-        }else{
-            this.down('#delete').disable();
-        }
-
-
-    },
-
-    onAddClick: function(button, e, options) {
-
-        var store = this.down('gridpanel').store;
-        if (this.getForm().isValid()){
-            var v = this.getForm().getFieldValues();
-            store.add(v);
-            store.sync();
-        }
-
-    },
-
-    onUpdateClick: function(button, e, options) {
-        this.getForm().updateRecord();
-        this.down('gridpanel').store.sync();
-    },
-
-    setLocale: function(lang) {
-        switch (lang){
-            case 'zh-cn':
-            this.down('#add').text = '增加';
-            break;
-            case 'en-us':
-            break;
-            default:
-            this.down('#add').text = 'Delete';
-        }
     }
 
 });

@@ -7,7 +7,7 @@
     },
     "codeClass": null,
     "userConfig": {
-        "autoLoad": true,
+        "autoLoad": false,
         "storeId": "netconfig",
         "model": "netconfig",
         "data": "[{dev:'eth0', physicdevice:'eth0', ipaddress:'192.168.10.1'},\n{dev:'eth1', physicdevice:'eth1',\nipaddress:'192.168.20.1'}]",
