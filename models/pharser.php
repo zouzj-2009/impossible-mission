@@ -21,11 +21,11 @@ function pharse_type(&$in, $pconfig){
 	return call_user_func("PHARSER::p_$type", &$in, $pconfig);
 }
 
-function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$raw=null){
+function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$raw=null){
 	$cmd = $pconfig[cmd];
 	if ($pconfig[commargs]) $args = array_merge($pconfig[commonargs], $args);
 	if (is_array($args)){
-		foreach($args as $k=>$v){ $cmd = preg_replace("/%$k%/", $v, $cmd); }
+		foreach($args as $k=>$v){ $cmd = str_replace("%$k%", $v, $cmd); }
 	}
 	//todo: using executer to do $pcmd[cmd] with $args
 	exec($cmd, $out, $retvar);

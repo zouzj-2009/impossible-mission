@@ -14,7 +14,7 @@ static $pconfigs = array(
 	busybox ifconfig %dev%
 	exit $ret
 )',
-		refcmd=>'MOD_netconfig::ifconfig', //use ifconfig's pharser config!
+		refcmd=>'MOD_netconfig::ifconfig', //use ifconfig's output pharser config!
 	),
 	'updconfig'=>array(
 		cmd=>'(

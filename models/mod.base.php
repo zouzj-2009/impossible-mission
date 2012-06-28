@@ -33,15 +33,17 @@ function check_need_vars($arr, $needles, $title='read params'){
 	foreach($k as $key) if (!isset($arr[$key])) throw new Exception(get_class($this)." $title need $needles, but $key not set.");
 }
 
-function getmod($modname, $newinstance=false){
+function getmod($modname, $loadonly=false, $newinstance=false){
 	global $__caches;
 	if (!$modname){
 		throw new Exception(get_class($this).' call getmod without modname.');
 	}
-	$mod = $__caches[mod][$modname];
-	if (!$newinstance && $mod){
-		$mod->caller = $this;
-		return $mod;
+	if (!$loadonly){
+		$mod = $__caches[mod][$modname];
+		if (!$newinstance && $mod){
+			$mod->caller = $this;
+			return $mod;
+		}
 	}
 	//create new one!
 	if (!file_exists("../models/mod.$modname.php")){
@@ -49,8 +51,9 @@ function getmod($modname, $newinstance=false){
 		throw new Exception("mod $modname not found");
 	}
 	include_once("../models/mod.$modname.php");
-	$modname = "MOD_$modname";
-	$mod = new $modname($modname);
+	$name = "MOD_$modname";
+	if ($loadonly) return $name;
+	$mod = new $name($modname);
 	$mod->caller = $this;
 	return $mod;
 }
@@ -75,13 +78,28 @@ function get_pconfig($class, $cmd)
 	return $pconfig;
 }
 
-function callcmd($cmd, $args=array(), &$data=null){
+function callcmd($cmd, &$cmderror, &$params, &$records, &$extra=null){
 //call internal cmd in pconfigs
-	if (!$this->get_pconfig($this, $cmd)) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
-	$pconfig = $this->get_pconfig($this, $cmd);
-	$r = PHARSER::pharse_cmd($cmd, $pconfig, $args, $cmderror);
-	if ($data !== null) $data = $r;
-	return $cmderror;
+//extra args using array('prefix'=>array_data or 'key'=>value);
+//$cmd canbe "MOD::cmd"
+	$cx = explode('::', $cmd);
+	if (count($cx)==2){
+		$mod = $this->getmod($cx[0]);
+		$c = $cx[1];
+	}else{
+		$mod = $this;
+		$c = $cmd;
+	}
+	$pconfig = $this->get_pconfig($mod, $c);
+	if (!$pconfig) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
+	$p = $params;
+	$p = array_merge($p, $records);
+	if (is_array($extra)) foreach($extra as $k=>$v){
+		if (is_array($v)) foreach($v as $name=>$value) $p[$k."_".$name] = $value;
+		else $p[$name] = $value;
+	}
+	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderror, $mod);
+	return $r;
 }
 
 //todo: call mod on other server!
@@ -103,7 +121,6 @@ function callmod($modname, $action, $params, $records, $simpleresult=true){
 //don't overwrite this method generally.
 function read($params, $records){
 	$cmd = $this->defaultcmds[read];
-	$pconfig = $this->get_pconfig($this, $cmd);
 	$msg = null;
 	try{
 		if (method_exists($this, 'before_read')){
@@ -113,7 +130,7 @@ function read($params, $records){
 			$r = parent::read($params, $records);
 		}else{
 			if ($cmd){//get read result by cmd
-				$r = PHARSER::pharse_cmd($cmd, $pconfig, $params, $cmderror);
+				$r = $this->callcmd($cmd, $cmderror, $params);
 			}else{// get read result by do_read of sub_classes
 				$r = $this->do_read($params, $records);
 			}
@@ -175,13 +192,9 @@ function update($params, $records){
 					//can be skipped by set an empty do_update function in subclass
 					parent::update($params, $record, $old);	 
 				}else{
-					$pconfig = $this->get_pconfig($this, $cmd);
-					$oldx = array();
-					if (is_array($old)) foreach($old as $k=>$v) $oldx["old_$k"] = $v;
-					$p = $params;
-					$p = array_merge($p, $record, $oldx);
 					if ($cmd){//get update result by cmd
-						$r = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						$extra = array(old=>$old);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
 							throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
 						}
@@ -199,11 +212,8 @@ function update($params, $records){
 				if ($cmd){//get update result by cmd
 					foreach($records as $record){
 						$old = $old_records[$i];
-						$oldx = array();
-						if (is_array($old)) foreach($old as $k=>$v) $oldx["old_$k"] = $v;
-						$p = $params;
-						$p = array_merge($p, $record, $oldx);
-						$r = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						$extra = array(old=>$old);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
 							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
 						}
@@ -259,11 +269,8 @@ function destroy($params, $records){
 					//can be skipped by set an empty do_update function in subclass
 					parent::destroy($params, $record);	 
 				}else{
-					$pconfig = $this->get_pconfig($this, $cmd);
-					$p = $params;
-					$p = array_merge($p, $record);
 					if ($cmd){//get destroy result by cmd
-						$r = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record);
 						if ($cmderror){
 							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
 						}
@@ -280,9 +287,7 @@ function destroy($params, $records){
 				//cmd has to be one_by_one!
 				if ($cmd){//get destroy result by cmd
 					foreach($records as $record){
-						$p = $params;
-						$p = array_merge($p, $record);
-						$r = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record);
 						if ($cmderror){
 							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
 						}
@@ -337,14 +342,9 @@ function create($params, $records){
 					//send new_records(just created) for reference!
 					parent::create($params, $record, $new_record, $new_records);	 
 				}else{
-					$pconfig = $this->get_pconfig($this, $cmd);
-					$p = $params;
-					$last_created = $new_records[count($new_records)-1];
-					$lastx = array();
-					if ($last_created) foreach($last_created as $k=>$v) $lastx["last_$k"]=$v;
-					$p = array_merge($p, $record, $lastx);
+					$extra = array(last=>$new_records[count($new_records)-1]);
 					if ($cmd){//get create result by cmd
-						$new_record = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						$new_record = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
 							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
 						}
@@ -362,13 +362,8 @@ function create($params, $records){
 				//cmd has to be one_by_one!
 				if ($cmd){//get create result by cmd
 					foreach($records as $record){
-						$pconfig = $this->get_pconfig($this, $cmd);
-						$p = $params;
-						$last_created = $new_records[count($new_records)-1];
-						$lastx = array();
-						if ($last_created) foreach($last_created as $k=>$v) $lastx["last_$k"]=$v;
-						$p = array_merge($p, $record, $lastx);
-						$new_record = PHARSER::pharse_cmd($cmd, $pconfig, $p, $cmderror);
+						$extra = array(last=>$new_records[count($new_records)-1]);
+						$new_record = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
 							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
 						}

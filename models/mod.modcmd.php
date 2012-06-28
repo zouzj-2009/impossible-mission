@@ -12,15 +12,15 @@ function read($params, $records){
 	try{
 		$mod = $this->getmod($params[_mod]);
 		$data = array();
-		$r = $mod->callcmd($params[_cmd], $params, $data);
+		$r = $mod->callcmd($params[_cmd], $cmderror, $params, $data);
 		return array(
 			success=>true,
 			data=>array(
 				array(
 					cmd=>$params[_cmd],
-					cmdresult=>$r,
+					cmderror=>$cmderror,
 					//return value or printed value
-					data=>$param[_retvalue]?$data:print_r($data, true),
+					data=>$params[_retvalue]?$r:print_r($r, true),
 				),
 			)
 		);

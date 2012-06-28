@@ -69,6 +69,11 @@ try{
 		}
 
 		$jid=$_REQUEST['jid'];
+		//for test purpose
+		if ($env && $jid && $mid == 'modcmd'){
+			$params[_cmd] = $jid;
+			$jid = '';
+		}
 		@ob_start();
 		ob_implicit_flush(true);
 		//todo: do security check, or will be DOSed!
