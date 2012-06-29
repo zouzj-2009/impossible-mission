@@ -176,10 +176,11 @@ function log($level, $log){
 	echo "LOG@$level $log";
 }
 
-function callcmd($cmd, &$cmderror, &$params, &$records, &$extra=null){
+function callcmd($cmd, &$cmderror=null, &$params=null, &$records=null, &$extra=null){
 //call internal cmd in pconfigs
 //extra args using array('prefix'=>array_data or 'key'=>value);
 //$cmd canbe "MOD::cmd"
+	$cmderr = '';
 	$cx = explode('::', $cmd);
 	if (count($cx)==2){
 		$mod = $this->getmod($cx[0]);
@@ -190,14 +191,15 @@ function callcmd($cmd, &$cmderror, &$params, &$records, &$extra=null){
 	}
 	$pconfig = $this->get_pconfig($mod, $c);
 	if (!$pconfig) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
-	$p = $params;
+	$p = $params?$params:array();
 	if (is_array($records)) $p = array_merge($p, $records);
 	if ($extra && is_array($extra)) foreach($extra as $k=>$v){
 		if (is_array($v)) foreach($v as $name=>$value) $p[$k."_".$name] = $value;
 		else $p[$name] = $value;
 	}
 	$logs = array();
-	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderror, $mod, $logs);
+	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderr, $mod, $logs);
+	if ($cmderror !== null) $cmderror = $cmderr;
 	if ($logs){
 		foreach($logs as $log){
 			$level = str_replace("LOG@", '', $log[record_id]);
@@ -211,13 +213,18 @@ function callcmd($cmd, &$cmderror, &$params, &$records, &$extra=null){
 function callmod_remote($serverconfig, $modname, $action, $params, $records, $simpleresult=true){
 }
 
-function callmod($modname, $action, $params, $records, $simpleresult=true){
+function callmod($modname, $action, $params, $records, $simpleresult=true, $throw=false){
 	$mod = $this->getmod($modname);
 	$r = $mod->$action($params, $records);
 	if (!$simpleresult) return $r;
+	if (!$r[success]){
+		if ($throw) throw new Exception("callmod $modname::$action unsuccessful.");
+		return false;
+	}
 	if ($action == 'read') return $r[data];
-	if ($r[data]) return $r[data];//created(new), updated(old), destroied(old)
-	return $r[success];
+	if ($action == 'create') return $r[created];
+	if ($action == 'update') return $r[updated];
+	if ($action == 'destroy') return $r[destroied];
 }
 
 /*
@@ -318,7 +325,7 @@ function update($params, $records){
 			$p[_readold] = true;
 			//incase write in some table, read in view!
 			if ($this->tablewrite) $p[_writetable] = $this->tablewrite;
-			if (!$cmd && !function_exists($this, 'do_update')){
+			if (!$cmd && !method_exists($this, 'do_update')){
 				$r = parent::read($p, $records);
 			}else{
 				$r = $this->read($p, $records);
@@ -359,7 +366,7 @@ function update($params, $records){
 						$updated[] = $record;
 						$retold[] = $old;
 					}else{// get update result by do_update of sub_classes
-						$r = $this->do_update($params, array($record), $old);
+						$r = $this->do_update($params, array($record), array($old));
 						$changes += $r[changes];
 						$updated = array_merge(updated, $r[updated]);
 						$retold[] = $old;
@@ -436,7 +443,7 @@ function destroy($params, $records){
 			$p[_readold] = true;
 			//incase write in some table, read in view!
 			if ($this->tablewrite) $p[_writetable] = $this->tablewrite;
-			if (!$cmd && !function_exists($this, 'do_destroy')){
+			if (!$cmd && !method_exists($this, 'do_destroy')){
 				$r = parent::read($p, $records);
 			}else{
 				$r = $this->read($p, $records);
@@ -564,9 +571,7 @@ function create($params, $records){
 						$changes ++;
 						$created[] = array_shift($r);
 					}else{// get create result by do_destroy of sub_classes
-						$p = $params;
-						$p = array_merge($p, array(_created=>$created));
-						$r = $this->do_create($p, array($record));
+						$r = $this->do_create($params, array($record), $created);
 						$changes += $r[changes];
 						$created = array_merge($created, $r[created]);
 					}
@@ -591,7 +596,7 @@ function create($params, $records){
 						$created[] = array_shift($r);
 					}
 				}else{// get create result by do_create of sub_classes
-					$r = $this->do_create($params, $records, $new_records);
+					$r = $this->do_create($params, $records);
 					$created = $r[created];
 					$changes = $r[changes];
 				}
