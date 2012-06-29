@@ -22,6 +22,8 @@ var $savechangeconfig = array(
 );
 
 var $saving_fields = null;
+var $readbeforeupdate = true;	//weather read old data before update
+var $readbeforedestroy = false;	//weather read old data before destroy
 */
 
 //we config defaultcmds and batch model for our operation
@@ -36,6 +38,8 @@ var $batchsupport = array(
 	update=>true, create=>false, destroy=>true
 );
 
+//we set it, for get destroied data by condition maybe
+var $readbeforedestroy = true;
 
 //config fields recorded in sysconfig table, note! no space between fields!
 //if dont' want to saving, just redefine $savechangeconfig as null
@@ -139,12 +143,22 @@ var $valid_pharser = array(
 		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
 	),
 	'just_output'=>array(
+		cmd=>'shell cmd to run',
+		executor=>executor_mode,	//optional, default is shell.
+		type=>'records_span_lines',
+		name=>'name_of_return_key',
+		endout=>'/pattern for end output, this line is included/',
+		endoutx=>'/pattern for end output, this line is excluded/',
+		strip=>'/pattern was stripped/',
+		ignore=>'/ignore pattern/',	//optional, ignored lines
+		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
 	),
 );
 
 
 //my command define
 static $pconfigs = array(
+	//default cmd for reading info, return array of record: [ record ].
 	'get_info'=>array(
 //command output start with #@LOG@LEVEL will be logged at log level LEVEL!
 //multiline log supported, null line(just \n) means log end.
@@ -173,10 +187,11 @@ static $pconfigs = array(
 		debug=>false,	//true for pconfig debug purpose
 	),	
 		
+	//default cmd for create record, run one by one, after ending, get created record in an array [ created ].
 	'create_one' =>array(
 		//if in-batchmode, last created record was supplied by last_$fieldname
 		cmd=>'(
-	echo "#@LOG@INFO create new one for %modname% ...\n"
+	echo "#@LOG@INFO create new one for %modname%(last created:%last_modname%) ...\n"
 	echo "do something ..."
 	echo "recordid=new"
 	echo "modname=%modname%"
@@ -186,6 +201,9 @@ static $pconfigs = array(
 		//use get_info's pharser config. create then read created.
 		refcmd=>'get_info',
 	),
+
+	//default cmd for update record, in default, old record will be read out and transfer in for reference.
+	//$this->readold is array of key fields for identify the records, set it to null will cause old data not be read before update.
 	'update_one'=>array(
 		//old record was supplied by old_$fieldname
 		cmd=>'(
@@ -193,6 +211,9 @@ static $pconfigs = array(
 	echo "do update...."
 )',
 	),
+
+	//default cmd for destroy record, in default, old record will be read out and transfer in for reference.
+	//$this->readold is array of key fields for identify the records, set it to null will cause old data not be read before update.
 	'destroy_it'=>array(
 		cmd=>'(
 	echo "#@LOG@INFO destroy %record_id%\n"

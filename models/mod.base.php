@@ -29,6 +29,8 @@ var $batchsupport = array(// false|true|'one_by_one'
 	update=>true, create=>'one_by_one', destroy=>true,
 );
 var $readold = array('id'); 	//using this keys as read before update key indexes
+var $readbeforeupdate = true;	//weather read old data before update
+var $readbeforedestroy = false;	//weather read old data before destroy
 
 var $savechangeconfig = array(
 	tablename=>'sysconfig', //table for store changing config data.
@@ -273,10 +275,18 @@ function update($params, $records){
 			throw new Exception("batch update not support, but ".count($records)." are supplied.");
 		if (!$records)//so, the destroy has to do read before destroy records.
 			throw new Exception("update, but null records supplied.");
-		if ($this->readold){
-			if ($this->tablewrite) $r = parent::read($params, $records, $this->tablewrite);
-			else $r = $this->read(array_merge($params,array(_readold=>true)), $records);
+		if ($this->readbeforeupdate){
+			$p = $params;
+			$p[_readold] = true;
+			//incase write in some table, read in view!
+			if ($this->tablewrite) $p[_writetable] = $this->tablewrite;
+			if (!$cmd && !function_exists($this, 'do_update')){
+				$r = parent::read($p, $records);
+			}else{
+				$r = $this->read($p, $records);
+			}
 			if ($r[success]) $old_records = $r[data];
+			else throw new Exception("fail to read old data before update.");
 		}
 		if (method_exists($this, 'before_update')){
 			$next = $this->before_update($params, $records, $old_records);	
@@ -383,6 +393,19 @@ function destroy($params, $records){
 			throw new Exception("batch destroy not support, but ".count($records)." are supplied.");
 		if (!$records)//so, the destroy has to do read before destroy records.
 			throw new Exception("destroy, but null records supplied.");
+		if ($this->readbeforedestroy){
+			$p = $params;
+			$p[_readold] = true;
+			//incase write in some table, read in view!
+			if ($this->tablewrite) $p[_writetable] = $this->tablewrite;
+			if (!$cmd && !function_exists($this, 'do_destroy')){
+				$r = parent::read($p, $records);
+			}else{
+				$r = $this->read($p, $records);
+			}
+			if ($r[success]) $old_records = $r[data];
+			else throw new Exception("fail to read old data before destroy.");
+		}
 		if (method_exists($this, 'before_destroy')){
 			$next = $this->before_destroy($params, $records);	
 			if ($next == 'return'){
