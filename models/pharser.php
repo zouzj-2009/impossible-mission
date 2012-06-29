@@ -38,13 +38,14 @@ function debug($tag, $info){
 function pharse_type(&$in, $pconfig){
 	$type = $pconfig[type];
 	if (!method_exists('PHARSER', "p_$type")){
+		PHARSER::debug("PHARSER::debug", "wrong pharse type $type!");
 		throw new Exception(__FUNCTION__." type $type not supported!");
 	}
 	if ($pconfig[debug]) PHARSER::debug("pharsing type", $type);
 	return call_user_func("PHARSER::p_$type", &$in, $pconfig);
 }
 
-function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null){
+function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null, $executor=null){
 	$cmd = $pconfig[cmd];
 	if ($pconfig[commargs]) $args = array_merge($pconfig[commonargs], $args);
 	if (is_array($args)){
@@ -53,7 +54,11 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null){
 		$cmd = preg_replace("/%[^ ]+%/", '', $cmd);
 	}
 	//todo: using executer to do $pcmd[cmd] with $args
-	exec($cmd, $out, $retvar);
+	if ($executor){
+		$executor->exec($cmd, $out, $retvar);
+	}else{
+		exec($cmd, $out, $retvar);
+	}
 
 	echo "$name: $cmd return $retvar\n";
 	$cmdresult = $retvar;
@@ -70,6 +75,7 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null){
 	if ($pconfig['logpharser']){
 		if ($log!==null){
 			$o = $out;
+			if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd logx -----------------');
 			$log = PHARSER::pharse_type($o, $pconfig['logpharser']);
 		}
 	}
@@ -77,9 +83,13 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null){
 	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd output---------------');
 	if ($pconfig[debug]) PHARSER::debug("$name.output", $out);
 	if ($retvar && $pconfig['errpharse']){
+		if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd fail -----------------');
 		return PHARSER::pharse_type($out, $pconfig['errpharser']);
 	}
-	if (!$pconfig[type]) return $out;	//directly out;
+	if (!$pconfig[type]){
+	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- no type configed, direct out -----');
+		return $out;	//directly out;
+	}
 	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- pharser trace -----------');
 	return PHARSER::pharse_type($out, $pconfig);
 }
@@ -277,7 +287,7 @@ function p_keyvalues_in_one_line(&$in, $pconfig){
 		}
 		if (!$line) return array();
 	}else $line = $in;
-	if (!$pconfig[matcher]) $pconfig[matcher] = '/(.*)/=/(.*)/';
+	if (!$pconfig[matcher]) $pconfig[matcher] = '/([^=]*) *= *([^ ].*)/';
 	$r = array();
 	if (preg_match_all($pconfig[matcher], $line, $m)){
 		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [matcher=".$pconfig[matcher]."]", $m);
@@ -327,8 +337,8 @@ function p_records_span_lines(&$in, $pconfig){
 //idindexed:	true|false, if true, use recordid as return array index.
 //fieldstype:	[simple|mixed], all fields has same model or mixed models. 
 //fieldsmode:	pconfig array, for mixed model, is a multi-pconfig, indexed by fieldgroup name, each pconfig must has these key:
-//	matcher:	regexp: lines match this group.
-//	mergeup:	[true|false]: merge value to fater, other than store in a group array.
+//	gmatcher:	regexp: lines match this group.
+//	gmergeup:	[true|false]: merge value to fater, other than store in a group array.
 //
 	$r = array();
 	if (!$pconfig[recordstart]){
@@ -395,8 +405,8 @@ function p_records_span_lines(&$in, $pconfig){
 			$cur_record = array_merge($cur_record, $fields);
 		}else{ //for mixed models, try each group
 			foreach($pconfig[fieldsmode] as $group=>$gpconfig){
-				if (!preg_match($gpconfig[matcher], $line)){
-					if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [recordignore]", $pconfig[recordignore]);
+				if (!preg_match($gpconfig[gmatcher], $line)){
+					if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." !gmatch [gmatcher]", $pconfig[recordignore]);
 					continue;
 				}
 				//try this group;
@@ -406,7 +416,7 @@ function p_records_span_lines(&$in, $pconfig){
 				//$gpconfig[fieldsmode][debug] = $pconfig[debug];
 				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." $group fields [pconfig]", $gpconfig[fieldsmode]);
 				$fields = PHARSER::pharse_type($in, $gpconfig[fieldsmode]);
-				if ($gpconfig[fieldsmode][mergeup])
+				if ($gpconfig[fieldsmode][gmergeup])
 					$cur_record = array_merge($cur_record, $fields);
 				else
 					$cur_record[$group] = $fields;

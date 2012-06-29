@@ -157,7 +157,7 @@ function callcmd($cmd, &$cmderror, &$params, &$records, &$extra=null){
 	$pconfig = $this->get_pconfig($mod, $c);
 	if (!$pconfig) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
 	$p = $params;
-	$p = array_merge($p, $records);
+	if (is_array($records)) $p = array_merge($p, $records);
 	if ($extra && is_array($extra)) foreach($extra as $k=>$v){
 		if (is_array($v)) foreach($v as $name=>$value) $p[$k."_".$name] = $value;
 		else $p[$name] = $value;
