@@ -27,6 +27,32 @@ if ($env){
 }
 
 $output = null;
+function shut_down_catcher(){
+	global $callback;
+	$error = error_get_last();
+	if (!$error) return;
+	if ($error[type] != 1) return;
+	$o = @ob_get_flush();
+	@ob_clean();
+	$trace = "File: ".basename($error['file'])."(line-".$error['line'].")";
+	//start output
+	$output = array(
+		success=>false,
+		msg=>$error[message],
+		trace=>$trace,
+		output=>$o,
+	);
+	if ($callback) {
+	    header('Content-Type: text/javascript');
+	    echo $callback . '(' . json_encode($output) . ');';
+	} else {
+	    header('Content-Type: application/x-json');
+	    echo json_encode($output);
+	}
+}
+
+register_shutdown_function('shut_down_catcher');
+
 try{
 	if ($preq){//run as serice
 		$preq = unserialize($preq);
@@ -53,7 +79,10 @@ try{
 		$mod = new $modname($mid, $jid);
 		$mod->sendPending("$mid $action xstarted ...", 0);
 		//usleep(200);
-		$output = $mod->$action($params, $records);
+		if ($action == 'read')
+			$output = $mod->$action($params);
+		else
+			$output = $mod->$action($params, $records);
 		echo "$mid.$action.$jid done.\n";
 		$mod->sendDone($output);
 		ob_end_flush();
@@ -115,7 +144,10 @@ try{
 					echo "_PREQ_=\"".addslashes($preq)."\"\n";
 				}
 			}else{
-				$output = $mod->$action($params, $records);
+				if ($action == 'read')
+					$output = $mod->$action($params);
+				else
+					$output = $mod->$action($params, $records);
 			}
 		}else{
 			if ($env){

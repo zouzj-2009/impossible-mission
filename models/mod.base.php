@@ -43,7 +43,7 @@ var $savechangeconfig = array(
 );
 
 function savechanges($action, $params, $changed, $oldif){
-	$new = $this->read(array());//get all and store it!
+	$new = $this->read(array(), array());//get all and store it!
 	$mod = $this->mid;
 	$old = array_shift($this->dbquery("SELECT rowid,* FROM sysconfig WHERE mod='$mod'"));
 	if (!$old){
@@ -53,7 +53,7 @@ function savechanges($action, $params, $changed, $oldif){
 			'current'=>serialize($new),
 			'currenttime'=>date('Y-m-d H:i:s', time()),
 		);
-		parent::create(array(_writetable=>'sysconfig'), $r);
+		parent::create(array(_writetable=>'sysconfig'), array($r));
 		return $new;
 	}
 	$r = array(
@@ -64,7 +64,7 @@ function savechanges($action, $params, $changed, $oldif){
 		'current'=>serialize($new),
 		'currenttime'=>date('Y-m-d H:i:s', time()),
 	);
-	parent::update(array(_writeable=>'sysconfig'), $r);
+	parent::update(array(_writetable=>'sysconfig'), array($r));
 	// subclass can using parent::savechanges to get all readed data
 	return $new;	
 }
@@ -234,7 +234,10 @@ function read($params, $records){
 function update($params, $records){
 	$cmd = $this->defaultcmds[update];
 	$msg = null;
-	$old_records = array();
+	$old_records = array(); //read before whole updates
+	$changes = 0;
+	$updated = array();
+	$retold = array(); //for return
 	try{
 		if (!$this->batchsupport['update'] && count($records)>1) 
 			throw new Exception("batch update not support, but ".count($records)." are supplied.");
@@ -252,7 +255,8 @@ function update($params, $records){
 				return array(
 					success=>true, //if false, exp was thrown already.
 					old=>$old_records,
-					data=>$records,
+					updated=>$records,
+					changes=>count($updated),
 				);
 			}
 		}
@@ -262,58 +266,78 @@ function update($params, $records){
 				$old = $old_records[$i];
 				if (!$cmd && !method_exists($this, 'do_update')){//dbonly
 					//can be skipped by set an empty do_update function in subclass
-					parent::update($params, $record, $old);	 
+					$r = parent::update($params, array($record));	 
+					$changes += $r[changes];
+					$updated = array_merge(updated, $r[updated]);
+					$retold[] = $old;
 				}else{
 					if ($cmd){//get update result by cmd
 						$extra = array(old=>$old);
-						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
+						$this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
 							throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
 						}
+						$changes ++;
+						$updated[] = $record;
+						$retold[] = $old;
 					}else{// get update result by do_update of sub_classes
-						$this->do_update($params, $record, $old);
+						$r = $this->do_update($params, array($record), $old);
+						$changes += $r[changes];
+						$updated = array_merge(updated, $r[updated]);
+						$retold[] = $old;
 					}
 				}
 			}
 		}else{//do it batchly
 			if (!$cmd && !method_exists($this, 'do_update')){//dbonly
 				//can be skipped by set an empty do_update function in subclass
-				parent::update($params, $records, $old_records);	 
+				$r = parent::update($params, $records);	 
+				$changes = $r[changes];
+				$updated = $r[updated];
+				$retold = $old_records;
 			}else{
 				//cmd has to be one_by_one!
 				if ($cmd){//get update result by cmd
 					foreach($records as $record){
 						$old = $old_records[$i];
 						$extra = array(old=>$old);
-						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
+						$this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
 							throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
 						}
+						$changes ++;
+						$updated[] = $record;
+						$retold[] = $old;
 					}
 				}else{// get update result by do_update of sub_classes
-					$this->do_update($params, $records, $old_records);
+					$r = $this->do_update($params, $records, $old_records);
+					$changes = $r[changes];
+					$updated = $r[updated];
+					$retold = $old_records;
 				}
 			}
 		}
 		if (method_exists($this, 'after_update')){
-			$this->after_update($params, $records, $old_records);	
+			$this->after_update($params, $updated, $retold);	
 		}
 		if ($cmd || method_exists($this, 'do_update')){
-			$this->savechanges('update', $params, $records, $old_records);
+			$this->savechanges('update', $params, $updated, $retold);
 		}
 	}catch(Exception $e){//rollback?
 		return array(
 			success=>false,
 			msg=>$e->getMessage(),
-			data=>$records,
-			old=>$old_records,
+			updated=>$updated,
+			changes=>$changes,
+			old=>$retold,
 		);
 	}
 	return array(
 		success=>true,
 		msg=>$msg?$msg:"$this->mid update done.",
-		data=>$records,
-		old=>$old_records,
+		updated=>$updated,
+		changes=>$changes,
+		old=>$retold,
 	);
 }
 
@@ -322,6 +346,8 @@ function destroy($params, $records){
 	$msg = null;
 	$next = 'continue';
 	$old_records = $records;
+	$destroied = array();
+	$changes = 0;
 	try{
 		if (!$this->batchsupport['destroy'] && count($records)>1) 
 			throw new Exception("batch destroy not support, but ".count($records)." are supplied.");
@@ -334,7 +360,8 @@ function destroy($params, $records){
 				return array(
 					success=>true,
 					msg=>$msg?$msg:"$this->mid destroy done.",
-					data=>$old_records,
+					destroied=>$old_records,
+					changes=>count($old_records),
 				);
 			}
 		}
@@ -343,33 +370,41 @@ function destroy($params, $records){
 				$old = $record;
 				if (!$cmd && !method_exists($this, 'do_destroy')){//dbonly
 					//can be skipped by set an empty do_update function in subclass
-					parent::destroy($params, $record);	 
+					parent::destroy($params, array($record));	 
 				}else{
 					if ($cmd){//get destroy result by cmd
-						$r = $this->callcmd($cmd, $cmderror, $params, $record);
+						$this->callcmd($cmd, $cmderror, $params, $record);
 						if ($cmderror){
 							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
 						}
 					}else{// get destroy result by do_destroy of sub_classes
-						$this->do_destroy($params, $record);
+						$this->do_destroy($params, array($record));
 					}
 				}
+				$destroied[] = $old;
+				$changes ++;
 			}
 		}else{//do it batchly
 			if (!$cmd && !method_exists($this, 'do_destroy')){//dbonly
 				//can be skipped by set an empty do_destroy function in subclass
-				parent::destroy($params, $records);	 
+				$r = parent::destroy($params, $records);	 
+				$destroied = $r[destroied];
+				$changes = $r[changes];
 			}else{
 				//cmd has to be one_by_one!
 				if ($cmd){//get destroy result by cmd
 					foreach($records as $record){
-						$r = $this->callcmd($cmd, $cmderror, $params, $record);
+						$this->callcmd($cmd, $cmderror, $params, $record);
 						if ($cmderror){
 							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
 						}
+						$destroied[] = $record;
+						$changes ++;
 					}
 				}else{// get destroy result by do_destroy of sub_classes
-					$this->do_destroy($params, $records);
+					$r = $this->do_destroy($params, $records);
+					$destroied = $r[destroied];
+					$changes = $r[changes];
 				}
 			}
 		}
@@ -383,13 +418,15 @@ function destroy($params, $records){
 		return array(
 			success=>false,
 			msg=>$e->getMessage(),
-			old=>$old_records,
+			destroied=>$destroied,
+			changes=>$changes,
 		);
 	}
 	return array(
 		success=>true,
 		msg=>$msg?$msg:"$this->mid destroy done.",
-		data=>$old_records,
+		destroied=>$destroied,
+		changes=>$changes,
 	);
 }
 
@@ -398,6 +435,8 @@ function create($params, $records){
 	$msg = null;
 	$next = 'continue';
 	$new_records = array();
+	$created = array();
+	$changes = 0;
 	try{
 		if (!$this->batchsupport['create'] && count($records)>1) 
 			throw new Exception("batch create not support, but ".count($records)." are supplied.");
@@ -410,7 +449,8 @@ function create($params, $records){
 				return array(
 					success=>true,
 					msg=>$msg?$msg:"$this->mid create done.",
-					data=>$new_records,
+					created=>$new_records,
+					changes=>count($new_records),
 				);
 			}
 		}
@@ -420,37 +460,49 @@ function create($params, $records){
 				if (!$cmd && !method_exists($this, 'do_create')){//dbonly
 					//can be skipped by set an empty do_create function in subclass
 					//send new_records(just created) for reference!
-					parent::create($params, $record, $new_record, $new_records);	 
+					$r = parent::create($params, array($record));
+					$changes += $r[changes];
+					$created = array_merge($created, $r[created]);
 				}else{
-					$extra = array(last=>$new_records[count($new_records)-1]);
+					$extra = array(last=>$created[count($created)-1]);
 					if ($cmd){//get create result by cmd
-						$new_record = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
 							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
 						}
+						$changes ++;
+						$created[] = array_shift($r);
 					}else{// get create result by do_destroy of sub_classes
-						$this->do_create($params, $record, $new_record, $new_records);
+						$p = $params;
+						$p = array_merge($p, array(_created=>$created));
+						$r = $this->do_create($p, array($record));
+						$changes += $r[changes];
+						$created = array_merge($created, $r[created]);
 					}
 				}
-				$new_records[] = $new_record;
 			}
 		}else{//do it batchly
 			if (!$cmd && !method_exists($this, 'do_create')){//dbonly
 				//can be skipped by set an empty do_create function in subclass
-				parent::create($params, $records, $new_records);	 
+				$r = parent::create($params, $records);	 
+				$created = $r[created];
+				$changes = $r[changes];
 			}else{
 				//cmd has to be one_by_one!
 				if ($cmd){//get create result by cmd
 					foreach($records as $record){
-						$extra = array(last=>$new_records[count($new_records)-1]);
-						$new_record = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
+						$extra = array(last=>$created[count($created)-1]);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
 							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
 						}
-						$new_records[] = $new_record;
+						$changes ++;
+						$created[] = array_shift($r);
 					}
 				}else{// get create result by do_create of sub_classes
-					$this->do_create($params, $records, $new_records);
+					$r = $this->do_create($params, $records, $new_records);
+					$created = $r[created];
+					$changes = $r[changes];
 				}
 			}
 		}
@@ -464,31 +516,18 @@ function create($params, $records){
 		return array(
 			success=>false,
 			msg=>$e->getMessage(),
+			created=>$created,
+			changes=>$changes,
 		);
 	}
 	return array(
 		success=>true,
 		msg=>$msg?$msg:"$this->mid create done.",
-		data=>$new_records,
+		created=>$created,
+		changes=>$changes,
 	);
 }
 
-function pending_test($params, $records){
-	global $_REQUEST;
-	$count = 2;
-	if ($_REQUEST['seqid']) sleep(2);
-	if (0 || $_REQUEST['seqid'] >= $count)
-		$output=array(success=>false, msg=>'server job fail.');
-	else
-		$output=array(success=>false, pending=>array(
-			seq=>$_REQUEST['seqid'],
-			msg=>'big job pending...'.$_REQUEST['seqid'],
-			text=>'server doing '.$_REQUEST['_act'].' '.($_REQUEST['seqid']/$count*100).'%',
-			title=>'Server Doing Title',
-			number=>$_REQUEST['seqid']/$count
-			));
-	return $output;
-}
-
+//end of class
 }
 ?>
