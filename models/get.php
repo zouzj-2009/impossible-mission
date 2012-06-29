@@ -99,6 +99,9 @@ try{
 
 		$jid=$_REQUEST['jid'];
 		//for test purpose
+		if ($env && getenv('COND')){
+			$params[_condition] = getenv('COND');
+		}
 		if ($env && $jid && $mid == 'modcmd'){
 			$params[_cmd] = $jid;
 			$jid = '';

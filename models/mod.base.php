@@ -55,12 +55,11 @@ function strip_unsaving(&$records){
 function savechanges($action, $params, $changed, $oldif=null){
 //we just read current config and save!
 //sub class can override this.
-
+	//not save to sysconfig, should be done by subclass's savechanges or before/do/after_$action
+	if (!$this->savechangeconfig) return;
 	$r = $this->read(array(), array());//get all and store it!
 	$new = $r[data];
-print_r($new);
 	$this->strip_unsaving($new);
-print_r($new);
 	$mod = $this->mid;
 	$old = array_shift($this->dbquery("SELECT rowid,* FROM sysconfig WHERE mod='$mod'"));
 	if (!$old){
@@ -69,6 +68,7 @@ print_r($new);
 			mod=>$mod,
 			'current'=>serialize($new),
 			'currenttime'=>date('Y-m-d H:i:s', time()),
+			byaction=>'create auto',
 		);
 		parent::create(array(_writetable=>'sysconfig'), array($r));
 		return $new;
@@ -80,6 +80,7 @@ print_r($new);
 		lasttime=>$old['currenttime'],
 		'current'=>serialize($new),
 		'currenttime'=>date('Y-m-d H:i:s', time()),
+		byaction=>$action,
 	);
 	parent::update(array(_writetable=>'sysconfig'), array($r));
 	// subclass can using parent::savechanges to get all readed data
@@ -195,20 +196,32 @@ function getid(&$record){
 //If has db, use before_read to change or add params. use after_read to fix result.
 //IF has not db, use do_read/cmd to get info. usually, no before/after_read needed, all in do_read.
 //don't overwrite this method generally.
-function read($params, $records){
+function read($params, $records=null){
 	$cmd = $this->defaultcmds[read];
 	$msg = null;
+	$next = 'continue';
 	try{
 		if (method_exists($this, 'before_read')){
-			$this->before_read($params, $records);	
+			if (!$records) $records = array();
+			//records carry out
+			$next = $this->before_read($params, $records);	
+			if ($next == 'return'){
+				return array(
+					success=>true,
+					data=>$records,
+					msg=>$msg?$msg:"$this->mid read done.",
+				);
+			}
 		}
 		if (!$cmd && !method_exists($this, 'do_read')){//dbonly
 			$r = parent::read($params, $records);
+			$r = $r[data];
 		}else{
 			if ($cmd){//get read result by cmd
 				$r = $this->callcmd($cmd, $cmderror, $params, $records);
 			}else{// get read result by do_read of sub_classes
 				$r = $this->do_read($params, $records);
+				$r = $r[data];
 			}
 			//todo: howto
 			if ($this->synctodb){
@@ -216,7 +229,7 @@ function read($params, $records){
 			}
 		}
 		if (method_exists($this, 'after_read')){
-			$r = $this->after_read($params, $r, $records);	
+			$this->after_read($params, $r);	
 		}
 	}catch(Exception $e){
 		return array(
