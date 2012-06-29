@@ -32,16 +32,16 @@ static $pconfigs = array(
 		echo "#@LOG@0 change defgw from $1 to $2\n"
 	}
 	if [ "%dns1%" != "%old_dns1%" ];then
-		changedns %old_dns1% %dns1%
+		changedns "%old_dns1%" "%dns1%"
 	fi
 	if [ "%defgw1%" != "%old_defgw1%" ];then
-		changegw %old_defgw1% %defgw1%
+		changegw "%old_defgw1%" "%defgw1%"
 	fi
 	if [ "%dns2%" != "%old_dns2%" ];then
-		changedns %old_dns2% %dns2%
+		changedns "%old_dns2%" "%dns2%"
 	fi
 	if [ "%defgw2%" != "%old_defgw2%" ];then
-		changegw %old_defgw2% %gw2%
+		changegw "%old_defgw2%" "%gw2%"
 	fi
 		
 )',

@@ -81,7 +81,7 @@ eth0      Link encap:Ethernet  HWaddr 00:21:86:5A:12:15
 		),
 	),
 );
-
+var $saving_fields = 'dev,ipaddress,broadcast,netmask,mtu,is_up,ipv6address';
 var $defaultcmds = array(read=>'ifconfig', destroy=>'delconfig', update=>'updconfig', create=>'addconfig');
 var $readold = array('dev');
 

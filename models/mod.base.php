@@ -42,8 +42,25 @@ var $savechangeconfig = array(
 	//current:	value of current setting
 );
 
-function savechanges($action, $params, $changed, $oldif){
-	$new = $this->read(array(), array());//get all and store it!
+function strip_unsaving(&$records){
+//strip needn't save fields not configed in $this->saving_fields
+
+	if (!$this->saving_fields) return;
+	$f = array_flip(explode(",", $this->saving_fields));
+	foreach($records as $i=>$record){
+		foreach($record as $k=>$v) if (!array_key_exists($k, $f)) unset($records[$i][$k]);
+	}
+}
+
+function savechanges($action, $params, $changed, $oldif=null){
+//we just read current config and save!
+//sub class can override this.
+
+	$r = $this->read(array(), array());//get all and store it!
+	$new = $r[data];
+print_r($new);
+	$this->strip_unsaving($new);
+print_r($new);
 	$mod = $this->mid;
 	$old = array_shift($this->dbquery("SELECT rowid,* FROM sysconfig WHERE mod='$mod'"));
 	if (!$old){
