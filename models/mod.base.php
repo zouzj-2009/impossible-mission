@@ -159,16 +159,20 @@ function get_pconfig($class, $cmd)
 	$pconfigs = $modname::$pconfigs;
 	$pconfig = $pconfigs[$cmd];
 	$refcmd = $pconfig['refcmd'];
-	if (!$refcmd) return $pconfig;
+	$callcmd = $pconfig['callcmd'];
+	if (!$refcmd && !$callcmd) return $pconfig;
+	$refcmd = $callcmd;
 	$r = explode('::', $refcmd);
 	$rconfig = null;
 	if (count($r)==2){
+		if (!preg_match('/^MOD_/', $r[0])) $r[0] = "MOD_".$r[0];
 		$rconfig = $this->get_pconfig($r[0], $r[1]); //can get from other class, rescurively
 	}else{
 		$rconfig = $pconfigs[$refcmd];
 	}	
 	if (!$rconfig) throw new Exception("$cmd's reference cmd $refcmd's pharser config not exists!");
-	$pconfig = array_merge($rconfig, $pconfig);
+	if ($callcmd) return $rconfig;	//totally override
+	$pconfig = array_merge($rconfig, $pconfig);	//using my setting addon
 	return $pconfig;
 }
 

@@ -75,8 +75,10 @@ var $saving_fields = 'dev,ipaddress,broadcast,netmask,mtu,is_up,ipv6address,ipv6
 static $pconfigs = array(
 	'mycommand'=>array( /* valid cmd pharser config, see mod.skeleton_shell.php */),
 	//....
+
+	//we reference other mod's command here
 	'update'=>array(
-		callcmd=>'netconfig::updconfig',
+		callcmd=>'netconfig::updconfig', //use that whole config, including cmd itself.
 	),
 );
 
