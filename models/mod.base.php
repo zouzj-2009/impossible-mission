@@ -1,6 +1,11 @@
 <?php
 include_once('../models/mod.db.php');
 include_once('../models/pharser.php');
+//todo:
+//cool feature!
+//run as ... using an other db and read,update,create,destroy on that database only?
+//run as means db only running, so all subclass feature will be ignored...
+
 class MOD_base extends MOD_db{
 
 var $caller;
@@ -28,7 +33,7 @@ var $defaultcmds = array(
 var $batchsupport = array(// false|true|'one_by_one'
 	update=>true, create=>'one_by_one', destroy=>true,
 );
-var $readold = array('id'); 	//using this keys as read before update key indexes
+var $keyids = array('id'); 	//using this keys as record identify
 var $readbeforeupdate = true;	//weather read old data before update
 var $readbeforedestroy = false;	//weather read old data before destroy
 
@@ -54,16 +59,43 @@ function strip_unsaving(&$records){
 	}
 }
 
+protected  function get_record_id($record){
+	$id='';
+	foreach($this->keyids as $key) $id .= "^".$record[$key];
+	return $id;
+}
+
+protected function filter_result_by_records($r, $records){
+	$ret = array();
+	foreach($records as $i=>$record){
+		$v = $this->get_record_id($record);
+		foreach($r as $got) if ($v == $this->get_record_id($got)){ $ret[$i] = $got; break; }
+	}
+	return $ret;
+}
+
+function get_sysconfig($which, $records=null)
+{
+	if (!$this->savechangeconfig) throw new Exception (get_class($this).".".__FUNCTION__.", but mod not configured by sysconfig.");
+	$mod = str_replace("MOD_", "", get_class($this));
+	$old = array_shift($this->dbquery("SELECT $which FROM $table WHERE mod='$mod'"));
+	$old = unserialize($old[$which]);
+	if (!$old || !$record) return $old;
+	return $this->filter_result_by_record($old, $records);
+}
+
 function savechanges($action, $params, $changed, $oldif=null){
 //we just read current config and save!
 //sub class can override this.
 	//not save to sysconfig, should be done by subclass's savechanges or before/do/after_$action
 	if (!$this->savechangeconfig) return;
+	$table = $this->savechangeconfig[talbename];
+	if (!$table) $table = 'sysconfig';
 	$r = $this->read(array(), array());//get all and store it!
 	$new = $r[data];
 	$this->strip_unsaving($new);
 	$mod = $this->mid;
-	$old = array_shift($this->dbquery("SELECT rowid,* FROM sysconfig WHERE mod='$mod'"));
+	$old = array_shift($this->dbquery("SELECT rowid,* FROM $table WHERE mod='$mod'"));
 	if (!$old){
 		if (!$this->savechangeconfig[autocreate]) throw new Exception("sysconfig.$mod not found, autocreate was hibited neither.");
 		$r = array(
@@ -72,7 +104,7 @@ function savechanges($action, $params, $changed, $oldif=null){
 			'currenttime'=>date('Y-m-d H:i:s', time()),
 			byaction=>'create auto',
 		);
-		parent::create(array(_writetable=>'sysconfig'), array($r));
+		parent::create(array(_writetable=>$table), array($r));
 		return $new;
 	}
 	$r = array(
@@ -84,7 +116,7 @@ function savechanges($action, $params, $changed, $oldif=null){
 		'currenttime'=>date('Y-m-d H:i:s', time()),
 		byaction=>$action,
 	);
-	parent::update(array(_writetable=>'sysconfig'), array($r));
+	parent::update(array(_writetable=>$table), array($r));
 	// subclass can using parent::savechanges to get all readed data
 	return $new;	
 }
@@ -188,12 +220,14 @@ function callmod($modname, $action, $params, $records, $simpleresult=true){
 	return $r[success];
 }
 
+/*
 function getid(&$record){
 //return value by $this->readold configed keys
 	$v = '';
-	foreach($this->readold as $k) $v .= $record[$k];
+	foreach($this->keyids as $k) $v .= $record[$k];
 	return $v;
 }
+*/
 //subclass advice:
 //If has db, use before_read to change or add params. use after_read to fix result.
 //IF has not db, use do_read/cmd to get info. usually, no before/after_read needed, all in do_read.
@@ -202,6 +236,7 @@ function read($params, $records=null){
 	$cmd = $this->defaultcmds[read];
 	$msg = null;
 	$next = 'continue';
+	$r = array();
 	try{
 		if (method_exists($this, 'before_read')){
 			if (!$records) $records = array();
@@ -241,6 +276,8 @@ function read($params, $records=null){
 	}
 	//kick out unused old records if indeed
 	if ($params[_readold])
+	$r = $this->filter_result_by_records($r, $records);
+/*
 	if ($records && $this->readold){
 		$old = array();
 		foreach($records as $i=>$record){
@@ -249,6 +286,7 @@ function read($params, $records=null){
 		}
 		$r = $old;
 	}
+*/
 	return array(
 		success=>true,
 		data=>$r,

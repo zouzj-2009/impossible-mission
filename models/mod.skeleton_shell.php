@@ -4,11 +4,17 @@ include_once('../models/mod.base.php');
 
 This is skeleton mod for only shell cmd needs, it's simplest one. 
 
+	** Four cmd,  and a pharser for read cmd was defined, config your saving fields if need, that's all! **
+
+Current setting after changing, will be saved in 'sysconfig' table automaticly.
+
+Just copy and edit for your need, don't extend from this class!
+
 */
 class MOD_skeleton_shell extends MOD_base{
 /*
 //these are default configurations
-var $readold = array('id'); 	//using this keys as read before update key indexes
+var $keyids = array('id'); 	//using this keys as record identify
 var $defaultcmds = array( 
 	read=>null,
 );
@@ -38,6 +44,9 @@ var $batchsupport = array(
 	update=>true, create=>false, destroy=>true
 );
 
+//we define this for get_sysconfig_$things to working
+var $keyids = array('record_id'); 	
+
 //we set it, for get destroied data by condition maybe
 var $readbeforedestroy = true;
 
@@ -47,7 +56,7 @@ var $saving_fields = 'record_id,modname,cmd';
 
 //now we define cmd and pharser
 // all valid type and configurator 
-var $executor_mode;	//$mode canbe: shell, ssh
+// This define just for description, should be removed in your real mod!
 var $valid_pharser = array(
 	'records_span_lines_simple'=>array(
 		cmd=>'shell cmd to run',
