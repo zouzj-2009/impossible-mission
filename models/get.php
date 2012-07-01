@@ -2,6 +2,7 @@
 @ob_start();
 ob_implicit_flush(true);
 include_once("../models/dbconnector.php");
+date_default_timezone_set('Asia/Chongqing');
 declare(ticks=1);
 $debugon = true;
 $env = getenv('MODTEST');

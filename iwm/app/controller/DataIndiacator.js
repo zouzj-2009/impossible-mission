@@ -45,7 +45,7 @@ Ext.define('MyApp.controller.DataIndiacator', {
                     pcfg.msgwin.setWidth(400);
                 }
             }else{
-                if (pend && pcfg.msgwin){
+                if(pend){
                     app.fireEvent('datadone',{
                         model: cfg.modelId, 
                         action: operation.action,
@@ -55,6 +55,8 @@ Ext.define('MyApp.controller.DataIndiacator', {
                         component: dbc,
                         domask: domask?true:false
                     });
+                }
+                if (pend && pcfg.msgwin){
                     if (response && response.success){
                         pcfg.msgwin.updateProgress(1, 'Complete(100%)', donetext);
                         Ext.defer(pcfg.msgwin.close, 1000, pcfg.msgwin);

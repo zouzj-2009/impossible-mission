@@ -90,7 +90,8 @@ static $pconfigs = array(
 function do_read($params, $records){
 	$cmderror = '';
 	//$r = $this->callcmd('netconfig::ifconfig', $cmderror, $params, $records, $extra=array());
-	$r = $this->callcmd('netconfig::ifconfig');
+	$r = $this->callcmd('netconfig::ifconfig', $cmderror);
+	if (!$cmderror) throw new Exception("do_read fail $cmderror.");
 	return array(
 		success=>true,
 		data=>$r,

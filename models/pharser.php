@@ -2,7 +2,7 @@
 class PHARSER{
 
 static $default_error_pharser = array(
-	type=>'one_record_span_lines',
+	type=>'records_span_lines',
 	recordstart=>'/^#@ERROR@[A-Z0-9]+ /',
 	recordid=>'/^#@(ERROR@[A-Z0-9]+) /',
 	recordend=>'/^ *$|^#ERROREND/',
@@ -77,14 +77,18 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null, $
 			$o = $out;
 			if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd logx -----------------');
 			$log = PHARSER::pharse_type($o, $pconfig['logpharser']);
+			if ($pconfig[debug]) PHARSER::debug("PHARSER::logx", $log);
 		}
 	}
 //	non 0 is error
 	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd output---------------');
 	if ($pconfig[debug]) PHARSER::debug("$name.output", $out);
-	if ($retvar && $pconfig['errpharse']){
+	if ($retvar && $pconfig['errpharser']){
 		if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd fail -----------------');
-		return PHARSER::pharse_type($out, $pconfig['errpharser']);
+		$r = PHARSER::pharse_type($out, $pconfig['errpharser']);
+		$r = array_shift($r);
+		if ($pconfig[debug]) PHARSER::debug("PHARSER::failmsg", $r);
+		return $r;
 	}
 	if (!$pconfig[type]){
 	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- no type configed, direct out -----');
@@ -148,6 +152,7 @@ function get_field_names($row, $pconfig){
 //			_xxx_ptype_yyy_:name as xxx, and parse as type yyy again, and this type must be configurated in pconfig	
 	$fieldnames = $pconfig[fieldnames];
 	$r = array();
+	$lastkey = '';
 	foreach($fieldnames as $i=>$name){
 		$v = $row[$i];
 		if ($name == '' || $name == '_' || $name == '_ignore_') continue;
@@ -157,6 +162,15 @@ function get_field_names($row, $pconfig){
 		}
 		if ($name == '_value_'){
 			$r[$v] = $v;
+			continue;
+		}
+		if ($name == '_key_'){//means key of next value!
+			$lastkey =$v;
+			continue;
+		}
+		if ($name == '_auto_'){
+			if ($lastkey) $r[$lastkey] = $v;
+			//this field maybe skipped
 			continue;
 		}
 		if (preg_match('/^_(.*)_ptype_(.*)_$/', $name, $m)){

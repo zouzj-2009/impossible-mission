@@ -78,11 +78,6 @@ Ext.define('MyApp.view.LunMap', {
                     columns: [
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'rid',
-                            text: 'Rid'
-                        },
-                        {
-                            xtype: 'gridcolumn',
                             dataIndex: 'sourceip',
                             text: 'Sourceip'
                         },
@@ -181,27 +176,25 @@ Ext.define('MyApp.view.LunMap', {
                                             title: 'Global CHAP Setting',
                                             items: [
                                                 {
+                                                    xtype: 'checkboxfield',
+                                                    name: 'chapenabled',
+                                                    fieldLabel: 'CHAP',
+                                                    boxLabel: 'Enabled'
+                                                },
+                                                {
                                                     xtype: 'textfield',
                                                     name: 'gtargetuser',
-                                                    fieldLabel: 'Target User'
+                                                    fieldLabel: 'Target User',
+                                                    maxLength: 12,
+                                                    minLength: 12
                                                 },
                                                 {
                                                     xtype: 'textfield',
                                                     inputType: 'password',
                                                     name: 'gtargetpass',
-                                                    fieldLabel: 'Target Pass'
-                                                },
-                                                {
-                                                    xtype: 'textfield',
-                                                    name: 'ginitiatoruser',
-                                                    fieldLabel: 'Initiator User',
-                                                    regexText: 'invalid IP address'
-                                                },
-                                                {
-                                                    xtype: 'textfield',
-                                                    inputType: 'password',
-                                                    name: 'ginitiatorpass',
-                                                    fieldLabel: 'Initiator Pass'
+                                                    fieldLabel: 'Target Pass',
+                                                    maxLength: 12,
+                                                    minLength: 12
                                                 }
                                             ]
                                         },

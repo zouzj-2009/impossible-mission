@@ -48,7 +48,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen16912",
@@ -91,7 +91,7 @@
                         "dock": "top"
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen16958",
@@ -129,22 +129,6 @@
                             "expanded": true
                         }
                     ]
-                },
-                {
-                    "id": "ExtBox1-ext-gen80904",
-                    "type": "gridcolumn",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "rid",
-                        "text": "Rid",
-                        "designer|userClassName": "MyColumn29"
-                    },
-                    "customConfigs": [],
-                    "expanded": true
                 },
                 {
                     "id": "ExtBox1-ext-gen80916",
@@ -405,7 +389,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen24302",
@@ -424,7 +408,7 @@
                                 "designer|userClassName": "MyFieldSet12"
                             },
                             "customConfigs": [],
-                            "expanded": false,
+                            "expanded": true,
                             "cn": [
                                 {
                                     "id": "ExtBox1-ext-gen66099",
@@ -461,8 +445,26 @@
                                         "designer|userClassName": "MyFieldSet"
                                     },
                                     "customConfigs": [],
-                                    "expanded": false,
+                                    "expanded": true,
                                     "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen6843",
+                                            "type": "checkboxfield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": null,
+                                                "name": "chapenabled",
+                                                "fieldLabel": "CHAP",
+                                                "boxLabel": "Enabled",
+                                                "designer|userClassName": "MyCheckbox1"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        },
                                         {
                                             "id": "ExtBox1-ext-gen64220",
                                             "type": "textfield",
@@ -475,6 +477,8 @@
                                                 "itemId": null,
                                                 "name": "gtargetuser",
                                                 "fieldLabel": "Target User",
+                                                "maxLength": 12,
+                                                "minLength": 12,
                                                 "regex": null,
                                                 "regexText": null,
                                                 "designer|userClassName": "MyTextField"
@@ -495,45 +499,8 @@
                                                 "inputType": "password",
                                                 "name": "gtargetpass",
                                                 "fieldLabel": "Target Pass",
-                                                "regex": null,
-                                                "regexText": null,
-                                                "designer|userClassName": "MyTextField"
-                                            },
-                                            "customConfigs": [],
-                                            "expanded": true
-                                        },
-                                        {
-                                            "id": "ExtBox1-ext-gen71833",
-                                            "type": "textfield",
-                                            "reference": {
-                                                "name": "items",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "itemId": null,
-                                                "name": "ginitiatoruser",
-                                                "fieldLabel": "Initiator User",
-                                                "regex": null,
-                                                "regexText": "invalid IP address",
-                                                "designer|userClassName": "MyTextField"
-                                            },
-                                            "customConfigs": [],
-                                            "expanded": true
-                                        },
-                                        {
-                                            "id": "ExtBox1-ext-gen71984",
-                                            "type": "textfield",
-                                            "reference": {
-                                                "name": "items",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "itemId": null,
-                                                "inputType": "password",
-                                                "name": "ginitiatorpass",
-                                                "fieldLabel": "Initiator Pass",
+                                                "maxLength": 12,
+                                                "minLength": 12,
                                                 "regex": null,
                                                 "regexText": null,
                                                 "designer|userClassName": "MyTextField"

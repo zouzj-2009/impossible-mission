@@ -1,0 +1,17 @@
+Features:
+* security/login
+* tasker runing by scheduler, or tigger(howto)
+* bind combo, when dropdown click, show loading icon ...
+
+
+
+Bugs:
+* pharser::p_one_record_span_lines, bug, errormsg can't be pharsed out
+
+
+
+Improvements:
+* using state machine in pharser, so, can be input by pipe in.
+
+
+

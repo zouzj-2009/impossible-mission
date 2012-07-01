@@ -88,6 +88,7 @@ function savechanges($action, $params, $changed, $oldif=null){
 //we just read current config and save!
 //sub class can override this.
 	//not save to sysconfig, should be done by subclass's savechanges or before/do/after_$action
+	$this->loginfo(TRACE, 'base', "saving changed sysconfig by $action.");
 	if (!$this->savechangeconfig) return;
 	$table = $this->savechangeconfig[talbename];
 	if (!$table) $table = 'sysconfig';
@@ -161,7 +162,7 @@ function get_pconfig($class, $cmd)
 	$refcmd = $pconfig['refcmd'];
 	$callcmd = $pconfig['callcmd'];
 	if (!$refcmd && !$callcmd) return $pconfig;
-	$refcmd = $callcmd;
+	if ($callcmd) $refcmd = $callcmd;
 	$r = explode('::', $refcmd);
 	$rconfig = null;
 	if (count($r)==2){
@@ -180,12 +181,13 @@ function log($level, $log){
 	echo "LOG@$level $log";
 }
 
-function callcmd($cmd, &$cmderror=null, &$params=null, &$records=null, &$extra=null){
+function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 //call internal cmd in pconfigs
 //extra args using array('prefix'=>array_data or 'key'=>value);
 //$cmd canbe "MOD::cmd"
 	$cmderr = '';
 	$cx = explode('::', $cmd);
+	$mod = $this;
 	if (count($cx)==2){
 		$mod = $this->getmod($cx[0]);
 		$c = $cx[1];
@@ -203,11 +205,11 @@ function callcmd($cmd, &$cmderror=null, &$params=null, &$records=null, &$extra=n
 	}
 	$logs = array();
 	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderr, $mod, $logs);
-	if ($cmderror !== null) $cmderror = $cmderr;
+	$cmderror = $cmderr;
 	if ($logs){
 		foreach($logs as $log){
 			$level = str_replace("LOG@", '', $log[record_id]);
-			$this->log($level, $log['log']);
+			$this->loginfo($level, str_replace("MOD_", "", get_class($mod))."::$c", $log['log']);
 		}
 	}
 	return $r;
@@ -362,9 +364,9 @@ function update($params, $records){
 				}else{
 					if ($cmd){//get update result by cmd
 						$extra = array(old=>$old);
-						$this->callcmd($cmd, $cmderror, $params, $record, $extra);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
-							throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
+							throw new Exception(get_class($this)." update fail: $cmd return fail($cmderror, $r[msg]).");
 						}
 						$changes ++;
 						$updated[] = $record;
@@ -390,9 +392,9 @@ function update($params, $records){
 					foreach($records as $record){
 						$old = $old_records[$i];
 						$extra = array(old=>$old);
-						$this->callcmd($cmd, $cmderror, $params, $record, $extra);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
-							throw new Exception(get_class($this)." update fail: $cmd return fail($r[msg]).");
+							throw new Exception(get_class($this)." update fail: $cmd return fail($cmderror, $r[msg]).");
 						}
 						$changes ++;
 						$updated[] = $record;
@@ -475,9 +477,9 @@ function destroy($params, $records){
 					parent::destroy($params, array($record));	 
 				}else{
 					if ($cmd){//get destroy result by cmd
-						$this->callcmd($cmd, $cmderror, $params, $record);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record);
 						if ($cmderror){
-							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
+							throw new Exception(get_class($this)." destroy fail: $cmd return fail($cmderror, $r[msg]).");
 						}
 					}else{// get destroy result by do_destroy of sub_classes
 						$this->do_destroy($params, array($record));
@@ -496,9 +498,9 @@ function destroy($params, $records){
 				//cmd has to be one_by_one!
 				if ($cmd){//get destroy result by cmd
 					foreach($records as $record){
-						$this->callcmd($cmd, $cmderror, $params, $record);
+						$r = $this->callcmd($cmd, $cmderror, $params, $record);
 						if ($cmderror){
-							throw new Exception(get_class($this)." destroy fail: $cmd return fail($r[msg]).");
+							throw new Exception(get_class($this)." destroy fail: $cmd return fail($cmderror, $r[msg]).");
 						}
 						$destroied[] = $record;
 						$changes ++;
@@ -570,7 +572,7 @@ function create($params, $records){
 					if ($cmd){//get create result by cmd
 						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
-							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
+							throw new Exception(get_class($this)." create fail: $cmd return fail($cmderror, $r[msg]).");
 						}
 						$changes ++;
 						$created[] = array_shift($r);
@@ -594,7 +596,7 @@ function create($params, $records){
 						$extra = array(last=>$created[count($created)-1]);
 						$r = $this->callcmd($cmd, $cmderror, $params, $record, $extra);
 						if ($cmderror){
-							throw new Exception(get_class($this)." create fail: $cmd return fail($r[msg]).");
+							throw new Exception(get_class($this)." create fail: $cmd return fail($cmderror, $r[msg]).");
 						}
 						$changes ++;
 						$created[] = array_shift($r);

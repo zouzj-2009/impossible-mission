@@ -33,7 +33,7 @@
                 ],
                 "implHandler": [
                     "var m = this.getMessager();",
-                    "    ",
+                    "",
                     "if (!m){",
                     "    this.getView('Messager').create();",
                     "    m = this.getMessager();",

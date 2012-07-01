@@ -137,6 +137,8 @@ var $valid_pharser = array(
 		fieldsep=>'/field split pattern/', 
 		fieldnames=>'name1,name2,...',	//name for splitted fields, one by one, some reserved name:
 						//	_value_:	use field value as field name,
+						//	_key_:		use field value as further _auto_ field's name,
+						//	_auto_:		use previous _key_ field's value as this field name,
 						//	_ignore_:	ignore this field in result array, null or '_' have same effect.
 						//	_xxx_ptype_yyy_:name as xxx, and parse as type yyy again, 
 						//		and this type must be configurated in [_xxx_ptype_yyy_]=>valid pharser config

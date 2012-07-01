@@ -405,7 +405,7 @@ Ext.define('MyApp.controller.DBinder', {
             store: null,
             failpolicy: {},
             timeout: 300000,
-            host: serverip?serverip:'localhost',
+            host: serverip?serverip:location.host,
             proto: 'http',
             port: '80',
             pcfg: Ext.isObject(databind.progress)?databind.progress:{},

@@ -7,14 +7,15 @@ static $pconfigs = array(
 	echo "#@LOG@INFO add ipaddress for %dev% %ipaddress%\n"
 	if [ ! -z "%netmask%" ];then
 		busybox ifconfig %dev% %ipaddress% netmask %netmask%
+		ret=$?
 	else
 		busybox ifconfig %dev% %ipaddress%
+		ret=$?
 	fi
-	ret=$?
 	busybox ifconfig %dev%
 	exit $ret
 )',
-		refcmd=>'MOD_netconfig::ifconfig', //use ifconfig's output pharser config!
+		refcmd=>'netconfig::ifconfig', //use ifconfig's output pharser config!
 	),
 	'updconfig'=>array(
 		cmd=>'(
