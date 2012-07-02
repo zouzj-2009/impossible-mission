@@ -195,6 +195,9 @@ function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 		$mod = $this;
 		$c = $cmd;
 	}
+	if ($c == 'faulty'){
+		throw new Exception(str_replace("MOD_", "", get_class($mod))." operation not support.");
+	}
 	$pconfig = $this->get_pconfig($mod, $c);
 	if (!$pconfig) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
 	$p = $params?$params:array();

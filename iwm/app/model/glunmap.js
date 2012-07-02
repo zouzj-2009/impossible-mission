@@ -22,16 +22,13 @@ Ext.define('MyApp.model.glunmap', {
             name: 'enabled'
         },
         {
-            name: 'ginitiatoruser'
+            name: 'chapenabled'
         },
         {
-            name: 'ginitiatorpass'
+            name: 'targetuser'
         },
         {
-            name: 'gtargetuser'
-        },
-        {
-            name: 'gtargetpass'
+            name: 'targetpass'
         }
     ]
 });

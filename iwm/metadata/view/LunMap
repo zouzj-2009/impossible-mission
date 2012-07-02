@@ -423,6 +423,7 @@
                                         "name": "enabled",
                                         "fieldLabel": "LUN Map",
                                         "boxLabel": "Enabled",
+                                        "uncheckedValue": 0,
                                         "designer|userClassName": "MyCheckbox1"
                                     },
                                     "customConfigs": [],
@@ -456,10 +457,11 @@
                                             },
                                             "codeClass": null,
                                             "userConfig": {
-                                                "itemId": null,
+                                                "itemId": "chapenabled",
                                                 "name": "chapenabled",
                                                 "fieldLabel": "CHAP",
                                                 "boxLabel": "Enabled",
+                                                "uncheckedValue": 0,
                                                 "designer|userClassName": "MyCheckbox1"
                                             },
                                             "customConfigs": [],
@@ -475,16 +477,42 @@
                                             "codeClass": null,
                                             "userConfig": {
                                                 "itemId": null,
-                                                "name": "gtargetuser",
+                                                "name": "targetuser",
                                                 "fieldLabel": "Target User",
-                                                "maxLength": 12,
-                                                "minLength": 12,
+                                                "maxLength": null,
+                                                "minLength": null,
                                                 "regex": null,
                                                 "regexText": null,
                                                 "designer|userClassName": "MyTextField"
                                             },
                                             "customConfigs": [],
-                                            "expanded": true
+                                            "expanded": true,
+                                            "cn": [
+                                                {
+                                                    "id": "ExtBox1-ext-gen9737",
+                                                    "type": "fixedfunction",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fn": "validator",
+                                                        "designer|params": [
+                                                            "value"
+                                                        ],
+                                                        "implHandler": [
+                                                            "if (!this.up().down('#chapenabled').getValue()) return true;",
+                                                            "if (value.length != 12) return 'length must be 12.'; ",
+                                                            "return true;"
+                                                        ],
+                                                        "designer|userClassName": "validator"
+                                                    },
+                                                    "customConfigs": [],
+                                                    "iconCls": "icon-basic-function",
+                                                    "expanded": true
+                                                }
+                                            ]
                                         },
                                         {
                                             "id": "ExtBox1-ext-gen71683",
@@ -497,16 +525,43 @@
                                             "userConfig": {
                                                 "itemId": null,
                                                 "inputType": "password",
-                                                "name": "gtargetpass",
+                                                "name": "targetpass",
                                                 "fieldLabel": "Target Pass",
-                                                "maxLength": 12,
-                                                "minLength": 12,
+                                                "maxLength": null,
+                                                "minLength": null,
                                                 "regex": null,
                                                 "regexText": null,
                                                 "designer|userClassName": "MyTextField"
                                             },
                                             "customConfigs": [],
-                                            "expanded": true
+                                            "expanded": true,
+                                            "cn": [
+                                                {
+                                                    "id": "ExtBox1-ext-gen5019",
+                                                    "type": "fixedfunction",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fn": "validator",
+                                                        "designer|params": [
+                                                            "value"
+                                                        ],
+                                                        "implHandler": [
+                                                            "",
+                                                            "if (!this.up().down('#chapenabled').getValue()) return true;",
+                                                            "if (value.length != 12) return 'length must be 12.';",
+                                                            "return true;"
+                                                        ],
+                                                        "designer|userClassName": "validator"
+                                                    },
+                                                    "customConfigs": [],
+                                                    "iconCls": "icon-basic-function",
+                                                    "expanded": true
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -522,6 +577,24 @@
                                         "itemId": "update",
                                         "width": null,
                                         "text": "Save",
+                                        "designer|userClassName": "MyButton14",
+                                        "formBind": true
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen11501",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "refresh",
+                                        "width": null,
+                                        "text": "Refresh",
                                         "designer|userClassName": "MyButton14",
                                         "formBind": true
                                     },
@@ -558,7 +631,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen126259",
@@ -760,24 +833,6 @@
                                         "autoWidth": true,
                                         "text": "Add New ...",
                                         "designer|userClassName": "MyButton",
-                                        "formBind": true
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                },
-                                {
-                                    "id": "ExtBox1-ext-gen5441",
-                                    "type": "button",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "height": null,
-                                        "itemId": "update",
-                                        "text": "Update",
-                                        "designer|userClassName": "MyButton29",
                                         "formBind": true
                                     },
                                     "customConfigs": [],

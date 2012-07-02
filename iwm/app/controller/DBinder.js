@@ -262,10 +262,11 @@ Ext.define('MyApp.controller.DBinder', {
         if (upd && !cfg.ignore.click){
             upd.on('click', function(button, event, options){
                 if (form.getForm().isValid()){
-                    var v = form.getForm().getFieldValues(true),
-                        m = form.getForm().getRecord();
+                    var v = form.getForm().getFieldValues(), //checkbox need all submit
+                    m = form.getForm().getRecord();
                     if (!m) return;
-                    for(var e in v) m.set(e, v[e]);
+                    m.set(v);
+                    //m.setDirty();
                     store.sync();
                 }
             });
@@ -278,7 +279,6 @@ Ext.define('MyApp.controller.DBinder', {
                 store.load({params:params});
             });
         }
-
     },
 
     bindProxy: function(store, cfg) {

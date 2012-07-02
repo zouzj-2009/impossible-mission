@@ -25,6 +25,7 @@ static $pconfigs = array(
 	echo "append src %sourceip% mask %netmask% $dest$target %access%$chap$mutalchap" >/proc/scsi_target/iscsi_target/lunmapping
 	ret=$?
 	cat /proc/scsi_target/iscsi_target/lunmapping|grep "src %sourceip% mask %netmask% $dest$target %access%$chap$mutalchap"
+	cat /proc/scsi_target/iscsi_target/lunmapping >/etc/sysconfig/lunmapsaving
 	exit $ret
 )',
 		refcmd=>'lunmap::get',
@@ -38,6 +39,8 @@ static $pconfigs = array(
 	[ ! -z "%initiatoruser%" ] && mutalchap=" agusr %initiatoruser% agpwd %initiatorpass%" || mutalchap=""
 	echo "delete src %sourceip% mask %netmask% $dest$target %access%$chap$mutalchap" >/proc/scsi_target/iscsi_target/lunmapping
 	ret=$?
+	cat /proc/scsi_target/iscsi_target/lunmapping >/etc/sysconfig/lunmapsaving
+	exit $ret;
 )',
 	),	
 	'update'=>array(

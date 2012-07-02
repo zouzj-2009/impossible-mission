@@ -124,6 +124,7 @@ function format_keys_and_values($array, $keys, $values=null){
 //newvalues:	array of (<old key|new key>=>array(pconfig)), to pharse the value again.
 //mergeup:	merge new values array to parent after get newvalues.
 	$r = array();
+	if (!$keys) $keys = array();	//value only
 	foreach($array as $k=>$v){
 		$newkey = $keys[$k]?$keys[$k]:$k;
 		$r[$newkey] = $v;
@@ -132,6 +133,19 @@ function format_keys_and_values($array, $keys, $values=null){
 		}//get new values;
 		$pconfig = $values[$k]?$values[$k]:$values[$newkey];
 		if (!$pconfig) continue;
+		if (!is_array($pconfig)){
+			$newvalue = $v;
+			switch($pconfig){
+			case 'boolean':
+				$newvalue = (!$v||$v=='false'||$v=='0'||$v=='no'||$v=='NO'||$v=='FALSE'||$v=='null'||$v=='NULL')?false:true;
+				break;
+			case 'password':
+				$newvalue = '********';
+				break;
+			}
+			$r[$newkey] = $newvalue;
+			continue;
+		}
 		$lines = array($v);
 		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." format value[$newkey=$lines], using pconfig", $pconfig);
 		$newvalue = PHARSER::pharse_type($lines, $pconfig);
@@ -250,7 +264,7 @@ function p_record_in_one_line(&$in, $pconfig){
 	$r = preg_split($fieldsep, $line);
 	if (!$fieldnames) return $r;
 	$r = PHARSER::get_field_names($r, $pconfig);
-	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues]);
+	if ($pconfig[newkeys]||$pconfig[newvalues]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues]);
 	return $r;
 }
 
@@ -301,7 +315,7 @@ function p_keyvalues_in_one_line(&$in, $pconfig){
 		}
 		if (!$line) return array();
 	}else $line = $in;
-	if (!$pconfig[matcher]) $pconfig[matcher] = '/([^=]*) *= *([^ ].*)/';
+	if (!$pconfig[matcher]) $pconfig[matcher] = '/([^=]*) *= *([^ ]*)/';
 	$r = array();
 	if (preg_match_all($pconfig[matcher], $line, $m)){
 		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [matcher=".$pconfig[matcher]."]", $m);
@@ -309,7 +323,7 @@ function p_keyvalues_in_one_line(&$in, $pconfig){
 			$r[trim($key, " :")] = trim($m[2][$i]);
 		}	
 	}
-	if ($pconfig[newkeys]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues]);
+	if ($pconfig[newkeys]||$pconfig[newvalues]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues]);
 	if ($pconfig[arrayret]) return array($r);
 	return $r;
 }
@@ -389,7 +403,7 @@ function p_records_span_lines(&$in, $pconfig){
 		if ($changerecord){
 			if ($cur_record){
 				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got new record(unformated)", $cur_record);
-				if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
+				if ($pconfig[newkeys]||$pconfig[newvalues]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
 				if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
 				else $r[] = $cur_record;	//add full record
 			}
@@ -438,7 +452,7 @@ function p_records_span_lines(&$in, $pconfig){
 		}
 	}
 	if ($cur_record){
-		if ($pconfig[newkeys]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
+		if ($pconfig[newkeys]||$pconfig[newvalues]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues]);
 		if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
 		else $r[] = $cur_record;	//add full record
 	}

@@ -166,7 +166,8 @@ Ext.define('MyApp.view.LunMap', {
                                             xtype: 'checkboxfield',
                                             name: 'enabled',
                                             fieldLabel: 'LUN Map',
-                                            boxLabel: 'Enabled'
+                                            boxLabel: 'Enabled',
+                                            uncheckedValue: 0
                                         },
                                         {
                                             xtype: 'fieldset',
@@ -177,24 +178,33 @@ Ext.define('MyApp.view.LunMap', {
                                             items: [
                                                 {
                                                     xtype: 'checkboxfield',
+                                                    itemId: 'chapenabled',
                                                     name: 'chapenabled',
                                                     fieldLabel: 'CHAP',
-                                                    boxLabel: 'Enabled'
+                                                    boxLabel: 'Enabled',
+                                                    uncheckedValue: 0
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    name: 'gtargetuser',
-                                                    fieldLabel: 'Target User',
-                                                    maxLength: 12,
-                                                    minLength: 12
+                                                    validator: function(value) {
+                                                        if (!this.up().down('#chapenabled').getValue()) return true;
+                                                        if (value.length != 12) return 'length must be 12.'; 
+                                                        return true;
+                                                    },
+                                                    name: 'targetuser',
+                                                    fieldLabel: 'Target User'
                                                 },
                                                 {
                                                     xtype: 'textfield',
+                                                    validator: function(value) {
+
+                                                        if (!this.up().down('#chapenabled').getValue()) return true;
+                                                        if (value.length != 12) return 'length must be 12.';
+                                                        return true;
+                                                    },
                                                     inputType: 'password',
-                                                    name: 'gtargetpass',
-                                                    fieldLabel: 'Target Pass',
-                                                    maxLength: 12,
-                                                    minLength: 12
+                                                    name: 'targetpass',
+                                                    fieldLabel: 'Target Pass'
                                                 }
                                             ]
                                         },
@@ -202,6 +212,12 @@ Ext.define('MyApp.view.LunMap', {
                                             xtype: 'button',
                                             itemId: 'update',
                                             text: 'Save',
+                                            formBind: true
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'Refresh',
                                             formBind: true
                                         }
                                     ]
@@ -283,12 +299,6 @@ Ext.define('MyApp.view.LunMap', {
                                             minWidth: 80,
                                             autoWidth: true,
                                             text: 'Add New ...',
-                                            formBind: true
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            itemId: 'update',
-                                            text: 'Update',
                                             formBind: true
                                         }
                                     ]

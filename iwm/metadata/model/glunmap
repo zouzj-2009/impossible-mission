@@ -13,7 +13,7 @@
     "customConfigs": [],
     "designerId": "9976b10b-5362-4406-9408-a5693b3da5f4",
     "$viewOrder": 11,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen4940",
@@ -39,23 +39,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "ginitiatoruser",
+                "name": "chapenabled",
                 "designer|userClassName": "MyField69"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen6274",
-            "type": "datafield",
-            "reference": {
-                "name": "fields",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "name": "ginitiatorpass",
-                "designer|userClassName": "MyField70"
             },
             "customConfigs": [],
             "expanded": true
@@ -69,7 +54,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "gtargetuser",
+                "name": "targetuser",
                 "designer|userClassName": "MyField67"
             },
             "customConfigs": [],
@@ -84,7 +69,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "gtargetpass",
+                "name": "targetpass",
                 "designer|userClassName": "MyField68"
             },
             "customConfigs": [],

@@ -38,6 +38,7 @@ var $defaultcmds = array(
 	create=>'create_one',
 	update=>'update_one',
 	destroy=>'delete_it',
+	//action=>'faulty' means operation not supported.
 );
 
 var $batchsupport = array(
@@ -75,6 +76,7 @@ var $valid_pharser = array(
 		),
 		newvalues=>array(		//optional, after pharse, recalc the result by new pharser
 			'key'=>array( /* any valid pharser config */), // ...
+			//or 'key'=>'boolean'|'password'
 			mergeup=>true,		//optional, default is false, if true, merge result to parent, otherwise, value indexed by key
 		),
 		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
@@ -104,6 +106,7 @@ var $valid_pharser = array(
 		newvalues=>array(		//optional, after pharse, recalc the result by new pharser
 			'key'=>array( /* any valid pharser config */), // ...
 			mergeup=>true,		//optional, default is false, if true, merge result to parent, otherwise, value indexed by key
+			//or 'key'=>'boolean'|'password'
 		),
 		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
 		idindexed=>false,		//true|false, if true, use record_id as return array index.
@@ -124,6 +127,7 @@ var $valid_pharser = array(
 		newvalues=>array(		//optional, after pharse, recalc the result by new pharser
 			'key'=>array( /* any valid pharser config */), // ...
 			mergeup=>true,		//optional, default is false, if true, merge result to parent, otherwise, value indexed by key
+			//or 'key'=>'boolean'|'password'
 		),
 		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
 	),
@@ -150,6 +154,7 @@ var $valid_pharser = array(
 		newvalues=>array(		//optional, after pharse, recalc the result by new pharser
 			'key'=>array( /* any valid pharser config */), // ...
 			mergeup=>true,		//optional, default is false, if true, merge result to parent, otherwise, value indexed by key
+			//or 'key'=>'boolean'|'password'
 		),
 		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
 	),
