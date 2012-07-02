@@ -390,7 +390,7 @@
                     "    upd.on('click', function(button, event, options){",
                     "        if (form.getForm().isValid()){",
                     "            var v = form.getForm().getFieldValues(), //checkbox need all submit",
-                    "                m = form.getForm().getRecord();",
+                    "            m = form.getForm().getRecord();",
                     "            if (!m) return;",
                     "            m.set(v);",
                     "            //m.setDirty();",
@@ -631,7 +631,7 @@
                     "    port: '80',",
                     "    pcfg: Ext.isObject(databind.progress)?databind.progress:{},",
                     "    container: container, //for masking or ...",
-                    "    defpc: dbc.down('>toolbar')?dbc.down('>toolbar'):dbc,",
+                    "    defpc: Ext.isFunction(dbc.down)?(dbc.down('>toolbar')?dbc.down('>toolbar'):dbc):dbc,",
                     "    binder: me",
                     "}, databind);",
                     "",
@@ -844,6 +844,47 @@
                 "designer|targetType": "Ext.grid.Panel",
                 "designer|controlQuery": "gridpanel",
                 "designer|userClassName": "onGridpanelActivate"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6595",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onComboboxExpand",
+                "implHandler": [
+                    "var me=this, c=field, databind = c.databind;",
+                    "if (!Ext.isObject(databind)) return;",
+                    "",
+                    "if (c.databinded){//refresh",
+                    "    var store = c.store,",
+                    "        params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams);",
+                    "    store.load({params:params});",
+                    "    return;",
+                    "}",
+                    "",
+                    "//form's default mask selector is this component.",
+                    "//if want to local show, using 'maskxtype: null' in databind config.",
+                    "if (databind.progress){",
+                    "    Ext.applyIf(databind.progress, {",
+                    "        maskxtype: null",
+                    "    });",
+                    "}",
+                    "",
+                    "me.bindGroup(c, c.databind, c.serverip, c.rebind);",
+                    ""
+                ],
+                "name": "expand",
+                "scope": "me",
+                "designer|targetType": "Ext.form.field.ComboBox",
+                "designer|controlQuery": "combobox",
+                "designer|userClassName": "onComboboxExpand"
             },
             "customConfigs": [],
             "expanded": true

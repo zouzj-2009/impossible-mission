@@ -70,7 +70,7 @@ static function get_targetname($v, $record, &$mergeup){
 }
 
 static function get_shortname($v, $record, &$mergeup){
-	return "iqn.2005-05...".gethostname().":".$record[targetid];
+	return "iqn.20...".gethostname().":".$record[targetid];
 }
 var $defaultcmds = array(read=>'read', destroy=>'faulty', update=>'faulty', create=>'faulty');
 

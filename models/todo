@@ -2,11 +2,13 @@ Features:
 * security/login
 * tasker runing by scheduler, or tigger(howto)
 * bind combo, when dropdown click, show loading icon ...
+* add confirm,notify to client from pharser/shell ..
 
 
 
 Bugs:
 * pharser::p_one_record_span_lines, bug, errormsg can't be pharsed out
+* lunmap add new with chap/mutalchap
 
 
 

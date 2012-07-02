@@ -72,6 +72,29 @@ Ext.define('MyApp.controller.DBinder', {
 
     },
 
+    onComboboxExpand: function(field, options) {
+        var me=this, c=field, databind = c.databind;
+        if (!Ext.isObject(databind)) return;
+
+        if (c.databinded){//refresh
+            var store = c.store,
+                params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams);
+            store.load({params:params});
+            return;
+        }
+
+        //form's default mask selector is this component.
+        //if want to local show, using 'maskxtype: null' in databind config.
+        if (databind.progress){
+            Ext.applyIf(databind.progress, {
+                maskxtype: null
+            });
+        }
+
+        me.bindGroup(c, c.databind, c.serverip, c.rebind);
+
+    },
+
     processLoad: function(store, records, successful, cfg) {
         //called by onProxyRead, when data loaded, update progress indicator.
         //binder scope
@@ -410,7 +433,7 @@ Ext.define('MyApp.controller.DBinder', {
             port: '80',
             pcfg: Ext.isObject(databind.progress)?databind.progress:{},
             container: container, //for masking or ...
-            defpc: dbc.down('>toolbar')?dbc.down('>toolbar'):dbc,
+            defpc: Ext.isFunction(dbc.down)?(dbc.down('>toolbar')?dbc.down('>toolbar'):dbc):dbc,
             binder: me
         }, databind);
 
@@ -506,6 +529,9 @@ Ext.define('MyApp.controller.DBinder', {
             "gridpanel": {
                 afterrender: this.onGridpanelAfterRender,
                 activate: this.onGridpanelActivate
+            },
+            "combobox": {
+                expand: this.onComboboxExpand
             }
         });
 

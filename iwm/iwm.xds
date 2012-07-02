@@ -164,11 +164,11 @@
         },
         "1c43788c-f013-4709-a4d1-b4b82da4a56b": {
             "paths": [
-                "metadata/model/TargetList",
-                "app/model/override/TargetList.js",
-                "app/model/TargetList.js"
+                "metadata/model/targetlist",
+                "app/model/override/targetlist.js",
+                "app/model/targetlist.js"
             ],
-            "className": "TargetList"
+            "className": "targetlist"
         },
         "b6026780-f473-4f7e-87e3-aa2911fedde3": {
             "paths": [

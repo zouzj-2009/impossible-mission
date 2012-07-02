@@ -8,7 +8,7 @@
     "codeClass": null,
     "userConfig": {
         "storeId": "targetlist",
-        "model": "TargetList",
+        "model": "targetlist",
         "designer|userClassName": "targetlist"
     },
     "customConfigs": [],

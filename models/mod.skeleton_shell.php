@@ -64,9 +64,12 @@ var $saving_fields = 'record_id,modname,cmd';
 //	filesize:	trans the value to a readable file size such as 134MB etc.
 //	bytesize:	trans the value from a file size to bytesize
 //	wwwn:		trans the value to a wwwn format
-//	MOD::FUNC:	call static MOD::FUNC($v, $record, &$mergeup) to format the value. related value will be transfer in.
+//	MOD::FUNC:	call static MOD::FUNC($v, $record, &$mergeup) to format the value. transed value will be transfer in.
 //			if mergeup is true, the return value will be merged up.
 //			note! MOD must be loaded already, this can be done by include_once on before your pconfigs define.
+//!note, newkeys's value can be an array, if so, one value will be set to multi values, such as:
+//	'capacity'=>array('size', 'bytesize')	//two new indexes 'size', 'bytesize' will be set, equal to 'capacity', and different values transfer can be set later.
+
 var $valid_pharser = array(
 	'records_span_lines_simple'=>array(
 		cmd=>'shell cmd to run',

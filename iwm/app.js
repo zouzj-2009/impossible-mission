@@ -22,7 +22,7 @@ Ext.application({
         'netconfig',
         'IscsiConn',
         'SysInfo',
-        'TargetList',
+        'targetlist',
         'LunMap',
         'Access',
         'VirtPortal',

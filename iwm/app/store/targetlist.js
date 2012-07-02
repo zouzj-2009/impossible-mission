@@ -16,7 +16,7 @@
 Ext.define('MyApp.store.targetlist', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.TargetList'
+        'MyApp.model.targetlist'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.targetlist', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'targetlist',
-            model: 'MyApp.model.TargetList'
+            model: 'MyApp.model.targetlist'
         }, cfg)]);
     }
 });

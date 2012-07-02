@@ -689,9 +689,18 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "name": "targetid"
+                                        "name": "targetid",
+                                        "displayField": "shortname",
+                                        "valueField": "targetid",
+                                        "databind": "{\nmodel: 'targetlist',\nautoload: true\n}"
                                     },
-                                    "customConfigs": [],
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "databind",
+                                            "type": "object"
+                                        }
+                                    ],
                                     "iconCls": "icon-linkedinstance",
                                     "expanded": true,
                                     "masterInstanceId": "ucmpTargetListField"

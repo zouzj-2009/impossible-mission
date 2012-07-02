@@ -245,7 +245,13 @@ Ext.define('MyApp.view.LunMap', {
                                         },
                                         {
                                             xtype: 'targetlistfield',
-                                            name: 'targetid'
+                                            name: 'targetid',
+                                            displayField: 'shortname',
+                                            valueField: 'targetid',
+                                            databind: {
+                                                model: 'targetlist',
+                                                autoload: true
+                                            }
                                         },
                                         {
                                             xtype: 'combobox',
