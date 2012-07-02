@@ -402,7 +402,7 @@
                             "userConfig": {
                                 "padding": 5,
                                 "width": null,
-                                "collapsed": true,
+                                "collapsed": false,
                                 "collapsible": true,
                                 "title": "Global Setting",
                                 "designer|userClassName": "MyFieldSet12"
@@ -440,7 +440,7 @@
                                     "userConfig": {
                                         "padding": 5,
                                         "width": null,
-                                        "collapsed": false,
+                                        "collapsed": true,
                                         "collapsible": true,
                                         "title": "Global CHAP Setting",
                                         "designer|userClassName": "MyFieldSet"

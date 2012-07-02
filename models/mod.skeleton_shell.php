@@ -58,6 +58,15 @@ var $saving_fields = 'record_id,modname,cmd';
 //now we define cmd and pharser
 // all valid type and configurator 
 // This define just for description, should be removed in your real mod!
+// !note, newvalues support these special type (using by 'key'=>'type')
+//	boolean:	trans the value from a string to boolean, null|NULL|no|NO|FALSE|false|'' will be treat as boolean false.
+//	password:	trans the value to a ******** format
+//	filesize:	trans the value to a readable file size such as 134MB etc.
+//	bytesize:	trans the value from a file size to bytesize
+//	wwwn:		trans the value to a wwwn format
+//	MOD::FUNC:	call static MOD::FUNC($v, $record, &$mergeup) to format the value. related value will be transfer in.
+//			if mergeup is true, the return value will be merged up.
+//			note! MOD must be loaded already, this can be done by include_once on before your pconfigs define.
 var $valid_pharser = array(
 	'records_span_lines_simple'=>array(
 		cmd=>'shell cmd to run',
@@ -119,6 +128,8 @@ var $valid_pharser = array(
 		executor=>executor_mode,	//optional, default is shell.
 		type=>'records_span_lines',
 		ignore=>'/ignore pattern/',	//optional, ignored lines
+		trimkey=>"letter trimed for key"//optional, default is " :"
+		trimvalue=>"letter trimed for value"//optional, default is " "
 		matcher=>'/(key pattern)split pattern(value pattern)/',
 						//optional, default is /([^=]*) *= *([^ ].*)/
 		newkeys=>array(			//optional, after pharse, keys will be transfered.
@@ -139,6 +150,7 @@ var $valid_pharser = array(
 		executor=>executor_mode,	//optional, default is shell.
 		type=>'records_span_lines',
 		fieldsep=>'/field split pattern/', 
+		trimvalue=>"letter trimed for value"//optional, default is " "
 		fieldnames=>'name1,name2,...',	//name for splitted fields, one by one, some reserved name:
 						//	_value_:	use field value as field name,
 						//	_key_:		use field value as further _auto_ field's name,

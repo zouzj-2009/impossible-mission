@@ -158,7 +158,7 @@ Ext.define('MyApp.view.LunMap', {
                                 {
                                     xtype: 'fieldset',
                                     padding: 5,
-                                    collapsed: true,
+                                    collapsed: false,
                                     collapsible: true,
                                     title: 'Global Setting',
                                     items: [
@@ -172,7 +172,7 @@ Ext.define('MyApp.view.LunMap', {
                                         {
                                             xtype: 'fieldset',
                                             padding: 5,
-                                            collapsed: false,
+                                            collapsed: true,
                                             collapsible: true,
                                             title: 'Global CHAP Setting',
                                             items: [
