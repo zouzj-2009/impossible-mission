@@ -10,62 +10,29 @@
         "autoLoad": false,
         "storeId": "netconfig",
         "model": "netconfig",
-        "data": "[{dev:'eth0', physicdevice:'eth0', ipaddress:'192.168.10.1'},\n{dev:'eth1', physicdevice:'eth1',\nipaddress:'192.168.20.1'}]",
-        "groupField": "physicdevice",
+        "data": null,
+        "groupField": null,
         "designer|userClassName": "netconfig"
     },
     "customConfigs": [],
     "designerId": "f8a27a84-e464-4246-b5bc-1e946a60fb43",
     "$viewOrder": 1,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen36820",
-            "type": "jsonpproxy",
+            "id": "ExtBox1-ext-gen12078",
+            "type": "sorter",
             "reference": {
-                "name": "proxy",
+                "name": "sorters",
                 "type": "object"
             },
             "codeClass": null,
             "userConfig": {
-                "extraParams": "['action']",
-                "designer|userClassName": "MyJsonPProxy"
+                "property": "physicdevice",
+                "designer|userClassName": "MySorter1"
             },
             "customConfigs": [],
-            "expanded": true,
-            "cn": [
-                {
-                    "id": "ExtBox1-ext-gen36824",
-                    "type": "jsonreader",
-                    "reference": {
-                        "name": "reader",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "designer|userClassName": "MyJsonReader"
-                    },
-                    "customConfigs": [],
-                    "expanded": true
-                },
-                {
-                    "id": "ExtBox1-ext-gen4951",
-                    "type": "jsonwriter",
-                    "reference": {
-                        "name": "writer",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "writeAllFields": false,
-                        "allowSingle": false,
-                        "root": "data",
-                        "designer|userClassName": "MyJsonWriter"
-                    },
-                    "customConfigs": [],
-                    "expanded": true
-                }
-            ]
+            "expanded": true
         }
     ]
 }

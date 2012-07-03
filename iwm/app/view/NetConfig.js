@@ -180,18 +180,32 @@ Ext.define('MyApp.view.NetConfig', {
                                     title: 'IP Address Configuration',
                                     items: [
                                         {
-                                            xtype: 'combobox',
+                                            xtype: 'textfield',
                                             name: 'dev',
-                                            fieldLabel: 'Device',
+                                            fieldLabel: 'Device Name',
                                             anchor: '100%'
                                         },
                                         {
+                                            xtype: 'combobox',
+                                            name: 'physicdevice',
+                                            fieldLabel: 'NIC',
+                                            displayField: 'shortname',
+                                            valueField: 'physicdevice',
+                                            anchor: '100%',
+                                            databind: {
+                                                autoload: true,
+                                                model: 'niclist'
+                                            }
+                                        },
+                                        {
                                             xtype: 'ipfield',
-                                            name: 'ipaddress'
+                                            name: 'ipaddress',
+                                            anchor: '100%'
                                         },
                                         {
                                             xtype: 'netmaskfield',
-                                            name: 'netmask'
+                                            name: 'netmask',
+                                            anchor: '100%'
                                         },
                                         {
                                             xtype: 'button',

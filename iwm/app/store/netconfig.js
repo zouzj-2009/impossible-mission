@@ -26,33 +26,8 @@ Ext.define('MyApp.store.netconfig', {
             autoLoad: false,
             storeId: 'netconfig',
             model: 'MyApp.model.netconfig',
-            data: [
-                {
-                    dev: 'eth0',
-                    physicdevice: 'eth0',
-                    ipaddress: '192.168.10.1'
-                },
-                {
-                    dev: 'eth1',
-                    physicdevice: 'eth1',
-                    ipaddress: '192.168.20.1'
-                }
-            ],
-            groupField: 'physicdevice',
-            proxy: {
-                type: 'jsonp',
-                extraParams: [
-                    'action'
-                ],
-                reader: {
-                    type: 'json'
-                },
-                writer: {
-                    type: 'json',
-                    writeAllFields: false,
-                    allowSingle: false,
-                    root: 'data'
-                }
+            sorters: {
+                property: 'physicdevice'
             }
         }, cfg)]);
     }

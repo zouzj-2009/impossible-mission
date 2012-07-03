@@ -59,6 +59,8 @@ var $saving_fields = 'record_id,modname,cmd';
 // all valid type and configurator 
 // This define just for description, should be removed in your real mod!
 // !note, newvalues support these special type (using by 'key'=>'type')
+//	tolower:	trans the value to string lower case
+//	touppser:	trans the value to string upper case
 //	boolean:	trans the value from a string to boolean, null|NULL|no|NO|FALSE|false|'' will be treat as boolean false.
 //	password:	trans the value to a ******** format
 //	filesize:	trans the value to a readable file size such as 134MB etc.
@@ -71,6 +73,23 @@ var $saving_fields = 'record_id,modname,cmd';
 //	'capacity'=>array('size', 'bytesize')	//two new indexes 'size', 'bytesize' will be set, equal to 'capacity', and different values transfer can be set later.
 
 var $valid_pharser = array(
+	'recrods_in_one_line'=>array(
+		cmd=>'shell cmd to run',
+		executor=>executor_mode,	//optional, default is shell
+		type=>'records_in_one_line',
+		ignore=>'/ignore pattern/',	//optional, ignored lines
+		recordmatcher=>'/pattern to match the whole record/',
+		recordtype=>array(
+			/* pharser config for the record */
+			mergeup=>false,		//if true, when this records are in a records_xxx type, the result will be expand to records.
+		),
+		newkeys=>array(			//optional, after pharse, keys will be transfered.
+			oldkey=>'newkey', 	//...
+		),
+		newvalues=>array(
+			/* ... see below */
+		),
+	),
 	'records_span_lines_simple'=>array(
 		cmd=>'shell cmd to run',
 		executor=>executor_mode,	//optional, default is shell

@@ -32,7 +32,8 @@ Ext.application({
         'etherspeed',
         'glunmap',
         'dnsgw',
-        'gvirtportal'
+        'gvirtportal',
+        'niclist'
     ],
     stores: [
         'networkinfo',

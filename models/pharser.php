@@ -192,6 +192,12 @@ function format_keys_and_values($array, $keys, $valueconfig=null, $ppconfig){
 			if (!is_array($pconfig)){
 				$newvalue = $v;
 				switch($pconfig){
+				case 'tolower':
+					$newvalue = strtolower($v);
+					break;
+				case 'touppser':
+					$newvalue = strtoupper($v);
+					break;
 				case 'boolean':
 					$newvalue = (!$v||$v=='false'||$v=='0'||$v=='no'||$v=='NO'||$v=='FALSE'||$v=='null'||$v=='NULL')?false:true;
 					break;
@@ -395,7 +401,7 @@ function p_one_record_per_line(&$in, $pconfig){
 	return $r;
 }
 
-function p_keyvalues_in_one_line(&$in, $pconfig){
+function p_keyvalues_in_one_line(&$in, $pconfig, $format=true){
 //valid config key:
 //matcher:	regexp, (key).*(value)
 	$line = false;
@@ -426,7 +432,7 @@ function p_keyvalues_in_one_line(&$in, $pconfig){
 			$r[trim($key, $trimkey)] = trim($m[2][$i], $trimvalue);
 		}	
 	}
-	if ($pconfig[newkeys]||$pconfig[newvalues]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues], $pconfig);
+	if ($format && ($pconfig[newkeys]||$pconfig[newvalues])) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues], $pconfig);
 	if ($pconfig[arrayret]) $r = array($r);
 	if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got", $r);
 	return $r;
@@ -452,9 +458,10 @@ function p_keyvalues_span_lines(&$in, $pconfig){
 			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
 			continue;
 		}
-		$kv = PHARSER::p_keyvalues_in_one_line($line, $pconfig);
+		$kv = PHARSER::p_keyvalues_in_one_line($line, $pconfig, $format=false);
 		$r = array_merge($r, $kv);
 	}
+	if ($pconfig[newkeys]||$pconfig[newvalues]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues], $pconfig);
 	if ($arrayret) $r = array($r);
 	if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got", $r);
 	return $r;

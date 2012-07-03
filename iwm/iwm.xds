@@ -431,6 +431,14 @@
                 "app/model/gvirtportal.js"
             ],
             "className": "gvirtportal"
+        },
+        "5d1f3b5b-82da-45dc-9b22-551c92435784": {
+            "paths": [
+                "metadata/model/niclist",
+                "app/model/override/niclist.js",
+                "app/model/niclist.js"
+            ],
+            "className": "niclist"
         }
     },
     "expandedState": {

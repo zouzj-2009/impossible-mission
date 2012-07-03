@@ -56,7 +56,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen13224",
@@ -421,7 +421,7 @@
                         "designer|userClassName": "MyForm11"
                     },
                     "customConfigs": [],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen13409",
@@ -443,6 +443,23 @@
                             "expanded": true,
                             "cn": [
                                 {
+                                    "id": "ExtBox1-ext-gen10473",
+                                    "type": "textfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "dev",
+                                        "fieldLabel": "Device Name",
+                                        "designer|userClassName": "MyTextField23",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
                                     "id": "ExtBox1-ext-gen38087",
                                     "type": "combobox",
                                     "reference": {
@@ -451,12 +468,21 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "name": "dev",
-                                        "fieldLabel": "Device",
+                                        "name": "physicdevice",
+                                        "fieldLabel": "NIC",
+                                        "displayField": "shortname",
+                                        "valueField": "physicdevice",
                                         "designer|userClassName": "MyComboBox3",
-                                        "layout|anchor": "100%"
+                                        "layout|anchor": "100%",
+                                        "databind": "{\nautoload:true,\nmodel:'niclist'\n}"
                                     },
-                                    "customConfigs": [],
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "databind",
+                                            "type": "object"
+                                        }
+                                    ],
                                     "expanded": true
                                 },
                                 {
@@ -468,7 +494,8 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "name": "ipaddress"
+                                        "name": "ipaddress",
+                                        "layout|anchor": "100%"
                                     },
                                     "customConfigs": [],
                                     "iconCls": "icon-linkedinstance",
@@ -484,7 +511,8 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "name": "netmask"
+                                        "name": "netmask",
+                                        "layout|anchor": "100%"
                                     },
                                     "customConfigs": [],
                                     "iconCls": "icon-linkedinstance",
