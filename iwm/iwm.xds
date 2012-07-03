@@ -196,19 +196,19 @@
         },
         "599b57e4-e9df-443a-804a-5e8542873958": {
             "paths": [
-                "metadata/model/Access",
-                "app/model/override/Access.js",
-                "app/model/Access.js"
+                "metadata/model/access",
+                "app/model/override/access.js",
+                "app/model/access.js"
             ],
-            "className": "Access"
+            "className": "access"
         },
         "01d85137-4610-4333-be7e-05118f173610": {
             "paths": [
-                "metadata/model/VirtPortal",
-                "app/model/override/VirtPortal.js",
-                "app/model/VirtPortal.js"
+                "metadata/model/virtportal",
+                "app/model/override/virtportal.js",
+                "app/model/virtportal.js"
             ],
-            "className": "VirtPortal"
+            "className": "virtportal"
         },
         "7761a2b3-3ddb-4d8d-9c4d-1ee9e275709a": {
             "paths": [
@@ -423,6 +423,14 @@
                 "app/model/dnsgw.js"
             ],
             "className": "dnsgw"
+        },
+        "430cc03e-d4f1-4d83-ac5d-797fd01914cb": {
+            "paths": [
+                "metadata/model/gvirtportal",
+                "app/model/override/gvirtportal.js",
+                "app/model/gvirtportal.js"
+            ],
+            "className": "gvirtportal"
         }
     },
     "expandedState": {

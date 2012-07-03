@@ -143,6 +143,7 @@ var $valid_pharser = array(
 			mergeup=>true,		//optional, default is false, if true, merge result to parent, otherwise, value indexed by key
 			//or 'key'=>'boolean'|'password'
 		),
+		arrayret=>false,		//true to returen record in an array, same as records span ...
 		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
 	),
 	'keyvalues_in_one_line'=>array(

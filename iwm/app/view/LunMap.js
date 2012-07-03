@@ -109,7 +109,7 @@ Ext.define('MyApp.view.LunMap', {
                         {
                             xtype: 'gridcolumn',
                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                return '********';
+                                if (record.targetuser) return '********'; else return '';
                             },
                             dataIndex: 'targetpass',
                             text: 'Targetpass'
@@ -122,7 +122,7 @@ Ext.define('MyApp.view.LunMap', {
                         {
                             xtype: 'gridcolumn',
                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                return '********';
+                                if (record.initiatoruser) return '********'; else return '';
                             },
                             dataIndex: 'initiatorpass',
                             text: 'Initiatorpass'
@@ -245,21 +245,19 @@ Ext.define('MyApp.view.LunMap', {
                                         },
                                         {
                                             xtype: 'targetlistfield',
-                                            name: 'targetid',
-                                            displayField: 'shortname',
-                                            valueField: 'targetid',
                                             databind: {
                                                 model: 'targetlist',
                                                 autoload: true
-                                            }
+                                            },
+                                            name: 'targetid',
+                                            displayField: 'shortname',
+                                            valueField: 'targetid'
                                         },
                                         {
                                             xtype: 'combobox',
                                             hidden: false,
                                             name: 'access',
-                                            value: [
-                                                'RW'
-                                            ],
+                                            value: 'rw',
                                             fieldLabel: 'Access',
                                             allowBlank: false,
                                             queryMode: 'local',

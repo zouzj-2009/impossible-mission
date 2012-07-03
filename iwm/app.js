@@ -24,14 +24,15 @@ Ext.application({
         'SysInfo',
         'targetlist',
         'LunMap',
-        'Access',
-        'VirtPortal',
+        'access',
+        'virtportal',
         'DiskList',
         'HbaList',
         'SysLog',
         'etherspeed',
         'glunmap',
-        'dnsgw'
+        'dnsgw',
+        'gvirtportal'
     ],
     stores: [
         'networkinfo',

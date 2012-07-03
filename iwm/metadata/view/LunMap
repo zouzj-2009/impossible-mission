@@ -17,7 +17,7 @@
     "customConfigs": [],
     "designerId": "31c39387-772c-4393-a015-cd5be86defd7",
     "$viewOrder": 16,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen16899",
@@ -48,7 +48,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen16912",
@@ -262,7 +262,7 @@
                                     "view"
                                 ],
                                 "implHandler": [
-                                    "return '********';"
+                                    "if (record.targetuser) return '********'; else return '';"
                                 ],
                                 "designer|userClassName": "renderer"
                             },
@@ -324,7 +324,7 @@
                                     "view"
                                 ],
                                 "implHandler": [
-                                    "return '********';"
+                                    "if (record.initiatoruser) return '********'; else return '';"
                                 ],
                                 "designer|userClassName": "renderer"
                             },
@@ -389,7 +389,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen24302",
@@ -408,7 +408,7 @@
                                 "designer|userClassName": "MyFieldSet12"
                             },
                             "customConfigs": [],
-                            "expanded": true,
+                            "expanded": false,
                             "cn": [
                                 {
                                     "id": "ExtBox1-ext-gen66099",
@@ -631,7 +631,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen126259",
@@ -689,10 +689,10 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "databind": "{\nmodel: 'targetlist',\nautoload: true\n}",
                                         "name": "targetid",
                                         "displayField": "shortname",
-                                        "valueField": "targetid",
-                                        "databind": "{\nmodel: 'targetlist',\nautoload: true\n}"
+                                        "valueField": "targetid"
                                     },
                                     "customConfigs": [
                                         {
@@ -717,7 +717,7 @@
                                         "hidden": false,
                                         "itemId": null,
                                         "name": "access",
-                                        "value": "['RW']",
+                                        "value": "rw",
                                         "fieldLabel": "Access",
                                         "allowBlank": false,
                                         "queryMode": "local",

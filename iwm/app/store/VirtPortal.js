@@ -16,7 +16,7 @@
 Ext.define('MyApp.store.VirtPortal', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.VirtPortal'
+        'MyApp.model.virtportal'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.VirtPortal', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'virtportal',
-            model: 'MyApp.model.VirtPortal',
+            model: 'MyApp.model.virtportal',
             data: [
                 {
                     targetid: -1,

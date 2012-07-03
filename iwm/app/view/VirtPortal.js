@@ -43,6 +43,10 @@ Ext.define('MyApp.view.VirtPortal', {
                     store: 'VirtPortal',
                     region: 'center',
                     split: true,
+                    databind: {
+                        autoload: true,
+                        bindform: 'newvirtentry'
+                    },
                     viewConfig: {
 
                     },
@@ -123,82 +127,125 @@ Ext.define('MyApp.view.VirtPortal', {
                 },
                 {
                     xtype: 'container',
-                    minWidth: 280,
-                    width: 150,
+                    minWidth: 292,
+                    width: 292,
                     autoScroll: true,
                     region: 'west',
                     split: true,
                     items: [
                         {
-                            xtype: 'fieldset',
-                            padding: 5,
-                            collapsed: false,
-                            collapsible: true,
-                            title: 'Global Setting',
+                            xtype: 'form',
+                            border: 0,
+                            itemId: 'gvirtportal',
+                            bodyCls: 'x-border-layout-ct',
+                            databind: {
+                                autoload: true,
+                                model: 'gvirtportal'
+                            },
                             items: [
                                 {
-                                    xtype: 'checkboxfield',
-                                    fieldLabel: 'Virt Portal',
-                                    boxLabel: 'Enabled'
-                                },
-                                {
-                                    xtype: 'ipfield',
-                                    name: 'portalip',
-                                    fieldLabel: 'Portal IP'
-                                },
-                                {
-                                    xtype: 'netmaskfield',
-                                    name: 'portalmask',
-                                    fieldLabel: 'Portal Mask'
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    name: 'maxcount',
-                                    fieldLabel: 'Max Count',
-                                    blankText: 'default'
-                                },
-                                {
-                                    xtype: 'button',
-                                    text: 'Save'
+                                    xtype: 'fieldset',
+                                    padding: 5,
+                                    collapsed: false,
+                                    collapsible: true,
+                                    title: 'Global Setting',
+                                    items: [
+                                        {
+                                            xtype: 'checkboxfield',
+                                            name: 'enabled',
+                                            fieldLabel: 'Virt Portal',
+                                            boxLabel: 'Enabled',
+                                            uncheckedValue: 0,
+                                            listeners: {
+                                                change: {
+                                                    fn: me.onCheckboxfieldChange,
+                                                    scope: me
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'ipfield',
+                                            itemId: 'portalip',
+                                            name: 'portalip',
+                                            fieldLabel: 'Portal IP'
+                                        },
+                                        {
+                                            xtype: 'netmaskfield',
+                                            itemId: 'portalmask',
+                                            name: 'portalmask',
+                                            fieldLabel: 'Portal Mask'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            name: 'maxcount',
+                                            fieldLabel: 'Max Count',
+                                            blankText: 'default'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'update',
+                                            text: 'Save'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'Refresh'
+                                        }
+                                    ]
                                 }
                             ]
                         },
                         {
-                            xtype: 'fieldset',
-                            padding: 5,
-                            collapsed: false,
-                            collapsible: true,
-                            title: 'Setting',
+                            xtype: 'form',
+                            border: 0,
+                            itemId: 'newvirtentry',
+                            bodyCls: 'x-border-layout-ct',
                             items: [
                                 {
-                                    xtype: 'targetlistfield',
-                                    name: 'targetname',
-                                    fieldLabel: 'TargetName'
-                                },
-                                {
-                                    xtype: 'ipfield',
-                                    name: 'includeip',
-                                    fieldLabel: 'Include IP'
-                                },
-                                {
-                                    xtype: 'ipfield',
-                                    name: 'excludesource',
-                                    fieldLabel: 'Exclude Client'
-                                },
-                                {
-                                    xtype: 'button',
-                                    itemId: 'add',
-                                    margin: 5,
-                                    minWidth: 80,
-                                    autoWidth: true,
-                                    text: 'Add New ...',
-                                    formBind: true,
-                                    listeners: {
-                                        click: {
-                                            fn: me.onAddClick,
-                                            scope: me
+                                    xtype: 'fieldset',
+                                    padding: 5,
+                                    collapsed: false,
+                                    collapsible: true,
+                                    title: 'Setting',
+                                    items: [
+                                        {
+                                            xtype: 'targetlistfield',
+                                            name: 'targetname',
+                                            value: 'default',
+                                            fieldLabel: 'TargetName',
+                                            allowBlank: true,
+                                            displayField: 'shortname',
+                                            valueField: 'targetname',
+                                            databind: {
+                                                model: 'targetlist'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'ipfield',
+                                            name: 'includeip',
+                                            fieldLabel: 'Include IP'
+                                        },
+                                        {
+                                            xtype: 'ipfield',
+                                            name: 'excludesource',
+                                            fieldLabel: 'Exclude Client'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'add',
+                                            margin: 5,
+                                            minWidth: 80,
+                                            autoWidth: true,
+                                            text: 'Add New ...',
+                                            formBind: true,
+                                            listeners: {
+                                                click: {
+                                                    fn: me.onAddClick,
+                                                    scope: me
+                                                }
+                                            }
                                         }
-                                    }
+                                    ]
                                 }
                             ]
                         }
@@ -229,6 +276,19 @@ Ext.define('MyApp.view.VirtPortal', {
         }
 
 
+    },
+
+    onCheckboxfieldChange: function(field, newValue, oldValue, options) {
+        if (!newValue){
+            field.up().down('#portalip').allowBlank = true;
+            field.up().down('#portalmask').allowBlank = true;
+            field.up().down('#portalip').setValue('');
+            field.up().down('#portalmask').setValue('');
+        }else{
+            field.up().down('#portalip').allowBlank = false;
+            field.up().down('#portalmask').allowBlank = false;
+        }
+        field.up('form').getForm().isValid();
     },
 
     onAddClick: function(button, e, options) {

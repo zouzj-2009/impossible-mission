@@ -8,8 +8,8 @@
     "codeClass": null,
     "userConfig": {
         "storeId": "access",
-        "model": "Access",
-        "data": "[{value:'RW', text:'Read & Write'},{value:'RO',text:'Read Only'},{value:'--', text:'No Access'}]\n",
+        "model": "access",
+        "data": "[{value:'rw', text:'Read & Write'},{value:'ro',text:'Read Only'},{value:'--', text:'No Access'}]\n",
         "designer|userClassName": "Access"
     },
     "customConfigs": [],

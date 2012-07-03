@@ -76,7 +76,7 @@ Ext.define('MyApp.controller.DataIndiacator', {
             }
             return;
         }else{
-            pc = dbc.down('#processstatus');
+            if (Ext.isFunction(dbc.down)) pc = dbc.down('#processstatus');
             if (!pc){
                 if (cfg.deffpc && (operation.action == 'update' || operation.action == 'create')){
                     pc = cfg.deffpc;
@@ -119,7 +119,7 @@ Ext.define('MyApp.controller.DataIndiacator', {
                 pc.getEl().setHTML('<a class="x-progress-text">'+pendingtext+'</a>');
             }
         }else{
-            var ppc = pc.down('progressbar');
+            var ppc = Ext.isFunction(pc.down)?pc.down('progressbar'):null;
             if (!ppc && !pend){
                 ppc = Ext.create('Ext.ProgressBar',{flex:1});
                 pc.add(ppc);
