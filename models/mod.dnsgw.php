@@ -49,7 +49,7 @@ static $pconfigs = array(
 	
 );
 
-var $defaultcmds=array(read=>'get', update=>'update');
+var $defaultcmds=array(read=>'get', update=>'update', create=>'faulty', destroy='faulty');
 
 }
 ?>

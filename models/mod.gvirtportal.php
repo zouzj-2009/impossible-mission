@@ -29,23 +29,41 @@ tgn: default
 	),	
 	'update'=>array(
 		cmd=>'(
-	changedns(){
-		echo "#@LOG@0 change dns from $1 to $2\n"
+	change_enabled(){
+		echo "#@LOG@0 change portal enabled from $1 to $2\n"
+		if [ "$2" = 1 ];then
+			shell group enable
+		else
+			shell group disable
+		fi
 	}
-	changegw(){
-		echo "#@LOG@0 change defgw from $1 to $2\n"
+
+	change_portalip(){
+		echo "#@LOG@0 change portalip from $1 to $2\n"
+		shell group master $2
 	}
-	if [ "%dns1%" != "%old_dns1%" ];then
-		changedns "%old_dns1%" "%dns1%"
+
+	change_portalmask(){
+		echo "#@LOG@0 change portalmask from $1 to $2\n"
+		shell group grpmask $2
+	}
+
+	change_maxcount(){
+		echo "#@LOG@0 change portal maxcount from $1 to $2\n"
+		shell group maxweight $2
+	}
+
+	if [ "%enabled%" != "%old_enabled%" ];then
+		change_enabled "%old_enabled%" "%enabled%"
 	fi
-	if [ "%defgw1%" != "%old_defgw1%" ];then
-		changegw "%old_defgw1%" "%defgw1%"
+	if [ "%portalip%" != "%old_portalip%" ];then
+		change_portalip "%old_portalip%" "%portalip%"
 	fi
-	if [ "%dns2%" != "%old_dns2%" ];then
-		changedns "%old_dns2%" "%dns2%"
+	if [ "%portalmask%" != "%old_portalmask%" ];then
+		change_portalmask "%old_portalmask%" "%portalmask%"
 	fi
-	if [ "%defgw2%" != "%old_defgw2%" ];then
-		changegw "%old_defgw2%" "%gw2%"
+	if [ "%maxcount%" != "%old_maxcount%" ];then
+		change_maxcount "%old_maxcount%" "%maxcount%"
 	fi
 		
 )',
@@ -57,7 +75,7 @@ static function get_enabled($v, $record, &$merge_up){
 	return $v=='enable';
 }
 
-var $defaultcmds=array(read=>'get', update=>'update');
+var $defaultcmds=array(read=>'get', update=>'update', destroy=>'faulty', create=>'faulty');
 
 }
 ?>
