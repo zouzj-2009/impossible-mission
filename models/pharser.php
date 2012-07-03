@@ -291,7 +291,9 @@ function p_just_output(&$in, $pconfig){
 //endout:	end of the msg, this line included
 //endoutx:	endo of the msg, this line not included
 //strip:	stips this pattern
+//nextnlines:	just output nextnlines after igore and strip:
 	$o = '';
+	$ocount =0;
 	while ($in){
 		$line = array_shift($in);
 		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
@@ -315,6 +317,8 @@ function p_just_output(&$in, $pconfig){
 			continue;
 		}
 		$o .= $line."\n";
+		$ocount ++;
+		if ($pconfig[nextnlines] && $pconfig[nextnlines] == $ocount) break;
 	}
 	if ($pconfig[strip]) $o = preg_replace($pconfig[strip], '', $o);
 	if (!$pconfig[name]) return $o;
@@ -456,6 +460,59 @@ function p_keyvalues_span_lines(&$in, $pconfig){
 	return $r;
 }
 
+function p_records_in_one_line(&$in, $pconfig){
+//valid config key:
+//recordmatcher:	regexp, pattern for match a record
+//recordspliter:	regexp, pattern for split line into record
+//strip:		regexp, things was stripped before record was checken
+//recordtype:		pharser config for in record pharse.
+	$r = array();
+	if (!$pconfig[recordmatcher] && !$pconfig[recordspliter]){
+		throw new Exception(__FUNCTION__.' missing [recordmatcher|recordspliter] config.');
+	}
+	if (!is_array($pconfig[recordtype])){
+		throw new Exception(__FUNCTION__.' missing [recordtype] config(array need).');
+	}
+	$line = false;
+	if (is_array($in)){
+		while($in){
+			$line = array_shift($in);
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
+			if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)){
+				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
+				continue;
+			}
+			break;
+		}
+		if (!$line){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got", 'nothing');
+			return array();
+		}
+	}else $line = $in;
+	if ($pconfig[strip]) $line = preg_replace($pconfig[strip], '', $line);
+	$m = array();
+	if ($pconfig[recordspliter]) $m = preg_split($pconfig[recordspliter], $line);
+	else if (preg_match_all($pconfig[recordmatcher], $line, $m)){
+		$m = $m[1];
+	}else $m = array();
+	if (!$m){
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." !match [recordmatcher]", $pconfig[recordmatcher]);
+		return array();
+	}
+	$records = array();
+	foreach($m as $rline){
+		$rconfig = $pconfig[recordtype];
+		$rconfig[debug] = $pconfig[debugall];
+		$rconfig[debugall] = $pconfig[debugall];
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." record, using", $rconfig[type]);
+		$rin = array($rline);
+		$record = PHARSER::pharse_type($rin, $rconfig);
+		if ($pconfig[debug] && !$pconfig[recordtype][debug]) PHARSER::debug(__FUNCTION__." got record", $record);
+		$records[] = $record;
+	}
+	return $records;
+}
+
 function p_records_span_lines(&$in, $pconfig){
 //valid config key:
 //ignore:	regexp, matched line will not be pharsed.
@@ -475,6 +532,7 @@ function p_records_span_lines(&$in, $pconfig){
 	}
 	$started = false;
 	$cur_record = array();
+	$cur_needexpand = array();
 	$cur_id	= false;
 	while($in){
 		$line = array_shift($in);
@@ -505,13 +563,24 @@ function p_records_span_lines(&$in, $pconfig){
 			$borrowed = preg_replace($pconfig[recordstart], '', $line);
 		}
 		if ($changerecord){
-			if ($cur_record){
+			if ($cur_record || $cur_needexpand){
 				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got new record(unformated)", $cur_record);
 				if ($pconfig[newkeys]||$pconfig[newvalues]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues], $pconfig);
-				if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
-				else $r[] = $cur_record;	//add full record
+				if ($cur_needexpand){
+					foreach ($cur_needexpand as $e_records){
+						foreach($e_records as $e_record){
+							$rec = $cur_record;
+							$rec = array_merge($rec, $e_record);
+							$r[] = $rec;
+						}
+					}
+				}else{
+					if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
+					else $r[] = $cur_record;	//add full record
+				}
 			}
 			$cur_record = array();
+			$cur_needexpand = array();
 			$cur_id = false;
 		}
 		if (!$started) continue;
@@ -536,8 +605,14 @@ function p_records_span_lines(&$in, $pconfig){
 			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." simple fields, using", $pconfig[fieldsmode][type]);
 			$fields = PHARSER::pharse_type($in, $pconfig[fieldsmode]);
 			if ($pconfig[debug] && !$pconfig[fileldsmode][debug]) PHARSER::debug(__FUNCTION__." got simple fields", $fields);
-			$cur_record = array_merge($cur_record, $fields);
-			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." cur_record", $cur_record);
+			if (preg_match('/^records/', $pconfig[fieldsmode][type]) && $pconfig[fieldsmode][mergeup]){
+				//expand record to records with cur_record!
+				$cur_needexpand[] = $fields;
+				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." cur_needexpand", $cur_needexpand);
+			}else{
+				$cur_record = array_merge($cur_record, $fields);
+				if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." cur_record", $cur_record);
+			}
 		}else{ //for mixed models, try each group
 			foreach($pconfig[fieldsmode] as $group=>$gpconfig){
 				if (preg_match($gpconfig[gmatcher], $line)){
@@ -552,20 +627,36 @@ print_r($in);
 					if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." pharse field group [$group] using", $gpconfig[type]);
 					$fields = PHARSER::pharse_type($in, $gpconfig);
 					if ($pconfig[debug] && !$gpconfig[debug]) PHARSER::debug(__FUNCTION__." got group[$group] fields", $fields);
-					if ($gpconfig[mergeup])
-						$cur_record = array_merge($cur_record, $fields);
-					else
-						$cur_record[$group] = $fields;
+					if (preg_match('/^records/', $gpconfig[type]) && $gpconfig[mergeup]){
+						//expand record to records with cur_record!
+						$cur_needexpand[] = $fields;
+						if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." cur_needexpand", $cur_needexpand);
+					}else{
+						if ($gpconfig[mergeup])
+							$cur_record = array_merge($cur_record, $fields);
+						else
+							$cur_record[$group] = $fields;
+					}
 					break;	//only match one time!
 				}
 			}
 			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." cur_record", $cur_record);
 		}
 	}
-	if ($cur_record){
+	if ($cur_record || $cur_needexpand){
 		if ($pconfig[newkeys]||$pconfig[newvalues]) $cur_record = PHARSER::format_keys_and_values($cur_record, $pconfig[newkeys], $pconfig[newvalues], $pconfig);
-		if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
-		else $r[] = $cur_record;	//add full record
+		if ($cur_needexpand){
+			foreach ($cur_needexpand as $e_records){
+				foreach($e_records as $e_record){
+					$rec = $cur_record;
+					$rec = array_merge($rec, $e_record);
+					$r[] = $rec;
+				}
+			}
+		}else{
+			if ($cur_id && $pconfig[idindexed]) $r[$cur_id] = $cur_record;
+			else $r[] = $cur_record;	//add full record
+		}
 	}
 	if ($pconfig[skiprecord]){
 		$t = array();

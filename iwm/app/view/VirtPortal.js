@@ -41,12 +41,12 @@ Ext.define('MyApp.view.VirtPortal', {
                     title: 'Current Setting',
                     titleCollapse: false,
                     store: 'VirtPortal',
-                    region: 'center',
-                    split: true,
                     databind: {
                         autoload: true,
                         bindform: 'newvirtentry'
                     },
+                    region: 'center',
+                    split: true,
                     viewConfig: {
 
                     },
@@ -62,24 +62,12 @@ Ext.define('MyApp.view.VirtPortal', {
                                     xtype: 'button',
                                     disabled: true,
                                     itemId: 'delete',
-                                    text: 'Delete',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onDeleteClick,
-                                            scope: me
-                                        }
-                                    }
+                                    text: 'Delete'
                                 },
                                 {
                                     xtype: 'button',
                                     itemId: 'refresh',
-                                    text: 'Refresh',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onRefreshClick,
-                                            scope: me
-                                        }
-                                    }
+                                    text: 'Refresh'
                                 }
                             ]
                         }
@@ -121,7 +109,9 @@ Ext.define('MyApp.view.VirtPortal', {
                     ],
                     features: [
                         {
-                            ftype: 'grouping'
+                            ftype: 'grouping',
+                            enableGroupingMenu: false,
+                            enableNoGroups: false
                         }
                     ]
                 },
@@ -210,15 +200,15 @@ Ext.define('MyApp.view.VirtPortal', {
                                     items: [
                                         {
                                             xtype: 'targetlistfield',
+                                            databind: {
+                                                autoload: true,
+                                                model: 'targetlist'
+                                            },
                                             name: 'targetname',
                                             value: 'default',
                                             fieldLabel: 'TargetName',
-                                            allowBlank: true,
                                             displayField: 'shortname',
-                                            valueField: 'targetname',
-                                            databind: {
-                                                model: 'targetlist'
-                                            }
+                                            valueField: 'targetname'
                                         },
                                         {
                                             xtype: 'ipfield',
@@ -237,13 +227,7 @@ Ext.define('MyApp.view.VirtPortal', {
                                             minWidth: 80,
                                             autoWidth: true,
                                             text: 'Add New ...',
-                                            formBind: true,
-                                            listeners: {
-                                                click: {
-                                                    fn: me.onAddClick,
-                                                    scope: me
-                                                }
-                                            }
+                                            formBind: true
                                         }
                                     ]
                                 }
@@ -255,16 +239,6 @@ Ext.define('MyApp.view.VirtPortal', {
         });
 
         me.callParent(arguments);
-    },
-
-    onDeleteClick: function(button, e, options) {
-        var records = this.down('gridpanel').getSelectionModel().getSelection();
-        this.down('gridpanel').store.remove(records);
-    },
-
-    onRefreshClick: function(button, e, options) {
-        this.reloaded = true;
-        this.down('gridpanel').store.load();
     },
 
     onGridpanelSelectionChange: function(tablepanel, selections, options) {
@@ -289,17 +263,6 @@ Ext.define('MyApp.view.VirtPortal', {
             field.up().down('#portalmask').allowBlank = false;
         }
         field.up('form').getForm().isValid();
-    },
-
-    onAddClick: function(button, e, options) {
-
-        var store = this.down('gridpanel').store;
-        if (this.getForm().isValid()){
-            var v = this.getForm().getFieldValues();
-            store.add(v);
-            store.sync();
-        }
-
     }
 
 });

@@ -10,8 +10,9 @@
         "storeId": "virtportal",
         "model": "virtportal",
         "sortRoot": null,
-        "data": "[{\ntargetid:-1,\ntargetname: 'default',\nincludeip:'10.10.1.201'\n},{\ntargetid: -1,\ntargetname: 'default',\nexcludesource:'10.10.1.1'\n},{\ntargetid: 0,\ntargetname: 'iqn:0',\nincludeip:'10.10.1.222'\n}]",
+        "data": null,
         "groupField": "targetname",
+        "remoteGroup": true,
         "designer|userClassName": "VirtPortal"
     },
     "customConfigs": [],
@@ -20,7 +21,7 @@
     "expanded": true,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen112839",
+            "id": "ExtBox1-ext-gen7673",
             "type": "sorter",
             "reference": {
                 "name": "sorters",
@@ -28,8 +29,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "direction": "DESC",
-                "property": "includeip",
+                "property": "excludesource",
                 "designer|userClassName": "MySorter"
             },
             "customConfigs": [],

@@ -182,6 +182,7 @@ var $valid_pharser = array(
 		endout=>'/pattern for end output, this line is included/',
 		endoutx=>'/pattern for end output, this line is excluded/',
 		strip=>'/pattern was stripped/',
+		nextnlines=>'0',		//next n lines after ignore things were output
 		ignore=>'/ignore pattern/',	//optional, ignored lines
 		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
 	),

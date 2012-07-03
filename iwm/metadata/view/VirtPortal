@@ -44,10 +44,10 @@
                 "titleCollapse": false,
                 "store": "VirtPortal",
                 "designer|userClassName": "MyGridPanel",
+                "databind": "{\nautoload: true,\nbindform: 'newvirtentry'\n}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
-                "layout|split": true,
-                "databind": "{\nautoload: true,\nbindform: 'newvirtentry'\n}"
+                "layout|split": true
             },
             "customConfigs": [
                 {
@@ -56,7 +56,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen47445",
@@ -117,30 +117,7 @@
                                 "layout|flex": null
                             },
                             "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen47467",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onDeleteClick",
-                                        "implHandler": [
-                                            "var records = this.down('gridpanel').getSelectionModel().getSelection();",
-                                            "this.down('gridpanel').store.remove(records);"
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onDeleteClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
+                            "expanded": true
                         },
                         {
                             "id": "ExtBox1-ext-gen47473",
@@ -157,30 +134,7 @@
                                 "layout|flex": null
                             },
                             "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen47479",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onRefreshClick",
-                                        "implHandler": [
-                                            "this.reloaded = true;",
-                                            "this.down('gridpanel').store.load();"
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onRefreshClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
+                            "expanded": true
                         }
                     ]
                 },
@@ -294,7 +248,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen58945",
+                    "id": "ExtBox1-ext-gen7020",
                     "type": "groupinggridfeature",
                     "reference": {
                         "name": "features",
@@ -302,6 +256,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "enableGroupingMenu": false,
+                        "enableNoGroups": false,
                         "designer|userClassName": "MyGroupingFeature"
                     },
                     "customConfigs": [],
@@ -326,7 +282,7 @@
                 "layout|split": true
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen8418",
@@ -560,13 +516,12 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "databind": "{\nautoload: true,\nmodel:'targetlist'\n}",
                                         "name": "targetname",
                                         "value": "'default'",
                                         "fieldLabel": "TargetName",
-                                        "allowBlank": true,
                                         "displayField": "shortname",
-                                        "valueField": "targetname",
-                                        "databind": "{\nmodel:'targetlist'\n}"
+                                        "valueField": "targetname"
                                     },
                                     "customConfigs": [
                                         {
@@ -631,36 +586,7 @@
                                         "formBind": true
                                     },
                                     "customConfigs": [],
-                                    "expanded": true,
-                                    "cn": [
-                                        {
-                                            "id": "ExtBox1-ext-gen85672",
-                                            "type": "basiceventbinding",
-                                            "reference": {
-                                                "name": "listeners",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "fn": "onAddClick",
-                                                "implHandler": [
-                                                    "",
-                                                    "var store = this.down('gridpanel').store;",
-                                                    "if (this.getForm().isValid()){",
-                                                    "    var v = this.getForm().getFieldValues();",
-                                                    "    store.add(v);",
-                                                    "    store.sync();",
-                                                    "}",
-                                                    ""
-                                                ],
-                                                "name": "click",
-                                                "scope": "me",
-                                                "designer|userClassName": "onAddClick"
-                                            },
-                                            "customConfigs": [],
-                                            "expanded": true
-                                        }
-                                    ]
+                                    "expanded": true
                                 }
                             ]
                         }

@@ -25,27 +25,10 @@ Ext.define('MyApp.store.VirtPortal', {
         me.callParent([Ext.apply({
             storeId: 'virtportal',
             model: 'MyApp.model.virtportal',
-            data: [
-                {
-                    targetid: -1,
-                    targetname: 'default',
-                    includeip: '10.10.1.201'
-                },
-                {
-                    targetid: -1,
-                    targetname: 'default',
-                    excludesource: '10.10.1.1'
-                },
-                {
-                    targetid: 0,
-                    targetname: 'iqn:0',
-                    includeip: '10.10.1.222'
-                }
-            ],
             groupField: 'targetname',
+            remoteGroup: true,
             sorters: {
-                direction: 'DESC',
-                property: 'includeip'
+                property: 'excludesource'
             }
         }, cfg)]);
     }
