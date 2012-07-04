@@ -40,9 +40,9 @@ Ext.define('MyApp.view.VirtPortal', {
                     preventHeader: false,
                     title: 'Current Setting',
                     titleCollapse: false,
-                    store: 'VirtPortal',
                     databind: {
                         autoload: true,
+                        model: 'virtportal',
                         bindform: 'newvirtentry'
                     },
                     region: 'center',

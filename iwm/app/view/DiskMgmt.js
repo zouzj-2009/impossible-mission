@@ -69,8 +69,8 @@ Ext.define('MyApp.view.DiskMgmt', {
                     columns: [
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'devname',
-                            text: 'Devname'
+                            dataIndex: 'blockdev',
+                            text: 'Blockdev'
                         },
                         {
                             xtype: 'gridcolumn',
@@ -94,18 +94,18 @@ Ext.define('MyApp.view.DiskMgmt', {
                         },
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'hostid',
-                            text: 'Hostid'
+                            dataIndex: 'fixed',
+                            text: 'Fixed'
                         },
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'hostdesc',
-                            text: 'Hostdesc'
+                            dataIndex: 'host',
+                            text: 'Host'
                         },
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'transmode',
-                            text: 'Transmode'
+                            dataIndex: 'scsi_device',
+                            text: 'Scsi_device'
                         }
                     ]
                 },

@@ -42,9 +42,9 @@
                 "preventHeader": false,
                 "title": "Current Setting",
                 "titleCollapse": false,
-                "store": "VirtPortal",
+                "store": null,
                 "designer|userClassName": "MyGridPanel",
-                "databind": "{\nautoload: true,\nbindform: 'newvirtentry'\n}",
+                "databind": "{\nautoload: true,\nmodel:'virtportal',\nbindform: 'newvirtentry'\n}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true

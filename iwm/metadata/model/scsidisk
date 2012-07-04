@@ -12,7 +12,7 @@
     "customConfigs": [],
     "designerId": "b81f6005-80ed-439c-9e34-8988c2cacbfc",
     "$viewOrder": 7,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen23642",
@@ -23,7 +23,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "devname",
+                "name": "blockdev",
                 "designer|userClassName": "MyField44"
             },
             "customConfigs": [],
@@ -90,6 +90,21 @@
             "expanded": true
         },
         {
+            "id": "ExtBox1-ext-gen16535",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "fixed",
+                "designer|userClassName": "MyField51"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
             "id": "ExtBox1-ext-gen23815",
             "type": "datafield",
             "reference": {
@@ -98,14 +113,14 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "hostid",
+                "name": "host",
                 "designer|userClassName": "MyField45"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen28048",
+            "id": "ExtBox1-ext-gen20782",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -113,23 +128,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "hostdesc",
-                "designer|userClassName": "MyField51"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen25060",
-            "type": "datafield",
-            "reference": {
-                "name": "fields",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "name": "transmode",
-                "designer|userClassName": "MyField50"
+                "name": "scsi_device",
+                "designer|userClassName": "MyField52"
             },
             "customConfigs": [],
             "expanded": true

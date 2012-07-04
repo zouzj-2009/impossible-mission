@@ -198,8 +198,17 @@ function format_keys_and_values($array, $keys, $valueconfig=null, $ppconfig){
 				case 'touppser':
 					$newvalue = strtoupper($v);
 					break;
+				case 'tohex':
+					$newvalue = dechex($v);
+					break;
+				case 'todec':
+					$newvalue = hexdec($v);
+					break;
 				case 'boolean':
 					$newvalue = (!$v||$v=='false'||$v=='0'||$v=='no'||$v=='NO'||$v=='FALSE'||$v=='null'||$v=='NULL')?false:true;
+					break;
+				case '!boolean':
+					$newvalue = (!$v||$v=='false'||$v=='0'||$v=='no'||$v=='NO'||$v=='FALSE'||$v=='null'||$v=='NULL')?true:false;
 					break;
 				case 'password':
 					$newvalue = '********';

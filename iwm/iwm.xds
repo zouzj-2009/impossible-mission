@@ -439,6 +439,14 @@
                 "app/model/niclist.js"
             ],
             "className": "niclist"
+        },
+        "0c4b6b7b-63b1-448f-849f-3fd39e59212a": {
+            "paths": [
+                "metadata/store/General",
+                "app/store/override/General.js",
+                "app/store/General.js"
+            ],
+            "className": "General"
         }
     },
     "expandedState": {

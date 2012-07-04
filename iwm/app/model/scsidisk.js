@@ -18,7 +18,7 @@ Ext.define('MyApp.model.scsidisk', {
 
     fields: [
         {
-            name: 'devname'
+            name: 'blockdev'
         },
         {
             name: 'capacity'
@@ -33,13 +33,13 @@ Ext.define('MyApp.model.scsidisk', {
             name: 'revision'
         },
         {
-            name: 'hostid'
+            name: 'fixed'
         },
         {
-            name: 'hostdesc'
+            name: 'host'
         },
         {
-            name: 'transmode'
+            name: 'scsi_device'
         }
     ]
 });

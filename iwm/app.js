@@ -48,7 +48,8 @@ Ext.application({
         'DiskList',
         'ScsiHost',
         'SysLog',
-        'LinkSpeed'
+        'LinkSpeed',
+        'General'
     ],
     views: [
         'MyViewport',
