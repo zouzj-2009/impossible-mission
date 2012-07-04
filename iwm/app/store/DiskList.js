@@ -16,7 +16,7 @@
 Ext.define('MyApp.store.DiskList', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.DiskList'
+        'MyApp.model.scsidisk'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.DiskList', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'MyJsonPStore8',
-            model: 'MyApp.model.DiskList',
+            model: 'MyApp.model.scsidisk',
             data: [
                 {
                     devname: 'sda',

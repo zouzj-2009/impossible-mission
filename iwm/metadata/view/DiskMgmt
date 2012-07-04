@@ -26,7 +26,7 @@
     ],
     "designerId": "5aa42372-e62c-4cda-9638-07e9d31b0f66",
     "$viewOrder": 8,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen3990",
@@ -42,14 +42,21 @@
                 "preventHeader": false,
                 "title": "Current Setting",
                 "titleCollapse": false,
-                "store": "DiskList",
+                "store": null,
                 "designer|userClassName": "MyGridPanel",
                 "layout|collapseMode": null,
                 "layout|region": "center",
-                "layout|split": true
+                "layout|split": true,
+                "databind": "{\nautoload:true,\nmodel: 'scsidisk'\n}"
             },
-            "customConfigs": [],
-            "expanded": false,
+            "customConfigs": [
+                {
+                    "group": "(Custom Properties)",
+                    "name": "databind",
+                    "type": "object"
+                }
+            ],
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen4003",
@@ -110,30 +117,7 @@
                                 "layout|flex": null
                             },
                             "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen4025",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onDeleteClick",
-                                        "implHandler": [
-                                            "var records = this.down('gridpanel').getSelectionModel().getSelection();",
-                                            "this.down('gridpanel').store.remove(records);"
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onDeleteClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
+                            "expanded": true
                         },
                         {
                             "id": "ExtBox1-ext-gen4031",
@@ -150,59 +134,9 @@
                                 "layout|flex": null
                             },
                             "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen4037",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onRefreshClick",
-                                        "implHandler": [
-                                            "this.reloaded = true;",
-                                            "this.down('gridpanel').store.load();"
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onRefreshClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
+                            "expanded": true
                         }
                     ]
-                },
-                {
-                    "id": "ExtBox1-ext-gen4044",
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onGridpanelSelectionChange",
-                        "implHandler": [
-                            "if (selections.length==1){",
-                            "    this.loadRecord(selections[0]);",
-                            "    this.down('#delete').enable();",
-                            "}else{",
-                            "    this.down('#delete').disable();",
-                            "}",
-                            "",
-                            ""
-                        ],
-                        "name": "selectionchange",
-                        "scope": "me",
-                        "designer|userClassName": "onGridpanelSelectionChange"
-                    },
-                    "customConfigs": [],
-                    "expanded": true
                 },
                 {
                     "id": "ExtBox1-ext-gen37902",
@@ -343,8 +277,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "minWidth": 280,
-                "width": 150,
+                "minWidth": 292,
+                "width": 292,
                 "autoScroll": true,
                 "designer|userClassName": "MyContainer14",
                 "layout|region": "west",
@@ -354,75 +288,113 @@
             "expanded": true,
             "cn": [
                 {
-                    "id": "ExtBox1-ext-gen32559",
-                    "type": "fieldset",
+                    "id": "ExtBox1-ext-gen5055",
+                    "type": "form",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "title": "HBA setting",
-                        "designer|userClassName": "MyFieldSet8"
+                        "border": 0,
+                        "bodyCls": "x-border-layout-ct",
+                        "bodyPadding": null,
+                        "title": null,
+                        "designer|userClassName": "MyForm14"
                     },
                     "customConfigs": [],
                     "expanded": true,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen22318",
-                            "type": "combobox",
+                            "id": "ExtBox1-ext-gen32559",
+                            "type": "fieldset",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "name": "hostid",
-                                "fieldLabel": "Disk Channel",
-                                "displayField": "hostdesc",
-                                "queryMode": "local",
-                                "store": "HbaList",
-                                "valueField": "hostid",
-                                "designer|userClassName": "MyComboBox7"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen22612",
-                            "type": "button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "itemId": "rescan",
-                                "text": "Rescan ...",
-                                "designer|userClassName": "MyButton21"
+                                "title": "HBA setting",
+                                "designer|userClassName": "MyFieldSet8"
                             },
                             "customConfigs": [],
                             "expanded": true,
                             "cn": [
                                 {
-                                    "id": "ExtBox1-ext-gen23099",
-                                    "type": "basiceventbinding",
+                                    "id": "ExtBox1-ext-gen22318",
+                                    "type": "combobox",
                                     "reference": {
-                                        "name": "listeners",
+                                        "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "fn": "onRescanClick",
-                                        "implHandler": [
-                                            ""
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onRescanClick"
+                                        "itemId": "scsihost",
+                                        "name": "host",
+                                        "fieldLabel": "Disk Channel",
+                                        "displayField": "shortname",
+                                        "queryMode": "local",
+                                        "store": "ScsiHost",
+                                        "valueField": "dev",
+                                        "designer|userClassName": "MyComboBox7",
+                                        "layout|anchor": "100%",
+                                        "databind": "{\nautoload:true,\nmodel:'scsihost'\n}"
+                                    },
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "databind",
+                                            "type": "object"
+                                        }
+                                    ],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen22612",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "rescan",
+                                        "text": "Rescan ...",
+                                        "designer|userClassName": "MyButton21"
                                     },
                                     "customConfigs": [],
-                                    "expanded": true
+                                    "expanded": true,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen23099",
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onRescanClick",
+                                                "implHandler": [
+                                                    "var me= button,",
+                                                    "    c = me.up().down('#scsihost'),",
+                                                    "    s = c.store,",
+                                                    "    v = c.getValue();",
+                                                    "if (!c.store) return;",
+                                                    "var m = s.findRecord('dev', v);",
+                                                    "if (!m) return;",
+                                                    "m.setDirty();",
+                                                    "s.sync();",
+                                                    ""
+                                                ],
+                                                "name": "click",
+                                                "scope": "me",
+                                                "designer|userClassName": "onRescanClick"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
                                 }
                             ]
                         }

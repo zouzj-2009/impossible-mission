@@ -172,11 +172,11 @@
         },
         "b6026780-f473-4f7e-87e3-aa2911fedde3": {
             "paths": [
-                "metadata/model/LunMap",
-                "app/model/override/LunMap.js",
-                "app/model/LunMap.js"
+                "metadata/model/lunmap",
+                "app/model/override/lunmap.js",
+                "app/model/lunmap.js"
             ],
-            "className": "LunMap"
+            "className": "lunmap"
         },
         "c6c36c57-a4ae-4ae8-98a6-ab972d8cf579": {
             "paths": [
@@ -282,27 +282,27 @@
         },
         "b81f6005-80ed-439c-9e34-8988c2cacbfc": {
             "paths": [
-                "metadata/model/DiskList",
-                "app/model/override/DiskList.js",
-                "app/model/DiskList.js"
+                "metadata/model/scsidisk",
+                "app/model/override/scsidisk.js",
+                "app/model/scsidisk.js"
             ],
-            "className": "DiskList"
+            "className": "scsidisk"
         },
         "92ec950c-c06d-4a67-9c55-bf804e3bb0b3": {
             "paths": [
-                "metadata/store/HbaList",
-                "app/store/override/HbaList.js",
-                "app/store/HbaList.js"
+                "metadata/store/ScsiHost",
+                "app/store/override/ScsiHost.js",
+                "app/store/ScsiHost.js"
             ],
-            "className": "HbaList"
+            "className": "ScsiHost"
         },
         "f7df3c82-d90c-4af5-b73f-434e83c4d0df": {
             "paths": [
-                "metadata/model/HbaList",
-                "app/model/override/HbaList.js",
-                "app/model/HbaList.js"
+                "metadata/model/scsihost",
+                "app/model/override/scsihost.js",
+                "app/model/scsihost.js"
             ],
-            "className": "HbaList"
+            "className": "scsihost"
         },
         "c3d0e290-fcc0-418a-a9e0-f8f81268a48a": {
             "paths": [

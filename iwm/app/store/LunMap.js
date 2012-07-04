@@ -17,7 +17,7 @@ Ext.define('MyApp.store.LunMap', {
     extend: 'Ext.data.Store',
     alias: 'store.lunmap',
     requires: [
-        'MyApp.model.LunMap'
+        'MyApp.model.lunmap'
     ],
 
     constructor: function(cfg) {
@@ -26,7 +26,7 @@ Ext.define('MyApp.store.LunMap', {
         me.callParent([Ext.apply({
             autoLoad: false,
             storeId: 'lunmap',
-            model: 'MyApp.model.LunMap'
+            model: 'MyApp.model.lunmap'
         }, cfg)]);
     }
 });

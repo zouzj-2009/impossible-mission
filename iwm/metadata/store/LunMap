@@ -9,7 +9,7 @@
     "userConfig": {
         "autoLoad": false,
         "storeId": "lunmap",
-        "model": "LunMap",
+        "model": "lunmap",
         "designer|userClassName": "LunMap",
         "designer|userAlias": "lunmap"
     },

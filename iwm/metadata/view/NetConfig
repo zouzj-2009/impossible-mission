@@ -473,8 +473,8 @@
                                         "displayField": "shortname",
                                         "valueField": "physicdevice",
                                         "designer|userClassName": "MyComboBox3",
-                                        "layout|anchor": "100%",
-                                        "databind": "{\nautoload:true,\nmodel:'niclist'\n}"
+                                        "databind": "{\nautoload:true,\nmodel:'niclist'\n}",
+                                        "layout|anchor": "100%"
                                     },
                                     "customConfigs": [
                                         {

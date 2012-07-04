@@ -88,8 +88,8 @@ function savechanges($action, $params, $changed, $oldif=null){
 //we just read current config and save!
 //sub class can override this.
 	//not save to sysconfig, should be done by subclass's savechanges or before/do/after_$action
-	$this->loginfo(TRACE, 'base', "saving changed sysconfig by $action.");
 	if (!$this->savechangeconfig) return;
+	$this->loginfo(TRACE, 'base', "saving changed sysconfig by $action.");
 	$table = $this->savechangeconfig[talbename];
 	if (!$table) $table = 'sysconfig';
 	$r = $this->read(array(), array());//get all and store it!

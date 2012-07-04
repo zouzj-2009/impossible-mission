@@ -8,7 +8,7 @@
     "codeClass": null,
     "userConfig": {
         "storeId": "MyJsonPStore8",
-        "model": "DiskList",
+        "model": "scsidisk",
         "data": "[{devname:'sda', hostid:'host1', hostdesc:'lsi sas adapter', capacity:'32GB', transmode:'SAS'}]",
         "designer|userClassName": "DiskList"
     },

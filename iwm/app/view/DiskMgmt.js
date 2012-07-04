@@ -35,9 +35,12 @@ Ext.define('MyApp.view.DiskMgmt', {
                     preventHeader: false,
                     title: 'Current Setting',
                     titleCollapse: false,
-                    store: 'DiskList',
                     region: 'center',
                     split: true,
+                    databind: {
+                        autoload: true,
+                        model: 'scsidisk'
+                    },
                     viewConfig: {
 
                     },
@@ -53,34 +56,16 @@ Ext.define('MyApp.view.DiskMgmt', {
                                     xtype: 'button',
                                     disabled: true,
                                     itemId: 'delete',
-                                    text: 'Delete',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onDeleteClick,
-                                            scope: me
-                                        }
-                                    }
+                                    text: 'Delete'
                                 },
                                 {
                                     xtype: 'button',
                                     itemId: 'refresh',
-                                    text: 'Refresh',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onRefreshClick,
-                                            scope: me
-                                        }
-                                    }
+                                    text: 'Refresh'
                                 }
                             ]
                         }
                     ],
-                    listeners: {
-                        selectionchange: {
-                            fn: me.onGridpanelSelectionChange,
-                            scope: me
-                        }
-                    },
                     columns: [
                         {
                             xtype: 'gridcolumn',
@@ -126,35 +111,48 @@ Ext.define('MyApp.view.DiskMgmt', {
                 },
                 {
                     xtype: 'container',
-                    minWidth: 280,
-                    width: 150,
+                    minWidth: 292,
+                    width: 292,
                     autoScroll: true,
                     region: 'west',
                     split: true,
                     items: [
                         {
-                            xtype: 'fieldset',
-                            title: 'HBA setting',
+                            xtype: 'form',
+                            border: 0,
+                            bodyCls: 'x-border-layout-ct',
                             items: [
                                 {
-                                    xtype: 'combobox',
-                                    name: 'hostid',
-                                    fieldLabel: 'Disk Channel',
-                                    displayField: 'hostdesc',
-                                    queryMode: 'local',
-                                    store: 'HbaList',
-                                    valueField: 'hostid'
-                                },
-                                {
-                                    xtype: 'button',
-                                    itemId: 'rescan',
-                                    text: 'Rescan ...',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onRescanClick,
-                                            scope: me
+                                    xtype: 'fieldset',
+                                    title: 'HBA setting',
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            itemId: 'scsihost',
+                                            name: 'host',
+                                            fieldLabel: 'Disk Channel',
+                                            displayField: 'shortname',
+                                            queryMode: 'local',
+                                            store: 'ScsiHost',
+                                            valueField: 'dev',
+                                            anchor: '100%',
+                                            databind: {
+                                                autoload: true,
+                                                model: 'scsihost'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'rescan',
+                                            text: 'Rescan ...',
+                                            listeners: {
+                                                click: {
+                                                    fn: me.onRescanClick,
+                                                    scope: me
+                                                }
+                                            }
                                         }
-                                    }
+                                    ]
                                 }
                             ]
                         }
@@ -166,28 +164,16 @@ Ext.define('MyApp.view.DiskMgmt', {
         me.callParent(arguments);
     },
 
-    onDeleteClick: function(button, e, options) {
-        var records = this.down('gridpanel').getSelectionModel().getSelection();
-        this.down('gridpanel').store.remove(records);
-    },
-
-    onRefreshClick: function(button, e, options) {
-        this.reloaded = true;
-        this.down('gridpanel').store.load();
-    },
-
-    onGridpanelSelectionChange: function(tablepanel, selections, options) {
-        if (selections.length==1){
-            this.loadRecord(selections[0]);
-            this.down('#delete').enable();
-        }else{
-            this.down('#delete').disable();
-        }
-
-
-    },
-
     onRescanClick: function(button, e, options) {
+        var me= button,
+            c = me.up().down('#scsihost'),
+            s = c.store,
+            v = c.getValue();
+        if (!c.store) return;
+        var m = s.findRecord('dev', v);
+        if (!m) return;
+        m.setDirty();
+        s.sync();
 
     }
 

@@ -191,11 +191,11 @@ Ext.define('MyApp.view.NetConfig', {
                                             fieldLabel: 'NIC',
                                             displayField: 'shortname',
                                             valueField: 'physicdevice',
-                                            anchor: '100%',
                                             databind: {
                                                 autoload: true,
                                                 model: 'niclist'
-                                            }
+                                            },
+                                            anchor: '100%'
                                         },
                                         {
                                             xtype: 'ipfield',

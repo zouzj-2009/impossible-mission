@@ -8,7 +8,7 @@
     "codeClass": null,
     "userConfig": {
         "height": 250,
-        "width": 400,
+        "width": null,
         "layout": "border",
         "designer|userClassName": "DiskSetting",
         "designer|userAlias": "disksetting"

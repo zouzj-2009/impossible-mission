@@ -1,5 +1,5 @@
 {
-    "id": "ExtBox1-ext-gen29335",
+    "id": "ExtBox1-ext-gen23448",
     "type": "datamodel",
     "reference": {
         "name": "items",
@@ -7,15 +7,90 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userClassName": "HbaList"
+        "designer|userClassName": "scsidisk"
     },
     "customConfigs": [],
-    "designerId": "f7df3c82-d90c-4af5-b73f-434e83c4d0df",
-    "$viewOrder": 8,
+    "designerId": "b81f6005-80ed-439c-9e34-8988c2cacbfc",
+    "$viewOrder": 7,
     "expanded": false,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen29529",
+            "id": "ExtBox1-ext-gen23642",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "devname",
+                "designer|userClassName": "MyField44"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen24165",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "capacity",
+                "designer|userClassName": "MyField47"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen24488",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "vendor",
+                "designer|userClassName": "MyField46"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen24674",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "product",
+                "designer|userClassName": "MyField48"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen24859",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "revision",
+                "designer|userClassName": "MyField49"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen23815",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -24,13 +99,13 @@
             "codeClass": null,
             "userConfig": {
                 "name": "hostid",
-                "designer|userClassName": "MyField52"
+                "designer|userClassName": "MyField45"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen29698",
+            "id": "ExtBox1-ext-gen28048",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -39,13 +114,13 @@
             "codeClass": null,
             "userConfig": {
                 "name": "hostdesc",
-                "designer|userClassName": "MyField53"
+                "designer|userClassName": "MyField51"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen29871",
+            "id": "ExtBox1-ext-gen25060",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -54,67 +129,7 @@
             "codeClass": null,
             "userConfig": {
                 "name": "transmode",
-                "designer|userClassName": "MyField54"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen30048",
-            "type": "datafield",
-            "reference": {
-                "name": "fields",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "name": "queuedepth",
-                "designer|userClassName": "MyField55"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen30232",
-            "type": "datafield",
-            "reference": {
-                "name": "fields",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "name": "devicecount",
-                "designer|userClassName": "MyField56"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen31941",
-            "type": "datafield",
-            "reference": {
-                "name": "fields",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "name": "nodename",
-                "designer|userClassName": "MyField57"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen32134",
-            "type": "datafield",
-            "reference": {
-                "name": "fields",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "name": "remotenode",
-                "designer|userClassName": "MyField58"
+                "designer|userClassName": "MyField50"
             },
             "customConfigs": [],
             "expanded": true
