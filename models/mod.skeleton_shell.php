@@ -61,6 +61,9 @@ var $saving_fields = 'record_id,modname,cmd';
 // !note, newvalues support these special type (using by 'key'=>'type')
 //	tolower:	trans the value to string lower case
 //	touppser:	trans the value to string upper case
+//	tohex:
+//	todec:
+//	!boolean:
 //	boolean:	trans the value from a string to boolean, null|NULL|no|NO|FALSE|false|'' will be treat as boolean false.
 //	password:	trans the value to a ******** format
 //	filesize:	trans the value to a readable file size such as 134MB etc.
