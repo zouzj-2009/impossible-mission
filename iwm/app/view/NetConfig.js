@@ -61,6 +61,17 @@ Ext.define('MyApp.view.NetConfig', {
                             items: [
                                 {
                                     xtype: 'button',
+                                    getConfirmation: function(button, value, records, store) {
+                                        if (!records.length) return false;
+                                        for(var i=0; i<records.length; i++){
+                                            var r = records[i].getData();
+                                            if (r.ipaddress == location.host) return {
+                                                title: 'Waning!',
+                                                msg: 'IP address of current visited server '+r.ipaddress+' will be deleted, you need restrart the web application, are you sure?'
+                                            };
+                                        }
+                                        return false;
+                                    },
                                     disabled: true,
                                     itemId: 'delete',
                                     text: 'Delete'

@@ -33,7 +33,7 @@
                 "layout|region": "center"
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen17739",
@@ -354,7 +354,41 @@
                                         "layout|flex": null
                                     },
                                     "customConfigs": [],
-                                    "expanded": true
+                                    "expanded": true,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen39683",
+                                            "type": "basicfunction",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "getConfirmation",
+                                                "designer|params": [
+                                                    "button",
+                                                    "value",
+                                                    "records",
+                                                    "store"
+                                                ],
+                                                "implHandler": [
+                                                    "if (!records.length) return false;",
+                                                    "for(var i=0; i<records.length; i++){",
+                                                    "    var r = records[i].getData();",
+                                                    "    if (r.ipaddress == location.host) return {",
+                                                    "        title: 'Waning!',",
+                                                    "        msg: 'IP address of current visited server '+r.ipaddress+' will be deleted, you need restrart the web application, are you sure?'",
+                                                    "    };",
+                                                    "}",
+                                                    "return false;"
+                                                ],
+                                                "designer|userClassName": "getConfirmation"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
                                 },
                                 {
                                     "id": "ExtBox1-ext-gen188247",

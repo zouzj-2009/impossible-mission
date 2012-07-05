@@ -98,7 +98,7 @@
                     "    //todo:when batch op,say create/destroy if create fail, ...",
                     "    alert('Fatal error, operation.'+operation.action+' no response! error:'+operation.error);",
                     "    //todo: try to continue when first op in batch fail at 'callbackxxx not found'",
-                    "    binder.application.fireEvent('indicatorchange', cfg, {success:false, msg:'proxy '+operation.error}, operation);",
+                    "    binder.application.fireEvent('indicatorchange', cfg, {success:false, msg:'proxy('+cfg.url+', no repsonse) '+operation.error}, operation);",
                     "    return;",
                     "}",
                     "try{",

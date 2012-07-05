@@ -30,7 +30,7 @@ static $pconfigs = array(
 	'delconfig'=>array(
 		cmd=>'(
 	echo "#@LOG@INFO del ipaddress for %dev%\n"
-	busybox ifconfig %dev% down
+	busybox ifconfig %dev% 0.0.0.0
 	exit $?
 )',
 	),
