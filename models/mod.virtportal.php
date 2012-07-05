@@ -91,9 +91,9 @@ var $defaultcmds=array(
 	update=>'faulty',
 );
 
-var $saving_fields = 'sourceip,netmask, taragetid,access,destinationip,targetuser,targetpass,initiatoruser,initiatorpass';
+var $saving_fields = 'targetname,includeip,excludesource';
 
-var $keyids = array('sourceip','netmask','targetid','destinationip','access');
+var $keyids = array('targetname','includeip','excludesource');
 
 
 }

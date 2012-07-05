@@ -94,6 +94,8 @@ function get_sysconfig($which, $records=null)
 {
 	if (!$this->savechangeconfig) throw new Exception (get_class($this).".".__FUNCTION__.", but mod not configured by sysconfig.");
 	$mod = str_replace("MOD_", "", get_class($this));
+	$table = $this->savechangeconfig[talbename];
+	if (!$table) $table = 'sysconfig';
 	$old = array_shift($this->dbquery("SELECT $which FROM $table WHERE mod='$mod'"));
 	$old = unserialize($old[$which]);
 	if (!$old || !$record) return $old;
@@ -194,6 +196,8 @@ function load_sysconfig($type='current'){
 		return $r;
 	}else{
 		$this->loginfo(TRACE, 'base', "loading sysconfig[$type] sysconfig db.");
+		$table = $this->savechangeconfig[talbename];
+		if (!$table) $table = 'sysconfig';
 		$r = array_shift($this->dbquery("SELECT $type FROM $table WHERE mod='$mod'"));
 		if ($r){
 			$r = unserialize($r[$type]);
