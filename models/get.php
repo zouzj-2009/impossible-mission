@@ -103,10 +103,16 @@ try{
 		if ($env && getenv('COND')){
 			$params[_condition] = getenv('COND');
 		}
+//for debug 
 		if ($env && $jid && $mid == 'modcmd'){
 			$params[_cmd] = $jid;
 			$jid = '';
 		}
+		if ($env && $jid && $mid == 'sysconfig'){
+			$params[_mod] = $jid;
+			$jid = '';
+		}
+//end for debug
 		@ob_start();
 		ob_implicit_flush(true);
 		//todo: do security check, or will be DOSed!

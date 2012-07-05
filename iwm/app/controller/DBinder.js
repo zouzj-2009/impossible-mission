@@ -211,7 +211,8 @@ Ext.define('MyApp.controller.DBinder', {
     },
 
     bindGrid: function(grid, store, cfg, binder) {
-        var sm = grid.getSelectionModel();
+        var sm = grid.getSelectionModel(),
+            me = this;
         //don't override designed behavior.
         if (sm && !cfg.ignore.selectionchange){
             grid.on('selectionchange', function(grid, selections, options){
@@ -226,18 +227,39 @@ Ext.define('MyApp.controller.DBinder', {
         var del = grid.down('#delete');
         if (del && !cfg.ignore['delete']){
             del.on('click', function(button, event, options){
-                var records = grid.getSelectionModel().getSelection();
-                //store = this.down('gridpanel').store;
-                store.remove(records);
-                store.sync({operation:{debug:'abc'}});
+                var records = grid.getSelectionModel().getSelection(),
+                    cfm = me.getConfirmation(button, null, records, store);
+                if (cfm){
+                    Ext.Msg.confirm(cfm.title, cfm.msg, function(btn){
+                        if (btn == 'yes'){
+                            //store = this.down('gridpanel').store;
+                            store.remove(records);
+                            store.sync({operation:{debug:'abc'}});
+                        }else{//todo:
+                        }
+                    });
+                }else{
+                    store.remove(records);
+                    store.sync();
+                }
             });
         }
 
         var ref = grid.down('#refresh');
         if (ref && !cfg.ignore.refresh){
             ref.on('click', function(button, event, options){
-                var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams);
-                store.load({params:params});
+                var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams),
+                    cfm = me.getConfirmation(button, null, null, store);
+                if (cfm){
+                    Ext.Msg.confirm(cfm.title, cfm.msg, function(btn){
+                        if (btn == 'yes'){
+                            store.load({params:params});
+                        }else{//todo:
+                        }
+                    });
+                }else{
+                    store.load({params:params});
+                }
             });
         }
     },
@@ -268,16 +290,29 @@ Ext.define('MyApp.controller.DBinder', {
     },
 
     bindFormActions: function(form, store, cfg) {
-        var add = form.down('#add');
+        var add = form.down('#add'),
+            me = this;
         if (add && !cfg.ignore.click){
             add.on('click', function(button, event, options){
                 if (form.getForm().isValid()){
-                    var v = form.getForm().getFieldValues();
-                    var m = store.add(v);
-                    for(var i=0;i<m.length;i++) m[i].phantom = true;
-                    store.sync();
+                    var v = form.getForm().getFieldValues(),
+                        cfm = me.getConfirmation(button, v, null, store, form);
+                    //confirmation
+                    if (cfm){
+                        Ext.Msg.confirm(cfm.title, cfm.msg, function(btn){
+                            if (btn == 'yes'){
+                                var m = store.add(v);
+                                for(var i=0;i<m.length;i++) m[i].phantom = true;
+                                store.sync();
+                            }else{//todo: reload?
+                            }
+                        });
+                    }else{
+                        var m = store.add(v);
+                        for(var i=0;i<m.length;i++) m[i].phantom = true;
+                        store.sync();
+                    }
                 }
-
             });
         }
 
@@ -288,9 +323,21 @@ Ext.define('MyApp.controller.DBinder', {
                     var v = form.getForm().getFieldValues(), //checkbox need all submit
                     m = form.getForm().getRecord();
                     if (!m) return;
-                    m.set(v);
-                    //m.setDirty();
-                    store.sync();
+                    //confirmation
+                    var cfm = me.getConfirmation(button, v, m, store);
+                    if (cfm){
+                        Ext.Msg.confirm(cfm.title, cfm.msg, function(btn){
+                            if (btn == 'yes'){
+                                m.set(v);
+                                store.sync();
+                            }else{//todo:
+                            }
+                        });
+                    }else{
+                        m.set(v);
+                        //m.setDirty();
+                        store.sync();
+                    }
                 }
             });
         }
@@ -298,8 +345,18 @@ Ext.define('MyApp.controller.DBinder', {
         var ref = form.down('#refresh');
         if (ref && !cfg.ignore.refresh){
             ref.on('click', function(button, event, options){
-                var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams);
-                store.load({params:params});
+                var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams),
+                    cfm = me.getConfirmation(button, null, null, store);
+                if (cfm){
+                    Ext.Msg.confirm(cfm.title, cfm.msg, function(btn){
+                        if (btn == 'yes'){
+                            store.load({params:params});
+                        }else{//todo:
+                        }
+                    });
+                }else{
+                    store.load({params:params});
+                }
             });
         }
     },
@@ -514,6 +571,46 @@ Ext.define('MyApp.controller.DBinder', {
                 me.bindOne(component, dbconfig[i], serverip, rebind, component);
             }
         }
+
+    },
+
+    getConfirmation: function(component, value, records, store) {
+        var c = component,
+            s = c.confirmation;
+        if (Ext.isFunction(c.getConfirmation)){
+            return c.getConfirmation(c, value, records, store);
+        }
+        if (!s) return false;
+        var title = c.confirmtitle?c.confirmtitle: Ext.String.capitalize(c.itemId)+' Confirm';
+        if (!value && !records){
+            return {title:title, msg: s?s:'Reload data?'};
+        }
+
+        //using predefined string with records to get confirm string.
+        if (Ext.isArray(records)){
+            var r = '';
+            for(var i=0; i<records.length; i++){
+                var r = records[i].getData(),
+                    x = s;
+                for (var e in r){
+                    ename = '%'+e+'%';
+                    x = x.replace(ename, r[e]);
+                    if (value) x = x.replace('%new_'+e+'%', value[e]);
+                }
+                r += x+'<br />';
+            }
+            return {title:title, msg:r};
+        }else{
+            var d = records?records.getData():value;
+            var r = s;
+            for(var e in d){
+                ename = '%'+e+'%';
+                r = r.replace(ename, d[e]);
+                if (value) r = r.replace('%new_'+e+'%', value[e]);
+            }
+            return {title:title, msg:r};
+        }
+
 
     },
 

@@ -38,6 +38,7 @@ var $readbeforeupdate = true;	//weather read old data before update
 var $readbeforedestroy = false;	//weather read old data before destroy
 
 var $savechangeconfig = array(
+	usingfile=>null,	//if named(file[.section]), changes will be stored in /etc/sysconfig/syscfg_$file, and in section $section
 	tablename=>'sysconfig', //table for store changing config data.
 	autocreate=>true,	//auto create records for not-existed update.
 	//configuration data will be stored in sysconfig or other table
@@ -47,6 +48,21 @@ var $savechangeconfig = array(
 	//lastshutdown:	value of lastshutdow(stored before shutdown)
 	//last:		value of last change
 	//current:	value of current setting
+);
+
+static $syscfgpconfig = array(
+	//for pharse records from record
+	type=>'records_span_lines',
+	recordstart=>'/^record: /',
+	recordid=>'/^record: ([0-9]+)/',
+	fieldstype=>'simple',
+	fieldsmode=>array(
+		type=>'keyvalues_span_lines',
+		matcher=>'/([^:]+): (.*)/',
+		trimkey=>"\t",
+	),
+	//debug=>true,
+	//debugall=>true,
 );
 
 function strip_unsaving(&$records){
@@ -84,18 +100,131 @@ function get_sysconfig($which, $records=null)
 	return $this->filter_result_by_record($old, $records);
 }
 
+private function write_config($fn, $data){
+	$retry = 3;	
+	$ok = false;
+	while($retry && !($ok = file_put_contents($fn, $data, LOCK_EX))) sleep(1);
+	if (!$ok) throw new Exception("write config $fn fail!");
+}
+
+private function read_config($fn, $section){
+	$n = explode("\n", file_get_contents($fn));
+	$o = array();
+	if (!$n) return $o;
+	$insection = false;
+	foreach($n as $line){
+		if (preg_match("/^\{\[$section\] *$/", $line)){//section start
+			$insection = true;
+			continue;
+		}
+		if (!$insection) continue;
+		if (preg_match("/^}/", $line)) return $o;
+		$o[] = $line;
+	}
+	return $o;
+}
+
+function loadcfg_in_file($usingfile, $mod, $type='current'){
+	$f = explode(".", $usingfile);
+	$fn = "/etc/sysconfig/syscfg_$f[0]";
+	if ($type != 'current') $fn .= ".$type";	//can load xxx.default xxx.nnn. ...
+	if (!file_exists($fn)){
+		throw new Exception ("config file $fn not exists!");
+	}
+	$sec = $f[1]?$f[1]:$mod;
+	$cfg = $this->read_config($fn, $sec);
+	$r = PHARSER::pharse_type($cfg, MOD_base::$syscfgpconfig);
+	return $r;
+}
+
+
+function savechanges_in_file($usingfile, $new, $mod, $action, $type='current'){
+	$header = "#last modified: ".date('Y-m-d H:i:s', time())." by $mod.$action\n";
+	$f = explode(".", $usingfile);
+	$fn = "/etc/sysconfig/syscfg_$f[0]";
+	if ($fn != 'current') $fn .= ".$type";	//can load xxx.default xxx.nnn. ...
+	$sec = $f[1]?$f[1]:$mod;
+	$data = "{[$sec]\n$header";
+	foreach($new as $i=>$record){
+		$data .= "record: $i\n";
+		foreach ($record as $k=>$v) $data .= "\t$k: $v\n";
+		$data .= "\n";
+	}
+	$data .= "}\n";
+	if (!file_exists($fn)){ 
+		$this->write_config($fn, $data);
+	}else{
+		$c = explode("\n", file_get_contents($fn));
+		$insection = false;
+		$inpara = false;
+		$found = false;
+		$o = '';
+		foreach($c as $line){
+			if (preg_match("/^{/", $line)) $inpara = true;
+			if (preg_match("/^}/", $line)) $inpara = false;
+			if (preg_match("/^\{\[([^\]]*)\] *$/", $line, $m)){//section start
+				if ($m[1] == $sec){
+					$insection = true;
+				}
+			}
+			if ($insection && preg_match("/^} *$/", $line)){
+				$insection = false;
+				$o .= "$data"; //add null-line 
+				$found = true;
+				//don't include this '}'
+				continue;
+			}
+			if ($insection) continue;
+			if (!$inpara && preg_match("/^ *$/", $line)) continue;
+			$o .= $line."\n";
+		}
+		if (!$found) $o .= "\n$data";
+		$this->write_config($fn, $o);
+	}
+	return $new;
+}
+
+function load_sysconfig($type='current'){
+	$mod = str_replace("MOD_", "", get_class($this));
+	if (!$this->savechangeconfig) throw new Exception("mod has not sysconfig setting!");
+	$usingfile = $this->savechangeconfig[usingfile];
+	if ($usingfile){
+		$this->loginfo(TRACE, 'base', "loading sysconfig[$type] from file $usingfile.");
+		$r = $this->loadcfg_in_file($usingfile, $mod, $type);
+		return $r;
+	}else{
+		$this->loginfo(TRACE, 'base', "loading sysconfig[$type] sysconfig db.");
+		$r = array_shift($this->dbquery("SELECT $type FROM $table WHERE mod='$mod'"));
+		if ($r){
+			$r = unserialize($r[$type]);
+		}
+		return $r;
+	}
+}
+
+function save_sysconfig($type='current'){
+	//store current mod's config to sysconfig
+	$this->savechanges('read', $type, null, null);
+}
+
 function savechanges($action, $params, $changed, $oldif=null){
 //we just read current config and save!
 //sub class can override this.
 	//not save to sysconfig, should be done by subclass's savechanges or before/do/after_$action
 	if (!$this->savechangeconfig) return;
-	$this->loginfo(TRACE, 'base', "saving changed sysconfig by $action.");
-	$table = $this->savechangeconfig[talbename];
-	if (!$table) $table = 'sysconfig';
+	$usingfile = $this->savechangeconfig[usingfile];
+	if ($usingfile){
+		$this->loginfo(TRACE, 'base', "saving changed by $action into $usingfile.");
+	}else{
+		$this->loginfo(TRACE, 'base', "saving changed sysconfig by $action.");
+	}
 	$r = $this->read(array(), array());//get all and store it!
 	$new = $r[data];
 	$this->strip_unsaving($new);
 	$mod = $this->mid;
+	if ($usingfile) return $this->savechanges_in_file($usingfile, $new, $mod, $action);
+	$table = $this->savechangeconfig[talbename];
+	if (!$table) $table = 'sysconfig';
 	$old = array_shift($this->dbquery("SELECT rowid,* FROM $table WHERE mod='$mod'"));
 	if (!$old){
 		if (!$this->savechangeconfig[autocreate]) throw new Exception("sysconfig.$mod not found, autocreate was hibited neither.");
@@ -577,8 +706,9 @@ function create($params, $records){
 						if ($cmderror){
 							throw new Exception(get_class($this)." create fail: $cmd return fail($cmderror, $r[msg]).");
 						}
-						$changes ++;
-						$created[] = array_shift($r);
+						//maybe multi-records were added!
+						$changes +=count($r);
+						$created = array_merge($created, $r);
 					}else{// get create result by do_destroy of sub_classes
 						$r = $this->do_create($params, array($record), $created);
 						$changes += $r[changes];
@@ -601,8 +731,9 @@ function create($params, $records){
 						if ($cmderror){
 							throw new Exception(get_class($this)." create fail: $cmd return fail($cmderror, $r[msg]).");
 						}
-						$changes ++;
-						$created[] = array_shift($r);
+						//maybe multi-records were added!
+						$changes += count($r);;
+						$created = array_merge($created, $r);
 					}
 				}else{// get create result by do_create of sub_classes
 					$r = $this->do_create($params, $records);

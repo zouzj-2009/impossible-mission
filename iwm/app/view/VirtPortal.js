@@ -40,6 +40,7 @@ Ext.define('MyApp.view.VirtPortal', {
                     preventHeader: false,
                     title: 'Current Setting',
                     titleCollapse: false,
+                    store: 'VirtPortal',
                     databind: {
                         autoload: true,
                         model: 'virtportal',
@@ -62,12 +63,14 @@ Ext.define('MyApp.view.VirtPortal', {
                                     xtype: 'button',
                                     disabled: true,
                                     itemId: 'delete',
-                                    text: 'Delete'
+                                    text: 'Delete',
+                                    confirmation: 'delete exclude(%excludesource%) or include(%includeip%) member??'
                                 },
                                 {
                                     xtype: 'button',
                                     itemId: 'refresh',
-                                    text: 'Refresh'
+                                    text: 'Refresh',
+                                    confirmation: 'reload portal info?'
                                 }
                             ]
                         }
@@ -174,12 +177,14 @@ Ext.define('MyApp.view.VirtPortal', {
                                         {
                                             xtype: 'button',
                                             itemId: 'update',
-                                            text: 'Save'
+                                            text: 'Save',
+                                            confirmation: 'change portalip(%portalip%) to %new_portalip%?'
                                         },
                                         {
                                             xtype: 'button',
                                             itemId: 'refresh',
-                                            text: 'Refresh'
+                                            text: 'Refresh',
+                                            confirmation: 'reload portal config?'
                                         }
                                     ]
                                 }
@@ -227,7 +232,8 @@ Ext.define('MyApp.view.VirtPortal', {
                                             minWidth: 80,
                                             autoWidth: true,
                                             text: 'Add New ...',
-                                            formBind: true
+                                            formBind: true,
+                                            confirmation: 'add for target:%targetname%?'
                                         }
                                     ]
                                 }

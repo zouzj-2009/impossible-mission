@@ -44,10 +44,10 @@
                 "titleCollapse": false,
                 "store": null,
                 "designer|userClassName": "MyGridPanel",
+                "databind": "{\nautoload:true,\nmodel: 'scsidisk'\n}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
-                "layout|split": true,
-                "databind": "{\nautoload:true,\nmodel: 'scsidisk'\n}"
+                "layout|split": true
             },
             "customConfigs": [
                 {
@@ -337,8 +337,8 @@
                                         "store": "ScsiHost",
                                         "valueField": "dev",
                                         "designer|userClassName": "MyComboBox7",
-                                        "layout|anchor": "100%",
-                                        "databind": "{\nautoload:true,\nmodel:'scsihost'\n}"
+                                        "databind": "{\nautoload:true,\nmodel:'scsihost'\n}",
+                                        "layout|anchor": "100%"
                                     },
                                     "customConfigs": [
                                         {

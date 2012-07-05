@@ -26,7 +26,7 @@
     ],
     "designerId": "b0e5598f-7470-4add-b675-b39b3b6ddb17",
     "$viewOrder": 7,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen47432",
@@ -42,7 +42,7 @@
                 "preventHeader": false,
                 "title": "Current Setting",
                 "titleCollapse": false,
-                "store": null,
+                "store": "VirtPortal",
                 "designer|userClassName": "MyGridPanel",
                 "databind": "{\nautoload: true,\nmodel:'virtportal',\nbindform: 'newvirtentry'\n}",
                 "layout|collapseMode": null,
@@ -114,9 +114,16 @@
                                 "itemId": "delete",
                                 "text": "Delete",
                                 "designer|userClassName": "MyButton2",
-                                "layout|flex": null
+                                "layout|flex": null,
+                                "confirmation": "delete exclude(%excludesource%) or include(%includeip%) member??"
                             },
-                            "customConfigs": [],
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "confirmation",
+                                    "type": "string"
+                                }
+                            ],
                             "expanded": true
                         },
                         {
@@ -131,9 +138,16 @@
                                 "itemId": "refresh",
                                 "text": "Refresh",
                                 "designer|userClassName": "MyButton3",
-                                "layout|flex": null
+                                "layout|flex": null,
+                                "confirmation": "reload portal info?"
                             },
-                            "customConfigs": [],
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "confirmation",
+                                    "type": "string"
+                                }
+                            ],
                             "expanded": true
                         }
                     ]
@@ -444,9 +458,16 @@
                                     "userConfig": {
                                         "itemId": "update",
                                         "text": "Save",
-                                        "designer|userClassName": "MyButton14"
+                                        "designer|userClassName": "MyButton14",
+                                        "confirmation": "change portalip(%portalip%) to %new_portalip%?"
                                     },
-                                    "customConfigs": [],
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "confirmation",
+                                            "type": "string"
+                                        }
+                                    ],
                                     "expanded": true
                                 },
                                 {
@@ -460,9 +481,16 @@
                                     "userConfig": {
                                         "itemId": "refresh",
                                         "text": "Refresh",
-                                        "designer|userClassName": "MyButton14"
+                                        "designer|userClassName": "MyButton14",
+                                        "confirmation": "reload portal config?"
                                     },
-                                    "customConfigs": [],
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "confirmation",
+                                            "type": "string"
+                                        }
+                                    ],
                                     "expanded": true
                                 }
                             ]
@@ -583,9 +611,16 @@
                                         "autoWidth": true,
                                         "text": "Add New ...",
                                         "designer|userClassName": "MyButton",
-                                        "formBind": true
+                                        "formBind": true,
+                                        "confirmation": "add for target:%targetname%?"
                                     },
-                                    "customConfigs": [],
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "confirmation",
+                                            "type": "string"
+                                        }
+                                    ],
                                     "expanded": true
                                 }
                             ]

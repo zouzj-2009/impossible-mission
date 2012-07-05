@@ -35,12 +35,12 @@ Ext.define('MyApp.view.DiskMgmt', {
                     preventHeader: false,
                     title: 'Current Setting',
                     titleCollapse: false,
-                    region: 'center',
-                    split: true,
                     databind: {
                         autoload: true,
                         model: 'scsidisk'
                     },
+                    region: 'center',
+                    split: true,
                     viewConfig: {
 
                     },
@@ -135,11 +135,11 @@ Ext.define('MyApp.view.DiskMgmt', {
                                             queryMode: 'local',
                                             store: 'ScsiHost',
                                             valueField: 'dev',
-                                            anchor: '100%',
                                             databind: {
                                                 autoload: true,
                                                 model: 'scsihost'
-                                            }
+                                            },
+                                            anchor: '100%'
                                         },
                                         {
                                             xtype: 'button',
