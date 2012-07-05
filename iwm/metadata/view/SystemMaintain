@@ -8,7 +8,7 @@
     "codeClass": null,
     "userConfig": {
         "height": 250,
-        "width": 400,
+        "width": null,
         "layout": "border",
         "designer|userClassName": "SystemMaintain",
         "designer|userAlias": "systemmaintain"
@@ -16,7 +16,7 @@
     "customConfigs": [],
     "designerId": "4ba79435-9153-4286-81c5-e08849f025df",
     "$viewOrder": 6,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen41461",

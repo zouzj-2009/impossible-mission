@@ -59,11 +59,24 @@ Ext.define('MyApp.view.SysMaintain', {
                                 },
                                 {
                                     xtype: 'button',
-                                    text: 'Clear This'
+                                    text: 'Clear All'
                                 },
                                 {
                                     xtype: 'button',
-                                    text: 'Clear All'
+                                    text: 'Clear This'
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Choose Log',
+                                    hideLabel: false,
+                                    labelWidth: 80,
+                                    queryMode: 'local'
+                                },
+                                {
+                                    xtype: 'pagingtoolbar',
+                                    width: 360,
+                                    displayInfo: true,
+                                    flex: 1
                                 }
                             ]
                         }
@@ -90,66 +103,88 @@ Ext.define('MyApp.view.SysMaintain', {
                 },
                 {
                     xtype: 'container',
-                    minWidth: 280,
-                    width: 150,
+                    minWidth: 292,
+                    width: 292,
                     autoScroll: true,
                     region: 'west',
                     split: true,
                     items: [
                         {
-                            xtype: 'fieldset',
-                            title: 'Host Setting$',
+                            xtype: 'form',
+                            border: 0,
+                            bodyCls: 'x-border-layout-ct',
                             items: [
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'HostName$',
-                                    anchor: '100%'
-                                },
-                                {
-                                    xtype: 'datefield',
-                                    fieldLabel: 'Date$',
-                                    anchor: '100%'
-                                },
-                                {
-                                    xtype: 'timefield',
-                                    fieldLabel: 'Time$',
-                                    anchor: '100%'
-                                },
-                                {
-                                    xtype: 'button',
-                                    text: 'Update$'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset',
-                            title: 'License',
-                            items: [
-                                {
-                                    xtype: 'filefield',
-                                    fieldLabel: 'New license',
-                                    anchor: '100%'
-                                },
-                                {
-                                    xtype: 'button',
-                                    text: 'Update$'
-                                },
                                 {
                                     xtype: 'fieldset',
-                                    collapsed: true,
-                                    collapsible: true,
-                                    title: 'Current License',
+                                    title: 'Host Setting$',
                                     items: [
                                         {
-                                            xtype: 'textareafield',
-                                            fieldLabel: 'Old license',
-                                            hideLabel: true,
-                                            labelAlign: 'top',
+                                            xtype: 'textfield',
+                                            fieldLabel: 'HostName$',
+                                            anchor: '100%'
+                                        },
+                                        {
+                                            xtype: 'datefield',
+                                            fieldLabel: 'Date$',
+                                            anchor: '100%'
+                                        },
+                                        {
+                                            xtype: 'timefield',
+                                            fieldLabel: 'Time$',
                                             anchor: '100%'
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Test ...'
+                                            itemId: 'update',
+                                            text: 'Update$'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'Refresh'
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'form',
+                            border: 0,
+                            bodyCls: 'x-border-layout-ct',
+                            items: [
+                                {
+                                    xtype: 'fieldset',
+                                    title: 'License',
+                                    items: [
+                                        {
+                                            xtype: 'filefield',
+                                            fieldLabel: 'New license',
+                                            anchor: '100%'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'add',
+                                            text: 'Update$'
+                                        },
+                                        {
+                                            xtype: 'fieldset',
+                                            collapsed: true,
+                                            collapsible: true,
+                                            title: 'Current License',
+                                            items: [
+                                                {
+                                                    xtype: 'textareafield',
+                                                    fieldLabel: 'Old license',
+                                                    hideLabel: true,
+                                                    labelAlign: 'top',
+                                                    anchor: '100%'
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    itemId: 'update',
+                                                    text: 'Test ...'
+                                                }
+                                            ]
                                         }
                                     ]
                                 }

@@ -232,8 +232,8 @@ Ext.define('MyApp.view.VirtPortal', {
                                             minWidth: 80,
                                             autoWidth: true,
                                             text: 'Add New ...',
-                                            formBind: true,
-                                            confirmation: 'add for target:%targetname%?'
+                                            confirmation: 'add for target:%targetname%?',
+                                            formBind: true
                                         }
                                     ]
                                 }

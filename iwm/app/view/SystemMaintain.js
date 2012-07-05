@@ -21,7 +21,6 @@ Ext.define('MyApp.view.SystemMaintain', {
     ],
 
     height: 250,
-    width: 400,
     layout: {
         type: 'border'
     },
