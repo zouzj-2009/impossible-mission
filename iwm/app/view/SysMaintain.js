@@ -36,6 +36,10 @@ Ext.define('MyApp.view.SysMaintain', {
                     title: 'System Log$',
                     titleCollapse: false,
                     store: 'SysLog',
+                    databind: {
+                        autoload: true,
+                        model: 'syslog'
+                    },
                     region: 'center',
                     split: true,
                     viewConfig: {
@@ -59,10 +63,12 @@ Ext.define('MyApp.view.SysMaintain', {
                                 },
                                 {
                                     xtype: 'button',
+                                    itemId: 'deleteall',
                                     text: 'Clear All'
                                 },
                                 {
                                     xtype: 'button',
+                                    itemId: 'deletethis',
                                     text: 'Clear This'
                                 },
                                 {
@@ -70,13 +76,19 @@ Ext.define('MyApp.view.SysMaintain', {
                                     fieldLabel: 'Choose Log',
                                     hideLabel: false,
                                     labelWidth: 80,
-                                    queryMode: 'local'
-                                },
-                                {
-                                    xtype: 'pagingtoolbar',
-                                    width: 360,
-                                    displayInfo: true,
-                                    flex: 1
+                                    displayField: 'logname',
+                                    queryMode: 'local',
+                                    valueField: 'logname',
+                                    databind: {
+                                        autoload: true,
+                                        model: 'logfiles'
+                                    },
+                                    listeners: {
+                                        change: {
+                                            fn: me.onComboboxChange,
+                                            scope: me
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -84,12 +96,18 @@ Ext.define('MyApp.view.SysMaintain', {
                     columns: [
                         {
                             xtype: 'gridcolumn',
-                            minWidth: 120,
+                            width: 46,
+                            dataIndex: 'line',
+                            text: 'Line'
+                        },
+                        {
+                            xtype: 'gridcolumn',
                             dataIndex: 'date',
                             text: 'Date'
                         },
                         {
                             xtype: 'gridcolumn',
+                            width: 76,
                             dataIndex: 'facility',
                             text: 'Facility'
                         },
@@ -113,35 +131,66 @@ Ext.define('MyApp.view.SysMaintain', {
                             xtype: 'form',
                             border: 0,
                             bodyCls: 'x-border-layout-ct',
+                            databind: {
+                                autoload: true,
+                                model: 'hostsetting'
+                            },
                             items: [
                                 {
                                     xtype: 'fieldset',
                                     title: 'Host Setting$',
+                                    databind: {
+                                        autoload: true,
+                                        model: 'hostsetting'
+                                    },
                                     items: [
                                         {
                                             xtype: 'textfield',
+                                            name: 'hostname',
                                             fieldLabel: 'HostName$',
                                             anchor: '100%'
                                         },
                                         {
                                             xtype: 'datefield',
+                                            name: 'date',
                                             fieldLabel: 'Date$',
+                                            format: 'Y-m-d',
+                                            submitFormat: 'Y-m-d',
                                             anchor: '100%'
                                         },
                                         {
-                                            xtype: 'timefield',
+                                            xtype: 'textfield',
+                                            name: 'time',
                                             fieldLabel: 'Time$',
+                                            allowBlank: false,
+                                            anchor: '100%'
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            name: 'timezone',
+                                            value: 'Asia/Shanghai',
+                                            fieldLabel: 'TimeZone',
+                                            displayField: 'shortname',
+                                            queryMode: 'local',
+                                            valueField: 'zone',
+                                            databind: {
+                                                autoload: true,
+                                                model: 'timezone',
+                                                loadonce: true
+                                            },
                                             anchor: '100%'
                                         },
                                         {
                                             xtype: 'button',
                                             itemId: 'update',
-                                            text: 'Update$'
+                                            text: 'Update$',
+                                            formBind: true
                                         },
                                         {
                                             xtype: 'button',
                                             itemId: 'refresh',
-                                            text: 'Refresh'
+                                            text: 'Refresh',
+                                            formBind: true
                                         }
                                     ]
                                 }
@@ -151,13 +200,22 @@ Ext.define('MyApp.view.SysMaintain', {
                             xtype: 'form',
                             border: 0,
                             bodyCls: 'x-border-layout-ct',
+                            databind: {
+                                autoload: true,
+                                model: 'license'
+                            },
                             items: [
                                 {
                                     xtype: 'fieldset',
                                     title: 'License',
+                                    databind: {
+                                        model: 'license',
+                                        autoload: true
+                                    },
                                     items: [
                                         {
                                             xtype: 'filefield',
+                                            name: 'licensefile',
                                             fieldLabel: 'New license',
                                             anchor: '100%'
                                         },
@@ -174,6 +232,7 @@ Ext.define('MyApp.view.SysMaintain', {
                                             items: [
                                                 {
                                                     xtype: 'textareafield',
+                                                    name: 'licensedata',
                                                     fieldLabel: 'Old license',
                                                     hideLabel: true,
                                                     labelAlign: 'top',
@@ -182,7 +241,13 @@ Ext.define('MyApp.view.SysMaintain', {
                                                 {
                                                     xtype: 'button',
                                                     itemId: 'update',
-                                                    text: 'Test ...'
+                                                    text: 'Test ...',
+                                                    forceupdate: true
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    itemId: 'refresh',
+                                                    text: 'Reload'
                                                 }
                                             ]
                                         }
@@ -200,6 +265,11 @@ Ext.define('MyApp.view.SysMaintain', {
 
     onDownloadClick: function(button, e, options) {
 
+    },
+
+    onComboboxChange: function(field, newValue, oldValue, options) {
+        var store = field.up('gridpanel').getStore();
+        store.load({params:{_logname:newValue}});
     }
 
 });

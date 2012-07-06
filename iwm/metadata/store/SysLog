@@ -8,8 +8,8 @@
     "codeClass": null,
     "userConfig": {
         "storeId": "MyJsonPStore10",
-        "model": "SysLog",
-        "data": "[{date:'2009-12-24 19:12:35',\nfacility:'kernel',\nmessage:'abadfasd asdfadsf<br /> adsfadsf adsfa dsfasdfafd asdfadsf adsfadf '}]",
+        "model": "syslog",
+        "data": null,
         "designer|userClassName": "SysLog"
     },
     "customConfigs": [],

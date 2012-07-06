@@ -44,11 +44,18 @@
                 "titleCollapse": false,
                 "store": "SysLog",
                 "designer|userClassName": "MyGridPanel",
+                "databind": "{\nautoload:true,\nmodel:'syslog'\n}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true
             },
-            "customConfigs": [],
+            "customConfigs": [
+                {
+                    "group": "(Custom Properties)",
+                    "name": "databind",
+                    "type": "object"
+                }
+            ],
             "expanded": true,
             "cn": [
                 {
@@ -125,6 +132,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "itemId": "deleteall",
                                 "text": "Clear All",
                                 "designer|userClassName": "MyButton25",
                                 "layout|flex": null
@@ -141,6 +149,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "itemId": "deletethis",
                                 "text": "Clear This",
                                 "designer|userClassName": "MyButton23",
                                 "layout|flex": null
@@ -160,34 +169,49 @@
                                 "fieldLabel": "Choose Log",
                                 "hideLabel": false,
                                 "labelWidth": 80,
+                                "displayField": "logname",
                                 "queryMode": "local",
+                                "valueField": "logname",
                                 "designer|userClassName": "MyComboBox8",
+                                "databind": "{\nautoload:true,\nmodel:'logfiles'\n}",
                                 "layout|flex": null
                             },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen47654",
-                            "type": "pagingtoolbar",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "width": 360,
-                                "displayInfo": true,
-                                "designer|userClassName": "MyPagingToolbar",
-                                "layout|flex": 1
-                            },
-                            "customConfigs": [],
-                            "expanded": true
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen8834",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onComboboxChange",
+                                        "implHandler": [
+                                            "var store = field.up('gridpanel').getStore();",
+                                            "store.load({params:{_logname:newValue}});"
+                                        ],
+                                        "name": "change",
+                                        "scope": "me",
+                                        "designer|userClassName": "onComboboxChange"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    "id": "ExtBox1-ext-gen56168",
+                    "id": "ExtBox1-ext-gen12759",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -195,16 +219,32 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "minWidth": 120,
+                        "width": 46,
+                        "dataIndex": "line",
+                        "text": "Line",
+                        "designer|userClassName": "MyColumn50"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen12771",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
                         "dataIndex": "date",
                         "text": "Date",
-                        "designer|userClassName": "MyColumn43"
+                        "designer|userClassName": "MyColumn51"
                     },
                     "customConfigs": [],
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen56180",
+                    "id": "ExtBox1-ext-gen12783",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -212,16 +252,16 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "width": 76,
                         "dataIndex": "facility",
-                        "flex": null,
                         "text": "Facility",
-                        "designer|userClassName": "MyColumn44"
+                        "designer|userClassName": "MyColumn52"
                     },
                     "customConfigs": [],
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen56192",
+                    "id": "ExtBox1-ext-gen12795",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -232,7 +272,7 @@
                         "dataIndex": "message",
                         "flex": 1,
                         "text": "Message",
-                        "designer|userClassName": "MyColumn45"
+                        "designer|userClassName": "MyColumn53"
                     },
                     "customConfigs": [],
                     "expanded": true
@@ -271,9 +311,16 @@
                         "bodyCls": "x-border-layout-ct",
                         "bodyPadding": null,
                         "title": null,
-                        "designer|userClassName": "MyForm15"
+                        "designer|userClassName": "MyForm15",
+                        "databind": "{\nautoload:true,\nmodel:'hostsetting'\n}"
                     },
-                    "customConfigs": [],
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
                     "expanded": true,
                     "cn": [
                         {
@@ -286,9 +333,16 @@
                             "codeClass": null,
                             "userConfig": {
                                 "title": "Host Setting$",
-                                "designer|userClassName": "MyFieldSet8"
+                                "designer|userClassName": "MyFieldSet8",
+                                "databind": "{\nautoload:true,\nmodel:'hostsetting'\n}"
                             },
-                            "customConfigs": [],
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
                             "expanded": true,
                             "cn": [
                                 {
@@ -300,6 +354,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "name": "hostname",
                                         "fieldLabel": "HostName$",
                                         "designer|userClassName": "MyTextField24",
                                         "layout|anchor": "100%"
@@ -316,7 +371,10 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "name": "date",
                                         "fieldLabel": "Date$",
+                                        "format": "Y-m-d",
+                                        "submitFormat": "Y-m-d",
                                         "designer|userClassName": "MyDateField",
                                         "layout|anchor": "100%"
                                     },
@@ -325,18 +383,48 @@
                                 },
                                 {
                                     "id": "ExtBox1-ext-gen50845",
-                                    "type": "timefield",
+                                    "type": "textfield",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "name": "time",
                                         "fieldLabel": "Time$",
-                                        "designer|userClassName": "MyTimeField",
+                                        "allowBlank": false,
+                                        "designer|userClassName": "MyTextField24",
                                         "layout|anchor": "100%"
                                     },
                                     "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen15968",
+                                    "type": "combobox",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "timezone",
+                                        "value": "'Asia/Shanghai'",
+                                        "fieldLabel": "TimeZone",
+                                        "displayField": "shortname",
+                                        "queryMode": "local",
+                                        "valueField": "zone",
+                                        "designer|userClassName": "MyComboBox9",
+                                        "databind": "{\nautoload:true,\nmodel:'timezone',\nloadonce:true\n}",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "databind",
+                                            "type": "object"
+                                        }
+                                    ],
                                     "expanded": true
                                 },
                                 {
@@ -350,7 +438,8 @@
                                     "userConfig": {
                                         "itemId": "update",
                                         "text": "Update$",
-                                        "designer|userClassName": "MyButton24"
+                                        "designer|userClassName": "MyButton24",
+                                        "formBind": true
                                     },
                                     "customConfigs": [],
                                     "expanded": true
@@ -366,7 +455,8 @@
                                     "userConfig": {
                                         "itemId": "refresh",
                                         "text": "Refresh",
-                                        "designer|userClassName": "MyButton24"
+                                        "designer|userClassName": "MyButton24",
+                                        "formBind": true
                                     },
                                     "customConfigs": [],
                                     "expanded": true
@@ -388,9 +478,16 @@
                         "bodyCls": "x-border-layout-ct",
                         "bodyPadding": null,
                         "title": null,
-                        "designer|userClassName": "MyForm16"
+                        "designer|userClassName": "MyForm16",
+                        "databind": "{\nautoload:true,\nmodel:'license'\n}"
                     },
-                    "customConfigs": [],
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
                     "expanded": true,
                     "cn": [
                         {
@@ -403,9 +500,16 @@
                             "codeClass": null,
                             "userConfig": {
                                 "title": "License",
-                                "designer|userClassName": "MyFieldSet8"
+                                "designer|userClassName": "MyFieldSet8",
+                                "databind": "{\nmodel:'license',\nautoload:true\n}"
                             },
-                            "customConfigs": [],
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
                             "expanded": true,
                             "cn": [
                                 {
@@ -417,6 +521,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "name": "licensefile",
                                         "fieldLabel": "New license",
                                         "designer|userClassName": "MyFileUpload",
                                         "layout|anchor": "100%"
@@ -466,6 +571,7 @@
                                             },
                                             "codeClass": null,
                                             "userConfig": {
+                                                "name": "licensedata",
                                                 "fieldLabel": "Old license",
                                                 "hideLabel": true,
                                                 "labelAlign": "top",
@@ -486,6 +592,29 @@
                                             "userConfig": {
                                                 "itemId": "update",
                                                 "text": "Test ...",
+                                                "designer|userClassName": "MyButton27",
+                                                "forceupdate": true
+                                            },
+                                            "customConfigs": [
+                                                {
+                                                    "group": "(Custom Properties)",
+                                                    "name": "forceupdate",
+                                                    "type": "boolean"
+                                                }
+                                            ],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen9649",
+                                            "type": "button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": "refresh",
+                                                "text": "Reload",
                                                 "designer|userClassName": "MyButton27"
                                             },
                                             "customConfigs": [],

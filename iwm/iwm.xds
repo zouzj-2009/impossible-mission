@@ -322,11 +322,11 @@
         },
         "57cd7513-5cd8-44bf-81a1-a5d1dbda9521": {
             "paths": [
-                "metadata/model/SysLog",
-                "app/model/override/SysLog.js",
-                "app/model/SysLog.js"
+                "metadata/model/syslog",
+                "app/model/override/syslog.js",
+                "app/model/syslog.js"
             ],
-            "className": "SysLog"
+            "className": "syslog"
         },
         "666ee7cd-1cb4-49c7-93d0-c87c6ba811bf": {
             "paths": [
@@ -447,6 +447,38 @@
                 "app/store/General.js"
             ],
             "className": "General"
+        },
+        "86ad1d07-1cd4-4449-be1b-09d495ec197c": {
+            "paths": [
+                "metadata/model/logfiles",
+                "app/model/override/logfiles.js",
+                "app/model/logfiles.js"
+            ],
+            "className": "logfiles"
+        },
+        "94111373-1fc4-4cbd-a6fb-eeabd0d30c8f": {
+            "paths": [
+                "metadata/model/hostsetting",
+                "app/model/override/hostsetting.js",
+                "app/model/hostsetting.js"
+            ],
+            "className": "hostsetting"
+        },
+        "8b20edcb-c530-4a6d-974d-480d6983a81c": {
+            "paths": [
+                "metadata/model/license",
+                "app/model/override/license.js",
+                "app/model/license.js"
+            ],
+            "className": "license"
+        },
+        "f65fe8ca-1717-4bbd-b893-375c6f44e145": {
+            "paths": [
+                "metadata/model/timezone",
+                "app/model/override/timezone.js",
+                "app/model/timezone.js"
+            ],
+            "className": "timezone"
         }
     },
     "expandedState": {

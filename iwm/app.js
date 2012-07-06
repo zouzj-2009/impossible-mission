@@ -28,12 +28,16 @@ Ext.application({
         'virtportal',
         'scsidisk',
         'scsihost',
-        'SysLog',
+        'syslog',
         'etherspeed',
         'glunmap',
         'dnsgw',
         'gvirtportal',
-        'niclist'
+        'niclist',
+        'logfiles',
+        'hostsetting',
+        'license',
+        'timezone'
     ],
     stores: [
         'networkinfo',

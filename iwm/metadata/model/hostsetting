@@ -1,5 +1,5 @@
 {
-    "id": "ExtBox1-ext-gen43439",
+    "id": "ExtBox1-ext-gen14449",
     "type": "datamodel",
     "reference": {
         "name": "items",
@@ -7,15 +7,30 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userClassName": "SysLog"
+        "designer|userClassName": "hostsetting"
     },
     "customConfigs": [],
-    "designerId": "57cd7513-5cd8-44bf-81a1-a5d1dbda9521",
-    "$viewOrder": 9,
-    "expanded": false,
+    "designerId": "94111373-1fc4-4cbd-a6fb-eeabd0d30c8f",
+    "$viewOrder": 16,
+    "expanded": true,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen44635",
+            "id": "ExtBox1-ext-gen14717",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "hostname",
+                "designer|userClassName": "MyField90"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen14890",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -24,13 +39,13 @@
             "codeClass": null,
             "userConfig": {
                 "name": "date",
-                "designer|userClassName": "MyField59"
+                "designer|userClassName": "MyField91"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen44804",
+            "id": "ExtBox1-ext-gen15063",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -38,14 +53,14 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "facility",
-                "designer|userClassName": "MyField60"
+                "name": "time",
+                "designer|userClassName": "MyField92"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen44977",
+            "id": "ExtBox1-ext-gen15240",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -53,8 +68,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "message",
-                "designer|userClassName": "MyField61"
+                "name": "timezone",
+                "designer|userClassName": "MyField93"
             },
             "customConfigs": [],
             "expanded": true

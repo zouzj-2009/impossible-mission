@@ -10,7 +10,7 @@ static $default_error_pharser = array(
 	fieldsmode=>array(
 		type=>'just_output',
 		name=>'msg',
-		strip=>'/ @@@@@@@@ /',
+		strip=>'/ @@@@@@@@ |\\\n$/',
 		//endoutx=>'/^#### error msg end ####/',
 	),
 );
@@ -24,7 +24,7 @@ static $default_log_pharser = array(
 	fieldsmode=>array(
 		type=>'just_output',
 		name=>'log',
-		strip=>'/ @@@@@@@@ /',
+		strip=>'/ @@@@@@@@ |\\\n$/',
 	),
 	//islogpconfig=>true,
 );
@@ -83,7 +83,7 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null, $
 //	non 0 is error
 	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd output---------------');
 	if ($pconfig[debug]) PHARSER::debug("$name.output", $out);
-	if ($retvar && $pconfig['errpharser']){
+	if (($retvar||$pconfig[getmsg]) && $pconfig['errpharser']){
 		if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd fail -----------------');
 		$r = PHARSER::pharse_type($out, $pconfig['errpharser']);
 		$r = array_shift($r);
@@ -338,6 +338,7 @@ function p_just_output(&$in, $pconfig){
 	if ($pconfig[strip]) $o = preg_replace($pconfig[strip], '', $o);
 	if (!$pconfig[name]) return $o;
 	$r = array($pconfig[name]=>$o);
+	if ($pconfig[arrayret]) $r = array($r);
 	if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got", $r);
 	return $r;
 }

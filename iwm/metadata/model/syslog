@@ -1,5 +1,5 @@
 {
-    "id": "ExtBox1-ext-gen13000",
+    "id": "ExtBox1-ext-gen43439",
     "type": "datamodel",
     "reference": {
         "name": "items",
@@ -7,15 +7,15 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userClassName": "gvirtportal"
+        "designer|userClassName": "syslog"
     },
     "customConfigs": [],
-    "designerId": "430cc03e-d4f1-4d83-ac5d-797fd01914cb",
-    "$viewOrder": 13,
+    "designerId": "57cd7513-5cd8-44bf-81a1-a5d1dbda9521",
+    "$viewOrder": 9,
     "expanded": false,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen13197",
+            "id": "ExtBox1-ext-gen12209",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -23,14 +23,14 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "enabled",
-                "designer|userClassName": "MyField75"
+                "name": "line",
+                "designer|userClassName": "MyField89"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen13370",
+            "id": "ExtBox1-ext-gen44635",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -38,14 +38,14 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "portalip",
-                "designer|userClassName": "MyField76"
+                "name": "date",
+                "designer|userClassName": "MyField59"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen13554",
+            "id": "ExtBox1-ext-gen44804",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -53,14 +53,14 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "portalmask",
-                "designer|userClassName": "MyField77"
+                "name": "facility",
+                "designer|userClassName": "MyField60"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen13731",
+            "id": "ExtBox1-ext-gen44977",
             "type": "datafield",
             "reference": {
                 "name": "fields",
@@ -68,8 +68,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "maxcount",
-                "designer|userClassName": "MyField78"
+                "name": "message",
+                "designer|userClassName": "MyField61"
             },
             "customConfigs": [],
             "expanded": true

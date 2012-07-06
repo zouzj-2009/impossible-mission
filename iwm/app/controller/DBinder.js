@@ -212,19 +212,19 @@ Ext.define('MyApp.controller.DBinder', {
 
     bindGrid: function(grid, store, cfg, binder) {
         var sm = grid.getSelectionModel(),
-            me = this;
+            me = this,
+            del = grid.down('#delete');
         //don't override designed behavior.
-        if (sm && !cfg.ignore.selectionchange){
+        if (sm && !cfg.ignore.selectionchange && del){
             grid.on('selectionchange', function(grid, selections, options){
-                if (selections.length>=1 && this.down('#delete')){
-                    this.down('#delete').enable();
+                if (selections.length>=1){
+                    del.enable();
                 }else{
-                    this.down('#delete').disable();
+                    del.disable();
                 }
             });
         }
 
-        var del = grid.down('#delete');
         if (del && !cfg.ignore['delete']){
             del.on('click', function(button, event, options){
                 var records = grid.getSelectionModel().getSelection(),
@@ -335,7 +335,7 @@ Ext.define('MyApp.controller.DBinder', {
                         });
                     }else{
                         m.set(v);
-                        //m.setDirty();
+                        if (button.forceupdate) m.setDirty();
                         store.sync();
                     }
                 }

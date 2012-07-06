@@ -457,6 +457,7 @@ function update($params, $records){
 	$changes = 0;
 	$updated = array();
 	$retold = array(); //for return
+	$okmsg = '';
 	try{
 		if (!$this->batchsupport['update'] && count($records)>1) 
 			throw new Exception("batch update not support, but ".count($records)." are supplied.");
@@ -504,6 +505,7 @@ function update($params, $records){
 						if ($cmderror){
 							throw new Exception(get_class($this)." update fail: $cmd return fail($cmderror, $r[msg]).");
 						}
+						$okmsg .= $r[msg];
 						$changes ++;
 						$updated[] = $record;
 						$retold[] = $old;
@@ -532,6 +534,7 @@ function update($params, $records){
 						if ($cmderror){
 							throw new Exception(get_class($this)." update fail: $cmd return fail($cmderror, $r[msg]).");
 						}
+						$okmsg .= $r[msg];
 						$changes ++;
 						$updated[] = $record;
 						$retold[] = $old;
@@ -561,7 +564,7 @@ function update($params, $records){
 	}
 	return array(
 		success=>true,
-		msg=>$msg?$msg:"$this->mid update done.",
+		msg=>$okmsg?$okmsg:"$this->mid update done.",
 		updated=>$updated,
 		changes=>$changes,
 		old=>$retold,

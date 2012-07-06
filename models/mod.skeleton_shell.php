@@ -143,6 +143,8 @@ var $valid_pharser = array(
 			//or 'key'=>'boolean'|'password'
 		),
 		debug=>false,			//true fo debug this pharser, sub modes sucha as fieldsmode need set debug flag indivisually.
+		debugall=>false,
+		getmsg=>false,			//true to get error msg from output even exec return ok.
 		idindexed=>false,		//true|false, if true, use record_id as return array index.
 	),
 	'one_record_span_lines'=>array(
