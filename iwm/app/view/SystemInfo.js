@@ -32,7 +32,7 @@ Ext.define('MyApp.view.SystemInfo', {
             items: [
                 {
                     xtype: 'tabpanel',
-                    activeTab: 1,
+                    activeTab: 2,
                     region: 'center',
                     items: [
                         {
@@ -199,31 +199,13 @@ Ext.define('MyApp.view.SystemInfo', {
                             xtype: 'gridpanel',
                             itemId: 'sysinfo',
                             title: '系统信息',
-                            store: 'sysinfo',
                             databind: {
-                                autoload: true
+                                autoload: true,
+                                model: 'pciinfo'
                             },
                             viewConfig: {
 
                             },
-                            columns: [
-                                {
-                                    xtype: 'gridcolumn',
-                                    dataIndex: 'part',
-                                    text: 'Part'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    dataIndex: 'description',
-                                    text: 'Description'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    dataIndex: 'note',
-                                    flex: 1,
-                                    text: 'Note'
-                                }
-                            ],
                             dockedItems: [
                                 {
                                     xtype: 'toolbar',
@@ -235,6 +217,36 @@ Ext.define('MyApp.view.SystemInfo', {
                                             text: 'refresh'
                                         }
                                     ]
+                                }
+                            ],
+                            columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 78,
+                                    dataIndex: 'busid',
+                                    text: 'Busid'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 113,
+                                    dataIndex: 'type',
+                                    text: 'Type',
+                                    databind: {
+                                        autoload: true,
+                                        model: 'pciinfo'
+                                    }
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 139,
+                                    dataIndex: 'vendor',
+                                    text: 'Vendor'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'description',
+                                    flex: 1,
+                                    text: 'Description'
                                 }
                             ]
                         },

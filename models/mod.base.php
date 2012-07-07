@@ -339,6 +339,17 @@ function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 		if (is_array($v)) foreach($v as $name=>$value) $p[$k."_".$name] = $value;
 		else $p[$name] = $value;
 	}
+
+	//recheck args, if array, flat-it
+	foreach($p as $k=>$v){
+		if (!is_array($v)) continue;
+		//usually, only posted files will use this feature.
+		foreach($v as $vk=>$vv){
+			$p[$k."__".$vk] = $vv;
+		}
+		$p[$k] = "Array(".implode(",", array_keys($p[$k])).")";
+	}
+
 	$logs = array();
 	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderr, $mod, $logs);
 	$cmderror = $cmderr;
@@ -514,6 +525,7 @@ function update($params, $records){
 						$changes += $r[changes];
 						$updated = array_merge(updated, $r[updated]);
 						$retold[] = $old;
+						$okmsg .= $r[msg];
 					}
 				}
 			}
@@ -544,6 +556,7 @@ function update($params, $records){
 					$changes = $r[changes];
 					$updated = $r[updated];
 					$retold = $old_records;
+					$okmsg .= $r[msg];
 				}
 			}
 		}
@@ -574,6 +587,7 @@ function update($params, $records){
 function destroy($params, $records){
 	$cmd = $this->defaultcmds[destroy];
 	$msg = null;
+	$okmsg = '';
 	$next = 'continue';
 	$old_records = $records;
 	$destroied = array();
@@ -620,12 +634,14 @@ function destroy($params, $records){
 						if ($cmderror){
 							throw new Exception(get_class($this)." destroy fail: $cmd return fail($cmderror, $r[msg]).");
 						}
+						$okmsg .= $r[msg];
 					}else{// get destroy result by do_destroy of sub_classes
-						$this->do_destroy($params, array($record));
+						$r = $this->do_destroy($params, array($record));
 					}
 				}
 				$destroied[] = $old;
 				$changes ++;
+				$okmsg .= $r[msg];
 			}
 		}else{//do it batchly
 			if (!$cmd && !method_exists($this, 'do_destroy')){//dbonly
@@ -643,11 +659,13 @@ function destroy($params, $records){
 						}
 						$destroied[] = $record;
 						$changes ++;
+						$okmsg .= $r[msg];
 					}
 				}else{// get destroy result by do_destroy of sub_classes
 					$r = $this->do_destroy($params, $records);
 					$destroied = $r[destroied];
 					$changes = $r[changes];
+					$okmsg .= $r[msg];
 				}
 			}
 		}
@@ -667,7 +685,7 @@ function destroy($params, $records){
 	}
 	return array(
 		success=>true,
-		msg=>$msg?$msg:"$this->mid destroy done.",
+		msg=>$okmsg?$okmsg:"$this->mid destroy done.",
 		destroied=>$destroied,
 		changes=>$changes,
 	);
@@ -676,6 +694,7 @@ function destroy($params, $records){
 function create($params, $records){
 	$cmd = $this->defaultcmds[create];
 	$msg = null;
+	$okmsg = '';
 	$next = 'continue';
 	$new_records = array();
 	$created = array();
@@ -716,10 +735,13 @@ function create($params, $records){
 						//maybe multi-records were added!
 						$changes +=count($r);
 						$created = array_merge($created, $r);
+						$okmsg .= $r[msg];
+					
 					}else{// get create result by do_destroy of sub_classes
 						$r = $this->do_create($params, array($record), $created);
 						$changes += $r[changes];
 						$created = array_merge($created, $r[created]);
+						$okmsg .= $r[msg];
 					}
 				}
 			}
@@ -741,11 +763,13 @@ function create($params, $records){
 						//maybe multi-records were added!
 						$changes += count($r);;
 						$created = array_merge($created, $r);
+						$okmsg .= $r[msg];
 					}
 				}else{// get create result by do_create of sub_classes
 					$r = $this->do_create($params, $records);
 					$created = $r[created];
 					$changes = $r[changes];
+					$okmsg .= $r[msg];
 				}
 			}
 		}
@@ -765,7 +789,7 @@ function create($params, $records){
 	}
 	return array(
 		success=>true,
-		msg=>$msg?$msg:"$this->mid create done.",
+		msg=>$okmsg?$okmsg:"$this->mid create done.",
 		created=>$created,
 		changes=>$changes,
 	);

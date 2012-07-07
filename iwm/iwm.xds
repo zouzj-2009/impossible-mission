@@ -148,11 +148,11 @@
         },
         "229c237c-7c75-4ea8-991d-bacaadcd24d1": {
             "paths": [
-                "metadata/model/SysInfo",
-                "app/model/override/SysInfo.js",
-                "app/model/SysInfo.js"
+                "metadata/model/pciinfo",
+                "app/model/override/pciinfo.js",
+                "app/model/pciinfo.js"
             ],
-            "className": "SysInfo"
+            "className": "pciinfo"
         },
         "076f8fd2-a8af-4981-bf12-2f02a27ff24a": {
             "paths": [

@@ -42,7 +42,17 @@ function pharse_type(&$in, $pconfig){
 		throw new Exception(__FUNCTION__." type $type not supported!");
 	}
 	if ($pconfig[debug]) PHARSER::debug("pharsing type", $type);
-	return call_user_func("PHARSER::p_$type", &$in, $pconfig);
+	$r = call_user_func("PHARSER::p_$type", &$in, $pconfig);
+	if ($pconfig[skiprecord]){
+		$t = array();
+		foreach($r as $record){
+			if (!PHARSER::check_skip_record($record, $pconfig[skiprecord], $pconfig[debug])) continue;
+			$t[] = $record;
+		}
+		return $t;
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got skipped", $r);
+	}
+	return $r;
 }
 
 function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null, $executor=null){
@@ -299,6 +309,32 @@ function get_field_names($row, $pconfig){
 	return $r;
 }
 
+function p_csv(&$in, $pconfig){
+	$r = array();
+	$pconfig[fieldnames] = is_array($pconfig[fieldnames])?$pconfig[fieldnames]:explode(",", $pconfig[fieldnames]);
+	while($in){
+		$line = array_shift($in);
+		if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." check line", $line);
+		if (($pconfig[parentstart] && preg_match($pconfig[parentstart], $line))
+			||($pconfig[parentend] && preg_match($pconfig[parentend], $line))){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [parentstart|parentend]", $pconfig[parentstart]."|".$pconfig[parentend]);
+			array_unshift($in, $line);
+			break;
+		}
+		if ($pconfig[ignore] && preg_match($pconfig[ignore], $line)){
+			if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." match [ignore]", $pconfig[ignore]);
+			continue;
+		}
+		$row = str_getcsv($line, $pconfig[delimiter]?$pconfig[delimiter]:',', $pconfig[enclosure]?$pconfig[enclosure]:'"', $pconfig[escape]?$pconfig[escape]:'\\');
+		//$row = str_getcsv($line);
+		$row = PHARSER::get_field_names($row, $pconfig);
+		if ($pconfig[newkeys]||$pconfig[newvalues]) $row = PHARSER::format_keys_and_values($row, $pconfig[newkeys], $pconfig[newvalues], $pconfig);
+		$r[] = $row;
+	}
+	if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got", $row);
+	return $r;
+}
+
 function p_just_output(&$in, $pconfig){
 //valid config key:
 //name: 	return keyname of output,
@@ -374,6 +410,7 @@ function p_record_in_one_line(&$in, $pconfig){
 	if (!$fieldnames) return $r;
 	$r = PHARSER::get_field_names($r, $pconfig);
 	if ($pconfig[newkeys]||$pconfig[newvalues]) $r = PHARSER::format_keys_and_values($r, $pconfig[newkeys], $pconfig[newvalues], $pconfig);
+	if ($pconfig[arrayret]) $r = array($r);
 	if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got", $r);
 	return $r;
 }
@@ -675,6 +712,7 @@ print_r($in);
 			else $r[] = $cur_record;	//add full record
 		}
 	}
+/*
 	if ($pconfig[skiprecord]){
 		$t = array();
 		foreach($r as $record){
@@ -683,6 +721,7 @@ print_r($in);
 		}
 		return $t;
 	}
+*/
 	if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." got", $r);
 	return $r;
 }

@@ -114,6 +114,26 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fn": "onDownloadClick",
+                                        "implHandler": [
+                                            "return;",
+                                            "var store = button.up('gridpanel').getStore(),",
+                                            "    url = store.getProxy().url+'&_download=1&_id=syslog&_act=read';",
+                                            "",
+                                            "if (!Ext.fly('download')){",
+                                            "    var form = document.createElement('form');",
+                                            "    form.id = 'download';",
+                                            "    form.name = 'download';",
+                                            "    form.style.display = 'none';",
+                                            "    button.up('gridpanel').up().getEl().appendChild(form);",
+                                            "}",
+                                            "",
+                                            "Ext.Ajax.request({",
+                                            "        url: url,",
+                                            "        form: Ext.fly('download'),",
+                                            "        method: 'POST',",
+                                            "        isUpload: true",
+                                            "});"
+                                        ],
                                         "name": "click",
                                         "scope": "me",
                                         "designer|userClassName": "onDownloadClick"
@@ -456,7 +476,7 @@
                                         "itemId": "refresh",
                                         "text": "Refresh",
                                         "designer|userClassName": "MyButton24",
-                                        "formBind": true
+                                        "formBind": false
                                     },
                                     "customConfigs": [],
                                     "expanded": true
@@ -466,20 +486,17 @@
                     ]
                 },
                 {
-                    "id": "ExtBox1-ext-gen44857",
-                    "type": "form",
+                    "id": "ExtBox1-ext-gen4527",
+                    "type": "fieldset",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "border": 0,
-                        "bodyCls": "x-border-layout-ct",
-                        "bodyPadding": null,
-                        "title": null,
-                        "designer|userClassName": "MyForm16",
-                        "databind": "{\nautoload:true,\nmodel:'license'\n}"
+                        "title": "License",
+                        "designer|userClassName": "MyFieldSet8",
+                        "databind": "{\nmodel:'license',\nautoload:true\n}"
                     },
                     "customConfigs": [
                         {
@@ -491,17 +508,21 @@
                     "expanded": true,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen4527",
-                            "type": "fieldset",
+                            "id": "ExtBox1-ext-gen44857",
+                            "type": "form",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "title": "License",
-                                "designer|userClassName": "MyFieldSet8",
-                                "databind": "{\nmodel:'license',\nautoload:true\n}"
+                                "border": 0,
+                                "bodyCls": "x-border-layout-ct",
+                                "bodyPadding": null,
+                                "title": null,
+                                "method": "post",
+                                "designer|userClassName": "MyForm16",
+                                "databind": "{\nmodel:'license'\n}"
                             },
                             "customConfigs": [
                                 {
@@ -523,6 +544,9 @@
                                     "userConfig": {
                                         "name": "licensefile",
                                         "fieldLabel": "New license",
+                                        "hideLabel": true,
+                                        "labelWidth": 80,
+                                        "allowBlank": false,
                                         "designer|userClassName": "MyFileUpload",
                                         "layout|anchor": "100%"
                                     },
@@ -538,13 +562,41 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "itemId": "add",
-                                        "text": "Update$",
-                                        "designer|userClassName": "MyButton24"
+                                        "itemId": "upload",
+                                        "text": "Upload",
+                                        "designer|userClassName": "MyButton24",
+                                        "formBind": true
                                     },
                                     "customConfigs": [],
                                     "expanded": true
-                                },
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen12582",
+                            "type": "form",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "border": 0,
+                                "bodyCls": "x-border-layout-ct",
+                                "bodyPadding": null,
+                                "title": null,
+                                "designer|userClassName": "MyForm16",
+                                "databind": "{\nautoload:true,\nmodel:'license'\n}"
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": false,
+                            "cn": [
                                 {
                                     "id": "ExtBox1-ext-gen6958",
                                     "type": "fieldset",
@@ -625,6 +677,24 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen24267",
+                    "type": "form",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "hidden": true,
+                        "itemId": "download",
+                        "bodyPadding": 10,
+                        "title": "My Form",
+                        "designer|userClassName": "MyForm18"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
                 }
             ]
         }

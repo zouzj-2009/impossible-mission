@@ -27,6 +27,8 @@
             },
             "codeClass": null,
             "userConfig": {
+                "id": null,
+                "itemId": "syslog",
                 "layout|region": "center"
             },
             "customConfigs": [],

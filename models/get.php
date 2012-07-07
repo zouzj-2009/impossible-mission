@@ -91,7 +91,15 @@ try{
 		$action = $_REQUEST['_act'];
 		$mid = strtolower($_REQUEST['mid']);
 		$data = array();
-		$records = json_decode(stripslashes($env?trim(getenv('records'), '"'):$_REQUEST['records']), true);
+
+		if (getenv('REQUEST_METHOD') == 'POST'){
+			$r = $_POST;
+			$r = array_merge($r, $_FILES);
+			$records = array($r);
+		}else{
+			$records = json_decode(stripslashes($env?trim(getenv('records'), '"'):$_REQUEST['records']), true);
+		}
+
 		$params = !$env?$_REQUEST:json_decode(stripslashes(trim(getenv('params'), '"')), true);
 		$callback = $_REQUEST['callback'];
 		foreach(explode(',', 'seqid,callback,PHPSESSID') as $key){
@@ -236,11 +244,15 @@ $output[output] = ob_get_flush();
 @ob_end_clean();
 //start output
 if ($callback) {
-    header('Content-Type: text/javascript');
-    echo $callback . '(' . json_encode($output) . ');';
+	header('Content-Type: text/javascript');
+	echo $callback . '(' . json_encode($output) . ');';
 } else {
-    header('Content-Type: application/x-json');
-    echo json_encode($output);
+	if (getenv('REQUEST_METHOD') == 'POST'){
+		header('Content-Type: text/html');
+	}else{
+		header('Content-Type: application/x-json');
+	}
+	echo json_encode($output);
 }
 if ($env){
 	echo "\n\nparams:\n";

@@ -21,7 +21,7 @@ Ext.application({
     models: [
         'netconfig',
         'IscsiConn',
-        'SysInfo',
+        'pciinfo',
         'targetlist',
         'lunmap',
         'access',

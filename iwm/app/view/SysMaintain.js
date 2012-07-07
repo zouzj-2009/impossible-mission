@@ -190,40 +190,55 @@ Ext.define('MyApp.view.SysMaintain', {
                                             xtype: 'button',
                                             itemId: 'refresh',
                                             text: 'Refresh',
-                                            formBind: true
+                                            formBind: false
                                         }
                                     ]
                                 }
                             ]
                         },
                         {
-                            xtype: 'form',
-                            border: 0,
-                            bodyCls: 'x-border-layout-ct',
+                            xtype: 'fieldset',
+                            title: 'License',
                             databind: {
-                                autoload: true,
-                                model: 'license'
+                                model: 'license',
+                                autoload: true
                             },
                             items: [
                                 {
-                                    xtype: 'fieldset',
-                                    title: 'License',
+                                    xtype: 'form',
+                                    border: 0,
+                                    bodyCls: 'x-border-layout-ct',
+                                    method: 'post',
                                     databind: {
-                                        model: 'license',
-                                        autoload: true
+                                        model: 'license'
                                     },
                                     items: [
                                         {
                                             xtype: 'filefield',
                                             name: 'licensefile',
                                             fieldLabel: 'New license',
+                                            hideLabel: true,
+                                            labelWidth: 80,
+                                            allowBlank: false,
                                             anchor: '100%'
                                         },
                                         {
                                             xtype: 'button',
-                                            itemId: 'add',
-                                            text: 'Update$'
-                                        },
+                                            itemId: 'upload',
+                                            text: 'Upload',
+                                            formBind: true
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'form',
+                                    border: 0,
+                                    bodyCls: 'x-border-layout-ct',
+                                    databind: {
+                                        autoload: true,
+                                        model: 'license'
+                                    },
+                                    items: [
                                         {
                                             xtype: 'fieldset',
                                             collapsed: true,
@@ -254,6 +269,13 @@ Ext.define('MyApp.view.SysMaintain', {
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            xtype: 'form',
+                            hidden: true,
+                            itemId: 'download',
+                            bodyPadding: 10,
+                            title: 'My Form'
                         }
                     ]
                 }
@@ -264,7 +286,24 @@ Ext.define('MyApp.view.SysMaintain', {
     },
 
     onDownloadClick: function(button, e, options) {
+        return;
+        var store = button.up('gridpanel').getStore(),
+            url = store.getProxy().url+'&_download=1&_id=syslog&_act=read';
 
+        if (!Ext.fly('download')){
+            var form = document.createElement('form');
+            form.id = 'download';
+            form.name = 'download';
+            form.style.display = 'none';
+            button.up('gridpanel').up().getEl().appendChild(form);
+        }
+
+        Ext.Ajax.request({
+            url: url,
+            form: Ext.fly('download'),
+            method: 'POST',
+            isUpload: true
+        });
     },
 
     onComboboxChange: function(field, newValue, oldValue, options) {

@@ -8,6 +8,7 @@ var $logfiles = array(
 );
 
 function read($params){
+	if ($params[_download]) return $this->callmod('download', 'read', array(_id=>'syslog'));
 	$logname = $params[_logname];
 	$fn = $this->logfiles[$logname];
 	if (!$fn && !strstr($logname, 'syslog')) return array(
