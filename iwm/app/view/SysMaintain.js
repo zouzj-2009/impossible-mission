@@ -102,7 +102,13 @@ Ext.define('MyApp.view.SysMaintain', {
                             flex: 1,
                             text: 'Message'
                         }
-                    ]
+                    ],
+                    listeners: {
+                        itemclick: {
+                            fn: me.onGridpanelItemClick,
+                            scope: me
+                        }
+                    }
                 },
                 {
                     xtype: 'container',
@@ -226,6 +232,7 @@ Ext.define('MyApp.view.SysMaintain', {
                                     items: [
                                         {
                                             xtype: 'fieldset',
+                                            itemId: 'currentlicensex',
                                             collapsed: true,
                                             collapsible: true,
                                             title: 'Current License',
@@ -251,7 +258,13 @@ Ext.define('MyApp.view.SysMaintain', {
                                                 }
                                             ]
                                         }
-                                    ]
+                                    ],
+                                    listeners: {
+                                        resize: {
+                                            fn: me.onFormResize,
+                                            scope: me
+                                        }
+                                    }
                                 }
                             ]
                         },
@@ -259,6 +272,8 @@ Ext.define('MyApp.view.SysMaintain', {
                             xtype: 'fieldset',
                             border: 0,
                             height: 200,
+                            hidden: true,
+                            itemId: 'logdetailx',
                             minHeight: 200,
                             maintainFlex: true,
                             title: 'Detail log inforamtion',
@@ -318,6 +333,15 @@ Ext.define('MyApp.view.SysMaintain', {
     onComboboxChange: function(field, newValue, oldValue, options) {
         var store = field.up('gridpanel').getStore();
         store.load({params:{_logname:newValue}});
+    },
+
+    onGridpanelItemClick: function(tablepanel, record, item, index, e, options) {
+        this.down('#logdetailx').setVisible(true);
+        this.down('#currentlicensex').collapse();
+    },
+
+    onFormResize: function(abstractcomponent, adjWidth, adjHeight, options) {
+        this.down('#logdetailx').setVisible(false);
     }
 
 });

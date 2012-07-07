@@ -27,7 +27,7 @@
     ],
     "designerId": "c3d0e290-fcc0-418a-a9e0-f8f81268a48a",
     "$viewOrder": 9,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen40032",
@@ -224,6 +224,27 @@
                     },
                     "customConfigs": [],
                     "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen22875",
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onGridpanelItemClick",
+                        "implHandler": [
+                            "this.down('#logdetailx').setVisible(true);",
+                            "this.down('#currentlicensex').collapse();"
+                        ],
+                        "name": "itemclick",
+                        "scope": "me",
+                        "designer|userClassName": "onGridpanelItemClick"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
                 }
             ]
         },
@@ -269,7 +290,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen40160",
@@ -433,7 +454,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen44857",
@@ -534,6 +555,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "itemId": "currentlicensex",
                                         "collapsed": true,
                                         "collapsible": true,
                                         "title": "Current License",
@@ -601,6 +623,26 @@
                                             "expanded": true
                                         }
                                     ]
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen25666",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onFormResize",
+                                        "implHandler": [
+                                            "this.down('#logdetailx').setVisible(false);"
+                                        ],
+                                        "name": "resize",
+                                        "scope": "me",
+                                        "designer|userClassName": "onFormResize"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
                                 }
                             ]
                         }
@@ -617,6 +659,8 @@
                     "userConfig": {
                         "border": 0,
                         "height": 200,
+                        "hidden": true,
+                        "itemId": "logdetailx",
                         "minHeight": 200,
                         "maintainFlex": true,
                         "title": "Detail log inforamtion",

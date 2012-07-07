@@ -27,7 +27,7 @@
     ],
     "designerId": "0cb07030-ef49-489e-a10f-eedd0b0b4b82",
     "$viewOrder": 10,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen13211",
@@ -289,7 +289,7 @@
                 "layout|split": true
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen5237",
