@@ -1,14 +1,90 @@
 .whitebg {
 	background-color: white;
 	background-image: -moz-linear-gradient(center top , #FFFFFF, #F9F9F9 48%, #E2E2E2 52%, #E7E7E7);
+	background-image: -webkit-linear-gradient(top,white,#F9F9F9 48%,#E2E2E2 52%,#E7E7E7);
 }
-.x-64-btn .diskmanager {
-	background: url(../images/diskmanager.64.png) center top !important;
+
+.viewbg{
+	background-color: #E2E2E2;
+	border-top: 1px;
+}
+.shadowpanel{
+	-moz-box-shadow:    3px 3px 5px 6px #ccc;
+	-webkit-box-shadow: 3px 3px 5px 6px #ccc;
+	box-shadow:         3px 3px 5px 6px #ccc;
+}
+.x-btn-tool-form-add{
+	background: url(../images/add.16.png) center top !important;
+}
+
+.x-btn-tool-form-refresh{
+	background: url(../images/refresh.16.png) center top !important;
+}
+.x-btn-tool-grid-refresh{
+	background: url(../images/refresh.16.png) center top !important;
+}
+
+.x-btn-tool-form-download{
+	background: url(../images/download.16.png) center top !important;
+}
+.x-btn-tool-grid-download{
+	background: url(../images/download.16.png) center top !important;
+}
+
+.x-btn-tool-form-update{
+	background: url(../images/update.16.png) center top !important;
+}
+.x-btn-tool-grid-update{
+	background: url(../images/update.16.png) center top !important;
+}
+
+.x-btn-tool-form-upload{
+	background: url(../images/upload.16.png) center top !important;
+}
+.x-btn-tool-grid-upload{
+	background: url(../images/upload.16.png) center top !important;
+}
+
+.x-btn-tool-form-delete{
+	background: url(../images/delete.16.png) center top !important;
+}
+.x-btn-tool-grid-delete{
+	background: url(../images/delete.16.png) center top !important;
+}
+.x-btn-tool-form-rescan{
+	background: url(../images/rescan.16.png) center top !important;
+}
+.x-btn-tool-grid-rescan{
+	background: url(../images/rescan.16.png) center top !important;
+}
+
+.x-64-btn .sysinfo {
+	background: url(../images/sysinfo.64.png) center top !important;
+	height: 64px;
+	width:64px;
+}
+.x-64-btn .network {
+	background: url(../images/network.64.png) center top !important;
+	height: 64px;
+	width:64px;
+}
+.x-64-btn .disks {
+	background: url(../images/disk.64.png) center top !important;
+	height: 64px;
+	width:64px;
+}
+.x-64-btn .iscsi {
+	background: url(../images/netdriver.64.png) center top !important;
+	height: 64px;
+	width:64px;
+}
+.x-64-btn .maintain {
+	background: url(../images/maintain.64.png) center top !important;
 	height: 64px;
 	width:64px;
 }
 .x-64-btn .x-btn-inner {
-  padding-top: 56px;
+  padding-top: 64px;
 }
 
 img.btn{

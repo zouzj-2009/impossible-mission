@@ -8,6 +8,7 @@
     "codeClass": null,
     "userConfig": {
         "designer|initialView": true,
+        "cls": "viewbg",
         "id": "viewport",
         "layout": "border",
         "designer|userClassName": "MyViewport"
@@ -15,7 +16,7 @@
     "customConfigs": [],
     "designerId": "c4225a9f-0a16-4f21-a0a6-9f036f492228",
     "$viewOrder": 0,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen3154",
@@ -26,9 +27,11 @@
             },
             "codeClass": null,
             "userConfig": {
+                "border": null,
                 "cls": "whitebg",
                 "height": 80,
                 "padding": "0px 50px ",
+                "shadow": null,
                 "designer|userClassName": "MyContainer",
                 "layout|region": "north"
             },
@@ -46,6 +49,7 @@
                     "userConfig": {
                         "id": "sysinfo",
                         "padding": null,
+                        "iconCls": "sysinfo",
                         "text": "系统信息"
                     },
                     "customConfigs": [],
@@ -63,24 +67,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "id": "network",
+                        "iconCls": "network",
                         "text": "网络设定"
-                    },
-                    "customConfigs": [],
-                    "iconCls": "icon-linkedinstance",
-                    "expanded": true,
-                    "masterInstanceId": "ExtBox1-ext-gen3484"
-                },
-                {
-                    "id": "ExtBox1-ext-gen8766",
-                    "type": "linkedinstance",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "id": "iscsi",
-                        "text": "iSCSI设定"
                     },
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",
@@ -97,7 +85,26 @@
                     "codeClass": null,
                     "userConfig": {
                         "id": "disks",
+                        "iconCls": "disks",
                         "text": "磁盘管理"
+                    },
+                    "customConfigs": [],
+                    "iconCls": "icon-linkedinstance",
+                    "expanded": true,
+                    "masterInstanceId": "ExtBox1-ext-gen3484"
+                },
+                {
+                    "id": "ExtBox1-ext-gen8766",
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "iscsi",
+                        "iconCls": "iscsi",
+                        "text": "iSCSI设定"
                     },
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",
@@ -114,6 +121,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "id": "maintain",
+                        "iconCls": "maintain",
                         "text": "系统维护"
                     },
                     "customConfigs": [],
@@ -132,9 +140,10 @@
             },
             "codeClass": null,
             "userConfig": {
+                "floating": false,
                 "id": "content",
                 "padding": "20px 20px 20px 100px",
-                "activeItem": 2,
+                "activeItem": 0,
                 "layout": "card",
                 "designer|userClassName": "MyContainer2",
                 "designer|userAlias": "mycontainer2",
@@ -152,6 +161,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "cls": "shadowpanel",
                         "itemId": "sysinfo"
                     },
                     "customConfigs": [],
@@ -168,6 +178,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "cls": "shadowpanel",
                         "itemId": "network",
                         "databind": null
                     },
@@ -185,6 +196,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "cls": "shadowpanel",
                         "itemId": "iscsi"
                     },
                     "customConfigs": [],
@@ -201,6 +213,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "cls": "shadowpanel",
                         "itemId": "disks"
                     },
                     "customConfigs": [],
@@ -217,6 +230,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "cls": "shadowpanel",
                         "itemId": "maintain"
                     },
                     "customConfigs": [],

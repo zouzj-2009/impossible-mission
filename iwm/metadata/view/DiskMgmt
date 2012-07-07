@@ -7,12 +7,13 @@
     },
     "codeClass": null,
     "userConfig": {
+        "cls": "shadowpanel",
         "height": null,
         "minHeight": null,
         "width": null,
         "layout": "border",
         "bodyPadding": 10,
-        "title": "Disk Management$",
+        "title": null,
         "designer|userClassName": "DiskMgmt",
         "designer|userAlias": "diskmgmt",
         "model": null
@@ -26,7 +27,7 @@
     ],
     "designerId": "5aa42372-e62c-4cda-9638-07e9d31b0f66",
     "$viewOrder": 8,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen3990",
@@ -359,6 +360,7 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "itemId": "rescan",
+                                        "iconCls": null,
                                         "text": "Rescan ...",
                                         "designer|userClassName": "MyButton21"
                                     },

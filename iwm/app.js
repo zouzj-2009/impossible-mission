@@ -20,7 +20,7 @@ Ext.Loader.setConfig({
 Ext.application({
     models: [
         'netconfig',
-        'IscsiConn',
+        'iscsiconn',
         'pciinfo',
         'targetlist',
         'lunmap',
@@ -84,7 +84,7 @@ Ext.application({
     ],
 
     launch: function() {
-        alert('aa');
+        //alert('pause for debug');
     }
 
 });

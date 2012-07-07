@@ -17,11 +17,11 @@ Ext.define('MyApp.view.SysMaintain', {
     extend: 'Ext.form.Panel',
     alias: 'widget.sysmaintain',
 
+    cls: 'shadowpanel',
     layout: {
         type: 'border'
     },
     bodyPadding: 10,
-    title: 'System Maintain$',
 
     initComponent: function() {
         var me = this;
@@ -51,27 +51,6 @@ Ext.define('MyApp.view.SysMaintain', {
                             dock: 'top',
                             items: [
                                 {
-                                    xtype: 'button',
-                                    itemId: 'download',
-                                    text: 'Download',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onDownloadClick,
-                                            scope: me
-                                        }
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    itemId: 'deleteall',
-                                    text: 'Clear All'
-                                },
-                                {
-                                    xtype: 'button',
-                                    itemId: 'deletethis',
-                                    text: 'Clear This'
-                                },
-                                {
                                     xtype: 'combobox',
                                     fieldLabel: 'Choose Log',
                                     hideLabel: false,
@@ -89,6 +68,11 @@ Ext.define('MyApp.view.SysMaintain', {
                                             scope: me
                                         }
                                     }
+                                },
+                                {
+                                    xtype: 'button',
+                                    itemId: 'download',
+                                    text: 'Download All'
                                 }
                             ]
                         }
@@ -283,27 +267,6 @@ Ext.define('MyApp.view.SysMaintain', {
         });
 
         me.callParent(arguments);
-    },
-
-    onDownloadClick: function(button, e, options) {
-        return;
-        var store = button.up('gridpanel').getStore(),
-            url = store.getProxy().url+'&_download=1&_id=syslog&_act=read';
-
-        if (!Ext.fly('download')){
-            var form = document.createElement('form');
-            form.id = 'download';
-            form.name = 'download';
-            form.style.display = 'none';
-            button.up('gridpanel').up().getEl().appendChild(form);
-        }
-
-        Ext.Ajax.request({
-            url: url,
-            form: Ext.fly('download'),
-            method: 'POST',
-            isUpload: true
-        });
     },
 
     onComboboxChange: function(field, newValue, oldValue, options) {

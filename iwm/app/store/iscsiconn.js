@@ -16,7 +16,7 @@
 Ext.define('MyApp.store.iscsiconn', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.IscsiConn'
+        'MyApp.model.iscsiconn'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.iscsiconn', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'iscsiconn',
-            model: 'MyApp.model.IscsiConn'
+            model: 'MyApp.model.iscsiconn'
         }, cfg)]);
     }
 });

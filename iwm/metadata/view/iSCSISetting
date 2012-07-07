@@ -27,6 +27,7 @@
             },
             "codeClass": null,
             "userConfig": {
+                "cls": "shadowpanel",
                 "activeTab": 0,
                 "designer|userClassName": "MyTabPanel",
                 "layout|region": "center"

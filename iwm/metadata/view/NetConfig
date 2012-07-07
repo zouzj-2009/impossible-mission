@@ -7,12 +7,13 @@
     },
     "codeClass": null,
     "userConfig": {
+        "cls": "shadowpanel",
         "height": null,
         "minHeight": 300,
         "width": null,
         "layout": "border",
         "bodyPadding": 10,
-        "title": "Network Configuration",
+        "title": null,
         "designer|userClassName": "NetConfig",
         "designer|userAlias": "netconfig",
         "model": "LunMap"
@@ -26,7 +27,7 @@
     ],
     "designerId": "0cb07030-ef49-489e-a10f-eedd0b0b4b82",
     "$viewOrder": 10,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen13211",
@@ -37,6 +38,7 @@
             },
             "codeClass": null,
             "userConfig": {
+                "itemId": "nicinfo",
                 "hideCollapseTool": false,
                 "overlapHeader": false,
                 "preventHeader": false,
@@ -452,9 +454,16 @@
                         "bodyCls": "x-border-layout-ct",
                         "bodyPadding": null,
                         "title": null,
-                        "designer|userClassName": "MyForm11"
+                        "designer|userClassName": "MyForm11",
+                        "bindto": "nicinfo"
                     },
-                    "customConfigs": [],
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "bindto",
+                            "type": "string"
+                        }
+                    ],
                     "expanded": true,
                     "cn": [
                         {
@@ -566,6 +575,7 @@
                                         "margin": 5,
                                         "minWidth": 80,
                                         "autoWidth": true,
+                                        "iconCls": null,
                                         "text": "Add New",
                                         "designer|userClassName": "MyButton",
                                         "formBind": true

@@ -48,7 +48,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen16912",
@@ -389,7 +389,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen24302",
@@ -408,7 +408,7 @@
                                 "designer|userClassName": "MyFieldSet12"
                             },
                             "customConfigs": [],
-                            "expanded": false,
+                            "expanded": true,
                             "cn": [
                                 {
                                     "id": "ExtBox1-ext-gen66099",
@@ -631,7 +631,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen126259",
@@ -837,9 +837,9 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "itemId": "add",
-                                        "margin": 5,
-                                        "minWidth": 80,
-                                        "autoWidth": true,
+                                        "margin": null,
+                                        "minWidth": null,
+                                        "autoWidth": null,
                                         "text": "Add New ...",
                                         "designer|userClassName": "MyButton",
                                         "formBind": true

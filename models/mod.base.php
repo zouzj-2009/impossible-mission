@@ -634,7 +634,6 @@ function destroy($params, $records){
 						if ($cmderror){
 							throw new Exception(get_class($this)." destroy fail: $cmd return fail($cmderror, $r[msg]).");
 						}
-						$okmsg .= $r[msg];
 					}else{// get destroy result by do_destroy of sub_classes
 						$r = $this->do_destroy($params, array($record));
 					}

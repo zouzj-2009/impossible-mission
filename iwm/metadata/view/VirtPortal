@@ -7,12 +7,13 @@
     },
     "codeClass": null,
     "userConfig": {
+        "cls": null,
         "height": null,
         "minHeight": null,
         "width": null,
         "layout": "border",
         "bodyPadding": 10,
-        "title": "Virt Portal",
+        "title": "Virtual Portal",
         "designer|userClassName": "VirtPortal",
         "designer|userAlias": "virtportal",
         "model": null
@@ -26,7 +27,7 @@
     ],
     "designerId": "b0e5598f-7470-4add-b675-b39b3b6ddb17",
     "$viewOrder": 7,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen47432",
@@ -296,7 +297,7 @@
                 "layout|split": true
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen8418",
@@ -597,7 +598,7 @@
                                     "masterInstanceId": "ucmpIpField"
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen85667",
+                                    "id": "ExtBox1-ext-gen21697",
                                     "type": "button",
                                     "reference": {
                                         "name": "items",
@@ -606,13 +607,10 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "itemId": "add",
-                                        "margin": 5,
-                                        "minWidth": 80,
-                                        "autoWidth": true,
-                                        "text": "Add New ...",
-                                        "designer|userClassName": "MyButton",
-                                        "confirmation": "add for target:%targetname%?",
-                                        "formBind": true
+                                        "iconCls": null,
+                                        "text": "Add new ...",
+                                        "designer|userClassName": "MyButton14",
+                                        "confirmation": "reload portal config?"
                                     },
                                     "customConfigs": [
                                         {

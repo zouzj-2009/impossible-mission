@@ -39,19 +39,32 @@ Ext.define('MyApp.view.SystemInfo', {
                             xtype: 'gridpanel',
                             itemId: 'iscsiconn',
                             title: 'iSCSI连接',
-                            store: 'iscsiconn',
                             databind: {
-                                
+                                autoload: true,
+                                model: 'iscsiconn'
                             },
                             viewConfig: {
 
                             },
-                            columns: [
+                            dockedItems: [
                                 {
-                                    xtype: 'gridcolumn',
-                                    dataIndex: 'id',
-                                    text: 'Id'
-                                },
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'delete',
+                                            text: 'disconnect'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'refresh'
+                                        }
+                                    ]
+                                }
+                            ],
+                            columns: [
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'initiator',
@@ -65,8 +78,8 @@ Ext.define('MyApp.view.SystemInfo', {
                                 },
                                 {
                                     xtype: 'gridcolumn',
-                                    dataIndex: 'sourceip',
-                                    text: 'Sourceip'
+                                    dataIndex: 'clientip',
+                                    text: 'Clientip'
                                 },
                                 {
                                     xtype: 'gridcolumn',
@@ -87,24 +100,6 @@ Ext.define('MyApp.view.SystemInfo', {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'writespeed',
                                     text: 'Writespeed'
-                                }
-                            ],
-                            dockedItems: [
-                                {
-                                    xtype: 'toolbar',
-                                    dock: 'top',
-                                    items: [
-                                        {
-                                            xtype: 'button',
-                                            itemId: 'delete',
-                                            text: 'disconnect'
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            itemId: 'refresh',
-                                            text: 'refresh'
-                                        }
-                                    ]
                                 }
                             ]
                         },

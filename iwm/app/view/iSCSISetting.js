@@ -34,6 +34,7 @@ Ext.define('MyApp.view.iSCSISetting', {
             items: [
                 {
                     xtype: 'tabpanel',
+                    cls: 'shadowpanel',
                     activeTab: 0,
                     region: 'center',
                     items: [

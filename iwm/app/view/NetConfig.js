@@ -21,12 +21,12 @@ Ext.define('MyApp.view.NetConfig', {
         'MyApp.view.NetMaskField'
     ],
 
+    cls: 'shadowpanel',
     minHeight: 300,
     layout: {
         type: 'border'
     },
     bodyPadding: 10,
-    title: 'Network Configuration',
     model: 'LunMap',
 
     initComponent: function() {
@@ -36,6 +36,7 @@ Ext.define('MyApp.view.NetConfig', {
             items: [
                 {
                     xtype: 'gridpanel',
+                    itemId: 'nicinfo',
                     hideCollapseTool: false,
                     overlapHeader: false,
                     preventHeader: false,
@@ -182,6 +183,7 @@ Ext.define('MyApp.view.NetConfig', {
                             border: 0,
                             itemId: 'nic',
                             bodyCls: 'x-border-layout-ct',
+                            bindto: 'nicinfo',
                             items: [
                                 {
                                     xtype: 'fieldset',

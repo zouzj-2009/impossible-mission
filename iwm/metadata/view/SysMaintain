@@ -7,12 +7,13 @@
     },
     "codeClass": null,
     "userConfig": {
+        "cls": "shadowpanel",
         "height": null,
         "minHeight": null,
         "width": null,
         "layout": "border",
         "bodyPadding": 10,
-        "title": "System Maintain$",
+        "title": null,
         "designer|userClassName": "SysMaintain",
         "designer|userAlias": "sysmaintain",
         "model": null
@@ -88,96 +89,6 @@
                     "expanded": true,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen45867",
-                            "type": "button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "itemId": "download",
-                                "text": "Download",
-                                "designer|userClassName": "MyButton22",
-                                "layout|flex": null
-                            },
-                            "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen46272",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onDownloadClick",
-                                        "implHandler": [
-                                            "return;",
-                                            "var store = button.up('gridpanel').getStore(),",
-                                            "    url = store.getProxy().url+'&_download=1&_id=syslog&_act=read';",
-                                            "",
-                                            "if (!Ext.fly('download')){",
-                                            "    var form = document.createElement('form');",
-                                            "    form.id = 'download';",
-                                            "    form.name = 'download';",
-                                            "    form.style.display = 'none';",
-                                            "    button.up('gridpanel').up().getEl().appendChild(form);",
-                                            "}",
-                                            "",
-                                            "Ext.Ajax.request({",
-                                            "        url: url,",
-                                            "        form: Ext.fly('download'),",
-                                            "        method: 'POST',",
-                                            "        isUpload: true",
-                                            "});"
-                                        ],
-                                        "name": "click",
-                                        "scope": "me",
-                                        "designer|userClassName": "onDownloadClick"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen46984",
-                            "type": "button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "itemId": "deleteall",
-                                "text": "Clear All",
-                                "designer|userClassName": "MyButton25",
-                                "layout|flex": null
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen46680",
-                            "type": "button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "itemId": "deletethis",
-                                "text": "Clear This",
-                                "designer|userClassName": "MyButton23",
-                                "layout|flex": null
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
                             "id": "ExtBox1-ext-gen48003",
                             "type": "combobox",
                             "reference": {
@@ -227,6 +138,23 @@
                                     "expanded": true
                                 }
                             ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen45867",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "download",
+                                "text": "Download All",
+                                "designer|userClassName": "MyButton22",
+                                "layout|flex": null
+                            },
+                            "customConfigs": [],
+                            "expanded": true
                         }
                     ]
                 },
@@ -595,7 +523,7 @@
                                     "type": "object"
                                 }
                             ],
-                            "expanded": false,
+                            "expanded": true,
                             "cn": [
                                 {
                                     "id": "ExtBox1-ext-gen6958",

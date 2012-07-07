@@ -652,7 +652,7 @@ function p_records_span_lines(&$in, $pconfig){
 		if ($borrowed) array_unshift($in, $borrowed);
 		if ($pconfig[fieldstype] == 'simple'){//just single line
 		//	$pconfig[fieldsmode][startline] = $n; //type maybe cross lines!
-			$pconfig[fieldsmode][parentend] = $pconfig[recordend];
+			if (!$pconfig[fieldsmode][parentend]) $pconfig[fieldsmode][parentend] = $pconfig[recordend];
 			$pconfig[fieldsmode][parentstart] = $pconfig[recordstart];
 			$pconfig[fieldsmode][debug] = $pconfig[debugall];
 			$pconfig[fieldsmode][debugall] = $pconfig[debugall];
@@ -674,7 +674,7 @@ function p_records_span_lines(&$in, $pconfig){
 print_r($in);
 					if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." gmatch [$group]", $pconfig[recordignore]);
 					//try this group;
-					$gpconfig[parentend] = $pconfig[recordend];
+					if (!$gpconfig[parentend]) $gpconfig[parentend] = $pconfig[recordend];
 					$gpconfig[parentstart] = $pconfig[recordstart];
 					$gpconfig[debug] = $pconfig[debugall];
 					$gpconfig[debugall] = $pconfig[debugall];

@@ -24,6 +24,7 @@ Ext.define('MyApp.view.MyViewport', {
         'MyApp.view.SystemMaintain'
     ],
 
+    cls: 'viewbg',
     id: 'viewport',
     layout: {
         type: 'border'
@@ -44,35 +45,41 @@ Ext.define('MyApp.view.MyViewport', {
                         {
                             xtype: 'bigiconbtn',
                             id: 'sysinfo',
+                            iconCls: 'sysinfo',
                             text: '系统信息'
                         },
                         {
                             xtype: 'bigiconbtn',
                             id: 'network',
+                            iconCls: 'network',
                             text: '网络设定'
                         },
                         {
                             xtype: 'bigiconbtn',
-                            id: 'iscsi',
-                            text: 'iSCSI设定'
-                        },
-                        {
-                            xtype: 'bigiconbtn',
                             id: 'disks',
+                            iconCls: 'disks',
                             text: '磁盘管理'
                         },
                         {
                             xtype: 'bigiconbtn',
+                            id: 'iscsi',
+                            iconCls: 'iscsi',
+                            text: 'iSCSI设定'
+                        },
+                        {
+                            xtype: 'bigiconbtn',
                             id: 'maintain',
+                            iconCls: 'maintain',
                             text: '系统维护'
                         }
                     ]
                 },
                 {
                     xtype: 'container',
+                    floating: false,
                     id: 'content',
                     padding: '20px 20px 20px 100px',
-                    activeItem: 2,
+                    activeItem: 0,
                     layout: {
                         type: 'card'
                     },
@@ -80,22 +87,27 @@ Ext.define('MyApp.view.MyViewport', {
                     items: [
                         {
                             xtype: 'sysinfo',
+                            cls: 'shadowpanel',
                             itemId: 'sysinfo'
                         },
                         {
                             xtype: 'networksetting',
+                            cls: 'shadowpanel',
                             itemId: 'network'
                         },
                         {
                             xtype: 'iscsisetting',
+                            cls: 'shadowpanel',
                             itemId: 'iscsi'
                         },
                         {
                             xtype: 'disksetting',
+                            cls: 'shadowpanel',
                             itemId: 'disks'
                         },
                         {
                             xtype: 'systemmaintain',
+                            cls: 'shadowpanel',
                             itemId: 'maintain'
                         }
                     ]

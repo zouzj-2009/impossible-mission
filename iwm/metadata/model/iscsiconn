@@ -7,28 +7,13 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userClassName": "IscsiConn"
+        "designer|userClassName": "iscsiconn"
     },
     "customConfigs": [],
     "designerId": "b83d36a9-e0df-4343-bcef-6b83404a2211",
     "$viewOrder": 1,
-    "expanded": false,
+    "expanded": true,
     "cn": [
-        {
-            "id": "ExtBox1-ext-gen3256",
-            "type": "datafield",
-            "reference": {
-                "name": "fields",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "name": "id",
-                "designer|userClassName": "MyField6"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
         {
             "id": "ExtBox1-ext-gen3430",
             "type": "datafield",
@@ -68,7 +53,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "sourceip",
+                "name": "clientip",
                 "designer|userClassName": "MyField9"
             },
             "customConfigs": [],
@@ -130,6 +115,21 @@
             "userConfig": {
                 "name": "writespeed",
                 "designer|userClassName": "MyField13"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen9138",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "txpid",
+                "designer|userClassName": "MyField8"
             },
             "customConfigs": [],
             "expanded": true

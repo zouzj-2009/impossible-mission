@@ -56,7 +56,7 @@ Ext.define('MyApp.view.Messager', {
         m.toFront();
         if (m.timeout) clearTimeout(m.timeout);
         m.timeout = Ext.defer(m.hidePopup, 6000, m);
-        m.animate({
+        if (!m.isVisible()) m.animate({
             duration: 1000,
             easing: 'bounceIn',
             to: {
@@ -65,12 +65,12 @@ Ext.define('MyApp.view.Messager', {
             from: {
                 opacity: 0
             }
-        });
+        });else m.getEl().setOpacity(1);
     },
 
     hidePopup: function() {
         var m = this;
-        m.animate({
+        if (m.isVisible()) m.animate({
             from:{
                 opacity:100
             },

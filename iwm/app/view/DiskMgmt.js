@@ -17,11 +17,11 @@ Ext.define('MyApp.view.DiskMgmt', {
     extend: 'Ext.form.Panel',
     alias: 'widget.diskmgmt',
 
+    cls: 'shadowpanel',
     layout: {
         type: 'border'
     },
     bodyPadding: 10,
-    title: 'Disk Management$',
 
     initComponent: function() {
         var me = this;

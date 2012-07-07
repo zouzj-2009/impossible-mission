@@ -271,6 +271,7 @@
                     "    });",
                     "}",
                     "",
+                    "if (del && !del.getInitialConfig().iconCls) del.setIconCls('x-btn-tool-grid-delete');",
                     "if (del && !cfg.ignore['delete']){",
                     "    del.on('click', function(button, event, options){",
                     "        var records = grid.getSelectionModel().getSelection(),",
@@ -292,6 +293,7 @@
                     "}",
                     "",
                     "var ref = grid.down('#refresh');",
+                    "if (ref && !ref.getInitialConfig().iconCls) ref.setIconCls('x-btn-tool-grid-refresh');",
                     "if (ref && !cfg.ignore.refresh){",
                     "    ref.on('click', function(button, event, options){",
                     "        var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams),",
@@ -310,6 +312,7 @@
                     "}",
                     "",
                     "var dwn = grid.down('#download');",
+                    "if (dwn && !dwn.getInitialConfig().iconCls) dwn.setIconCls('x-btn-tool-grid-download');",
                     "if (dwn && !cfg.ignore.download){",
                     "    var url = store.getProxy().url+'&_download=1&_id=syslog&_act=read';",
                     "    dwn.on('click', function(button, event, options){",
@@ -328,7 +331,7 @@
                     "        });",
                     "    });",
                     "}",
-                    "    "
+                    ""
                 ],
                 "designer|userClassName": "bindGrid"
             },
@@ -391,7 +394,6 @@
                     "        if (m) form.loadRecord(m);",
                     "    });",
                     "}",
-                    "",
                     "binder.bindFormActions(form, store, cfg, binder);"
                 ],
                 "designer|userClassName": "bindGridForm"
@@ -415,10 +417,11 @@
                     "cfg"
                 ],
                 "implHandler": [
-                    "var add = form.down('#add'),",
-                    "    me = this;",
-                    "if (add && !cfg.ignore.click){",
-                    "    add.on('click', function(button, event, options){",
+                    "var me = this;",
+                    "",
+                    "var crt = form.down('#add');",
+                    "if (crt && !cfg.ignore.click){",
+                    "    crt.on('click', function(button, event, options){",
                     "        if (form.getForm().isValid()){",
                     "            var v = form.getForm().getFieldValues(),",
                     "                cfm = me.getConfirmation(button, v, null, store, form);",
@@ -598,7 +601,8 @@
                     "store.reloadParams = cfg.loadparams?cfg.loadparams:{};",
                     "if (store.autoLoad||cfg.autoload){",
                     "    var params = Ext.applyIf({}, store.reloadParams);",
-                    "    store.load({params:params});",
+                    "    //store.load({params:params});",
+                    "    Ext.defer(store.load, 200, store, [{params:params}]);",
                     "    cfg.autoloaded = true;",
                     "}",
                     ""
@@ -884,7 +888,6 @@
                 "implHandler": [
                     "var me=this, c=abstractcomponent, databind = c.databind;",
                     "if (!Ext.isObject(databind)) return;",
-                    "",
                     "//form's default mask selector is this component.",
                     "//if want to local show, using 'maskxtype: null' in databind config.",
                     "if (databind.progress){",
@@ -1077,6 +1080,35 @@
                     ""
                 ],
                 "designer|userClassName": "getConfirmation"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen31291",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onFormBeforeRender",
+                "implHandler": [
+                    "var me=this, c=abstractcomponent;",
+                    "var search=['add', 'update', 'upload', 'rescan'];",
+                    "for(var i=0; i<search.length; i++){",
+                    "    var btn = c.down('button#'+search[i]);",
+                    "    if (!btn) continue;",
+                    "    if (!btn.getInitialConfig().iconCls) btn.setIconCls('x-btn-tool-form-'+search[i]);",
+                    "}",
+                    ""
+                ],
+                "name": "beforerender",
+                "scope": "me",
+                "designer|targetType": "Ext.form.Panel",
+                "designer|controlQuery": "form",
+                "designer|userClassName": "onFormBeforeRender"
             },
             "customConfigs": [],
             "expanded": true

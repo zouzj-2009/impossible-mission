@@ -9,7 +9,7 @@
     "userConfig": {
         "models": [
             "netconfig",
-            "IscsiConn",
+            "iscsiconn",
             "pciinfo",
             "targetlist",
             "lunmap",
@@ -89,7 +89,7 @@
             "userConfig": {
                 "fn": "launch",
                 "implHandler": [
-                    "alert('aa');"
+                    "//alert('pause for debug');"
                 ],
                 "designer|userClassName": "launch"
             },

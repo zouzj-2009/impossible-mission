@@ -7,6 +7,7 @@
     },
     "codeClass": null,
     "userConfig": {
+        "border": null,
         "height": 400,
         "width": null,
         "layout": "border",
@@ -46,9 +47,9 @@
                     "userConfig": {
                         "itemId": "iscsiconn",
                         "title": "iSCSI连接",
-                        "store": "iscsiconn",
+                        "store": null,
                         "designer|userClassName": "MyGridPanel1",
-                        "databind": "{}"
+                        "databind": "{\nautoload:true,\nmodel:'iscsiconn'\n}"
                     },
                     "customConfigs": [
                         {
@@ -57,7 +58,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen17791",
@@ -69,135 +70,6 @@
                             "codeClass": null,
                             "userConfig": {
                                 "designer|userClassName": "MyGridView1"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen8882",
-                            "type": "gridcolumn",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "id",
-                                "text": "Id",
-                                "designer|userClassName": "MyColumn"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen8893",
-                            "type": "gridcolumn",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "initiator",
-                                "flex": 1,
-                                "text": "Initiator",
-                                "designer|userClassName": "MyColumn15"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen8904",
-                            "type": "gridcolumn",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "targetid",
-                                "text": "Targetid",
-                                "designer|userClassName": "MyColumn16"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen8915",
-                            "type": "gridcolumn",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "sourceip",
-                                "text": "Sourceip",
-                                "designer|userClassName": "MyColumn17"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen8926",
-                            "type": "gridcolumn",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "targetip",
-                                "text": "Targetip",
-                                "designer|userClassName": "MyColumn18"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen8937",
-                            "type": "gridcolumn",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "access",
-                                "text": "Access",
-                                "designer|userClassName": "MyColumn19"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen8948",
-                            "type": "gridcolumn",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "readspeed",
-                                "text": "Readspeed",
-                                "designer|userClassName": "MyColumn20"
-                            },
-                            "customConfigs": [],
-                            "expanded": true
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen8959",
-                            "type": "gridcolumn",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "writespeed",
-                                "text": "Writespeed",
-                                "designer|userClassName": "MyColumn21"
                             },
                             "customConfigs": [],
                             "expanded": true
@@ -267,6 +139,119 @@
                                     "expanded": true
                                 }
                             ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen6925",
+                            "type": "gridcolumn",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "initiator",
+                                "flex": 1,
+                                "text": "Initiator",
+                                "designer|userClassName": "MyColumn17"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen6936",
+                            "type": "gridcolumn",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "targetid",
+                                "text": "Targetid",
+                                "designer|userClassName": "MyColumn52"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen6947",
+                            "type": "gridcolumn",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "clientip",
+                                "text": "Clientip",
+                                "designer|userClassName": "MyColumn53"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen6958",
+                            "type": "gridcolumn",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "targetip",
+                                "text": "Targetip",
+                                "designer|userClassName": "MyColumn54"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen6969",
+                            "type": "gridcolumn",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "access",
+                                "text": "Access",
+                                "designer|userClassName": "MyColumn55"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen6980",
+                            "type": "gridcolumn",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "readspeed",
+                                "text": "Readspeed",
+                                "designer|userClassName": "MyColumn56"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen6991",
+                            "type": "gridcolumn",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "writespeed",
+                                "text": "Writespeed",
+                                "designer|userClassName": "MyColumn57"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
                         }
                     ]
                 },
@@ -577,7 +562,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen18752",

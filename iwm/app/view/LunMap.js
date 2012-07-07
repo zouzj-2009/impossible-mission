@@ -299,9 +299,6 @@ Ext.define('MyApp.view.LunMap', {
                                         {
                                             xtype: 'button',
                                             itemId: 'add',
-                                            margin: 5,
-                                            minWidth: 80,
-                                            autoWidth: true,
                                             text: 'Add New ...',
                                             formBind: true
                                         }

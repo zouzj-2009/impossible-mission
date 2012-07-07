@@ -26,7 +26,7 @@ Ext.define('MyApp.view.VirtPortal', {
         type: 'border'
     },
     bodyPadding: 10,
-    title: 'Virt Portal',
+    title: 'Virtual Portal',
 
     initComponent: function() {
         var me = this;
@@ -228,12 +228,8 @@ Ext.define('MyApp.view.VirtPortal', {
                                         {
                                             xtype: 'button',
                                             itemId: 'add',
-                                            margin: 5,
-                                            minWidth: 80,
-                                            autoWidth: true,
-                                            text: 'Add New ...',
-                                            confirmation: 'add for target:%targetname%?',
-                                            formBind: true
+                                            text: 'Add new ...',
+                                            confirmation: 'reload portal config?'
                                         }
                                     ]
                                 }

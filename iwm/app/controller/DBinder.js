@@ -20,7 +20,6 @@ Ext.define('MyApp.controller.DBinder', {
     onFormAfterRender: function(abstractcomponent, options) {
         var me=this, c=abstractcomponent, databind = c.databind;
         if (!Ext.isObject(databind)) return;
-
         //form's default mask selector is this component.
         //if want to local show, using 'maskxtype: null' in databind config.
         if (databind.progress){
@@ -92,6 +91,17 @@ Ext.define('MyApp.controller.DBinder', {
         }
 
         me.bindGroup(c, c.databind, c.serverip, c.rebind);
+
+    },
+
+    onFormBeforeRender: function(abstractcomponent, options) {
+        var me=this, c=abstractcomponent;
+        var search=['add', 'update', 'upload', 'rescan'];
+        for(var i=0; i<search.length; i++){
+            var btn = c.down('button#'+search[i]);
+            if (!btn) continue;
+            if (!btn.getInitialConfig().iconCls) btn.setIconCls('x-btn-tool-form-'+search[i]);
+        }
 
     },
 
@@ -225,6 +235,7 @@ Ext.define('MyApp.controller.DBinder', {
             });
         }
 
+        if (del && !del.getInitialConfig().iconCls) del.setIconCls('x-btn-tool-grid-delete');
         if (del && !cfg.ignore['delete']){
             del.on('click', function(button, event, options){
                 var records = grid.getSelectionModel().getSelection(),
@@ -246,6 +257,7 @@ Ext.define('MyApp.controller.DBinder', {
         }
 
         var ref = grid.down('#refresh');
+        if (ref && !ref.getInitialConfig().iconCls) ref.setIconCls('x-btn-tool-grid-refresh');
         if (ref && !cfg.ignore.refresh){
             ref.on('click', function(button, event, options){
                 var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams),
@@ -264,6 +276,7 @@ Ext.define('MyApp.controller.DBinder', {
         }
 
         var dwn = grid.down('#download');
+        if (dwn && !dwn.getInitialConfig().iconCls) dwn.setIconCls('x-btn-tool-grid-download');
         if (dwn && !cfg.ignore.download){
             var url = store.getProxy().url+'&_download=1&_id=syslog&_act=read';
             dwn.on('click', function(button, event, options){
@@ -306,15 +319,15 @@ Ext.define('MyApp.controller.DBinder', {
                 if (m) form.loadRecord(m);
             });
         }
-
         binder.bindFormActions(form, store, cfg, binder);
     },
 
     bindFormActions: function(form, store, cfg) {
-        var add = form.down('#add'),
-            me = this;
-        if (add && !cfg.ignore.click){
-            add.on('click', function(button, event, options){
+        var me = this;
+
+        var crt = form.down('#add');
+        if (crt && !cfg.ignore.click){
+            crt.on('click', function(button, event, options){
                 if (form.getForm().isValid()){
                     var v = form.getForm().getFieldValues(),
                         cfm = me.getConfirmation(button, v, null, store, form);
@@ -476,7 +489,8 @@ Ext.define('MyApp.controller.DBinder', {
         store.reloadParams = cfg.loadparams?cfg.loadparams:{};
         if (store.autoLoad||cfg.autoload){
             var params = Ext.applyIf({}, store.reloadParams);
-            store.load({params:params});
+            //store.load({params:params});
+            Ext.defer(store.load, 200, store, [{params:params}]);
             cfg.autoloaded = true;
         }
 
@@ -696,7 +710,8 @@ Ext.define('MyApp.controller.DBinder', {
     init: function() {
         this.control({
             "form": {
-                afterrender: this.onFormAfterRender
+                afterrender: this.onFormAfterRender,
+                beforerender: this.onFormBeforeRender
             },
             "gridpanel": {
                 afterrender: this.onGridpanelAfterRender,
