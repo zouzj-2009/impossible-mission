@@ -56,12 +56,14 @@ Ext.define('MyApp.view.LinkSpeedBar', {
                                     {
                                         xtype: 'menucheckitem',
                                         itemId: 'start',
+                                        iconCls: 'x-btn-tool-start',
                                         text: 'Start Monitor',
                                         checked: true
                                     },
                                     {
                                         xtype: 'menucheckitem',
                                         itemId: 'stop',
+                                        iconCls: 'x-btn-tool-stop',
                                         text: 'Stop Monitor',
                                         checked: false
                                     }
@@ -76,6 +78,7 @@ Ext.define('MyApp.view.LinkSpeedBar', {
                         },
                         {
                             xtype: 'button',
+                            iconCls: 'x-btn-tool-export',
                             text: 'Export ...',
                             listeners: {
                                 click: {
@@ -205,7 +208,7 @@ Ext.define('MyApp.view.LinkSpeedBar', {
     onButtonClick: function(button, e, options) {
         Ext.MessageBox.confirm('Confirm Download', 'Would you like to download the chart as an image?<br/>Warning! This is a cloud service, Data will be sent to website:sencha.io)', function(choice){
             if(choice == 'yes'){
-                this.down.save({
+                button.up('panel').down('chart').save({
                     type: 'image/png'
                 });
             }

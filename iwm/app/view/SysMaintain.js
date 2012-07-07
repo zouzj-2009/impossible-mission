@@ -38,6 +38,7 @@ Ext.define('MyApp.view.SysMaintain', {
                     store: 'SysLog',
                     databind: {
                         autoload: true,
+                        bindform: 'logdetail',
                         model: 'syslog'
                     },
                     region: 'center',
@@ -255,11 +256,56 @@ Ext.define('MyApp.view.SysMaintain', {
                             ]
                         },
                         {
-                            xtype: 'form',
-                            hidden: true,
-                            itemId: 'download',
-                            bodyPadding: 10,
-                            title: 'My Form'
+                            xtype: 'fieldset',
+                            border: 0,
+                            height: 200,
+                            minHeight: 200,
+                            maintainFlex: true,
+                            title: 'Detail log inforamtion',
+                            databind: {
+                                model: 'license',
+                                autoload: true
+                            },
+                            items: [
+                                {
+                                    xtype: 'form',
+                                    border: 0,
+                                    itemId: 'logdetail',
+                                    bodyCls: 'x-border-layout-ct',
+                                    method: 'post',
+                                    databind: {
+                                        model: 'license'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            name: 'date',
+                                            readOnly: true,
+                                            fieldLabel: 'Date',
+                                            labelWidth: 60,
+                                            anchor: '100%'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            name: 'facility',
+                                            readOnly: true,
+                                            fieldLabel: 'Facility',
+                                            labelWidth: 60,
+                                            anchor: '100%'
+                                        },
+                                        {
+                                            xtype: 'textareafield',
+                                            height: 120,
+                                            maintainFlex: true,
+                                            name: 'message',
+                                            readOnly: true,
+                                            fieldLabel: 'Message',
+                                            labelWidth: 60,
+                                            anchor: '100%'
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }

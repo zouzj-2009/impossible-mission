@@ -69,7 +69,6 @@ Ext.application({
         'VirtPortal',
         'DiskMgmt',
         'SysMaintain',
-        'LinkSpeed',
         'LinkSpeedBar',
         'LunMap'
     ],

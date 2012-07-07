@@ -14,8 +14,8 @@
     },
     "customConfigs": [],
     "designerId": "110df611-400a-4ab8-90bb-097dc36687c1",
-    "$viewOrder": 15,
-    "expanded": false,
+    "$viewOrder": 14,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen4335",
@@ -112,6 +112,7 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "itemId": "start",
+                                        "iconCls": "x-btn-tool-start",
                                         "text": "Start Monitor",
                                         "checked": true,
                                         "designer|userClassName": "MyCheckItem"
@@ -129,6 +130,7 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "itemId": "stop",
+                                        "iconCls": "x-btn-tool-stop",
                                         "text": "Stop Monitor",
                                         "checked": false,
                                         "designer|userClassName": "MyCheckItem1"
@@ -214,6 +216,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "iconCls": "x-btn-tool-export",
                         "text": "Export ...",
                         "designer|userClassName": "MyButton28",
                         "layout|flex": null
@@ -234,7 +237,7 @@
                                 "implHandler": [
                                     "Ext.MessageBox.confirm('Confirm Download', 'Would you like to download the chart as an image?<br/>Warning! This is a cloud service, Data will be sent to website:sencha.io)', function(choice){",
                                     "    if(choice == 'yes'){",
-                                    "        this.down.save({",
+                                    "        button.up('panel').down('chart').save({",
                                     "            type: 'image/png'",
                                     "        });",
                                     "    }",

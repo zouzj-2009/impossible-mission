@@ -22,6 +22,7 @@ Ext.define('MyApp.view.LunMap', {
         'MyApp.view.TargetListField'
     ],
 
+    border: 0,
     layout: {
         type: 'border'
     },

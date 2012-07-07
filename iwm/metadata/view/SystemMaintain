@@ -27,6 +27,7 @@
             },
             "codeClass": null,
             "userConfig": {
+                "height": 250,
                 "id": null,
                 "itemId": "syslog",
                 "layout|region": "center"

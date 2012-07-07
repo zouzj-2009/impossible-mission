@@ -150,7 +150,7 @@
                 "layout|region": "center"
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen21788",

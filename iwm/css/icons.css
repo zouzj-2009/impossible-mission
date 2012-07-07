@@ -16,6 +16,15 @@
 .x-btn-tool-form-add{
 	background: url(../images/add.16.png) center top !important;
 }
+.x-btn-tool-start{
+	background: url(../images/play.16.png) center top !important;
+}
+.x-btn-tool-stop{
+	background: url(../images/stop.16.png) center top !important;
+}
+.x-btn-tool-export{
+	background: url(../images/export.16.png) center top !important;
+}
 
 .x-btn-tool-form-refresh{
 	background: url(../images/refresh.16.png) center top !important;

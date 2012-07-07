@@ -28,6 +28,9 @@
             },
             "codeClass": null,
             "userConfig": {
+                "border": 0,
+                "padding": 10,
+                "bodyStyle": null,
                 "title": null,
                 "activeTab": 2,
                 "designer|userClassName": "MyTabPanel1",
@@ -58,7 +61,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen17791",
@@ -562,7 +565,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen18752",

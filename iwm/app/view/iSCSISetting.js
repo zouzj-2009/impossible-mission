@@ -35,11 +35,13 @@ Ext.define('MyApp.view.iSCSISetting', {
                 {
                     xtype: 'tabpanel',
                     cls: 'shadowpanel',
+                    padding: 10,
                     activeTab: 0,
                     region: 'center',
                     items: [
                         {
-                            xtype: 'lunmap'
+                            xtype: 'lunmap',
+                            bodyBorder: false
                         },
                         {
                             xtype: 'virtportal'

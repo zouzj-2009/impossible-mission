@@ -328,14 +328,6 @@
             ],
             "className": "syslog"
         },
-        "666ee7cd-1cb4-49c7-93d0-c87c6ba811bf": {
-            "paths": [
-                "metadata/view/LinkSpeed",
-                "app/view/override/LinkSpeed.js",
-                "app/view/LinkSpeed.js"
-            ],
-            "className": "LinkSpeed"
-        },
         "cc71364a-2756-4b62-9aa4-4609b65536cc": {
             "paths": [
                 "metadata/store/LinkSpeed",

@@ -27,7 +27,7 @@
     ],
     "designerId": "c3d0e290-fcc0-418a-a9e0-f8f81268a48a",
     "$viewOrder": 9,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen40032",
@@ -45,7 +45,7 @@
                 "titleCollapse": false,
                 "store": "SysLog",
                 "designer|userClassName": "MyGridPanel",
-                "databind": "{\nautoload:true,\nmodel:'syslog'\n}",
+                "databind": "{\nautoload:true,\nbindform:'logdetail',\nmodel:'syslog'\n}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true
@@ -433,7 +433,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen44857",
@@ -607,22 +607,121 @@
                     ]
                 },
                 {
-                    "id": "ExtBox1-ext-gen24267",
-                    "type": "form",
+                    "id": "ExtBox1-ext-gen9357",
+                    "type": "fieldset",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "hidden": true,
-                        "itemId": "download",
-                        "bodyPadding": 10,
-                        "title": "My Form",
-                        "designer|userClassName": "MyForm18"
+                        "border": 0,
+                        "height": 200,
+                        "minHeight": 200,
+                        "maintainFlex": true,
+                        "title": "Detail log inforamtion",
+                        "designer|userClassName": "MyFieldSet8",
+                        "databind": "{\nmodel:'license',\nautoload:true\n}"
                     },
-                    "customConfigs": [],
-                    "expanded": true
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen9362",
+                            "type": "form",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "border": 0,
+                                "itemId": "logdetail",
+                                "bodyCls": "x-border-layout-ct",
+                                "bodyPadding": null,
+                                "title": null,
+                                "method": "post",
+                                "designer|userClassName": "MyForm16",
+                                "databind": "{\nmodel:'license'\n}"
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen11897",
+                                    "type": "textfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "date",
+                                        "readOnly": true,
+                                        "fieldLabel": "Date",
+                                        "labelWidth": 60,
+                                        "designer|userClassName": "MyTextField25",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen12197",
+                                    "type": "textfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "facility",
+                                        "readOnly": true,
+                                        "fieldLabel": "Facility",
+                                        "labelWidth": 60,
+                                        "designer|userClassName": "MyTextField26",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen12506",
+                                    "type": "textareafield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "height": 120,
+                                        "minHeight": null,
+                                        "maintainFlex": true,
+                                        "name": "message",
+                                        "readOnly": true,
+                                        "fieldLabel": "Message",
+                                        "labelWidth": 60,
+                                        "designer|userClassName": "MyTextArea1",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

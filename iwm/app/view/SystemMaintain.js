@@ -32,6 +32,7 @@ Ext.define('MyApp.view.SystemMaintain', {
             items: [
                 {
                     xtype: 'sysmaintain',
+                    height: 250,
                     itemId: 'syslog',
                     region: 'center'
                 }

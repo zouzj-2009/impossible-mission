@@ -58,7 +58,6 @@
             "VirtPortal",
             "DiskMgmt",
             "SysMaintain",
-            "LinkSpeed",
             "LinkSpeedBar",
             "LunMap"
         ],
