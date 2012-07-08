@@ -40,37 +40,38 @@ Ext.define('MyApp.view.MyViewport', {
                     cls: 'whitebg',
                     height: 80,
                     padding: '0px 50px ',
+                    floatable: false,
                     region: 'north',
                     items: [
                         {
                             xtype: 'bigiconbtn',
                             id: 'sysinfo',
                             iconCls: 'sysinfo',
-                            text: '系统信息'
+                            text: 'SysInfo$'
                         },
                         {
                             xtype: 'bigiconbtn',
                             id: 'network',
                             iconCls: 'network',
-                            text: '网络设定'
+                            text: 'Network$'
                         },
                         {
                             xtype: 'bigiconbtn',
                             id: 'disks',
                             iconCls: 'disks',
-                            text: '磁盘管理'
+                            text: 'Disks$'
                         },
                         {
                             xtype: 'bigiconbtn',
                             id: 'iscsi',
                             iconCls: 'iscsi',
-                            text: 'iSCSI设定'
+                            text: 'iSCSI$'
                         },
                         {
                             xtype: 'bigiconbtn',
                             id: 'maintain',
                             iconCls: 'maintain',
-                            text: '系统维护'
+                            text: 'Maintain$'
                         }
                     ]
                 },
@@ -83,6 +84,7 @@ Ext.define('MyApp.view.MyViewport', {
                     layout: {
                         type: 'card'
                     },
+                    floatable: false,
                     region: 'center',
                     items: [
                         {

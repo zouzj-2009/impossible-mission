@@ -15,7 +15,7 @@
     "customConfigs": [],
     "designerId": "110df611-400a-4ab8-90bb-097dc36687c1",
     "$viewOrder": 14,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen4335",
@@ -113,7 +113,7 @@
                                     "userConfig": {
                                         "itemId": "start",
                                         "iconCls": "x-btn-tool-start",
-                                        "text": "Start Monitor",
+                                        "text": "Start Monitor$",
                                         "checked": true,
                                         "designer|userClassName": "MyCheckItem"
                                     },
@@ -131,7 +131,7 @@
                                     "userConfig": {
                                         "itemId": "stop",
                                         "iconCls": "x-btn-tool-stop",
-                                        "text": "Stop Monitor",
+                                        "text": "Stop Monitor$",
                                         "checked": false,
                                         "designer|userClassName": "MyCheckItem1"
                                     },
@@ -217,7 +217,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "iconCls": "x-btn-tool-export",
-                        "text": "Export ...",
+                        "text": "Export ...$",
                         "designer|userClassName": "MyButton28",
                         "layout|flex": null
                     },

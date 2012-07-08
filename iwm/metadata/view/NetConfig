@@ -27,7 +27,7 @@
     ],
     "designerId": "0cb07030-ef49-489e-a10f-eedd0b0b4b82",
     "$viewOrder": 10,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen13211",
@@ -58,7 +58,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen13224",
@@ -116,9 +116,22 @@
                                 "itemId": "delete",
                                 "text": "Delete",
                                 "designer|userClassName": "MyButton2",
-                                "layout|flex": null
+                                "layout|flex": null,
+                                "confirmation": "IP address of current visited server %ipaddress% will be deleted, you need restrart the web application, are you sure?$",
+                                "confirmtitle": "Warning"
                             },
-                            "customConfigs": [],
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "confirmation",
+                                    "type": "string"
+                                },
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "confirmtitle",
+                                    "type": "string"
+                                }
+                            ],
                             "expanded": true,
                             "cn": [
                                 {
@@ -142,8 +155,8 @@
                                             "for(var i=0; i<records.length; i++){",
                                             "    var r = records[i].getData();",
                                             "    if (r.ipaddress == location.host) return {",
-                                            "        title: 'Waning!',",
-                                            "        msg: 'IP address of current visited server '+r.ipaddress+' will be deleted, you need restrart the web application, are you sure?'",
+                                            "        title: button.confirmtitle,",
+                                            "        msg: button.confirmation.replace('%ipaddress%', r.ipaddress)",
                                             "    };",
                                             "}",
                                             "return false;"

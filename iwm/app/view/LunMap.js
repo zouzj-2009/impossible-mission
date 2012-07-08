@@ -26,6 +26,7 @@ Ext.define('MyApp.view.LunMap', {
     layout: {
         type: 'border'
     },
+    bodyPadding: 10,
     title: 'LunMap',
 
     initComponent: function() {

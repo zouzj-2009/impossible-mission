@@ -96,7 +96,7 @@ Ext.define('MyApp.controller.DBinder', {
 
     onFormBeforeRender: function(abstractcomponent, options) {
         var me=this, c=abstractcomponent;
-        var search=['add', 'update', 'upload', 'rescan'];
+        var search=['add', 'update', 'upload', 'rescan', 'refresh'];
         for(var i=0; i<search.length; i++){
             var btn = c.down('button#'+search[i]);
             if (!btn) continue;

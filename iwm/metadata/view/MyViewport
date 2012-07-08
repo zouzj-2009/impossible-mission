@@ -33,6 +33,7 @@
                 "padding": "0px 50px ",
                 "shadow": null,
                 "designer|userClassName": "MyContainer",
+                "layout|floatable": false,
                 "layout|region": "north"
             },
             "customConfigs": [],
@@ -50,7 +51,7 @@
                         "id": "sysinfo",
                         "padding": null,
                         "iconCls": "sysinfo",
-                        "text": "系统信息"
+                        "text": "SysInfo$"
                     },
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",
@@ -68,7 +69,7 @@
                     "userConfig": {
                         "id": "network",
                         "iconCls": "network",
-                        "text": "网络设定"
+                        "text": "Network$"
                     },
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",
@@ -86,7 +87,7 @@
                     "userConfig": {
                         "id": "disks",
                         "iconCls": "disks",
-                        "text": "磁盘管理"
+                        "text": "Disks$"
                     },
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",
@@ -104,7 +105,7 @@
                     "userConfig": {
                         "id": "iscsi",
                         "iconCls": "iscsi",
-                        "text": "iSCSI设定"
+                        "text": "iSCSI$"
                     },
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",
@@ -122,7 +123,7 @@
                     "userConfig": {
                         "id": "maintain",
                         "iconCls": "maintain",
-                        "text": "系统维护"
+                        "text": "Maintain$"
                     },
                     "customConfigs": [],
                     "iconCls": "icon-linkedinstance",
@@ -147,10 +148,11 @@
                 "layout": "card",
                 "designer|userClassName": "MyContainer2",
                 "designer|userAlias": "mycontainer2",
+                "layout|floatable": false,
                 "layout|region": "center"
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen21788",

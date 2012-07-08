@@ -32,7 +32,7 @@
                 "padding": 10,
                 "bodyStyle": null,
                 "title": null,
-                "activeTab": 2,
+                "activeTab": 3,
                 "designer|userClassName": "MyTabPanel1",
                 "layout|region": "center"
             },
@@ -49,7 +49,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "itemId": "iscsiconn",
-                        "title": "iSCSI连接",
+                        "title": "iSCSI Connection$",
                         "store": null,
                         "designer|userClassName": "MyGridPanel1",
                         "databind": "{\nautoload:true,\nmodel:'iscsiconn'\n}"
@@ -269,7 +269,7 @@
                     "userConfig": {
                         "height": 109,
                         "itemId": "netconfig",
-                        "title": "网卡设定",
+                        "title": "NIC Setting$",
                         "store": null,
                         "designer|userClassName": "MyGridPanel",
                         "databind": "{model:'netconfig'}"
@@ -552,7 +552,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "itemId": "sysinfo",
-                        "title": "系统信息",
+                        "title": "System Information$",
                         "store": null,
                         "designer|userClassName": "MyGridPanel2",
                         "databind": "{\"autoload\":true,\nmodel:'pciinfo'}",

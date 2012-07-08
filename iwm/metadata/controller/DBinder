@@ -13,7 +13,7 @@
     "customConfigs": [],
     "designerId": "9e4fb2fe-2107-4c8e-947e-b88044a7a23a",
     "$viewOrder": 2,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen32603",
@@ -1096,7 +1096,7 @@
                 "fn": "onFormBeforeRender",
                 "implHandler": [
                     "var me=this, c=abstractcomponent;",
-                    "var search=['add', 'update', 'upload', 'rescan'];",
+                    "var search=['add', 'update', 'upload', 'rescan', 'refresh'];",
                     "for(var i=0; i<search.length; i++){",
                     "    var btn = c.down('button#'+search[i]);",
                     "    if (!btn) continue;",

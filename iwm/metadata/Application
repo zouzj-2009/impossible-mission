@@ -68,10 +68,18 @@
             "MainMenu",
             "MaskDBClick",
             "DataIndiacator",
-            "EventManager"
-        ]
+            "EventManager",
+            "Localizer"
+        ],
+        "defaultlang": "zh_cn"
     },
-    "customConfigs": [],
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "defaultlang",
+            "type": "string"
+        }
+    ],
     "designerId": "application",
     "$viewOrder": 0,
     "iconCls": "icon-application",

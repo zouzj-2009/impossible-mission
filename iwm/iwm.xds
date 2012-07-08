@@ -471,6 +471,20 @@
                 "app/model/timezone.js"
             ],
             "className": "timezone"
+        },
+        "673555de-c116-4f86-8c3e-f9d60c0204a0": {
+            "paths": [
+                "metadata/resource/js1"
+            ],
+            "className": "js1"
+        },
+        "e1636392-c952-46f9-a690-7eb5b68b3f6e": {
+            "paths": [
+                "metadata/controller/Localizer",
+                "app/controller/override/Localizer.js",
+                "app/controller/Localizer.js"
+            ],
+            "className": "Localizer"
         }
     },
     "expandedState": {

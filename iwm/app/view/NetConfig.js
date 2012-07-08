@@ -67,15 +67,17 @@ Ext.define('MyApp.view.NetConfig', {
                                         for(var i=0; i<records.length; i++){
                                             var r = records[i].getData();
                                             if (r.ipaddress == location.host) return {
-                                                title: 'Waning!',
-                                                msg: 'IP address of current visited server '+r.ipaddress+' will be deleted, you need restrart the web application, are you sure?'
+                                                title: button.confirmtitle,
+                                                msg: button.confirmation.replace('%ipaddress%', r.ipaddress)
                                             };
                                         }
                                         return false;
                                     },
                                     disabled: true,
                                     itemId: 'delete',
-                                    text: 'Delete'
+                                    text: 'Delete',
+                                    confirmation: 'IP address of current visited server %ipaddress% will be deleted, you need restrart the web application, are you sure?$',
+                                    confirmtitle: 'Warning'
                                 },
                                 {
                                     xtype: 'button',

@@ -57,14 +57,14 @@ Ext.define('MyApp.view.LinkSpeedBar', {
                                         xtype: 'menucheckitem',
                                         itemId: 'start',
                                         iconCls: 'x-btn-tool-start',
-                                        text: 'Start Monitor',
+                                        text: 'Start Monitor$',
                                         checked: true
                                     },
                                     {
                                         xtype: 'menucheckitem',
                                         itemId: 'stop',
                                         iconCls: 'x-btn-tool-stop',
-                                        text: 'Stop Monitor',
+                                        text: 'Stop Monitor$',
                                         checked: false
                                     }
                                 ]
@@ -79,7 +79,7 @@ Ext.define('MyApp.view.LinkSpeedBar', {
                         {
                             xtype: 'button',
                             iconCls: 'x-btn-tool-export',
-                            text: 'Export ...',
+                            text: 'Export ...$',
                             listeners: {
                                 click: {
                                     fn: me.onButtonClick,

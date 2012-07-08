@@ -27,7 +27,7 @@ Ext.define('MyApp.view.VirtPortal', {
         type: 'border'
     },
     bodyPadding: 10,
-    title: 'Virtual Portal',
+    title: 'Virtual Portal$',
 
     initComponent: function() {
         var me = this;
@@ -39,7 +39,7 @@ Ext.define('MyApp.view.VirtPortal', {
                     hideCollapseTool: false,
                     overlapHeader: false,
                     preventHeader: false,
-                    title: 'Current Setting',
+                    title: 'Current Setting$',
                     titleCollapse: false,
                     store: 'VirtPortal',
                     databind: {
@@ -108,6 +108,7 @@ Ext.define('MyApp.view.VirtPortal', {
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'count',
+                            flex: 1,
                             text: 'Count'
                         }
                     ],
@@ -142,12 +143,12 @@ Ext.define('MyApp.view.VirtPortal', {
                                     padding: 5,
                                     collapsed: false,
                                     collapsible: true,
-                                    title: 'Global Setting',
+                                    title: 'Global Setting$',
                                     items: [
                                         {
                                             xtype: 'checkboxfield',
                                             name: 'enabled',
-                                            fieldLabel: 'Virt Portal',
+                                            fieldLabel: 'Virt Portal$',
                                             boxLabel: 'Enabled',
                                             uncheckedValue: 0,
                                             listeners: {

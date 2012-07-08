@@ -14,7 +14,7 @@
         "width": null,
         "layout": "border",
         "bodyPadding": 10,
-        "title": "Virtual Portal",
+        "title": "Virtual Portal$",
         "designer|userClassName": "VirtPortal",
         "designer|userAlias": "virtportal",
         "model": null
@@ -28,7 +28,7 @@
     ],
     "designerId": "b0e5598f-7470-4add-b675-b39b3b6ddb17",
     "$viewOrder": 7,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen47432",
@@ -42,7 +42,7 @@
                 "hideCollapseTool": false,
                 "overlapHeader": false,
                 "preventHeader": false,
-                "title": "Current Setting",
+                "title": "Current Setting$",
                 "titleCollapse": false,
                 "store": "VirtPortal",
                 "designer|userClassName": "MyGridPanel",
@@ -257,6 +257,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "dataIndex": "count",
+                        "flex": 1,
                         "text": "Count",
                         "designer|userClassName": "MyColumn47"
                     },
@@ -339,7 +340,7 @@
                                 "width": null,
                                 "collapsed": false,
                                 "collapsible": true,
-                                "title": "Global Setting",
+                                "title": "Global Setting$",
                                 "designer|userClassName": "MyFieldSet"
                             },
                             "customConfigs": [],
@@ -356,7 +357,7 @@
                                     "userConfig": {
                                         "itemId": null,
                                         "name": "enabled",
-                                        "fieldLabel": "Virt Portal",
+                                        "fieldLabel": "Virt Portal$",
                                         "boxLabel": "Enabled",
                                         "uncheckedValue": 0,
                                         "designer|userClassName": "MyCheckbox1"

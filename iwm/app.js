@@ -79,8 +79,10 @@ Ext.application({
         'MainMenu',
         'MaskDBClick',
         'DataIndiacator',
-        'EventManager'
+        'EventManager',
+        'Localizer'
     ],
+    defaultlang: 'zh_cn',
 
     launch: function() {
         //alert('pause for debug');

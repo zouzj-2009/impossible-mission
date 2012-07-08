@@ -13,7 +13,11 @@ static $pconfigs = array(
 		for key in `ls|grep -v ^stat`
 		do
 			[ -d "$key" ] && continue
-			echo "$key: "`cat "$key"`
+			if [ "$key" = "size" ];then
+				echo "size: $((`cat size`*512))"
+			else
+				echo "$key: "`cat "$key"`
+			fi
 		done
 		cd "/sys/block/$dev/device/"
 		echo "scsi_device: "`ls scsi_device:*|sed "s/scsi_device://g"`

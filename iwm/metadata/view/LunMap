@@ -9,8 +9,10 @@
     "userConfig": {
         "border": 0,
         "height": null,
+        "padding": null,
         "width": null,
         "layout": "border",
+        "bodyPadding": 10,
         "title": "LunMap",
         "designer|userClassName": "LunMap",
         "designer|userAlias": "lunmap"

@@ -34,13 +34,13 @@ Ext.define('MyApp.view.SystemInfo', {
                     xtype: 'tabpanel',
                     border: 0,
                     padding: 10,
-                    activeTab: 2,
+                    activeTab: 3,
                     region: 'center',
                     items: [
                         {
                             xtype: 'gridpanel',
                             itemId: 'iscsiconn',
-                            title: 'iSCSI连接',
+                            title: 'iSCSI Connection$',
                             databind: {
                                 autoload: true,
                                 model: 'iscsiconn'
@@ -109,7 +109,7 @@ Ext.define('MyApp.view.SystemInfo', {
                             xtype: 'gridpanel',
                             height: 109,
                             itemId: 'netconfig',
-                            title: '网卡设定',
+                            title: 'NIC Setting$',
                             databind: {
                                 model: 'netconfig'
                             },
@@ -195,7 +195,7 @@ Ext.define('MyApp.view.SystemInfo', {
                         {
                             xtype: 'gridpanel',
                             itemId: 'sysinfo',
-                            title: '系统信息',
+                            title: 'System Information$',
                             databind: {
                                 autoload: true,
                                 model: 'pciinfo'
