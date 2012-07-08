@@ -80,6 +80,8 @@ Ext.define('MyApp.view.LinkSpeedBar', {
                             xtype: 'button',
                             iconCls: 'x-btn-tool-export',
                             text: 'Export ...$',
+                            confirmation: 'Would you like to download the chart as an image?<br/>Warning! This is a cloud service, Data will be sent to website:sencha.io)',
+                            confirmtitle: 'Download Confirm$',
                             listeners: {
                                 click: {
                                     fn: me.onButtonClick,
@@ -206,7 +208,7 @@ Ext.define('MyApp.view.LinkSpeedBar', {
     },
 
     onButtonClick: function(button, e, options) {
-        Ext.MessageBox.confirm('Confirm Download', 'Would you like to download the chart as an image?<br/>Warning! This is a cloud service, Data will be sent to website:sencha.io)', function(choice){
+        Ext.MessageBox.confirm(button.confirmtitle, button.confirmation, function(choice){
             if(choice == 'yes'){
                 button.up('panel').down('chart').save({
                     type: 'image/png'

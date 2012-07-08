@@ -129,6 +129,22 @@
                     "iconCls": "icon-linkedinstance",
                     "expanded": true,
                     "masterInstanceId": "ExtBox1-ext-gen3484"
+                },
+                {
+                    "id": "ExtBox1-ext-gen63919",
+                    "type": "button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "show_unlocalized",
+                        "text": "show unlocalized",
+                        "designer|userClassName": "MyButton37"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
                 }
             ]
         },

@@ -20,8 +20,48 @@ Ext.define('MyApp.controller.Localizer', {
         
     },
 
-    onButtonBeforeRender: function(abstractcomponent, options) {
-        var c = abstractcomponent,
+    onComponentBeforeRender: function(abstractcomponent, options) {
+        //maybe slowly?
+        var c = abstractcomponent;
+        if (c.id == 'show_unlocalized'){
+            var me = this;
+            c.on('click', function(){
+                var l = me.unlocalized,
+                    o = '';
+                for (var name in l){
+                    o += "\t'"+name+'\': \''+l[name]+'\',\n';
+                }
+                alert(o);
+            });
+        }else if (c.isXType('menuitem')){
+            this.localizeMenuItem(c);
+        }else if (c.isXType('button')){
+            this.localizeButton(c);
+        }else if (c.isXType('field')){
+            this.localizeField(c);
+        }else if (c.isXType('panel')){
+            this.localizePanel(c);
+        }else if (c.isXType('gridcolumn')){
+            this.localizeGridColumn(c);
+        }else if (c.isXType('fieldset')){
+            this.localizeFieldSet(c);
+        }
+
+    },
+
+    init: function(application) {
+        this.control({
+            "component": {
+                beforerender: this.onComponentBeforeRender
+            }
+        });
+        //todo: load proper lang setting js here
+    },
+
+    localizeButton: function(button) {
+        //we use a '$-ended' string for localize-need text
+        //because button text is short, easy to confused, so, use $ as an identify
+        var c = button,
             t = c.getText(),
             tx = t?t.replace(/\$$/, ''):'__x',
             lt = App.locale.text[tx];
@@ -35,20 +75,20 @@ Ext.define('MyApp.controller.Localizer', {
             }
         }
 
+        //confirmation is long, so can be or not be end with $
         t = c.confirmation;
         if (t){
             //end with $ will be localized
             tx = t.replace(/\$$/, '');
-            if (t != tx){
-                lt = App.locale.text[tx];
-                if (lt) c.confirmation = lt;
-                else {
-                    c.confirmation = tx;
-                    this.unlocalized[tx] = '';
-                }
+            lt = App.locale.text[tx];
+            if (lt) c.confirmation = lt;
+            else {
+                c.confirmation = tx;
+                this.unlocalized[tx] = tx;
             }
         }
 
+        //same as button text, title is short, so need $
         t = c.confirmtitle;
         if (t){
             //end with $ will be localized
@@ -64,13 +104,12 @@ Ext.define('MyApp.controller.Localizer', {
         }
     },
 
-    onFieldsetBeforeRender: function(abstractcomponent, options) {
-        var c = abstractcomponent,
+    localizeFieldSet: function(fieldset) {
+        var c = fieldset,
             t = c.title,
             tx = t?t.replace(/\$$/, ''):'__x',
             lt = App.locale.text[tx];
-        //if button has itemId, we check it.
-        //if button text has $ ended, we check it.
+        //can be or not be ended with $
         if (lt) c.setTitle(lt);
         else {
             if (t) c.setTitle(tx);
@@ -78,13 +117,12 @@ Ext.define('MyApp.controller.Localizer', {
         }
     },
 
-    onPanelBeforeRender: function(abstractcomponent, options) {
-        var c = abstractcomponent,
+    localizePanel: function(panel) {
+        var c = panel,
             t = c.title,
             tx = t?t.replace(/\$$/, ''):'__x',
             lt = App.locale.text[tx];
-        //if button has itemId, we check it.
-        //if button text has $ ended, we check it.
+        //can be or not be ended with $
         if (lt) c.setTitle(lt);
         else{
             if(t) c.setTitle(tx);
@@ -92,94 +130,80 @@ Ext.define('MyApp.controller.Localizer', {
         }
     },
 
-    onGridpanelBeforeRender: function(abstractcomponent, options) {
-        //for each column, check text 
-        var c = abstractcomponent,
-            me = this,
-            columns = c.columns;
-        if(!Ext.isArray(columns)) return;
-        for(var i=0;i<columns.length;i++){
-            var t = columns[i].text,
-                lt = t?App.locale.text[t]:null;
-            if (lt) columns[i].setText(lt);
-            else{
-                me.unlocalized[t] = '';
-            }
+    localizeGridColumn: function(column) {
+        var t = column.text?column.text:'__x',
+            lt = App.locale.text[t];
+        if (lt) column.setText(lt);
+        else{
+            this.unlocalized[t] = '';
         }
     },
 
-    onFormBeforeRender: function(abstractcomponent, options) {
-        //for each field, check label, invalid text ...
-        var c = abstractcomponent,
-            me = this,
-            fields = c.getForm().getFields();
-
-        fields.each(function(){
-            //label
-            var t = this.getFieldLabel(),
-                tx = t?t.replace(/\$$/, ''):'__x',
-                lt = App.locale.text[tx];
-            if (t!=tx){
-                if (lt) this.setFieldLabel(lt);
-                else{
-                    this.setFieldLabel(tx);
-                    me.unlocalized[tx] = '';
-                }
-            }
-            //invalid text!
-            t = this.invalidText;
-            tx = t?t.replace(/\$$/, ''):'__x';
-            lt = App.locale.text[tx];
-            if (t!=tx){
-                if (lt) this.invalidText = lt;
-                else{
-                    this.invalidText = tx;
-                    me.unlocalized[tx] = '';
-                }
-            }
-        });
-    },
-
-    onSliderBeforeRender: function(abstractcomponent, options) {
-        var c = abstractcomponent,
-            t = c.getFieldLabel(),
+    localizeField: function(field) {
+        var t = field.getFieldLabel(),
             tx = t?t.replace(/\$$/, ''):'__x',
             lt = App.locale.text[tx];
-        if (t!=tx){
-            if (lt) c.setFieldLabel(lt);
-            else{
-                c.setFieldLabel(tx);
+        if (lt) field.setFieldLabel(lt);
+        else{
+            if (t) field.setFieldLabel(tx);
+            this.unlocalized[tx] = '';
+        }
+        //invalid text!
+        t = field.invalidText;
+        tx = t?t.replace(/\$$/, ''):'__x';
+        lt = App.locale.text[tx];
+        if (lt) field.invalidText = lt;
+        else{
+            if (t) field.invalidText = tx;
+            this.unlocalized[tx] = tx;
+        }
+
+    },
+
+    localizeMenuItem: function(mi) {
+        //we use a '$-ended' string for localize-need text
+        //because button text is short, easy to confused, so, use $ as an identify
+        var c = mi,
+            t = c.text,
+            tx = t?t.replace(/\$$/, ''):'__x',
+            lt = App.locale.text[tx];
+        //if button has itemId, we check it.
+        //if button text has $ ended, we check it.
+        if ((c.itemId || (tx != t))){
+            if (lt) c.setText(lt);
+            else {
+                if (t) c.setText(tx);
                 this.unlocalized[tx] = '';
             }
         }
-    },
 
-    init: function(application) {
-        this.control({
-            "button": {
-                beforerender: this.onButtonBeforeRender
-            },
-            "fieldset": {
-                beforerender: this.onFieldsetBeforeRender
-            },
-            "panel": {
-                beforerender: this.onPanelBeforeRender
-            },
-            "gridpanel": {
-                beforerender: this.onGridpanelBeforeRender
-            },
-            "form": {
-                beforerender: this.onFormBeforeRender
-            },
-            "slider": {
-                beforerender: this.onSliderBeforeRender
+        //confirmation is long, so can be or not be end with $
+        t = c.confirmation;
+        if (t){
+            //end with $ will be localized
+            tx = t.replace(/\$$/, '');
+            lt = App.locale.text[tx];
+            if (lt) c.confirmation = lt;
+            else {
+                c.confirmation = tx;
+                this.unlocalized[tx] = tx;
             }
-        });
-        //todo: load proper lang setting js here
-    },
+        }
 
-    onControllerBeforeRenderStub: function() {
-
+        //same as button text, title is short, so need $
+        t = c.confirmtitle;
+        if (t){
+            //end with $ will be localized
+            tx = t.replace(/\$$/, '');
+            if (t != tx){
+                lt = App.locale.text[tx];
+                if (lt) c.confirmtitle = lt;
+                else {
+                    c.confirmtitle = tx;
+                    this.unlocalized[tx] = '';
+                }
+            }
+        }
     }
 
 });

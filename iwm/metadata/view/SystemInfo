@@ -32,7 +32,7 @@
                 "padding": 10,
                 "bodyStyle": null,
                 "title": null,
-                "activeTab": 3,
+                "activeTab": 2,
                 "designer|userClassName": "MyTabPanel1",
                 "layout|region": "center"
             },

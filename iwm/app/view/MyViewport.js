@@ -72,6 +72,11 @@ Ext.define('MyApp.view.MyViewport', {
                             id: 'maintain',
                             iconCls: 'maintain',
                             text: 'Maintain$'
+                        },
+                        {
+                            xtype: 'button',
+                            id: 'show_unlocalized',
+                            text: 'show unlocalized'
                         }
                     ]
                 },

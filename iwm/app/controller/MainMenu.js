@@ -20,14 +20,6 @@ Ext.define('MyApp.controller.MainMenu', {
     onButtonClick: function(button, e, options) {
         var id=button.getId();
         Ext.getCmp('content').getLayout().setActiveItem(id);
-        if (id != 'maintain') return;
-        var l = this.application.getController('Localizer').unlocalized,
-            o = '';
-        for (var name in l){
-            o += "\t'"+name+'\': \'\',\n';
-        }
-        alert(o);
-
     },
 
     init: function() {

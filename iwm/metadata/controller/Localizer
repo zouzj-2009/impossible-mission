@@ -19,7 +19,7 @@
     ],
     "designerId": "e1636392-c952-46f9-a690-7eb5b68b3f6e",
     "$viewOrder": 5,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen5941",
@@ -44,7 +44,7 @@
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen6563",
+            "id": "ExtBox1-ext-gen51544",
             "type": "controlleraction",
             "reference": {
                 "name": "listeners",
@@ -52,9 +52,61 @@
             },
             "codeClass": null,
             "userConfig": {
-                "fn": "onButtonBeforeRender",
+                "fn": "onComponentBeforeRender",
                 "implHandler": [
-                    "var c = abstractcomponent,",
+                    "//maybe slowly?",
+                    "var c = abstractcomponent;",
+                    "if (c.id == 'show_unlocalized'){",
+                    "    var me = this;",
+                    "    c.on('click', function(){",
+                    "        var l = me.unlocalized,",
+                    "            o = '';",
+                    "        for (var name in l){",
+                    "            o += \"\\t'\"+name+'\\': \\''+l[name]+'\\',\\n';",
+                    "        }",
+                    "        alert(o);",
+                    "    });",
+                    "}else if (c.isXType('menuitem')){",
+                    "    this.localizeMenuItem(c);",
+                    "}else if (c.isXType('button')){",
+                    "    this.localizeButton(c);",
+                    "}else if (c.isXType('field')){",
+                    "    this.localizeField(c);",
+                    "}else if (c.isXType('panel')){",
+                    "    this.localizePanel(c);",
+                    "}else if (c.isXType('gridcolumn')){",
+                    "    this.localizeGridColumn(c);",
+                    "}else if (c.isXType('fieldset')){",
+                    "    this.localizeFieldSet(c);",
+                    "}",
+                    "    "
+                ],
+                "name": "beforerender",
+                "scope": "me",
+                "designer|targetType": "Ext.Component",
+                "designer|controlQuery": "component",
+                "designer|userClassName": "onComponentBeforeRender"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen55470",
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "localizeButton",
+                "designer|params": [
+                    "button"
+                ],
+                "implHandler": [
+                    "//we use a '$-ended' string for localize-need text",
+                    "//because button text is short, easy to confused, so, use $ as an identify",
+                    "var c = button,",
                     "    t = c.getText(),",
                     "    tx = t?t.replace(/\\$$/, ''):'__x',",
                     "    lt = App.locale.text[tx];",
@@ -68,20 +120,20 @@
                     "    }",
                     "}",
                     "",
+                    "//confirmation is long, so can be or not be end with $",
                     "t = c.confirmation;",
                     "if (t){",
                     "    //end with $ will be localized",
                     "    tx = t.replace(/\\$$/, '');",
-                    "    if (t != tx){",
-                    "        lt = App.locale.text[tx];",
-                    "        if (lt) c.confirmation = lt;",
-                    "        else {",
-                    "            c.confirmation = tx;",
-                    "            this.unlocalized[tx] = '';",
-                    "        }",
+                    "    lt = App.locale.text[tx];",
+                    "    if (lt) c.confirmation = lt;",
+                    "    else {",
+                    "        c.confirmation = tx;",
+                    "        this.unlocalized[tx] = tx;",
                     "    }",
                     "}",
                     "",
+                    "//same as button text, title is short, so need $",
                     "t = c.confirmtitle;",
                     "if (t){",
                     "    //end with $ will be localized",
@@ -96,191 +148,194 @@
                     "    }",
                     "}"
                 ],
-                "name": "beforerender",
-                "scope": "me",
-                "designer|targetType": "Ext.button.Button",
-                "designer|controlQuery": "button",
-                "designer|userClassName": "onButtonBeforeRender"
+                "designer|userClassName": "localizeButton"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen13538",
-            "type": "controlleraction",
+            "id": "ExtBox1-ext-gen56054",
+            "type": "basicfunction",
             "reference": {
-                "name": "listeners",
+                "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "fn": "onFieldsetBeforeRender",
+                "fn": "localizeFieldSet",
+                "designer|params": [
+                    "fieldset"
+                ],
                 "implHandler": [
-                    "var c = abstractcomponent,",
+                    "var c = fieldset,",
                     "    t = c.title,",
                     "    tx = t?t.replace(/\\$$/, ''):'__x',",
                     "    lt = App.locale.text[tx];",
-                    "//if button has itemId, we check it.",
-                    "//if button text has $ ended, we check it.",
+                    "//can be or not be ended with $",
                     "if (lt) c.setTitle(lt);",
                     "else {",
                     "    if (t) c.setTitle(tx);",
                     "    this.unlocalized[tx] = '';",
                     "}"
                 ],
-                "name": "beforerender",
-                "scope": "me",
-                "designer|targetType": "Ext.form.FieldSet",
-                "designer|controlQuery": "fieldset",
-                "designer|userClassName": "onFieldsetBeforeRender"
+                "designer|userClassName": "localizeFieldSet"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen14314",
-            "type": "controlleraction",
+            "id": "ExtBox1-ext-gen56125",
+            "type": "basicfunction",
             "reference": {
-                "name": "listeners",
+                "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "fn": "onPanelBeforeRender",
+                "fn": "localizePanel",
+                "designer|params": [
+                    "panel"
+                ],
                 "implHandler": [
-                    "var c = abstractcomponent,",
+                    "var c = panel,",
                     "    t = c.title,",
                     "    tx = t?t.replace(/\\$$/, ''):'__x',",
                     "    lt = App.locale.text[tx];",
-                    "//if button has itemId, we check it.",
-                    "//if button text has $ ended, we check it.",
+                    "//can be or not be ended with $",
                     "if (lt) c.setTitle(lt);",
                     "else{",
                     "    if(t) c.setTitle(tx);",
                     "    this.unlocalized[tx] = '';",
                     "}"
                 ],
-                "name": "beforerender",
-                "scope": "me",
-                "designer|targetType": "Ext.panel.Panel",
-                "designer|controlQuery": "panel",
-                "designer|userClassName": "onPanelBeforeRender"
+                "designer|userClassName": "localizePanel"
             },
             "customConfigs": [],
             "expanded": true
         },
         {
-            "id": "ExtBox1-ext-gen21656",
-            "type": "controlleraction",
+            "id": "ExtBox1-ext-gen56193",
+            "type": "basicfunction",
             "reference": {
-                "name": "listeners",
+                "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "fn": "onGridpanelBeforeRender",
+                "fn": "localizeGridColumn",
+                "designer|params": [
+                    "column"
+                ],
                 "implHandler": [
-                    "//for each column, check text ",
-                    "var c = abstractcomponent,",
-                    "    me = this,",
-                    "    columns = c.columns;",
-                    "if(!Ext.isArray(columns)) return;",
-                    "for(var i=0;i<columns.length;i++){",
-                    "    var t = columns[i].text,",
-                    "        lt = t?App.locale.text[t]:null;",
-                    "    if (lt) columns[i].setText(lt);",
-                    "    else{",
-                    "            me.unlocalized[t] = '';",
+                    "var t = column.text?column.text:'__x',",
+                    "    lt = App.locale.text[t];",
+                    "if (lt) column.setText(lt);",
+                    "else{",
+                    "    this.unlocalized[t] = '';",
+                    "}"
+                ],
+                "designer|userClassName": "localizeGridColumn"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen56261",
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "localizeField",
+                "designer|params": [
+                    "field"
+                ],
+                "implHandler": [
+                    "var t = field.getFieldLabel(),",
+                    "    tx = t?t.replace(/\\$$/, ''):'__x',",
+                    "lt = App.locale.text[tx];",
+                    "if (lt) field.setFieldLabel(lt);",
+                    "else{",
+                    "    if (t) field.setFieldLabel(tx);",
+                    "    this.unlocalized[tx] = '';",
+                    "}",
+                    "//invalid text!",
+                    "t = field.invalidText;",
+                    "tx = t?t.replace(/\\$$/, ''):'__x';",
+                    "lt = App.locale.text[tx];",
+                    "if (lt) field.invalidText = lt;",
+                    "else{",
+                    "    if (t) field.invalidText = tx;",
+                    "    this.unlocalized[tx] = tx;",
+                    "}",
+                    ""
+                ],
+                "designer|userClassName": "localizeField"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen65931",
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "localizeMenuItem",
+                "designer|params": [
+                    "mi"
+                ],
+                "implHandler": [
+                    "//we use a '$-ended' string for localize-need text",
+                    "//because button text is short, easy to confused, so, use $ as an identify",
+                    "var c = mi,",
+                    "    t = c.text,",
+                    "    tx = t?t.replace(/\\$$/, ''):'__x',",
+                    "    lt = App.locale.text[tx];",
+                    "//if button has itemId, we check it.",
+                    "//if button text has $ ended, we check it.",
+                    "if ((c.itemId || (tx != t))){",
+                    "    if (lt) c.setText(lt);",
+                    "    else {",
+                    "        if (t) c.setText(tx);",
+                    "        this.unlocalized[tx] = '';",
+                    "    }",
+                    "}",
+                    "",
+                    "//confirmation is long, so can be or not be end with $",
+                    "t = c.confirmation;",
+                    "if (t){",
+                    "    //end with $ will be localized",
+                    "    tx = t.replace(/\\$$/, '');",
+                    "    lt = App.locale.text[tx];",
+                    "    if (lt) c.confirmation = lt;",
+                    "    else {",
+                    "        c.confirmation = tx;",
+                    "        this.unlocalized[tx] = tx;",
+                    "    }",
+                    "}",
+                    "",
+                    "//same as button text, title is short, so need $",
+                    "t = c.confirmtitle;",
+                    "if (t){",
+                    "    //end with $ will be localized",
+                    "    tx = t.replace(/\\$$/, '');",
+                    "    if (t != tx){",
+                    "        lt = App.locale.text[tx];",
+                    "        if (lt) c.confirmtitle = lt;",
+                    "        else {",
+                    "            c.confirmtitle = tx;",
+                    "            this.unlocalized[tx] = '';",
+                    "        }",
                     "    }",
                     "}"
                 ],
-                "name": "beforerender",
-                "scope": "me",
-                "designer|targetType": "Ext.grid.Panel",
-                "designer|controlQuery": "gridpanel",
-                "designer|userClassName": "onGridpanelBeforeRender"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen22287",
-            "type": "controlleraction",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "onFormBeforeRender",
-                "implHandler": [
-                    "//for each field, check label, invalid text ...",
-                    "var c = abstractcomponent,",
-                    "    me = this,",
-                    "    fields = c.getForm().getFields();",
-                    "",
-                    "fields.each(function(){",
-                    "//label",
-                    "    var t = this.getFieldLabel(),",
-                    "        tx = t?t.replace(/\\$$/, ''):'__x',",
-                    "        lt = App.locale.text[tx];",
-                    "    if (t!=tx){",
-                    "        if (lt) this.setFieldLabel(lt);",
-                    "        else{",
-                    "            this.setFieldLabel(tx);",
-                    "            me.unlocalized[tx] = '';",
-                    "        }",
-                    "    }",
-                    "//invalid text!",
-                    "    t = this.invalidText;",
-                    "    tx = t?t.replace(/\\$$/, ''):'__x';",
-                    "    lt = App.locale.text[tx];",
-                    "    if (t!=tx){",
-                    "        if (lt) this.invalidText = lt;",
-                    "        else{",
-                    "            this.invalidText = tx;",
-                    "            me.unlocalized[tx] = '';",
-                    "        }",
-                    "    }",
-                    "});"
-                ],
-                "name": "beforerender",
-                "scope": "me",
-                "designer|targetType": "Ext.form.Panel",
-                "designer|controlQuery": "form",
-                "designer|userClassName": "onFormBeforeRender"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen44416",
-            "type": "controlleraction",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "onSliderBeforeRender",
-                "implHandler": [
-                    "    var c = abstractcomponent,",
-                    "        t = c.getFieldLabel(),",
-                    "        tx = t?t.replace(/\\$$/, ''):'__x',",
-                    "        lt = App.locale.text[tx];",
-                    "    if (t!=tx){",
-                    "        if (lt) c.setFieldLabel(lt);",
-                    "        else{",
-                    "            c.setFieldLabel(tx);",
-                    "            this.unlocalized[tx] = '';",
-                    "        }",
-                    "    }"
-                ],
-                "name": "beforerender",
-                "scope": "me",
-                "designer|targetType": "Ext.slider.Single",
-                "designer|controlQuery": "slider",
-                "designer|userClassName": "onSliderBeforeRender"
+                "designer|userClassName": "localizeMenuItem"
             },
             "customConfigs": [],
             "expanded": true

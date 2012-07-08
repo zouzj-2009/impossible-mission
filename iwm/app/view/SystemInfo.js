@@ -34,7 +34,7 @@ Ext.define('MyApp.view.SystemInfo', {
                     xtype: 'tabpanel',
                     border: 0,
                     padding: 10,
-                    activeTab: 3,
+                    activeTab: 2,
                     region: 'center',
                     items: [
                         {
