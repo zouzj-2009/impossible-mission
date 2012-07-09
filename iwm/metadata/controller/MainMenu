@@ -13,7 +13,7 @@
     "customConfigs": [],
     "designerId": "f1f29fd6-c384-4dc8-8c23-ea89658d8ed7",
     "$viewOrder": 3,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen70896",
@@ -26,7 +26,16 @@
             "userConfig": {
                 "fn": "onButtonClick",
                 "implHandler": [
-                    "var id=button.getId();",
+                    "var id = button.getId(),",
+                    "    app = this.application;",
+                    "if (id == 'logout'){",
+                    "    Ext.Msg.confirm(button.confirmtitle, button.confirmation, function(btn){",
+                    "        if (btn == 'yes'){",
+                    "            app.fireEvent('logout');",
+                    "        }",
+                    "    });",
+                    "    return;",
+                    "}",
                     "Ext.getCmp('content').getLayout().setActiveItem(id);"
                 ],
                 "name": "click",

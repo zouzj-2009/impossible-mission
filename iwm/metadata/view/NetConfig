@@ -27,7 +27,7 @@
     ],
     "designerId": "0cb07030-ef49-489e-a10f-eedd0b0b4b82",
     "$viewOrder": 10,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen13211",
@@ -116,9 +116,9 @@
                                 "itemId": "delete",
                                 "text": "Delete",
                                 "designer|userClassName": "MyButton2",
-                                "layout|flex": null,
                                 "confirmation": "IP address of current visited server %ipaddress% will be deleted, you need restrart the web application, are you sure?$",
-                                "confirmtitle": "Warning"
+                                "confirmtitle": "Warning",
+                                "layout|flex": null
                             },
                             "customConfigs": [
                                 {

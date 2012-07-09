@@ -18,7 +18,16 @@ Ext.define('MyApp.controller.MainMenu', {
     alias: 'controller.mainmenu',
 
     onButtonClick: function(button, e, options) {
-        var id=button.getId();
+        var id = button.getId(),
+            app = this.application;
+        if (id == 'logout'){
+            Ext.Msg.confirm(button.confirmtitle, button.confirmation, function(btn){
+                if (btn == 'yes'){
+                    app.fireEvent('logout');
+                }
+            });
+            return;
+        }
         Ext.getCmp('content').getLayout().setActiveItem(id);
     },
 

@@ -100,7 +100,7 @@ Ext.define('MyApp.controller.DBinder', {
         for(var i=0; i<search.length; i++){
             var btn = c.down('button#'+search[i]);
             if (!btn) continue;
-            if (!btn.getInitialConfig().iconCls) btn.setIconCls('x-btn-tool-form-'+search[i]);
+            if (!btn.iconCls) btn.setIconCls('x-btn-tool-form-'+search[i]);
         }
 
     },
@@ -110,8 +110,8 @@ Ext.define('MyApp.controller.DBinder', {
         //binder scope
         var binder = this;
         if (!successful) return true;//updated by proxyErrors
-        binder.application.fireEvent('indicatorchange', cfg, {success:successful}, {action:'read', seq:10, seqmax:10});
-
+        if (cfg.mid != 'xlogin') binder.application.fireEvent('indicatorchange', cfg, {success:successful}, {action:'read', seq:10, seqmax:10});
+        if (cfg.mid == 'login') binder.application.fireEvent('loginloaded', store, cfg.dbc);
     },
 
     processWrite: function(store, operation, cfg) {
@@ -122,13 +122,15 @@ Ext.define('MyApp.controller.DBinder', {
         var binder = this;
         if(!operation.wasSuccessful()) alert('write fail!');
         binder.application.fireEvent('indicatorchange', cfg, operation.response, operation);
-
+        if (cfg.mid == 'login' && operation.action == 'update') binder.application.fireEvent('loginok', cfg.host);
     },
 
     processErrors: function(proxy, response, operation, cfg) {
         //called by onProxyException, when proxy error OR PENDING received
         //binder scope
         var binder = this;
+        if (cfg.mid == 'login' && operation.action == 'update')
+        binder.application.fireEvent('loginfail', cfg.host);
         if (!response){
             //todo:when batch op,say create/destroy if create fail, ...
             alert('Fatal error, operation.'+operation.action+' no response! error:'+operation.error);
@@ -145,6 +147,9 @@ Ext.define('MyApp.controller.DBinder', {
                 operation.params = params;
                 cfg.store.getProxy().doRequest(operation, operation.origincallback, operation.originscope);
             }else{//fail
+                if (cfg.mid != 'login' && response.authfail){
+                    binder.application.fireEvent('loginfail', cfg.host);
+                }
                 //why, the operation of new action not cleaned?
                 if (operation.params && operation.params.pending) delete operation.params.pending;
                 binder.application.fireEvent('indicatorchange', cfg, response, operation);
@@ -235,7 +240,7 @@ Ext.define('MyApp.controller.DBinder', {
             });
         }
 
-        if (del && !del.getInitialConfig().iconCls) del.setIconCls('x-btn-tool-grid-delete');
+        if (del && !del.iconCls) del.setIconCls('x-btn-tool-grid-delete');
         if (del && !cfg.ignore['delete']){
             del.on('click', function(button, event, options){
                 var records = grid.getSelectionModel().getSelection(),
@@ -257,7 +262,7 @@ Ext.define('MyApp.controller.DBinder', {
         }
 
         var ref = grid.down('#refresh');
-        if (ref && !ref.getInitialConfig().iconCls) ref.setIconCls('x-btn-tool-grid-refresh');
+        if (ref && !ref.iconCls) ref.setIconCls('x-btn-tool-grid-refresh');
         if (ref && !cfg.ignore.refresh){
             ref.on('click', function(button, event, options){
                 var params = Ext.applyIf({refresh:true, docheck:true}, store.reloadParams),
@@ -276,7 +281,7 @@ Ext.define('MyApp.controller.DBinder', {
         }
 
         var dwn = grid.down('#download');
-        if (dwn && !dwn.getInitialConfig().iconCls) dwn.setIconCls('x-btn-tool-grid-download');
+        if (dwn && !dwn.iconCls) dwn.setIconCls('x-btn-tool-grid-download');
         if (dwn && !cfg.ignore.download){
             var url = store.getProxy().url+'&_download=1&_id=syslog&_act=read';
             dwn.on('click', function(button, event, options){
@@ -401,9 +406,17 @@ Ext.define('MyApp.controller.DBinder', {
                 if (uld.usingaction) form.url += '&_act='+uld.usingaction;
                 else form.url += '&_act=create';
                 if (form.getForm().isValid()){
+                    if (cfg.mid == 'login'){
+                    }
                     //todo: process pending state!
-                    var p = {
+                    var v = form.getForm().getFieldValues(), //checkbox need all submit
+                    //sotre,record maybe exist or not
+                    m = form.getForm().getRecord(),
+                    p = {
                         success: function(form, action) {
+                            if (cfg.mid == 'login'){
+                                me.application.fireEvent('loginok', cfg.host);
+                            }
                             me.application.fireEvent('datadone',{
                                 model: cfg.modelId, 
                                 action: 'upload',
@@ -415,6 +428,9 @@ Ext.define('MyApp.controller.DBinder', {
                             });
                         },
                         failure: function(form, action) {
+                            if (cfg.mid == 'login'){
+                                me.application.fireEvent('loginfail', cfg.host);
+                            }
                             me.application.fireEvent('datadone',{
                                 model: cfg.modelId, 
                                 action: 'upload',
@@ -428,19 +444,21 @@ Ext.define('MyApp.controller.DBinder', {
                         params: uld.uploadparams,
                         url: form.url
                     };
-                    var v = form.getForm().getFieldValues(), //checkbox need all submit
-                    //sotre,record maybe exist or not
-                    m = form.getForm().getRecord();
                     //confirmation
                     var cfm = me.getConfirmation(button, v, m, store);
                     if (cfm){
                         Ext.Msg.confirm(cfm.title, cfm.msg, function(btn){
                             if (btn == 'yes'){
+                                //for using model's convert stuff etc.
+                                m.set(v);
+                                form.getForm().loadRecord(m);
                                 form.submit(p);
                             }else{//todo:
                             }
                         });
                     }else{
+                        m.set(v);
+                        form.getForm().loadRecord(m);
                         form.submit(p);
                     }
                 }

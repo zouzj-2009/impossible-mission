@@ -56,6 +56,14 @@ Ext.define('MyApp.controller.Localizer', {
             }
         });
         //todo: load proper lang setting js here
+        var lang = this.application.defaultlang;
+        Ext.ns('App.locale');
+        if (!App.locale.text){
+            App.locale.text = {};
+            //todo: need synchorized loading here!
+            Ext.Loader.loadScript('js/lang.'+lang+'.js');
+        }
+
     },
 
     localizeButton: function(button) {

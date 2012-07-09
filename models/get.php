@@ -1,6 +1,8 @@
 <?php
 @ob_start();
 ob_implicit_flush(true);
+if ($_GET['sid']) session_id($_GET['sid']);
+session_start();
 include_once("../models/dbconnector.php");
 date_default_timezone_set('Asia/Chongqing');
 declare(ticks=1);
@@ -81,7 +83,7 @@ try{
 		$mod->sendPending("$mid $action xstarted ...", 0);
 		//usleep(200);
 		if ($action == 'read')
-			$output = $mod->$action($params);
+			$output = $mod->$action($params, $records);
 		else
 			$output = $mod->$action($params, $records);
 		echo "$mid.$action.$jid done.\n";
@@ -90,8 +92,8 @@ try{
 	}else{
 		$action = $_REQUEST['_act'];
 		$mid = strtolower($_REQUEST['mid']);
+		@ob_start();
 		$data = array();
-
 		if (getenv('REQUEST_METHOD') == 'POST'){
 			$r = $_POST;
 			$r = array_merge($r, $_FILES);
@@ -104,6 +106,12 @@ try{
 		$callback = $_REQUEST['callback'];
 		foreach(explode(',', 'seqid,callback,PHPSESSID') as $key){
 			unset($params[$key]);
+		}
+
+		if ($mid != 'login' && $mid != 'language'){
+			if (!$_SESSION['loginuser']){
+				throw new Exception("user not login!", -1);
+			}
 		}
 
 		$jid=$_REQUEST['jid'];
@@ -121,7 +129,6 @@ try{
 			$jid = '';
 		}
 //end for debug
-		@ob_start();
 		ob_implicit_flush(true);
 		//todo: do security check, or will be DOSed!
 		if (!$jid){//todo: service maybe exit before we request, so check existense must be done.
@@ -163,7 +170,7 @@ try{
 				}
 			}else{
 				if ($action == 'read')
-					$output = $mod->$action($params);
+					$output = $mod->$action($params, $records);
 				else
 					$output = $mod->$action($params, $records);
 			}
@@ -237,6 +244,7 @@ try{
 	$output = array(
 		success=>false,
 		msg=>$e->getMessage(),
+		authfail=>$e->getCode()==-1,
 	);
 	if ($env) print_r($output);
 }

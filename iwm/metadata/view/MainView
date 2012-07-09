@@ -7,16 +7,16 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|initialView": true,
         "cls": "viewbg",
         "id": "viewport",
         "layout": "border",
-        "designer|userClassName": "MyViewport"
+        "designer|userClassName": "MainView",
+        "designer|userAlias": "mainview"
     },
     "customConfigs": [],
     "designerId": "c4225a9f-0a16-4f21-a0a6-9f036f492228",
     "$viewOrder": 0,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen3154",
@@ -30,6 +30,7 @@
                 "border": null,
                 "cls": "whitebg",
                 "height": 80,
+                "id": "menuarea",
                 "padding": "0px 50px ",
                 "shadow": null,
                 "designer|userClassName": "MyContainer",
@@ -131,6 +132,37 @@
                     "masterInstanceId": "ExtBox1-ext-gen3484"
                 },
                 {
+                    "id": "ExtBox1-ext-gen26019",
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "confirmtitle": "Logout Confirm$",
+                        "confirmation": "Are you sure to logout?",
+                        "id": "logout",
+                        "itemId": "refresh",
+                        "iconCls": "logout"
+                    },
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "confirmtitle",
+                            "type": "string"
+                        },
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "confirmation",
+                            "type": "string"
+                        }
+                    ],
+                    "iconCls": "icon-linkedinstance",
+                    "expanded": true,
+                    "masterInstanceId": "ExtBox1-ext-gen3484"
+                },
+                {
                     "id": "ExtBox1-ext-gen63919",
                     "type": "button",
                     "reference": {
@@ -168,7 +200,7 @@
                 "layout|region": "center"
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen21788",

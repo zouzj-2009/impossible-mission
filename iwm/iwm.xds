@@ -21,12 +21,11 @@
     "topInstanceFileMap": {
         "c4225a9f-0a16-4f21-a0a6-9f036f492228": {
             "paths": [
-                "metadata/view/MyViewport",
-                "app/view/override/MyViewport.js",
-                "app/view/MyViewport.js",
-                "app/view/Viewport.js"
+                "metadata/view/MainView",
+                "app/view/override/MainView.js",
+                "app/view/MainView.js"
             ],
-            "className": "MyViewport"
+            "className": "MainView"
         },
         "139fb1ed-4c93-4c25-b580-a9fe140e0c1d": {
             "paths": [
@@ -472,12 +471,6 @@
             ],
             "className": "timezone"
         },
-        "673555de-c116-4f86-8c3e-f9d60c0204a0": {
-            "paths": [
-                "metadata/resource/js1"
-            ],
-            "className": "js1"
-        },
         "e1636392-c952-46f9-a690-7eb5b68b3f6e": {
             "paths": [
                 "metadata/controller/Localizer",
@@ -485,6 +478,59 @@
                 "app/controller/Localizer.js"
             ],
             "className": "Localizer"
+        },
+        "c8ae736f-9e6a-42cb-8855-7b18d7335cb2": {
+            "paths": [
+                "metadata/view/Login",
+                "app/view/override/Login.js",
+                "app/view/Login.js",
+                "app/view/Viewport.js"
+            ],
+            "className": "Login"
+        },
+        "5a74ce3c-719c-4ddd-b9a9-4a3da758b180": {
+            "paths": [
+                "metadata/model/language",
+                "app/model/override/language.js",
+                "app/model/language.js"
+            ],
+            "className": "language"
+        },
+        "b30b01f3-caba-4fe3-8729-e062515c3c69": {
+            "paths": [
+                "metadata/model/login",
+                "app/model/override/login.js",
+                "app/model/login.js"
+            ],
+            "className": "login"
+        },
+        "72f976f6-31fa-4be1-b80a-5e44f2928b8f": {
+            "paths": [
+                "metadata/controller/Login",
+                "app/controller/override/Login.js",
+                "app/controller/Login.js"
+            ],
+            "className": "Login"
+        },
+        "3d9cd8c7-4d49-4333-956a-49d9ff9190a7": {
+            "paths": [
+                "metadata/resource/js1"
+            ],
+            "className": "js1"
+        },
+        "4fa35701-bfcc-4711-8faf-d197b4beac1b": {
+            "paths": [
+                "metadata/store/language",
+                "app/store/override/language.js",
+                "app/store/language.js"
+            ],
+            "className": "language"
+        },
+        "818277a7-3c36-4bf1-9e85-9f05fb83d5f5": {
+            "paths": [
+                "metadata/resource/js2"
+            ],
+            "className": "js2"
         }
     },
     "expandedState": {

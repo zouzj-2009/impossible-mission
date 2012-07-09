@@ -14,10 +14,11 @@
  */
 
 Ext.define('MyApp.view.Viewport', {
-    extend: 'MyApp.view.MyViewport',
+    extend: 'MyApp.view.Login',
     renderTo: Ext.getBody(),
     requires: [
-        'MyApp.view.MyViewport',
-        'MyApp.view.Messager'
+        'MyApp.view.MainView',
+        'MyApp.view.Messager',
+        'MyApp.view.Login'
     ]
 });

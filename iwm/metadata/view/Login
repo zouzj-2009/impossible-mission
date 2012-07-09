@@ -1,0 +1,270 @@
+{
+    "id": "ExtBox1-ext-gen4851",
+    "type": "window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|initialView": true,
+        "autoShow": true,
+        "height": 264,
+        "id": "loginwindow",
+        "width": 412,
+        "layout": "fit",
+        "bodyBorder": false,
+        "closeAction": "hide",
+        "iconCls": "login",
+        "title": "Login$",
+        "defaultFocus": "upload",
+        "modal": true,
+        "designer|userClassName": "Login"
+    },
+    "customConfigs": [],
+    "designerId": "c8ae736f-9e6a-42cb-8855-7b18d7335cb2",
+    "$viewOrder": 17,
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen5227",
+            "type": "form",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": 0,
+                "id": "loginform",
+                "padding": 10,
+                "layout": "vbox",
+                "bodyCls": "x-border-layout-ct",
+                "bodyPadding": 20,
+                "title": null,
+                "designer|userClassName": "MyForm19",
+                "databind": "{\nmodel:'login',\nloadparams:{_getlogingon:true},\nautoload: true\n}",
+                "container|align": "center",
+                "container|pack": "center",
+                "container|padding": null,
+                "dock": null
+            },
+            "customConfigs": [
+                {
+                    "group": "(Custom Properties)",
+                    "name": "databind",
+                    "type": "object"
+                }
+            ],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen14841",
+                    "type": "displayfield",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": null,
+                        "itemId": "logon",
+                        "maxHeight": null,
+                        "maxWidth": null,
+                        "minHeight": null,
+                        "minWidth": null,
+                        "padding": null,
+                        "width": 300,
+                        "name": "logingon",
+                        "value": "localhost",
+                        "fieldLabel": "Loging on",
+                        "labelAlign": "right",
+                        "designer|userClassName": "MyDisplayField",
+                        "layout|margins": "0 0 5 0"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen5918",
+                    "type": "textfield",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "maxWidth": null,
+                        "width": 300,
+                        "name": "username",
+                        "fieldLabel": "Username",
+                        "labelAlign": "right",
+                        "allowBlank": false,
+                        "designer|userClassName": "MyTextField27"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen6157",
+                    "type": "textfield",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "maxWidth": null,
+                        "width": 300,
+                        "inputType": "password",
+                        "name": "password",
+                        "fieldLabel": "Password",
+                        "labelAlign": "right",
+                        "designer|userClassName": "MyTextField28"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen6408",
+                    "type": "combobox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "itemId": "language",
+                        "maxWidth": null,
+                        "width": 300,
+                        "name": "language",
+                        "value": "zh_cn",
+                        "fieldLabel": "Language",
+                        "labelAlign": "right",
+                        "displayField": "language",
+                        "queryMode": "local",
+                        "store": "language",
+                        "valueField": "lang",
+                        "designer|userClassName": "MyComboBox10",
+                        "databind": "{\nmodel:'language',\nautoload:true\n}"
+                    },
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen34812",
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onLanguageChange",
+                                "implHandler": [
+                                    "var lang = field.getValue();",
+                                    "Ext.Loader.loadScript('js/lang.'+lang+'.js');"
+                                ],
+                                "name": "change",
+                                "scope": "me",
+                                "designer|userClassName": "onLanguageChange"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen6673",
+                    "type": "button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": null,
+                        "itemId": "upload",
+                        "minWidth": 120,
+                        "padding": null,
+                        "iconCls": "x-btn-tool-login",
+                        "text": "Login$",
+                        "designer|userClassName": "MyButton38",
+                        "usingaction": "read",
+                        "layout|flex": null,
+                        "layout|margins": "15 0 20 0",
+                        "formBind": true
+                    },
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "usingaction",
+                            "type": "string"
+                        }
+                    ],
+                    "expanded": true
+                }
+            ]
+        },
+        {
+            "id": "ExtBox1-ext-gen22588",
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onWindowShow",
+                "implHandler": [
+                    "var w = abstractcomponent,",
+                    "    logon = '';",
+                    "if (w.logonip) ",
+                    "logon += w.logonip; ",
+                    "else ",
+                    "logon += location.host;",
+                    "if (w.logonhost) logon += '('+w.logonhost+')';",
+                    "w.down('#logon').setValue(logon);",
+                    ""
+                ],
+                "name": "show",
+                "scope": "me",
+                "designer|userClassName": "onWindowShow"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen12410",
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onLoginwindowClose",
+                "designer|params": [
+                    "window"
+                ],
+                "implHandler": [
+                    "if (!Ext.getCmp('menuarea')) {",
+                    "    window.show();",
+                    "    return false;",
+                    "}"
+                ],
+                "name": "close",
+                "scope": "me",
+                "designer|userClassName": "onLoginwindowClose"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

@@ -15,7 +15,7 @@
     "customConfigs": [],
     "designerId": "110df611-400a-4ab8-90bb-097dc36687c1",
     "$viewOrder": 14,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen4335",
@@ -219,9 +219,9 @@
                         "iconCls": "x-btn-tool-export",
                         "text": "Export ...$",
                         "designer|userClassName": "MyButton28",
-                        "layout|flex": null,
                         "confirmation": "Would you like to download the chart as an image?<br/>Warning! This is a cloud service, Data will be sent to website:sencha.io)",
-                        "confirmtitle": "Download Confirm$"
+                        "confirmtitle": "Download Confirm$",
+                        "layout|flex": null
                     },
                     "customConfigs": [
                         {

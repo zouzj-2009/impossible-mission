@@ -1,5 +1,5 @@
 {
-    "id": "ExtBox1-ext-gen35931",
+    "id": "ExtBox1-ext-gen13667",
     "type": "jsresource",
     "reference": {
         "name": "items",
@@ -7,10 +7,10 @@
     },
     "codeClass": null,
     "userConfig": {
-        "url": "js/lang.zh_cn.js"
+        "url": "js/encrypt.js"
     },
     "customConfigs": [],
-    "designerId": "3d9cd8c7-4d49-4333-956a-49d9ff9190a7",
-    "$viewOrder": 2,
+    "designerId": "818277a7-3c36-4bf1-9e85-9f05fb83d5f5",
+    "$viewOrder": 3,
     "expanded": true
 }

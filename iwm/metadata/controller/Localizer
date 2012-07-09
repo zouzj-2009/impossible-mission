@@ -35,7 +35,15 @@
                     "application"
                 ],
                 "implHandler": [
-                    "//todo: load proper lang setting js here"
+                    "//todo: load proper lang setting js here",
+                    "var lang = this.application.defaultlang;",
+                    "Ext.ns('App.locale');",
+                    "if (!App.locale.text){",
+                    "    App.locale.text = {};",
+                    "    //todo: need synchorized loading here!",
+                    "    Ext.Loader.loadScript('js/lang.'+lang+'.js');",
+                    "}",
+                    ""
                 ],
                 "designer|userClassName": "init"
             },
@@ -79,7 +87,7 @@
                     "}else if (c.isXType('fieldset')){",
                     "    this.localizeFieldSet(c);",
                     "}",
-                    "    "
+                    ""
                 ],
                 "name": "beforerender",
                 "scope": "me",
@@ -255,7 +263,7 @@
                 "implHandler": [
                     "var t = field.getFieldLabel(),",
                     "    tx = t?t.replace(/\\$$/, ''):'__x',",
-                    "lt = App.locale.text[tx];",
+                    "    lt = App.locale.text[tx];",
                     "if (lt) field.setFieldLabel(lt);",
                     "else{",
                     "    if (t) field.setFieldLabel(tx);",

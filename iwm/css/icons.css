@@ -29,6 +29,9 @@
 .x-btn-tool-form-refresh{
 	background: url(../images/refresh.16.png) center top !important;
 }
+.x-btn-tool-login{
+	background: url(../images/login.16.png) center top !important;
+}
 .x-btn-tool-grid-refresh{
 	background: url(../images/refresh.16.png) center top !important;
 }
@@ -89,6 +92,11 @@
 }
 .x-64-btn .maintain {
 	background: url(../images/maintain.64.png) center top !important;
+	height: 64px;
+	width:64px;
+}
+.x-64-btn .logout {
+	background: url(../images/logout.64.png) center top !important;
 	height: 64px;
 	width:64px;
 }

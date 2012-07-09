@@ -37,7 +37,9 @@ Ext.application({
         'logfiles',
         'hostsetting',
         'license',
-        'timezone'
+        'timezone',
+        'language',
+        'login'
     ],
     stores: [
         'networkinfo',
@@ -53,10 +55,11 @@ Ext.application({
         'ScsiHost',
         'SysLog',
         'LinkSpeed',
-        'General'
+        'General',
+        'language'
     ],
     views: [
-        'MyViewport',
+        'MainView',
         'BigIconBtn',
         'SystemInfo',
         'NetworkSetting',
@@ -80,7 +83,8 @@ Ext.application({
         'MaskDBClick',
         'DataIndiacator',
         'EventManager',
-        'Localizer'
+        'Localizer',
+        'Login'
     ],
     defaultlang: 'zh_cn',
 
