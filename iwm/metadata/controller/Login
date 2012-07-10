@@ -15,7 +15,7 @@
     "customConfigs": [],
     "designerId": "72f976f6-31fa-4be1-b80a-5e44f2928b8f",
     "$viewOrder": 6,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen41035",
@@ -35,6 +35,7 @@
                     "    lwin = Ext.getCmp('loginwindow');",
                     "",
                     "lwin.hide();",
+                    "lwin.logouted = false;",
                     "if (!app.mainview){",
                     "    app.mainview = Ext.widget('mainview', {serverip: host});",
                     "}"
@@ -113,8 +114,10 @@
                     "var store = this.loginstore,",
                     "    params = Ext.apply({_logout:true}, store.reloadParams);",
                     "store.load({params:params});",
-                    "Ext.getCmp('loginwindow').show();",
-                    "    "
+                    "var lwin = Ext.getCmp('loginwindow');",
+                    "lwin.logouted = true;",
+                    "lwin.show();",
+                    ""
                 ],
                 "name": "logout",
                 "designer|userClassName": "onLogout"

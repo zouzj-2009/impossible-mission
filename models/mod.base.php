@@ -131,8 +131,8 @@ function loadcfg_in_file($usingfile, $mod, $type='current'){
 	$fn = "/etc/sysconfig/syscfg_$f[0]";
 	if ($type != 'current') $fn .= ".$type";	//can load xxx.default xxx.nnn. ...
 	if (!file_exists($fn)){
-		return array();
-		//throw new Exception ("config file $fn not exists!");
+		//return array();
+		throw new Exception ("config file $fn not exists!");
 	}
 	$sec = $f[1]?$f[1]:$mod;
 	$cfg = $this->read_config($fn, $sec);

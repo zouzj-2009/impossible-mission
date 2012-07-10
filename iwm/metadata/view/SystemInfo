@@ -17,7 +17,7 @@
     "customConfigs": [],
     "designerId": "13967b33-2221-4a18-91c2-98dbd3a1badf",
     "$viewOrder": 2,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen4171",
@@ -565,7 +565,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen18752",
@@ -656,7 +656,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "width": 113,
+                                "width": 177,
                                 "dataIndex": "type",
                                 "text": "Type",
                                 "designer|userClassName": "MyColumn52",
@@ -669,7 +669,37 @@
                                     "type": "object"
                                 }
                             ],
-                            "expanded": true
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen5112",
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "renderer",
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "implHandler": [
+                                            "return '<span class=\"x-column-icon x-hardware-'+value.replace(' ', '_').toLowerCase()+'\"> </span><span class=x-column-icon-text>'+value+'</span>';"
+                                        ],
+                                        "designer|userClassName": "renderer"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-basic-function",
+                                    "expanded": true
+                                }
+                            ]
                         },
                         {
                             "id": "ExtBox1-ext-gen37201",

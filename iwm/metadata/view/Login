@@ -254,7 +254,7 @@
                     "window"
                 ],
                 "implHandler": [
-                    "if (!Ext.getCmp('menuarea')) {",
+                    "if (!Ext.getCmp('menuarea') || window.logouted) {",
                     "    window.show();",
                     "    return false;",
                     "}"

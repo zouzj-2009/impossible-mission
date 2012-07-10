@@ -25,6 +25,7 @@ Ext.define('MyApp.controller.Login', {
             lwin = Ext.getCmp('loginwindow');
 
         lwin.hide();
+        lwin.logouted = false;
         if (!app.mainview){
             app.mainview = Ext.widget('mainview', {serverip: host});
         }
@@ -51,7 +52,9 @@ Ext.define('MyApp.controller.Login', {
         var store = this.loginstore,
             params = Ext.apply({_logout:true}, store.reloadParams);
         store.load({params:params});
-        Ext.getCmp('loginwindow').show();
+        var lwin = Ext.getCmp('loginwindow');
+        lwin.logouted = true;
+        lwin.show();
 
     },
 

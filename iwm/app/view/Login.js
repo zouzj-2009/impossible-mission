@@ -150,7 +150,7 @@ Ext.define('MyApp.view.Login', {
     },
 
     onLoginwindowClose: function(window) {
-        if (!Ext.getCmp('menuarea')) {
+        if (!Ext.getCmp('menuarea') || window.logouted) {
             window.show();
             return false;
         }

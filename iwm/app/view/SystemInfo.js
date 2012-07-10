@@ -225,7 +225,10 @@ Ext.define('MyApp.view.SystemInfo', {
                                 },
                                 {
                                     xtype: 'gridcolumn',
-                                    width: 113,
+                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        return '<span class="x-column-icon x-hardware-'+value.replace(' ', '_').toLowerCase()+'"> </span><span class=x-column-icon-text>'+value+'</span>';
+                                    },
+                                    width: 177,
                                     dataIndex: 'type',
                                     text: 'Type',
                                     databind: {

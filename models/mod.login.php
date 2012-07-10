@@ -7,10 +7,11 @@ var $logfiles = array(
 //	pcilog=>'/var/log/env_lspci',
 );
 
-var $savechangeconfig = array(usingfile=>'/etc/sysconfig/adminusers');
+var $savechangeconfig = array(usingfile=>'adminusers');
 function read($params, $records=array()){
 	if (!$params){//get all
 		//todo: check login, only check in user, and have rights can do this!
+		if (!$_SESSION[loginuser]) throw new Exception ('user not login!', -1);
 		$r = $this->load_sysconfig();
 		if (!$r) $r = array(array(
 			username=>'admin',
