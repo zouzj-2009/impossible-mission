@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.VirtPortal', {
+Ext.define('iwm.store.VirtPortal', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.virtportal'
+        'iwm.model.virtportal'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.VirtPortal', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'virtportal',
-            model: 'MyApp.model.virtportal',
+            model: 'iwm.model.virtportal',
             groupField: 'targetname',
             remoteGroup: true,
             sorters: {

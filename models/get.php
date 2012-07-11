@@ -15,6 +15,7 @@ if ($env){
 	$_REQUEST['_act'] = $env[0];
 	$_REQUEST['mid'] = $env[1];
 	$_REQUEST['jid'] = $env[2];
+	$_SESSION['loginuser'] = array(username=>'admin');
 	$debugpreq = $env[3];
 	if ($debugpreq){
 		$preq = serialize(array(

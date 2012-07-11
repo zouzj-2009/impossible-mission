@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.access', {
+Ext.define('iwm.model.access', {
     extend: 'Ext.data.Model',
 
     fields: [

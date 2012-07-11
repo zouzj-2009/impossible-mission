@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.SystemInfo', {
+Ext.define('iwm.view.SystemInfo', {
     extend: 'Ext.container.Container',
     alias: 'widget.sysinfo',
     requires: [
-        'MyApp.view.LinkSpeedBar'
+        'iwm.view.LinkSpeedBar'
     ],
 
     height: 400,

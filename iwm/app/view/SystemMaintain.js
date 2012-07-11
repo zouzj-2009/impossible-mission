@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.SystemMaintain', {
+Ext.define('iwm.view.SystemMaintain', {
     extend: 'Ext.container.Container',
     alias: 'widget.systemmaintain',
     requires: [
-        'MyApp.view.SysMaintain'
+        'iwm.view.SysMaintain'
     ],
 
     height: 250,

@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.General', {
+Ext.define('iwm.store.General', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.scsidisk'
+        'iwm.model.scsidisk'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.General', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'MyStore',
-            model: 'MyApp.model.scsidisk'
+            model: 'iwm.model.scsidisk'
         }, cfg)]);
     }
 });

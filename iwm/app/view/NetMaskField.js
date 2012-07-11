@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.NetMaskField', {
+Ext.define('iwm.view.NetMaskField', {
     extend: 'Ext.form.field.Text',
     alias: 'widget.netmaskfield',
 

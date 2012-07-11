@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.targetlist', {
+Ext.define('iwm.model.targetlist', {
     extend: 'Ext.data.Model',
 
     fields: [

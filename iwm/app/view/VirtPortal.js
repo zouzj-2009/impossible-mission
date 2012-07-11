@@ -13,13 +13,13 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.VirtPortal', {
+Ext.define('iwm.view.VirtPortal', {
     extend: 'Ext.form.Panel',
     alias: 'widget.virtportal',
     requires: [
-        'MyApp.view.IpField',
-        'MyApp.view.NetMaskField',
-        'MyApp.view.TargetListField'
+        'iwm.view.IpField',
+        'iwm.view.NetMaskField',
+        'iwm.view.TargetListField'
     ],
 
     border: 0,

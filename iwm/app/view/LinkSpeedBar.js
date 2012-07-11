@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.LinkSpeedBar', {
+Ext.define('iwm.view.LinkSpeedBar', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.linkspeedbar',
 

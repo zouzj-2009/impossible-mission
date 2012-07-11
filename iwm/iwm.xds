@@ -481,12 +481,11 @@
         },
         "c8ae736f-9e6a-42cb-8855-7b18d7335cb2": {
             "paths": [
-                "metadata/view/Login",
-                "app/view/override/Login.js",
-                "app/view/Login.js",
-                "app/view/Viewport.js"
+                "metadata/view/ChangePassword",
+                "app/view/override/ChangePassword.js",
+                "app/view/ChangePassword.js"
             ],
-            "className": "Login"
+            "className": "ChangePassword"
         },
         "5a74ce3c-719c-4ddd-b9a9-4a3da758b180": {
             "paths": [
@@ -531,13 +530,22 @@
                 "metadata/resource/js2"
             ],
             "className": "js2"
+        },
+        "c9bb67e2-83dc-4adc-8c5b-5641f724af57": {
+            "paths": [
+                "metadata/view/Login",
+                "app/view/override/Login.js",
+                "app/view/Login.js",
+                "app/view/Viewport.js"
+            ],
+            "className": "Login"
         }
     },
     "expandedState": {
         "data": true,
         "model": true,
         "component": true,
-        "controller": true,
+        "controller": false,
         "resource": true
     }
 }

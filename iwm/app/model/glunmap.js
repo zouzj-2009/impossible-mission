@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.glunmap', {
+Ext.define('iwm.model.glunmap', {
     extend: 'Ext.data.Model',
     alias: 'model.glunmap',
 

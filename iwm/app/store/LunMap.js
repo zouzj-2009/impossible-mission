@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.LunMap', {
+Ext.define('iwm.store.LunMap', {
     extend: 'Ext.data.Store',
     alias: 'store.lunmap',
     requires: [
-        'MyApp.model.lunmap'
+        'iwm.model.lunmap'
     ],
 
     constructor: function(cfg) {
@@ -26,7 +26,7 @@ Ext.define('MyApp.store.LunMap', {
         me.callParent([Ext.apply({
             autoLoad: false,
             storeId: 'lunmap',
-            model: 'MyApp.model.lunmap'
+            model: 'iwm.model.lunmap'
         }, cfg)]);
     }
 });

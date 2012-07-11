@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.LinkSpeed', {
+Ext.define('iwm.store.LinkSpeed', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.etherspeed'
+        'iwm.model.etherspeed'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.LinkSpeed', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'MyJsonPStore11',
-            model: 'MyApp.model.etherspeed',
+            model: 'iwm.model.etherspeed',
             proxy: {
                 type: 'jsonp',
                 url: 'http://localhost/iwm/data/ifconfig.php',

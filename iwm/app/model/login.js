@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.login', {
+Ext.define('iwm.model.login', {
     extend: 'Ext.data.Model',
 
     fields: [
@@ -35,6 +35,26 @@ Ext.define('MyApp.model.login', {
         },
         {
             name: 'language'
+        },
+        {
+            convert: function(v, rec) {
+                //todo: encrypt password
+                if (v)
+                return hex_md5(v);
+                else
+                return v;
+            },
+            name: 'newpassword'
+        },
+        {
+            convert: function(v, rec) {
+                //todo: encrypt password
+                if (v)
+                return hex_md5(v);
+                else
+                return v;
+            },
+            name: 'retyping'
         }
     ]
 });

@@ -86,7 +86,7 @@
                         "dock": "top"
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen48003",
@@ -290,7 +290,7 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen40160",
@@ -426,6 +426,24 @@
                                         "text": "Refresh",
                                         "designer|userClassName": "MyButton24",
                                         "formBind": false
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen5271",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "changepassword",
+                                        "margin": "0 0 0 20",
+                                        "padding": null,
+                                        "text": "Change password ...",
+                                        "designer|userClassName": "MyButton40"
                                     },
                                     "customConfigs": [],
                                     "expanded": true

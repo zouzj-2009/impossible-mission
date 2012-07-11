@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.controller.Localizer', {
+Ext.define('iwm.controller.Localizer', {
     extend: 'Ext.app.Controller',
 
     unlocalized: {

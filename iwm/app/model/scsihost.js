@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.scsihost', {
+Ext.define('iwm.model.scsihost', {
     extend: 'Ext.data.Model',
 
     fields: [

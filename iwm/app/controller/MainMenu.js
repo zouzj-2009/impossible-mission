@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.controller.MainMenu', {
+Ext.define('iwm.controller.MainMenu', {
     extend: 'Ext.app.Controller',
     alias: 'controller.mainmenu',
 

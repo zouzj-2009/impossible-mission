@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.logfiles', {
+Ext.define('iwm.model.logfiles', {
     extend: 'Ext.data.Model',
 
     fields: [

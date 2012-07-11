@@ -13,16 +13,16 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.MainView', {
+Ext.define('iwm.view.MainView', {
     extend: 'Ext.container.Viewport',
     alias: 'widget.mainview',
     requires: [
-        'MyApp.view.BigIconBtn',
-        'MyApp.view.SystemInfo',
-        'MyApp.view.NetworkSetting',
-        'MyApp.view.iSCSISetting',
-        'MyApp.view.DiskSetting',
-        'MyApp.view.SystemMaintain'
+        'iwm.view.BigIconBtn',
+        'iwm.view.SystemInfo',
+        'iwm.view.NetworkSetting',
+        'iwm.view.iSCSISetting',
+        'iwm.view.DiskSetting',
+        'iwm.view.SystemMaintain'
     ],
 
     cls: 'viewbg',

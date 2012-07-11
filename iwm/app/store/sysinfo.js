@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.sysinfo', {
+Ext.define('iwm.store.sysinfo', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.pciinfo'
+        'iwm.model.pciinfo'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.sysinfo', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'sysinfo',
-            model: 'MyApp.model.pciinfo'
+            model: 'iwm.model.pciinfo'
         }, cfg)]);
     }
 });

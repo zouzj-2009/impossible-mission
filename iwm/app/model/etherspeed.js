@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.etherspeed', {
+Ext.define('iwm.model.etherspeed', {
     extend: 'Ext.data.Model',
 
     fields: [

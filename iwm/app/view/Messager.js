@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.Messager', {
+Ext.define('iwm.view.Messager', {
     extend: 'Ext.container.Container',
     alias: 'widget.messager',
 

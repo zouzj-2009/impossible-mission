@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.targetlist', {
+Ext.define('iwm.store.targetlist', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.targetlist'
+        'iwm.model.targetlist'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.targetlist', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'targetlist',
-            model: 'MyApp.model.targetlist'
+            model: 'iwm.model.targetlist'
         }, cfg)]);
     }
 });

@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.language', {
+Ext.define('iwm.store.language', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.language'
+        'iwm.model.language'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.language', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'MyArrayStore1',
-            model: 'MyApp.model.language',
+            model: 'iwm.model.language',
             data: [
                 {
                     language: '中文(Simpilifed Chanese)',

@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.iscsiconn', {
+Ext.define('iwm.store.iscsiconn', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.iscsiconn'
+        'iwm.model.iscsiconn'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.iscsiconn', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'iscsiconn',
-            model: 'MyApp.model.iscsiconn'
+            model: 'iwm.model.iscsiconn'
         }, cfg)]);
     }
 });

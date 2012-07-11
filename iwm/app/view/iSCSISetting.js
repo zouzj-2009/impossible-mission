@@ -13,12 +13,12 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.iSCSISetting', {
+Ext.define('iwm.view.iSCSISetting', {
     extend: 'Ext.container.Container',
     alias: 'widget.iscsisetting',
     requires: [
-        'MyApp.view.LunMap',
-        'MyApp.view.VirtPortal'
+        'iwm.view.LunMap',
+        'iwm.view.VirtPortal'
     ],
 
     height: 600,

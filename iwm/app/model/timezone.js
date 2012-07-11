@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.timezone', {
+Ext.define('iwm.model.timezone', {
     extend: 'Ext.data.Model',
 
     fields: [

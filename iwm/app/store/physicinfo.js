@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.physicinfo', {
+Ext.define('iwm.store.physicinfo', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.netconfig'
+        'iwm.model.netconfig'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.physicinfo', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'physicinfo',
-            model: 'MyApp.model.netconfig'
+            model: 'iwm.model.netconfig'
         }, cfg)]);
     }
 });

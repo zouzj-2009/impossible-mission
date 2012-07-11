@@ -8,6 +8,7 @@ var $logfiles = array(
 );
 
 var $savechangeconfig = array(usingfile=>'adminusers');
+var $keyids = array('username');
 function read($params, $records=array()){
 	if (!$params){//get all
 		//todo: check login, only check in user, and have rights can do this!
@@ -18,7 +19,14 @@ function read($params, $records=array()){
 			password=>md5('admin'),
 		));
 		return array(success=>true, data=>$r);
-	}else if ($records){//check login!
+	}else if ($records){//check login! or read old
+		if ($params[_readold]){
+			if (!$_SESSION[loginuser]) throw new Exception('user not login!', -1);
+			return array(
+				success=>true,
+				data=>$this->load_sysconfig('current', $records),
+			);
+		}
 		$users = $this->load_sysconfig();
 		if (!$users) $users = array(array(
 			username=>'admin',
@@ -31,7 +39,7 @@ function read($params, $records=array()){
 				return array(success=>true, data=>array($login), msg=>'login ok.');
 			}
 		}
-		return array(success=>false, authfail=>true, msg=>'login fail.');
+		return array(success=>false, authfail=>true, msg=>'login fail.', login=>$login, users=>$users);
 	}else if ($params[_logout]){
 		unset($_SESSION['loginuser']);
 	}
@@ -42,6 +50,17 @@ function read($params, $records=array()){
 		language=>'zh_cn',
 	);
 	return array(success=>true, data=>array($r), msg=>'get loging information done.');
+}
+
+function do_update($params, $records, $olds){
+	$r = array_shift($records);
+	if (!$r['newpassword']) throw new Exception('new password not set!');
+	$o = array_shift($olds);
+	if (!$o) throw new Exception("old user $r[username] not found!");
+	if ($o[password] != $r[password]) throw new Exception("old password mismatch!");
+	$updated = array(username=>$o[username], password=>$r[newpassword]);
+	return array(success=>true, updated=>array($updated), changes=>1);
+	
 }
 
 }

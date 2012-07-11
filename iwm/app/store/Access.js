@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.Access', {
+Ext.define('iwm.store.Access', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.access'
+        'iwm.model.access'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.Access', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'access',
-            model: 'MyApp.model.access',
+            model: 'iwm.model.access',
             data: [
                 {
                     value: 'rw',

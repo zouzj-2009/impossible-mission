@@ -13,12 +13,13 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.Viewport', {
-    extend: 'MyApp.view.Login',
+Ext.define('iwm.view.Viewport', {
+    extend: 'iwm.view.Login',
     renderTo: Ext.getBody(),
     requires: [
-        'MyApp.view.MainView',
-        'MyApp.view.Messager',
-        'MyApp.view.Login'
+        'iwm.view.MainView',
+        'iwm.view.Messager',
+        'iwm.view.ChangePassword',
+        'iwm.view.Login'
     ]
 });

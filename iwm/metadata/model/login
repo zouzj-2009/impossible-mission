@@ -12,7 +12,7 @@
     "customConfigs": [],
     "designerId": "b30b01f3-caba-4fe3-8729-e062515c3c69",
     "$viewOrder": 20,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen19421",
@@ -102,6 +102,94 @@
             },
             "customConfigs": [],
             "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen15638",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "newpassword",
+                "designer|userClassName": "MyField107"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen15951",
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "convert",
+                        "designer|params": [
+                            "v",
+                            "rec"
+                        ],
+                        "implHandler": [
+                            "//todo: encrypt password",
+                            "if (v)",
+                            "return hex_md5(v);",
+                            "else",
+                            "return v;"
+                        ],
+                        "designer|userClassName": "convert"
+                    },
+                    "customConfigs": [],
+                    "iconCls": "icon-basic-function",
+                    "expanded": true
+                }
+            ]
+        },
+        {
+            "id": "ExtBox1-ext-gen46011",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "retyping",
+                "designer|userClassName": "MyField108"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen46568",
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "convert",
+                        "designer|params": [
+                            "v",
+                            "rec"
+                        ],
+                        "implHandler": [
+                            "//todo: encrypt password",
+                            "if (v)",
+                            "return hex_md5(v);",
+                            "else",
+                            "return v;"
+                        ],
+                        "designer|userClassName": "convert"
+                    },
+                    "customConfigs": [],
+                    "iconCls": "icon-basic-function",
+                    "expanded": true
+                }
+            ]
         }
     ]
 }

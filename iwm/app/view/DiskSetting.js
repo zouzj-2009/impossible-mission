@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.DiskSetting', {
+Ext.define('iwm.view.DiskSetting', {
     extend: 'Ext.container.Container',
     alias: 'widget.disksetting',
     requires: [
-        'MyApp.view.DiskMgmt'
+        'iwm.view.DiskMgmt'
     ],
 
     height: 250,

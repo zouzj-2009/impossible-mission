@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.BigIconBtn', {
+Ext.define('iwm.view.BigIconBtn', {
     extend: 'Ext.button.Button',
     alias: 'widget.bigiconbtn',
 

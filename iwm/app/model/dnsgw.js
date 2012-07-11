@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.dnsgw', {
+Ext.define('iwm.model.dnsgw', {
     extend: 'Ext.data.Model',
 
     fields: [

@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.language', {
+Ext.define('iwm.model.language', {
     extend: 'Ext.data.Model',
 
     fields: [

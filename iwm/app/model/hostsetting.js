@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.hostsetting', {
+Ext.define('iwm.model.hostsetting', {
     extend: 'Ext.data.Model',
 
     fields: [

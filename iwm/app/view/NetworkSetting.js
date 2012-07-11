@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.NetworkSetting', {
+Ext.define('iwm.view.NetworkSetting', {
     extend: 'Ext.container.Container',
     alias: 'widget.networksetting',
     requires: [
-        'MyApp.view.NetConfig'
+        'iwm.view.NetConfig'
     ],
 
     height: 250,

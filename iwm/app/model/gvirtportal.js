@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.gvirtportal', {
+Ext.define('iwm.model.gvirtportal', {
     extend: 'Ext.data.Model',
 
     fields: [

@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.controller.DBinder', {
+Ext.define('iwm.controller.DBinder', {
     extend: 'Ext.app.Controller',
     alias: 'controller.dbinder',
 
@@ -412,11 +412,10 @@ Ext.define('MyApp.controller.DBinder', {
                     var v = form.getForm().getFieldValues(), //checkbox need all submit
                     //sotre,record maybe exist or not
                     m = form.getForm().getRecord(),
+                    type = uld.usingaction?uld.usingaction:'create',
                     p = {
+                        type: type,
                         success: function(form, action) {
-                            if (cfg.mid == 'login'){
-                                me.application.fireEvent('loginok', cfg.host);
-                            }
                             me.application.fireEvent('datadone',{
                                 model: cfg.modelId, 
                                 action: 'upload',
@@ -426,16 +425,15 @@ Ext.define('MyApp.controller.DBinder', {
                                 component: form,
                                 domask:false
                             });
+                            if (Ext.isFunction(form.onactiondone))
+                            form.onactiondone(action.result.success, action, m, v, me, cfg);
                         },
                         failure: function(form, action) {
-                            if (cfg.mid == 'login'){
-                                me.application.fireEvent('loginfail', cfg.host);
-                            }
                             me.application.fireEvent('datadone',{
                                 model: cfg.modelId, 
                                 action: 'upload',
-                                success: action.result.success,
-                                donetext: action.result.msg,
+                                success: false,
+                                donetext: action.result?action.result.msg:cfg.mid+'/'+type+' client error.',
                                 indicatortype: 'normal',
                                 component: form,
                                 domask:false
@@ -445,6 +443,7 @@ Ext.define('MyApp.controller.DBinder', {
                         url: form.url
                     };
                     //confirmation
+                    if (!m) m = store.add(v).shift();
                     var cfm = me.getConfirmation(button, v, m, store);
                     if (cfm){
                         Ext.Msg.confirm(cfm.title, cfm.msg, function(btn){
@@ -516,7 +515,7 @@ Ext.define('MyApp.controller.DBinder', {
 
     createStore: function(dbc, cfg, binder) {
         console.log('create db '+cfg.model+' for '+cfg.itemid);
-        var app = 'MyApp';
+        var app = this.application.name;
         //create store by cfg.model
         //if (Ext.isObject(dbc.store)) return dbc.store;
         Ext.syncRequire(app+'.model.'+cfg.model);

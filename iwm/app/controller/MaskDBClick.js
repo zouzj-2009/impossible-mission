@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.controller.MaskDBClick', {
+Ext.define('iwm.controller.MaskDBClick', {
     extend: 'Ext.app.Controller',
     alias: 'controller.maskdbclick',
 

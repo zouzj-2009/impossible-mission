@@ -8,7 +8,7 @@
     "codeClass": null,
     "userConfig": {
         "views": [
-            "Login"
+            "ChangePassword"
         ],
         "designer|userClassName": "Login"
     },
@@ -28,7 +28,8 @@
             "userConfig": {
                 "fn": "onLoginok",
                 "designer|params": [
-                    "host"
+                    "host",
+                    "login"
                 ],
                 "implHandler": [
                     "var app = this,",
@@ -36,6 +37,7 @@
                     "",
                     "lwin.hide();",
                     "lwin.logouted = false;",
+                    "this.logged = login;",
                     "if (!app.mainview){",
                     "    app.mainview = Ext.widget('mainview', {serverip: host});",
                     "}"
@@ -117,10 +119,58 @@
                     "var lwin = Ext.getCmp('loginwindow');",
                     "lwin.logouted = true;",
                     "lwin.show();",
+                    "this.mainview.destroy();",
+                    "delete this.mainview;",
                     ""
                 ],
                 "name": "logout",
                 "designer|userClassName": "onLogout"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen8979",
+            "type": "applicationaction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onChangePassword",
+                "designer|params": [
+                    "login"
+                ],
+                "implHandler": [
+                    "var user = login?login.username:this.logged.username,",
+                    "    form = this.getView('ChangePassword').create({user:user});",
+                    "form.show();"
+                ],
+                "name": "changepassword",
+                "designer|userClassName": "onChangePassword"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen39072",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onButtonClick",
+                "implHandler": [
+                    "this.application.fireEvent('changepassword', button.login);"
+                ],
+                "name": "click",
+                "scope": "me",
+                "designer|targetType": "Ext.button.Button",
+                "designer|controlQuery": "button#changepassword",
+                "designer|userClassName": "onButtonClick"
             },
             "customConfigs": [],
             "expanded": true

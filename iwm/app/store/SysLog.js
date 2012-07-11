@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.SysLog', {
+Ext.define('iwm.store.SysLog', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.syslog'
+        'iwm.model.syslog'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.SysLog', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'MyJsonPStore10',
-            model: 'MyApp.model.syslog'
+            model: 'iwm.model.syslog'
         }, cfg)]);
     }
 });

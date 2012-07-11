@@ -62,10 +62,11 @@
             "DiskMgmt",
             "SysMaintain",
             "LinkSpeedBar",
-            "LunMap"
+            "LunMap",
+            "changepassword"
         ],
         "autoCreateViewport": true,
-        "name": "MyApp",
+        "name": "iwm",
         "controllers": [
             "DBinder",
             "MainMenu",
@@ -100,7 +101,7 @@
             "userConfig": {
                 "fn": "launch",
                 "implHandler": [
-                    "//alert('pause for debug');"
+                    ""
                 ],
                 "designer|userClassName": "launch"
             },

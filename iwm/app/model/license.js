@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.license', {
+Ext.define('iwm.model.license', {
     extend: 'Ext.data.Model',
 
     fields: [

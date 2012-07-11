@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.DiskMgmt', {
+Ext.define('iwm.view.DiskMgmt', {
     extend: 'Ext.form.Panel',
     alias: 'widget.diskmgmt',
 

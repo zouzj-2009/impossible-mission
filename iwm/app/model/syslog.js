@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.syslog', {
+Ext.define('iwm.model.syslog', {
     extend: 'Ext.data.Model',
 
     fields: [

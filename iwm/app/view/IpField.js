@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.IpField', {
+Ext.define('iwm.view.IpField', {
     extend: 'Ext.form.field.Text',
     alias: 'widget.ipfield',
 

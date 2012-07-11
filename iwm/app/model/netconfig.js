@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.netconfig', {
+Ext.define('iwm.model.netconfig', {
     extend: 'Ext.data.Model',
 
     fields: [

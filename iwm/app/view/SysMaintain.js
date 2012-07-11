@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.SysMaintain', {
+Ext.define('iwm.view.SysMaintain', {
     extend: 'Ext.form.Panel',
     alias: 'widget.sysmaintain',
 
@@ -182,6 +182,12 @@ Ext.define('MyApp.view.SysMaintain', {
                                             itemId: 'refresh',
                                             text: 'Refresh',
                                             formBind: false
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'changepassword',
+                                            margin: '0 0 0 20',
+                                            text: 'Change password ...'
                                         }
                                     ]
                                 }

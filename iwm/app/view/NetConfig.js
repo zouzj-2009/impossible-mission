@@ -13,12 +13,12 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.NetConfig', {
+Ext.define('iwm.view.NetConfig', {
     extend: 'Ext.form.Panel',
     alias: 'widget.netconfig',
     requires: [
-        'MyApp.view.IpField',
-        'MyApp.view.NetMaskField'
+        'iwm.view.IpField',
+        'iwm.view.NetMaskField'
     ],
 
     cls: 'shadowpanel',

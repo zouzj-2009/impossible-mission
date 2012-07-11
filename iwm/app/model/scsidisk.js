@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.scsidisk', {
+Ext.define('iwm.model.scsidisk', {
     extend: 'Ext.data.Model',
 
     fields: [

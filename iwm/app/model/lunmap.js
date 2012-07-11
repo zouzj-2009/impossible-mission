@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.lunmap', {
+Ext.define('iwm.model.lunmap', {
     extend: 'Ext.data.Model',
 
     fields: [

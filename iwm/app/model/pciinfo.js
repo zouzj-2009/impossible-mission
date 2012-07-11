@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.pciinfo', {
+Ext.define('iwm.model.pciinfo', {
     extend: 'Ext.data.Model',
 
     fields: [

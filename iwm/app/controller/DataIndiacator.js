@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.controller.DataIndiacator', {
+Ext.define('iwm.controller.DataIndiacator', {
     extend: 'Ext.app.Controller',
     alias: 'controller.dataindicator',
 

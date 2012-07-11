@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.niclist', {
+Ext.define('iwm.model.niclist', {
     extend: 'Ext.data.Model',
 
     fields: [

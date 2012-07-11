@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.ScsiHost', {
+Ext.define('iwm.store.ScsiHost', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.scsihost'
+        'iwm.model.scsihost'
     ],
 
     constructor: function(cfg) {
@@ -24,7 +24,7 @@ Ext.define('MyApp.store.ScsiHost', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'MyJsonPStore9',
-            model: 'MyApp.model.scsihost',
+            model: 'iwm.model.scsihost',
             data: [
                 {
                     hostid: 'host1',

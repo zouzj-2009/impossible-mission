@@ -13,10 +13,10 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.netconfig', {
+Ext.define('iwm.store.netconfig', {
     extend: 'Ext.data.Store',
     requires: [
-        'MyApp.model.netconfig'
+        'iwm.model.netconfig'
     ],
 
     constructor: function(cfg) {
@@ -25,7 +25,7 @@ Ext.define('MyApp.store.netconfig', {
         me.callParent([Ext.apply({
             autoLoad: false,
             storeId: 'netconfig',
-            model: 'MyApp.model.netconfig',
+            model: 'iwm.model.netconfig',
             sorters: {
                 property: 'physicdevice'
             }

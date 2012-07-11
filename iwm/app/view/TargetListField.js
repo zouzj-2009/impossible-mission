@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.TargetListField', {
+Ext.define('iwm.view.TargetListField', {
     extend: 'Ext.form.field.ComboBox',
     alias: 'widget.targetlistfield',
 

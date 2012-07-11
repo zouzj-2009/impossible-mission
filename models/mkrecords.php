@@ -1,10 +1,10 @@
 <?php
 echo 'records="'.addslashes(json_encode(array(
 array(
-	sourceip=>'192.253.253.111',
-	netmask=>'255.255.255.255',
-	targetid=>'1023',
-	access=>'rw',
+	username=>'admin',
+	password=>'e2fc714c4727ee9395f324cd2e7f331f',
+	newpassword=>'0cc175b9c0f1b6a831c399e269772661',
+	retyping=>'0cc175b9c0f1b6a831c399e269772661',
 ),
 ))).'"'."\n";
 ?>

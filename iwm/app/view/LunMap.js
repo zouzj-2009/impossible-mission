@@ -13,13 +13,13 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.LunMap', {
+Ext.define('iwm.view.LunMap', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.lunmap',
     requires: [
-        'MyApp.view.IpField',
-        'MyApp.view.NetMaskField',
-        'MyApp.view.TargetListField'
+        'iwm.view.IpField',
+        'iwm.view.NetMaskField',
+        'iwm.view.TargetListField'
     ],
 
     border: 0,

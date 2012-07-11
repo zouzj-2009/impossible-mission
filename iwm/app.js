@@ -73,10 +73,11 @@ Ext.application({
         'DiskMgmt',
         'SysMaintain',
         'LinkSpeedBar',
-        'LunMap'
+        'LunMap',
+        'changepassword'
     ],
     autoCreateViewport: true,
-    name: 'MyApp',
+    name: 'iwm',
     controllers: [
         'DBinder',
         'MainMenu',
@@ -89,7 +90,7 @@ Ext.application({
     defaultlang: 'zh_cn',
 
     launch: function() {
-        //alert('pause for debug');
+
     }
 
 });

@@ -31,7 +31,7 @@ var $defaultcmds = array(
 	read=>null,
 );
 var $batchsupport = array(// false|true|'one_by_one'
-	update=>true, create=>'one_by_one', destroy=>true,
+	update=>'one_by_one', create=>'one_by_one', destroy=>true,
 );
 var $keyids = array('id'); 	//using this keys as record identify
 var $readbeforeupdate = true;	//weather read old data before update
@@ -60,6 +60,7 @@ static $syscfgpconfig = array(
 		type=>'keyvalues_span_lines',
 		matcher=>'/([^:]+): (.*)/',
 		trimkey=>"\t",
+		trimvalue=>"\n",
 	),
 	//debug=>true,
 	//debugall=>true,
@@ -85,7 +86,7 @@ protected function filter_result_by_records($r, $records){
 	$ret = array();
 	foreach($records as $i=>$record){
 		$v = $this->get_record_id($record);
-		foreach($r as $got) if ($v == $this->get_record_id($got)){ $ret[$i] = $got; break; }
+		foreach($r as $got) if ($v == $this->get_record_id($got)){ $ret[] = $got; break; }
 	}
 	return $ret;
 }
@@ -105,7 +106,7 @@ function get_sysconfig($which, $records=null)
 private function write_config($fn, $data){
 	$retry = 3;	
 	$ok = false;
-	while($retry && !($ok = file_put_contents($fn, $data, LOCK_EX))) sleep(1);
+	while($retry-- && !($ok = file_put_contents($fn, $data, LOCK_EX))) sleep(1);
 	if (!$ok) throw new Exception("write config $fn fail!");
 }
 
@@ -145,7 +146,7 @@ function savechanges_in_file($usingfile, $new, $mod, $action, $type='current'){
 	$header = "#last modified: ".date('Y-m-d H:i:s', time())." by $mod.$action\n";
 	$f = explode(".", $usingfile);
 	$fn = "/etc/sysconfig/syscfg_$f[0]";
-	if ($fn != 'current') $fn .= ".$type";	//can load xxx.default xxx.nnn. ...
+	if ($type != 'current') $fn .= ".$type";	//can load xxx.default xxx.nnn. ...
 	$sec = $f[1]?$f[1]:$mod;
 	$data = "{[$sec]\n$header";
 	foreach($new as $i=>$record){
@@ -187,14 +188,13 @@ function savechanges_in_file($usingfile, $new, $mod, $action, $type='current'){
 	return $new;
 }
 
-function load_sysconfig($type='current'){
+function load_sysconfig($type='current', $filterby=array()){
 	$mod = str_replace("MOD_", "", get_class($this));
 	if (!$this->savechangeconfig) throw new Exception("mod has not sysconfig setting!");
 	$usingfile = $this->savechangeconfig[usingfile];
 	if ($usingfile){
 		$this->loginfo(TRACE, 'base', "loading sysconfig[$type] from file $usingfile.");
 		$r = $this->loadcfg_in_file($usingfile, $mod, $type);
-		return $r;
 	}else{
 		$this->loginfo(TRACE, 'base', "loading sysconfig[$type] sysconfig db.");
 		$table = $this->savechangeconfig[talbename];
@@ -203,8 +203,10 @@ function load_sysconfig($type='current'){
 		if ($r){
 			$r = unserialize($r[$type]);
 		}
-		return $r;
 	}
+	if (!$filterby) return $r;
+	$r = $this->filter_result_by_records($r, $filterby);
+	return $r;
 }
 
 function save_sysconfig($type='current'){
@@ -225,6 +227,15 @@ function savechanges($action, $params, $changed, $oldif=null){
 	}
 	$r = $this->read(array(), array());//get all and store it!
 	$new = $r[data];
+	//merge with changed
+	foreach($new as $k=>$record){
+		foreach ($changed as $c){
+			if ($this->get_record_id($c) == $this->get_record_id($record)){
+				$new[$k] = $c; 
+				break;
+			}
+		}
+	}
 	$this->strip_unsaving($new);
 	$mod = $this->mid;
 	if ($usingfile) return $this->savechanges_in_file($usingfile, $new, $mod, $action);
@@ -508,7 +519,7 @@ function update($params, $records){
 					//can be skipped by set an empty do_update function in subclass
 					$r = parent::update($params, array($record));	 
 					$changes += $r[changes];
-					$updated = array_merge(updated, $r[updated]);
+					$updated = array_merge($updated, $r[updated]);
 					$retold[] = $old;
 				}else{
 					if ($cmd){//get update result by cmd
@@ -524,7 +535,7 @@ function update($params, $records){
 					}else{// get update result by do_update of sub_classes
 						$r = $this->do_update($params, array($record), array($old));
 						$changes += $r[changes];
-						$updated = array_merge(updated, $r[updated]);
+						$updated = array_merge($updated, $r[updated]);
 						$retold[] = $old;
 						$okmsg .= $r[msg];
 					}

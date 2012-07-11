@@ -13,19 +13,24 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.controller.Login', {
+Ext.define('iwm.controller.Login', {
     extend: 'Ext.app.Controller',
 
     views: [
-        'Login'
+        'ChangePassword'
     ],
 
-    onLoginok: function(host) {
+    onButtonClick: function(button, e, options) {
+        this.application.fireEvent('changepassword', button.login);
+    },
+
+    onLoginok: function(host, login) {
         var app = this,
             lwin = Ext.getCmp('loginwindow');
 
         lwin.hide();
         lwin.logouted = false;
+        this.logged = login;
         if (!app.mainview){
             app.mainview = Ext.widget('mainview', {serverip: host});
         }
@@ -55,10 +60,23 @@ Ext.define('MyApp.controller.Login', {
         var lwin = Ext.getCmp('loginwindow');
         lwin.logouted = true;
         lwin.show();
+        this.mainview.destroy();
+        delete this.mainview;
 
     },
 
+    onChangePassword: function(login) {
+        var user = login?login.username:this.logged.username,
+            form = this.getView('ChangePassword').create({user:user});
+        form.show();
+    },
+
     init: function() {
+        this.control({
+            "button#changepassword": {
+                click: this.onButtonClick
+            }
+        });
 
         this.application.on({
             loginok: {
@@ -72,6 +90,9 @@ Ext.define('MyApp.controller.Login', {
             },
             logout: {
                 fn: this.onLogout
+            },
+            changepassword: {
+                fn: this.onChangePassword
             }
         });
 
