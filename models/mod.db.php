@@ -1,5 +1,6 @@
 <?php
-class MOD_db{
+include_once("../models/debugee.php");
+class MOD_db extends DEBUGEE{
 
 var $mid;
 var $useservice=array(read=>false, create=>false, update=>false, destroy=>false);
@@ -147,6 +148,7 @@ private function get_create_values($db, $record, &$cols){
 }
 
 function read($params, $records=null){
+	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 //if records supplied, an no condition, will use these records as condition
 
 	$db = $this->opendb();
@@ -202,6 +204,7 @@ private function get_cond_from_records($db, $records, $params){
 }
 
 function update($params, $records){
+	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$db = $this->opendb(true);
 	$table = $this->mid;
 	if ($params[_writetable]) $table = $params[_writetable];
@@ -251,6 +254,7 @@ function update($params, $records){
 }
 
 function destroy($params, $records){
+	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$db = $this->opendb(true);
 	$cond = $params[_condition];
 	$table = $this->mid;
@@ -295,6 +299,7 @@ function destroy($params, $records){
 }
 
 function create($params, $records){
+	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$db = $this->opendb(true);
 	$table = $this->mid;
 	if ($params[_writetable]) $table = $params[_writetable];

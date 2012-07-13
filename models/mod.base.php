@@ -481,6 +481,7 @@ function getid(&$record){
 //IF has not db, use do_read/cmd to get info. usually, no before/after_read needed, all in do_read.
 //don't overwrite this method generally.
 function read($params, $records=null){
+	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$cmd = $this->defaultcmds[read];
 	$msg = null;
 	$next = 'continue';
@@ -552,6 +553,7 @@ function read($params, $records=null){
 //IF has not db, use do_update/cmd to make change. usually, no before_update/after_update needed, all in do_update.
 //don't overwrite this method generally.
 function update($params, $records){
+	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$cmd = $this->defaultcmds[update];
 	$msg = null;
 	$old_records = array(); //read before whole updates
@@ -559,14 +561,17 @@ function update($params, $records){
 	$updated = array();
 	$retold = array(); //for return
 	$okmsg = '';
+	$mustreadold = false;
 	try{
 		if (!$this->batchsupport['update'] && count($records)>1) 
 			throw new Exception("batch update not support, but ".count($records)." are supplied.");
-		if (!$records)//so, the destroy has to do read before destroy records.
-			throw new Exception("update, but null records supplied.");
-		if ($this->readbeforeupdate){
+		if (!$records){//so, the destroy has to do read before destroy records.
+			if (!$params[_condition]) throw new Exception("update, but neither records nor condition supplied.");
+			$mustreadold = true;
+		}
+		if ($mustreadold || $this->readbeforeupdate){
 			$p = $params;
-			$p[_readold] = true;
+			if (!$mustreadold) $p[_readold] = true;
 			//incase write in some table, read in view!
 			if ($this->tablewrite) $p[_writetable] = $this->tablewrite;
 			if (!$cmd && !method_exists($this, 'do_update')){
@@ -576,6 +581,15 @@ function update($params, $records){
 			}
 			if ($r[success]) $old_records = $r[data];
 			else throw new Exception("fail to read old data before update.");
+			if ($mustreadold) $records = $old_records;
+			//return now!
+			if (!$records && !$params[_checknull]) return array(
+				success=>true,
+				old=>$records,
+				updated=>array(),
+				changes=>0,
+				msg=>'update done. nothing changed',
+			);
 		}
 		if (method_exists($this, 'before_update')){
 			$next = $this->before_update($params, $records, $old_records);	
@@ -675,21 +689,25 @@ function update($params, $records){
 }
 
 function destroy($params, $records){
+	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$cmd = $this->defaultcmds[destroy];
 	$msg = null;
 	$okmsg = '';
 	$next = 'continue';
 	$old_records = $records;
 	$destroied = array();
+	$mustreadold = false;
 	$changes = 0;
 	try{
 		if (!$this->batchsupport['destroy'] && count($records)>1) 
 			throw new Exception("batch destroy not support, but ".count($records)." are supplied.");
-		if (!$records)//so, the destroy has to do read before destroy records.
-			throw new Exception("destroy, but null records supplied.");
-		if ($this->readbeforedestroy){
+		if (!$records){//so, the destroy has to do read before destroy records.
+			if (!$params[_condition]) throw new Exception("destroy, but null records supplied.");
+			$mustreadold = true;
+		}
+		if ($mustreadold || $this->readbeforedestroy){
 			$p = $params;
-			$p[_readold] = true;
+			if (!$mustreadold) $p[_readold] = true;
 			//incase write in some table, read in view!
 			if ($this->tablewrite) $p[_writetable] = $this->tablewrite;
 			if (!$cmd && !method_exists($this, 'do_destroy')){
@@ -699,6 +717,15 @@ function destroy($params, $records){
 			}
 			if ($r[success]) $old_records = $r[data];
 			else throw new Exception("fail to read old data before destroy.");
+			if ($mustreadold) $records = $old_records;
+			//return now!
+			if (!$records && !$params[_checknull]) return array(
+				success=>true,
+				old=>$records,
+				updated=>array(),
+				changes=>0,
+				msg=>'destroy done. nothing changed',
+			);
 		}
 		if (method_exists($this, 'before_destroy')){
 			$next = $this->before_destroy($params, $old_records);	
@@ -781,6 +808,7 @@ function destroy($params, $records){
 }
 
 function create($params, $records){
+	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$cmd = $this->defaultcmds[create];
 	$msg = null;
 	$okmsg = '';

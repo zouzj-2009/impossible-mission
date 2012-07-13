@@ -64,10 +64,21 @@ function pharse_cmd($name, $pconfig, $args, &$cmdresult, &$caller, &$log=null, $
 		$cmd = preg_replace("/%[^ ]+%/", '', $cmd);
 	}
 	//todo: using executer to do $pcmd[cmd] with $args
+	//try to get error output
+	$xcmd = '(
+'.$cmd.' 2>/tmp/.cmderr.$$
+ret=$?
+if [ $ret -ne 0 ];then
+	echo -n "#@ERROR@TRACE "
+	cat /tmp/.cmderr.$$
+	echo 
+fi
+exit $ret
+)';
 	if ($executor){
 		$executor->exec($cmd, $out, $retvar);
 	}else{
-		exec($cmd, $out, $retvar);
+		exec($pconfig[errorignore]?$cmd:$xcmd, $out, $retvar);
 	}
 
 	echo "$name: $cmd return $retvar\n";
