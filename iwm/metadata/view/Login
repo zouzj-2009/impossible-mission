@@ -25,7 +25,7 @@
     "customConfigs": [],
     "designerId": "c9bb67e2-83dc-4adc-8c5b-5641f724af57",
     "$viewOrder": 18,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen12841",
@@ -57,7 +57,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen12848",
@@ -232,39 +232,41 @@
                             "type": "string"
                         }
                     ],
-                    "expanded": true
-                },
-                {
-                    "id": "ExtBox1-ext-gen49887",
-                    "type": "basicfunction",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onactiondone",
-                        "designer|params": [
-                            "success",
-                            "action",
-                            "model",
-                            "values",
-                            "controller",
-                            "dbcfg"
-                        ],
-                        "implHandler": [
-                            "if (action.type == 'read'){",
-                            "    if (success)",
-                            "    controller.application.fireEvent('loginok', dbcfg.host, values);",
-                            "    else",
-                            "    controller.application.fireEvent('loginfail', dbcfg.host, values);",
-                            "}",
-                            ""
-                        ],
-                        "designer|userClassName": "onactiondone"
-                    },
-                    "customConfigs": [],
-                    "expanded": true
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen49887",
+                            "type": "basicfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onactiondone",
+                                "designer|params": [
+                                    "success",
+                                    "action",
+                                    "model",
+                                    "values",
+                                    "controller",
+                                    "dbcfg"
+                                ],
+                                "implHandler": [
+                                    "if (action.type == 'read'){",
+                                    "    if (success)",
+                                    "    controller.application.fireEvent('loginok', dbcfg.host, values);",
+                                    "    else",
+                                    "    controller.application.fireEvent('loginfail', dbcfg.host, values);",
+                                    "}",
+                                    ""
+                                ],
+                                "designer|userClassName": "onactiondone"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
                 }
             ]
         },

@@ -38,15 +38,6 @@ Ext.define('iwm.view.Login', {
             items: [
                 {
                     xtype: 'form',
-                    onactiondone: function(success, action, model, values, controller, dbcfg) {
-                        if (action.type == 'read'){
-                            if (success)
-                            controller.application.fireEvent('loginok', dbcfg.host, values);
-                            else
-                            controller.application.fireEvent('loginfail', dbcfg.host, values);
-                        }
-
-                    },
                     border: 0,
                     id: 'loginform',
                     padding: 10,
@@ -123,6 +114,15 @@ Ext.define('iwm.view.Login', {
                         },
                         {
                             xtype: 'button',
+                            onactiondone: function(success, action, model, values, controller, dbcfg) {
+                                if (action.type == 'read'){
+                                    if (success)
+                                    controller.application.fireEvent('loginok', dbcfg.host, values);
+                                    else
+                                    controller.application.fireEvent('loginfail', dbcfg.host, values);
+                                }
+
+                            },
                             itemId: 'upload',
                             minWidth: 120,
                             iconCls: 'x-btn-tool-login',

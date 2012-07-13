@@ -38,9 +38,6 @@ Ext.define('iwm.view.ChangePassword', {
             items: [
                 {
                     xtype: 'form',
-                    onactiondone: function(success, action, model, values, controller, dbcfg) {
-                        if (success) dbcfg.dbc.up('window').close();
-                    },
                     border: 0,
                     padding: 10,
                     layout: {
@@ -109,6 +106,9 @@ Ext.define('iwm.view.ChangePassword', {
                         },
                         {
                             xtype: 'button',
+                            onactiondone: function(success, action, model, values, controller, dbcfg) {
+                                if (success) dbcfg.dbc.up('window').close();
+                            },
                             itemId: 'upload',
                             minWidth: 120,
                             iconCls: 'x-btn-tool-login',

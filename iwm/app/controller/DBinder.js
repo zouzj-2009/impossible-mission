@@ -425,8 +425,8 @@ Ext.define('iwm.controller.DBinder', {
                                 component: form,
                                 domask:false
                             });
-                            if (Ext.isFunction(form.onactiondone))
-                            form.onactiondone(action.result.success, action, m, v, me, cfg);
+                            if (Ext.isFunction(uld.onactiondone))
+                            uld.onactiondone(action.result.success, action, m, v, me, cfg);
                         },
                         failure: function(form, action) {
                             me.application.fireEvent('datadone',{
@@ -507,7 +507,10 @@ Ext.define('iwm.controller.DBinder', {
         if (store.autoLoad||cfg.autoload){
             var params = Ext.applyIf({}, store.reloadParams);
             //store.load({params:params});
+            if (cfg.deferload)
             Ext.defer(store.load, 200, store, [{params:params}]);
+            else
+            store.load({params:params});
             cfg.autoloaded = true;
         }
 

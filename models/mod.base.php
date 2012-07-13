@@ -82,6 +82,56 @@ protected  function get_record_id($record){
 	return $id;
 }
 
+protected function is_exclude_condition($condition){
+	//todo:
+	return false;
+}
+
+protected function prepare_condition($condition){
+	//todo: date, like ...
+	$c = str_replace('AND', '&&', $condition);
+	$c = str_replace('OR', '||', $c);
+/*
+	$c = str_replace('>=', '>>' $c);
+	$c = str_replace('<=', '<<' $c);
+	$c = str_replace('=', '==', $c);
+	$c = str_replace('>>', '>=', $c);
+	$c = str_replace('<<', '<=', $c);
+*/
+	$c = preg_replace('/([a-zA-Z][^ <=>]*) *(>=|<=|<|>|=) */', '$${1} ${2} ', $c);
+	$c = str_replace(' = ', ' == ', $c);
+	//$c = addslashes($c);
+	$c = "\$___conditionresult=($c);";
+	$this->loginfo(DBG, 'base', "prepared condition($c).");
+	return $c;
+}
+
+protected function record_match_condition($___rec, $___condition){
+	$___conditionresult = false;
+	foreach($___rec as $___key=>$___v){
+		$$___key = $___v;
+	//	echo "$___key=".$$___key."\n";
+	}
+	if (eval($___condition) === false){
+		$this->loginfo(TRACE, 'base', "bad condition string($___condition).");
+		print_r($___rec);
+		return false;
+	}
+	return $___conditionresult;
+}
+
+protected function filter_result_by_condition($r, $condition)
+{
+	$this->loginfo(DBG, 'base', "filter result by ($condition).");
+	$ret = array();
+	$isExclude = $this->is_exclude_condition($condition);
+	$condition = $this->prepare_condition($condition);
+	foreach($r as $record){
+		if ($this->record_match_condition($record, $condition))
+			if ($isExclude) continue; else $ret[] = $record;
+	}
+	return $ret;
+}
 protected function filter_result_by_records($r, $records){
 	$ret = array();
 	foreach($records as $i=>$record){
@@ -228,14 +278,40 @@ function savechanges($action, $params, $changed, $oldif=null){
 	$r = $this->read(array(), array());//get all and store it!
 	$new = $r[data];
 	//merge with changed
-	foreach($new as $k=>$record){
-		foreach ($changed as $c){
-			if ($this->get_record_id($c) == $this->get_record_id($record)){
-				$new[$k] = $c; 
-				break;
+	//do we need this? or just read from updated above?
+	//we not save change yet, so, ... these is need
+	if ($action == 'upate'){
+		foreach($new as $k=>$record){
+			foreach ($changed as $c){
+				if ($this->get_record_id($c) == $this->get_record_id($record)){
+					$new[$k] = $c; 
+					break;
+				}
 			}
 		}
+	}else if ($action == 'destroy'){
+		foreach($new as $k=>$record){
+			foreach ($changed as $c){
+				if ($this->get_record_id($c) == $this->get_record_id($record)){
+					unset($new[$k]);
+					break;
+				}
+			}
+		}
+	}else if ($action == 'create'){
+		//don't just merge, maybe duplicated record!
+		//$new = array_merge($new, $changed);
+		foreach($new as $k=>$record){
+			foreach ($changed as $j=>$c){
+				if ($this->get_record_id($c) == $this->get_record_id($record)){
+					unset($changed[$j]);
+					break;
+				}
+			}
+		}
+		$new = array_merge($new, $changed);
 	}
+
 	$this->strip_unsaving($new);
 	$mod = $this->mid;
 	if ($usingfile) return $this->savechanges_in_file($usingfile, $new, $mod, $action);
@@ -447,8 +523,10 @@ function read($params, $records=null){
 		);
 	}
 	//kick out unused old records if indeed
-	if ($params[_readold])
-	$r = $this->filter_result_by_records($r, $records);
+	if ($params[_readold]) $r = $this->filter_result_by_records($r, $records);
+	if ($params[_condition]){
+		$r = $this->filter_result_by_condition($r, $params[_condition]);
+	}
 /*
 	if ($records && $this->readold){
 		$old = array();
@@ -623,7 +701,7 @@ function destroy($params, $records){
 			else throw new Exception("fail to read old data before destroy.");
 		}
 		if (method_exists($this, 'before_destroy')){
-			$next = $this->before_destroy($params, $records);	
+			$next = $this->before_destroy($params, $old_records);	
 			if ($next == 'return'){
 				$this->savechanges('destroy', $params, $records, array());
 				return array(
@@ -663,7 +741,7 @@ function destroy($params, $records){
 			}else{
 				//cmd has to be one_by_one!
 				if ($cmd){//get destroy result by cmd
-					foreach($records as $record){
+					foreach($old_records as $record){
 						$r = $this->callcmd($cmd, $cmderror, $params, $record);
 						if ($cmderror){
 							throw new Exception(get_class($this)." destroy fail: $cmd return fail($cmderror, $r[msg]).");
@@ -673,7 +751,7 @@ function destroy($params, $records){
 						$okmsg .= $r[msg];
 					}
 				}else{// get destroy result by do_destroy of sub_classes
-					$r = $this->do_destroy($params, $records);
+					$r = $this->do_destroy($params, $old_records);
 					$destroied = $r[destroied];
 					$changes = $r[changes];
 					$okmsg .= $r[msg];
@@ -681,10 +759,10 @@ function destroy($params, $records){
 			}
 		}
 		if (method_exists($this, 'after_destroy')){
-			$this->after_destroy($params, $old_records);	
+			$this->after_destroy($params, $destroied);	
 		}
 		if ($cmd || method_exists($this, 'do_destroy')){
-			$this->savechanges('destroy', $params, $records, array());
+			$this->savechanges('destroy', $params, $destroied, array());
 		}
 	}catch(Exception $e){
 		return array(
@@ -785,10 +863,10 @@ function create($params, $records){
 			}
 		}
 		if (method_exists($this, 'after_create')){
-			$this->after_create($params, $old_records);	
+			$this->after_create($params, $created);	
 		}
 		if ($cmd || method_exists($this, 'do_create')){
-			$this->savechanges('create', $params, $new_records, array());
+			$this->savechanges('create', $params, $created, array());
 		}
 	}catch(Exception $e){
 		return array(

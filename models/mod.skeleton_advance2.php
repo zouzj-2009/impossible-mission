@@ -22,12 +22,12 @@ This is skeleton mod for advanced mode:
 		* for before_destroy($params, $records), destroing data will be sent in as $records.
 		* for before_create($params, $records, &new_records), if 'return' returned, new_records must be setted as created records. 
 
-//todo:....
-		* for after_read($params, &$records), records are readed data by previous step, can be modified here. 
+		* for after_read($params, &$records), records are readed by previous step, can be modified here. 
 		* for after_update($params, $records, $old_records), old_records will be sent in.
-		* for after_destroy($params, $records), destroing data will be sent in as $records.
-		* for after_create($params, $records, &new_records), if 'return' returned, new_records must be setted as created records. 
+		* for after_destroy($params, $records), destroied data will be sent in as $records.
+		* for after_create($params, $created), newly created records  will be sent in. 
 			
+//below todo:....
 
 Current setting after changing, will be saved in 'sysconfig' table automaticly.
 
