@@ -1,0 +1,78 @@
+{
+    "id": "ExtBox1-ext-gen17176",
+    "type": "datamodel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "timezone"
+    },
+    "customConfigs": [],
+    "designerId": "f65fe8ca-1717-4bbd-b893-375c6f44e145",
+    "$viewOrder": 18,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen17369",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "shortname",
+                "designer|userClassName": "MyField96"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen17543",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "zone",
+                "designer|userClassName": "MyField97"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen17723",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "name",
+                "designer|userClassName": "MyField98"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen17906",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "timeoffset",
+                "designer|userClassName": "MyField99"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

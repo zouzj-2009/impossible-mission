@@ -1,0 +1,19 @@
+{
+    "id": "ExtBox1-ext-gen45186",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "storeId": "MyJsonPStore10",
+        "model": "syslog",
+        "data": null,
+        "designer|userClassName": "SysLog"
+    },
+    "customConfigs": [],
+    "designerId": "30be8f67-3a7e-4175-9595-96c32cfa399b",
+    "$viewOrder": 10,
+    "expanded": true
+}

@@ -1,0 +1,16 @@
+{
+    "id": "ExtBox1-ext-gen13667",
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "url": "js/encrypt.js"
+    },
+    "customConfigs": [],
+    "designerId": "818277a7-3c36-4bf1-9e85-9f05fb83d5f5",
+    "$viewOrder": 3,
+    "expanded": true
+}

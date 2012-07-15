@@ -33,6 +33,9 @@
 .x-hardware-ide_interface{
 	background: url(../images/disk.16.png) center left !important;
 }
+.x-hardware-scsi_storage_controller{
+	background: url(../images/chip.16.png) center left !important;
+}
 .x-hardware-audio_device{
 	background: url(../images/audio.16.png) center left !important;
 }

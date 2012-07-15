@@ -1,0 +1,18 @@
+{
+    "id": "ExtBox1-ext-gen11717",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "storeId": "sysinfo",
+        "model": "pciinfo",
+        "designer|userClassName": "sysinfo"
+    },
+    "customConfigs": [],
+    "designerId": "ba0491e8-e18b-4e86-919d-20763c245f52",
+    "$viewOrder": 5,
+    "expanded": true
+}

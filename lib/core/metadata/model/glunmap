@@ -1,0 +1,79 @@
+{
+    "id": "ExtBox1-ext-gen4745",
+    "type": "datamodel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "glunmap",
+        "designer|userAlias": "glunmap"
+    },
+    "customConfigs": [],
+    "designerId": "9976b10b-5362-4406-9408-a5693b3da5f4",
+    "$viewOrder": 11,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen4940",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "enabled",
+                "designer|userClassName": "MyField66"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6085",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "chapenabled",
+                "designer|userClassName": "MyField69"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6715",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "targetuser",
+                "designer|userClassName": "MyField67"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6903",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "targetpass",
+                "designer|userClassName": "MyField68"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

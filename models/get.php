@@ -110,7 +110,7 @@ try{
 		}
 
 		if ($mid != 'login' && $mid != 'language'){
-			if (!$_SESSION['loginuser']){
+			if (1&& !$_SESSION['loginuser']){
 				throw new Exception("user not login!", -1);
 			}
 		}

@@ -1,0 +1,26 @@
+{
+    "id": "ExtBox1-ext-gen25699",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "iwm.model.netconfig",
+            "iwm.model.dnsgw"
+        ],
+        "stores": [
+            "iwm.store.netconfig"
+        ],
+        "views": [
+            "iwm.view.NetConfig"
+        ],
+        "designer|userClassName": "NetConfig"
+    },
+    "customConfigs": [],
+    "designerId": "72142859-849f-419a-80fe-629db4d240df",
+    "$viewOrder": 7,
+    "expanded": true
+}

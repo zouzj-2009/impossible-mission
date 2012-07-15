@@ -59,6 +59,7 @@ var $defaultcmds=array(
 );
 
 var $saving_fields = 'sourceip,netmask, taragetid,access,destinationip,targetuser,targetpass,initiatoruser,initiatorpass';
+var $savechangeconfig = array(usingfile=>'lunmap.rules');
 
 var $keyids = array('sourceip','netmask','targetid','destinationip','access');
 

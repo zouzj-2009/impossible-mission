@@ -3,6 +3,12 @@ Features:
 * tasker runing by scheduler, or tigger(howto)
 * bind combo, when dropdown click, show loading icon ...
 * add confirm,notify to client from pharser/shell ..
+* libs for client/server,
+  libs for client:
+	1. define a controller, with required view, store and models
+	2. using requires in other application to include the full path of this controller, such as iwm.controller.NetConfig
+	3. using appx.html, include appx.js before app.js
+	4. include DBinder/Login in all application as default(in app.js)
 
 
 

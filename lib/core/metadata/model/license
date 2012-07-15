@@ -1,0 +1,48 @@
+{
+    "id": "ExtBox1-ext-gen14526",
+    "type": "datamodel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "license"
+    },
+    "customConfigs": [],
+    "designerId": "8b20edcb-c530-4a6d-974d-480d6983a81c",
+    "$viewOrder": 17,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen15543",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "licensefile",
+                "designer|userClassName": "MyField94"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen15716",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "licensedata",
+                "designer|userClassName": "MyField95"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

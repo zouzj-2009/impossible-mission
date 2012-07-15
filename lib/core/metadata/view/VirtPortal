@@ -1,0 +1,633 @@
+{
+    "id": "ExtBox1-ext-gen47428",
+    "type": "form",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "border": 0,
+        "cls": null,
+        "height": null,
+        "minHeight": null,
+        "width": null,
+        "layout": "border",
+        "bodyPadding": 10,
+        "title": "Virtual Portal$",
+        "designer|userClassName": "VirtPortal",
+        "designer|userAlias": "virtportal",
+        "model": null
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "model",
+            "type": "string"
+        }
+    ],
+    "designerId": "b0e5598f-7470-4add-b675-b39b3b6ddb17",
+    "$viewOrder": 7,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen47432",
+            "type": "gridpanel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "hideCollapseTool": false,
+                "overlapHeader": false,
+                "preventHeader": false,
+                "title": "Current Setting$",
+                "titleCollapse": false,
+                "store": "VirtPortal",
+                "designer|userClassName": "MyGridPanel",
+                "databind": "{\nautoload: true,\nmodel:'virtportal',\nbindform: 'newvirtentry'\n}",
+                "layout|collapseMode": null,
+                "layout|region": "center",
+                "layout|split": true
+            },
+            "customConfigs": [
+                {
+                    "group": "(Custom Properties)",
+                    "name": "databind",
+                    "type": "object"
+                }
+            ],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen47445",
+                    "type": "gridview",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyGridView"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen47450",
+                    "type": "checkboxselectionmodel",
+                    "reference": {
+                        "name": "selModel",
+                        "type": "object"
+                    },
+                    "codeClass": "Ext.selection.CheckboxModel",
+                    "userConfig": {
+                        "designer|userClassName": "MyCheckboxSelectionModel"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen47454",
+                    "type": "toolbar",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyToolbar",
+                        "dock": "top"
+                    },
+                    "customConfigs": [],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen47461",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "disabled": true,
+                                "itemId": "delete",
+                                "text": "Delete",
+                                "designer|userClassName": "MyButton2",
+                                "confirmation": "delete exclude(%excludesource%) or include(%includeip%) member??",
+                                "layout|flex": null
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "confirmation",
+                                    "type": "string"
+                                }
+                            ],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen47473",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "refresh",
+                                "text": "Refresh",
+                                "designer|userClassName": "MyButton3",
+                                "confirmation": "reload portal info?",
+                                "layout|flex": null
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "confirmation",
+                                    "type": "string"
+                                }
+                            ],
+                            "expanded": true
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen47486",
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onGridpanelSelectionChange",
+                        "implHandler": [
+                            "if (selections.length==1){",
+                            "    this.loadRecord(selections[0]);",
+                            "    this.down('#delete').enable();",
+                            "}else{",
+                            "    this.down('#delete').disable();",
+                            "}",
+                            "",
+                            ""
+                        ],
+                        "name": "selectionchange",
+                        "scope": "me",
+                        "designer|userClassName": "onGridpanelSelectionChange"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen56813",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "hidden": true,
+                        "dataIndex": "targetid",
+                        "text": "Targetid",
+                        "designer|userClassName": "MyColumn43"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen56825",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "hidden": true,
+                        "dataIndex": "targetname",
+                        "text": "Targetname",
+                        "designer|userClassName": "MyColumn44"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen56837",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "includeip",
+                        "text": "Includeip",
+                        "designer|userClassName": "MyColumn45"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen56849",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "excludesource",
+                        "text": "Excludesource",
+                        "designer|userClassName": "MyColumn46"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen56861",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "count",
+                        "flex": 1,
+                        "text": "Count",
+                        "designer|userClassName": "MyColumn47"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen7020",
+                    "type": "groupinggridfeature",
+                    "reference": {
+                        "name": "features",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "enableGroupingMenu": false,
+                        "enableNoGroups": false,
+                        "designer|userClassName": "MyGroupingFeature"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                }
+            ]
+        },
+        {
+            "id": "ExtBox1-ext-gen85203",
+            "type": "container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "minWidth": 292,
+                "width": 292,
+                "autoScroll": true,
+                "designer|userClassName": "MyContainer14",
+                "layout|region": "west",
+                "layout|split": true
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen8418",
+                    "type": "form",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "border": 0,
+                        "itemId": "gvirtportal",
+                        "bodyCls": "x-border-layout-ct",
+                        "bodyPadding": null,
+                        "title": null,
+                        "designer|userClassName": "MyForm13",
+                        "databind": "{\nautoload:true,\nmodel:'gvirtportal'\n}"
+                    },
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen85215",
+                            "type": "fieldset",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "padding": 5,
+                                "width": null,
+                                "collapsed": false,
+                                "collapsible": true,
+                                "title": "Global Setting$",
+                                "designer|userClassName": "MyFieldSet"
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen85219",
+                                    "type": "checkboxfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": null,
+                                        "name": "enabled",
+                                        "fieldLabel": "Virt Portal$",
+                                        "boxLabel": "Enabled",
+                                        "uncheckedValue": 0,
+                                        "designer|userClassName": "MyCheckbox1"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen17551",
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onCheckboxfieldChange",
+                                                "implHandler": [
+                                                    "if (!newValue){",
+                                                    "    field.up().down('#portalip').allowBlank = true;",
+                                                    "    field.up().down('#portalmask').allowBlank = true;",
+                                                    "    field.up().down('#portalip').setValue('');",
+                                                    "    field.up().down('#portalmask').setValue('');",
+                                                    "}else{",
+                                                    "    field.up().down('#portalip').allowBlank = false;",
+                                                    "    field.up().down('#portalmask').allowBlank = false;",
+                                                    "}",
+                                                    "field.up('form').getForm().isValid();"
+                                                ],
+                                                "name": "change",
+                                                "scope": "me",
+                                                "designer|userClassName": "onCheckboxfieldChange"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen85375",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "portalip",
+                                        "name": "portalip",
+                                        "fieldLabel": "Portal IP"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ucmpIpField"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen93817",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "portalmask",
+                                        "name": "portalmask",
+                                        "fieldLabel": "Portal Mask"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ExtBox1-ext-gen64225"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen95442",
+                                    "type": "textfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "maxcount",
+                                        "fieldLabel": "Max Count",
+                                        "blankText": "default",
+                                        "designer|userClassName": "MyTextField21",
+                                        "layout|anchor": null
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen85255",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "update",
+                                        "text": "Save",
+                                        "designer|userClassName": "MyButton14",
+                                        "confirmation": "change portalip(%portalip%) to %new_portalip%?"
+                                    },
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "confirmation",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen11735",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "refresh",
+                                        "text": "Refresh",
+                                        "designer|userClassName": "MyButton14",
+                                        "confirmation": "reload portal config?"
+                                    },
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "confirmation",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen8090",
+                    "type": "form",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "border": 0,
+                        "itemId": "newvirtentry",
+                        "bodyCls": "x-border-layout-ct",
+                        "bodyPadding": null,
+                        "title": null,
+                        "designer|userClassName": "MyForm12"
+                    },
+                    "customConfigs": [],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen85262",
+                            "type": "fieldset",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "padding": 5,
+                                "width": null,
+                                "collapsed": false,
+                                "collapsible": true,
+                                "title": "Setting",
+                                "designer|userClassName": "MyFieldSet1"
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen85627",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "databind": "{\nautoload: true,\nmodel:'targetlist'\n}",
+                                        "name": "targetname",
+                                        "value": "'default'",
+                                        "fieldLabel": "TargetName",
+                                        "displayField": "shortname",
+                                        "valueField": "targetname"
+                                    },
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "databind",
+                                            "type": "object"
+                                        }
+                                    ],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ucmpTargetListField"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen91514",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "includeip",
+                                        "fieldLabel": "Include IP"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ucmpIpField"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen107414",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "excludesource",
+                                        "fieldLabel": "Exclude Client"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ucmpIpField"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen21697",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "add",
+                                        "iconCls": null,
+                                        "text": "Add new ...",
+                                        "designer|userClassName": "MyButton14",
+                                        "confirmation": "reload portal config?"
+                                    },
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "confirmation",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

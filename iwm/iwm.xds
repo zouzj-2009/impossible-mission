@@ -4,7 +4,7 @@
         "urlPrefix": "http://localhost/iwm/",
         "spacesToIndent": 4,
         "codeGenFormat": "Class",
-        "exportPath": "",
+        "exportPath": "/home/zouzj/testwebroot/iwm.release",
         "extPath": "http://localhost/extjs-4.1.0/",
         "senchaIoKey": "",
         "senchaIoPath": "http://extjs.cachefly.net/designer/IO/",
@@ -539,6 +539,14 @@
                 "app/view/Viewport.js"
             ],
             "className": "Login"
+        },
+        "72142859-849f-419a-80fe-629db4d240df": {
+            "paths": [
+                "metadata/controller/NetConfig",
+                "app/controller/override/NetConfig.js",
+                "app/controller/NetConfig.js"
+            ],
+            "className": "NetConfig"
         }
     },
     "expandedState": {

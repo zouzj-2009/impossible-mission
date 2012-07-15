@@ -75,6 +75,7 @@ static $pconfigs = array(
 );
 
 var $defaultcmds = array(read=>'get', update=>'update', destroy=>'faulty', create=>'faulty');
+var $savechangeconfig = array(usingfile=>'lunmap.global');
 
 }
 ?>

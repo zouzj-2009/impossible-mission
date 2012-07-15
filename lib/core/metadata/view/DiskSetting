@@ -1,0 +1,38 @@
+{
+    "id": "ExtBox1-ext-gen25809",
+    "type": "container",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "height": 250,
+        "width": null,
+        "layout": "border",
+        "designer|userClassName": "DiskSetting",
+        "designer|userAlias": "disksetting"
+    },
+    "customConfigs": [],
+    "designerId": "cbde6fad-eae9-443a-a73e-338ef6390535",
+    "$viewOrder": 5,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen12745",
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|region": "center"
+            },
+            "customConfigs": [],
+            "iconCls": "icon-linkedinstance",
+            "expanded": true,
+            "masterInstanceId": "ExtBox1-ext-gen3986"
+        }
+    ]
+}

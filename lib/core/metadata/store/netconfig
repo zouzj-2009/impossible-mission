@@ -1,0 +1,38 @@
+{
+    "id": "ExtBox1-ext-gen36816",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": false,
+        "storeId": "netconfig",
+        "model": "netconfig",
+        "data": null,
+        "groupField": null,
+        "designer|userClassName": "netconfig"
+    },
+    "customConfigs": [],
+    "designerId": "f8a27a84-e464-4246-b5bc-1e946a60fb43",
+    "$viewOrder": 2,
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen12078",
+            "type": "sorter",
+            "reference": {
+                "name": "sorters",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "property": "physicdevice",
+                "designer|userClassName": "MySorter1"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}
