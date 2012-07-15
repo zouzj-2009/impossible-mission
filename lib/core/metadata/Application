@@ -68,7 +68,7 @@
             "Login"
         ],
         "autoCreateViewport": true,
-        "name": "iwm",
+        "name": "lib_core",
         "controllers": [
             "DBinder",
             "MainMenu",
