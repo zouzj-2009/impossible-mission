@@ -1,0 +1,20 @@
+{
+    "id": "ExtBox1-ext-gen21487",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": false,
+        "storeId": "lunmap",
+        "model": "lunmap",
+        "designer|userClassName": "LunMap",
+        "designer|userAlias": "lunmap"
+    },
+    "customConfigs": [],
+    "designerId": "c6c36c57-a4ae-4ae8-98a6-ab972d8cf579",
+    "$viewOrder": 7,
+    "expanded": true
+}

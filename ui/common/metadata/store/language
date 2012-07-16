@@ -7,7 +7,7 @@
     },
     "codeClass": null,
     "userConfig": {
-        "storeId": "MyArrayStore1",
+        "storeId": "language",
         "model": "language",
         "data": "[{\nlanguage:'中文(Simpilifed Chanese)',\nlang:'zh_cn'\n},{\nlanguage:'English',\nlang:'en'\n}]",
         "designer|userClassName": "language"

@@ -109,7 +109,7 @@ try{
 			unset($params[$key]);
 		}
 
-		if ($mid != 'login' && $mid != 'language'){
+		if (1 && $mid != 'login' && $mid != 'language'){
 			if (1&& !$_SESSION['loginuser']){
 				throw new Exception("user not login!", -1);
 			}

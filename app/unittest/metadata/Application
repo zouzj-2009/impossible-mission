@@ -1,0 +1,43 @@
+{
+    "id": "ExtBox1-ext-gen2293",
+    "type": "application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "testunit"
+        ],
+        "stores": [
+            "testunit"
+        ],
+        "views": [
+            "MainView",
+            "changepassword"
+        ],
+        "autoCreateViewport": true,
+        "name": "app_unittest",
+        "controllers": [
+            "LoadTest"
+        ],
+        "designer|requires": [
+            "net_utils.controller.NetConfig",
+            "net_utils.controller.NicInfo",
+            "net_utils.controller.NetSpeed"
+        ],
+        "defaultlang": "zh_cn"
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "defaultlang",
+            "type": "string"
+        }
+    ],
+    "designerId": "application",
+    "$viewOrder": 0,
+    "iconCls": "icon-application",
+    "expanded": true
+}

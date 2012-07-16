@@ -23,7 +23,8 @@ Ext.application({
         'language'
     ],
     stores: [
-        'language'
+        'language',
+        'login'
     ],
     views: [
         'BigIconBtn',

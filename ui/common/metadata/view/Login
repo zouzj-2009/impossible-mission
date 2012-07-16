@@ -44,7 +44,7 @@
                 "bodyPadding": 20,
                 "title": null,
                 "designer|userClassName": "MyForm19",
-                "databind": "{\nmodel:'login',\nloadparams:{_getlogingon:true},\nautoload: true\n}",
+                "databind": "{\nmodel:'ui_common.model.login',\nloadparams:{_getlogingon:true},\nautoload: true\n}",
                 "container|align": "center",
                 "container|pack": "center",
                 "container|padding": null,
@@ -57,7 +57,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen12848",
@@ -167,10 +167,10 @@
                         "labelAlign": "right",
                         "displayField": "language",
                         "queryMode": "local",
-                        "store": "language",
+                        "store": "ui_common.store.language",
                         "valueField": "lang",
                         "designer|userClassName": "MyComboBox10",
-                        "databind": "{\nmodel:'language',\nautoload:true\n}"
+                        "databind": "{\nmodel:'ui_common.model.language',\nautoload:true\n}"
                     },
                     "customConfigs": [
                         {

@@ -7,7 +7,6 @@
     },
     "codeClass": null,
     "userConfig": {
-        "views": null,
         "designer|userClassName": "EventManager",
         "designer|userAlias": "eventmanager"
     },

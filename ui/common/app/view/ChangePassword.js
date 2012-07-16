@@ -48,7 +48,7 @@ Ext.define('ui_common.view.ChangePassword', {
                     bodyCls: 'x-border-layout-ct',
                     bodyPadding: 20,
                     databind: {
-                        model: 'login'
+                        model: 'ui_common.model.login'
                     },
                     items: [
                         {

@@ -13,7 +13,7 @@
     "customConfigs": [],
     "designerId": "9e4fb2fe-2107-4c8e-947e-b88044a7a23a",
     "$viewOrder": 2,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen32603",
@@ -808,6 +808,13 @@
                     "    }",
                     "}",
                     "",
+                    "if (!Ext.isFunction(store.load)){",
+                    "    console.log('bind fail!, store is not a object.');",
+                    "    console.log(dbc);",
+                    "    console.log(cfg);",
+                    "    return ;",
+                    "}",
+                    "    ",
                     "if (store){//just replace with old",
                     "    if (Ext.isFunction(dbc.bindStore)){",
                     "        dbc.bindStore(store);",

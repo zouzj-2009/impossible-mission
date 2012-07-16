@@ -1,0 +1,19 @@
+{
+    "id": "ExtBox1-ext-gen30457",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "storeId": "MyJsonPStore9",
+        "model": "scsihost",
+        "data": "[{hostid:'host1', hostdesc:'lsi sas adapter'},\n{hostid:'host2',\nhostdesc:'iscsi initiator'}]",
+        "designer|userClassName": "ScsiHost"
+    },
+    "customConfigs": [],
+    "designerId": "92ec950c-c06d-4a67-9c55-bf804e3bb0b3",
+    "$viewOrder": 9,
+    "expanded": true
+}

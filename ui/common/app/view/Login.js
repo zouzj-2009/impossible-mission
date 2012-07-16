@@ -49,7 +49,7 @@ Ext.define('ui_common.view.Login', {
                     bodyCls: 'x-border-layout-ct',
                     bodyPadding: 20,
                     databind: {
-                        model: 'login',
+                        model: 'ui_common.model.login',
                         loadparams: {
                             _getlogingon: true
                         },
@@ -99,10 +99,10 @@ Ext.define('ui_common.view.Login', {
                             labelAlign: 'right',
                             displayField: 'language',
                             queryMode: 'local',
-                            store: 'language',
+                            store: 'ui_common.store.language',
                             valueField: 'lang',
                             databind: {
-                                model: 'language',
+                                model: 'ui_common.model.language',
                                 autoload: true
                             },
                             listeners: {

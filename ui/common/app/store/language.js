@@ -23,7 +23,7 @@ Ext.define('ui_common.store.language', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            storeId: 'MyArrayStore1',
+            storeId: 'language',
             model: 'ui_common.model.language',
             data: [
                 {

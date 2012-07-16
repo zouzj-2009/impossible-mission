@@ -1,0 +1,95 @@
+{
+    "id": "ExtBox1-ext-gen30366",
+    "type": "datamodel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "idProperty": null,
+        "designer|userClassName": "virtportal"
+    },
+    "customConfigs": [],
+    "designerId": "01d85137-4610-4333-be7e-05118f173610",
+    "$viewOrder": 6,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen54088",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "targetid",
+                "designer|userClassName": "MyField39"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen54262",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "targetname",
+                "designer|userClassName": "MyField40"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen54755",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "includeip",
+                "designer|userClassName": "MyField41"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen54938",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "excludesource",
+                "designer|userClassName": "MyField42"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen55123",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "defaultValue": "0",
+                "name": "count",
+                "designer|userClassName": "MyField43"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

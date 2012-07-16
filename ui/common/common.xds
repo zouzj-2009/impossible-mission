@@ -147,6 +147,14 @@
                 "app/controller/DataIndicator.js"
             ],
             "className": "DataIndicator"
+        },
+        "1ceb8e7f-035a-435c-a9f3-ff8613357aa2": {
+            "paths": [
+                "metadata/store/login",
+                "app/store/override/login.js",
+                "app/store/login.js"
+            ],
+            "className": "login"
         }
     },
     "expandedState": {

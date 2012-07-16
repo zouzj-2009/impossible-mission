@@ -12,7 +12,8 @@
             "ui_common.model.login"
         ],
         "stores": [
-            "ui_common.store.language"
+            "ui_common.store.language",
+            "ui_common.store.login"
         ],
         "views": [
             "ui_common.view.Login",
@@ -23,7 +24,7 @@
     "customConfigs": [],
     "designerId": "72f976f6-31fa-4be1-b80a-5e44f2928b8f",
     "$viewOrder": 1,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen41035",

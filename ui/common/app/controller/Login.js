@@ -21,7 +21,8 @@ Ext.define('ui_common.controller.Login', {
         'ui_common.model.login'
     ],
     stores: [
-        'ui_common.store.language'
+        'ui_common.store.language',
+        'ui_common.store.login'
     ],
     views: [
         'ui_common.view.Login',

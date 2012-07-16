@@ -1,0 +1,39 @@
+{
+    "id": "ExtBox1-ext-gen55721",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "storeId": "virtportal",
+        "model": "virtportal",
+        "sortRoot": null,
+        "data": null,
+        "groupField": "targetname",
+        "remoteGroup": true,
+        "designer|userClassName": "VirtPortal"
+    },
+    "customConfigs": [],
+    "designerId": "6630264d-d972-4ec9-b6ee-a7f0e1ba5067",
+    "$viewOrder": 12,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen7673",
+            "type": "sorter",
+            "reference": {
+                "name": "sorters",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "property": "excludesource",
+                "designer|userClassName": "MySorter"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

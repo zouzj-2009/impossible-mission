@@ -1,0 +1,133 @@
+{
+    "id": "ExtBox1-ext-gen49691",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "LoadTest"
+    },
+    "customConfigs": [],
+    "designerId": "604dd598-4ba5-4593-b598-b72498e2ab8d",
+    "$viewOrder": 0,
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen50448",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onButtonClick",
+                "implHandler": [
+                    "var app = this.application,",
+                    "    r = app.uselibs,",
+                    "    v = [],",
+                    "    em = button.up().down('#multiinstance').getValue(),",
+                    "    tp = Ext.getCmp('testpanel');",
+                    "//if (!em) button.disable();",
+                    "if (!tp) return;",
+                    "if (!Ext.isArray(r)) return;",
+                    "Ext.Array.forEach(r, function(cn){",
+                    "    var c = app.getController(cn);",
+                    "    var views = c.views;",
+                    "    if (!Ext.isArray(views)) return;",
+                    "    Ext.Array.forEach(views, function(view){",
+                    "        var itemId = view.replace(/\\.view\\./, '_');",
+                    "        if (!em && tp.down('#'+itemId)){",
+                    "            alert(view+': already created.');",
+                    "            return;",
+                    "        }",
+                    "        var vv = c.getView(view).create({itemId:em?null:itemId, closable:true});",
+                    "        if (!vv){",
+                    "            alert(view+' not found!');",
+                    "            return;",
+                    "        }",
+                    "        tp.add(vv);",
+                    "    });",
+                    "});"
+                ],
+                "name": "click",
+                "scope": "me",
+                "designer|targetType": "Ext.button.Button",
+                "designer|controlQuery": "button#loadtest",
+                "designer|userClassName": "onButtonClick"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen3888",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onComboboxBeforeRender",
+                "implHandler": [
+                    "var c = abstractcomponent,",
+                    "    store = c.getStore();",
+                    "Ext.Array.forEach(this.application.uselibs, function(unit){",
+                    "    store.add({text:unit});",
+                    "});",
+                    ""
+                ],
+                "name": "beforerender",
+                "scope": "me",
+                "designer|targetType": "Ext.form.field.ComboBox",
+                "designer|controlQuery": "combobox#testunitselector",
+                "designer|userClassName": "onComboboxBeforeRender"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen5007",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onComboboxChange",
+                "implHandler": [
+                    "if (!newValue) return;",
+                    "var tp =Ext.getCmp('testpanel');",
+                    "var c = this.application.getController(newValue),",
+                    "    em = field.up().down('#multiinstance').getValue();",
+                    "if (!c) return;",
+                    "var views = c.views;",
+                    "if (!Ext.isArray(views)) return;",
+                    "Ext.Array.forEach(views, function(view){",
+                    "        var itemId = view.replace(/\\.view\\./, '_');",
+                    "        if (!em && tp.down('#'+itemId)){",
+                    "            alert(view+': already created.');",
+                    "            return;",
+                    "        }",
+                    "        var vv = c.getView(view).create({itemId:em?null:itemId, closable:true});",
+                    "    if (!vv){",
+                    "        alert(view+' not found!');",
+                    "        return;",
+                    "    }",
+                    "    tp.add(vv);",
+                    "});"
+                ],
+                "name": "change",
+                "scope": "me",
+                "designer|targetType": "Ext.form.field.ComboBox",
+                "designer|controlQuery": "combobox#testunitselector",
+                "designer|userClassName": "onComboboxChange"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

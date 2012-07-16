@@ -1,0 +1,110 @@
+{
+    "id": "ExtBox1-ext-gen2293",
+    "type": "application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "netconfig",
+            "iscsiconn",
+            "pciinfo",
+            "targetlist",
+            "lunmap",
+            "access",
+            "virtportal",
+            "scsidisk",
+            "scsihost",
+            "syslog",
+            "etherspeed",
+            "glunmap",
+            "dnsgw",
+            "gvirtportal",
+            "niclist",
+            "logfiles",
+            "hostsetting",
+            "license",
+            "timezone",
+            "login",
+            "language"
+        ],
+        "stores": [
+            "networkinfo",
+            "netconfig",
+            "physicinfo",
+            "iscsiconn",
+            "sysinfo",
+            "targetlist",
+            "LunMap",
+            "Access",
+            "VirtPortal",
+            "DiskList",
+            "ScsiHost",
+            "SysLog",
+            "LinkSpeed",
+            "General",
+            "language"
+        ],
+        "views": [
+            "MainView",
+            "BigIconBtn",
+            "SystemInfo",
+            "NetworkSetting",
+            "iSCSISetting",
+            "DiskSetting",
+            "SystemMaintain",
+            "NetMaskField",
+            "TargetListField",
+            "NetConfig",
+            "VirtPortal",
+            "DiskMgmt",
+            "SysMaintain",
+            "LinkSpeedBar",
+            "LunMap",
+            "changepassword"
+        ],
+        "autoCreateViewport": true,
+        "name": "app_iwm",
+        "controllers": [
+            "MainMenu"
+        ],
+        "designer|requires": [
+            "ui_common.controller.DataIndicator"
+        ],
+        "defaultlang": "zh_cn"
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "defaultlang",
+            "type": "string"
+        }
+    ],
+    "designerId": "application",
+    "$viewOrder": 0,
+    "iconCls": "icon-application",
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen4488",
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "launch",
+                "implHandler": [
+                    ""
+                ],
+                "designer|userClassName": "launch"
+            },
+            "customConfigs": [],
+            "iconCls": "icon-basic-function",
+            "expanded": true
+        }
+    ]
+}
