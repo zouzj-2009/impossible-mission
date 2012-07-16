@@ -7,15 +7,13 @@
     },
     "codeClass": null,
     "userConfig": {
-        "views": [
-            "Messager"
-        ],
+        "views": null,
         "designer|userClassName": "EventManager",
         "designer|userAlias": "eventmanager"
     },
     "customConfigs": [],
     "designerId": "bc030210-7ccc-4aad-9499-f2187633c77e",
-    "$viewOrder": 4,
+    "$viewOrder": 3,
     "expanded": false,
     "cn": [
         {

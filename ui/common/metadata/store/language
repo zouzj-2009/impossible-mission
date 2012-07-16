@@ -1,0 +1,19 @@
+{
+    "id": "ExtBox1-ext-gen36273",
+    "type": "arraystore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "storeId": "MyArrayStore1",
+        "model": "language",
+        "data": "[{\nlanguage:'中文(Simpilifed Chanese)',\nlang:'zh_cn'\n},{\nlanguage:'English',\nlang:'en'\n}]",
+        "designer|userClassName": "language"
+    },
+    "customConfigs": [],
+    "designerId": "4fa35701-bfcc-4711-8faf-d197b4beac1b",
+    "$viewOrder": 0,
+    "expanded": true
+}

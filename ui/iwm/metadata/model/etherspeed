@@ -1,0 +1,78 @@
+{
+    "id": "ExtBox1-ext-gen64922",
+    "type": "datamodel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "etherspeed"
+    },
+    "customConfigs": [],
+    "designerId": "d0cee99b-aed1-4cee-860d-d4f1c0a23245",
+    "$viewOrder": 10,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen11228",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "devname",
+                "designer|userClassName": "MyField62"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen11406",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "recv",
+                "designer|userClassName": "MyField63"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen11583",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "send",
+                "designer|userClassName": "MyField64"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen11764",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "total",
+                "designer|userClassName": "MyField65"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

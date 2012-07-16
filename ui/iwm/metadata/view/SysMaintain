@@ -1,0 +1,791 @@
+{
+    "id": "ExtBox1-ext-gen40028",
+    "type": "form",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "cls": "shadowpanel",
+        "height": null,
+        "minHeight": null,
+        "width": null,
+        "layout": "border",
+        "bodyPadding": 10,
+        "title": null,
+        "designer|userClassName": "SysMaintain",
+        "designer|userAlias": "sysmaintain",
+        "model": null
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "model",
+            "type": "string"
+        }
+    ],
+    "designerId": "c3d0e290-fcc0-418a-a9e0-f8f81268a48a",
+    "$viewOrder": 9,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen40032",
+            "type": "gridpanel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "hideCollapseTool": false,
+                "overlapHeader": false,
+                "preventHeader": false,
+                "title": "System Log$",
+                "titleCollapse": false,
+                "store": "SysLog",
+                "designer|userClassName": "MyGridPanel",
+                "databind": "{\nautoload:true,\nbindform:'logdetail',\nmodel:'syslog'\n}",
+                "layout|collapseMode": null,
+                "layout|region": "center",
+                "layout|split": true
+            },
+            "customConfigs": [
+                {
+                    "group": "(Custom Properties)",
+                    "name": "databind",
+                    "type": "object"
+                }
+            ],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen40045",
+                    "type": "gridview",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyGridView"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen40054",
+                    "type": "toolbar",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyToolbar",
+                        "dock": "top"
+                    },
+                    "customConfigs": [],
+                    "expanded": false,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen48003",
+                            "type": "combobox",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Choose Log",
+                                "hideLabel": false,
+                                "labelWidth": 80,
+                                "displayField": "logname",
+                                "queryMode": "local",
+                                "valueField": "logname",
+                                "designer|userClassName": "MyComboBox8",
+                                "databind": "{\nautoload:true,\nmodel:'logfiles'\n}",
+                                "layout|flex": null
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen8834",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onComboboxChange",
+                                        "implHandler": [
+                                            "var store = field.up('gridpanel').getStore();",
+                                            "store.load({params:{_logname:newValue}});"
+                                        ],
+                                        "name": "change",
+                                        "scope": "me",
+                                        "designer|userClassName": "onComboboxChange"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen45867",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "download",
+                                "text": "Download All",
+                                "designer|userClassName": "MyButton22",
+                                "layout|flex": null
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen12759",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "width": 46,
+                        "dataIndex": "line",
+                        "text": "Line",
+                        "designer|userClassName": "MyColumn50"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen12771",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "date",
+                        "text": "Date",
+                        "designer|userClassName": "MyColumn51"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen12783",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "width": 76,
+                        "dataIndex": "facility",
+                        "text": "Facility",
+                        "designer|userClassName": "MyColumn52"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen12795",
+                    "type": "gridcolumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "message",
+                        "flex": 1,
+                        "text": "Message",
+                        "designer|userClassName": "MyColumn53"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen22875",
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onGridpanelItemClick",
+                        "implHandler": [
+                            "this.down('#logdetailx').setVisible(true);",
+                            "this.down('#currentlicensex').collapse();"
+                        ],
+                        "name": "itemclick",
+                        "scope": "me",
+                        "designer|userClassName": "onGridpanelItemClick"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                }
+            ]
+        },
+        {
+            "id": "ExtBox1-ext-gen40148",
+            "type": "container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "minWidth": 292,
+                "width": 292,
+                "autoScroll": true,
+                "designer|userClassName": "MyContainer14",
+                "layout|region": "west",
+                "layout|split": true
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen44070",
+                    "type": "form",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "border": 0,
+                        "bodyCls": "x-border-layout-ct",
+                        "bodyPadding": null,
+                        "title": null,
+                        "designer|userClassName": "MyForm15",
+                        "databind": "{\nautoload:true,\nmodel:'hostsetting'\n}"
+                    },
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen40160",
+                            "type": "fieldset",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "title": "Host Setting$",
+                                "designer|userClassName": "MyFieldSet8",
+                                "databind": "{\nautoload:true,\nmodel:'hostsetting'\n}"
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen49039",
+                                    "type": "textfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "hostname",
+                                        "fieldLabel": "HostName$",
+                                        "designer|userClassName": "MyTextField24",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen49952",
+                                    "type": "datefield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "date",
+                                        "fieldLabel": "Date$",
+                                        "format": "Y-m-d",
+                                        "submitFormat": "Y-m-d",
+                                        "designer|userClassName": "MyDateField",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen50845",
+                                    "type": "textfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "time",
+                                        "fieldLabel": "Time$",
+                                        "allowBlank": false,
+                                        "designer|userClassName": "MyTextField24",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen15968",
+                                    "type": "combobox",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "timezone",
+                                        "value": "'Asia/Shanghai'",
+                                        "fieldLabel": "TimeZone",
+                                        "displayField": "shortname",
+                                        "queryMode": "local",
+                                        "valueField": "zone",
+                                        "designer|userClassName": "MyComboBox9",
+                                        "databind": "{\nautoload:true,\nmodel:'timezone',\nloadonce:true\n}",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [
+                                        {
+                                            "group": "(Custom Properties)",
+                                            "name": "databind",
+                                            "type": "object"
+                                        }
+                                    ],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen51743",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "update",
+                                        "text": "Update$",
+                                        "designer|userClassName": "MyButton24",
+                                        "formBind": true
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen46657",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "refresh",
+                                        "text": "Refresh",
+                                        "designer|userClassName": "MyButton24",
+                                        "formBind": false
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen5271",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "changepassword",
+                                        "margin": "0 0 0 20",
+                                        "padding": null,
+                                        "text": "Change password ...",
+                                        "designer|userClassName": "MyButton40"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen4527",
+                    "type": "fieldset",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "License",
+                        "designer|userClassName": "MyFieldSet8",
+                        "databind": "{\nmodel:'license',\nautoload:true\n}"
+                    },
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen44857",
+                            "type": "form",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "border": 0,
+                                "bodyCls": "x-border-layout-ct",
+                                "bodyPadding": null,
+                                "title": null,
+                                "method": "post",
+                                "designer|userClassName": "MyForm16",
+                                "databind": "{\nmodel:'license'\n}"
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen5504",
+                                    "type": "filefield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "licensefile",
+                                        "fieldLabel": "New license",
+                                        "hideLabel": true,
+                                        "labelWidth": 80,
+                                        "allowBlank": false,
+                                        "designer|userClassName": "MyFileUpload",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen4549",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "upload",
+                                        "text": "Upload",
+                                        "designer|userClassName": "MyButton24",
+                                        "formBind": true
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen12582",
+                            "type": "form",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "border": 0,
+                                "bodyCls": "x-border-layout-ct",
+                                "bodyPadding": null,
+                                "title": null,
+                                "designer|userClassName": "MyForm16",
+                                "databind": "{\nautoload:true,\nmodel:'license'\n}"
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen6958",
+                                    "type": "fieldset",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "currentlicensex",
+                                        "collapsed": true,
+                                        "collapsible": true,
+                                        "title": "Current License",
+                                        "designer|userClassName": "MyFieldSet11"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen7202",
+                                            "type": "textareafield",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "name": "licensedata",
+                                                "fieldLabel": "Old license",
+                                                "hideLabel": true,
+                                                "labelAlign": "top",
+                                                "designer|userClassName": "MyTextArea",
+                                                "layout|anchor": "100%"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen7920",
+                                            "type": "button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": "update",
+                                                "text": "Test ...",
+                                                "designer|userClassName": "MyButton27",
+                                                "forceupdate": true
+                                            },
+                                            "customConfigs": [
+                                                {
+                                                    "group": "(Custom Properties)",
+                                                    "name": "forceupdate",
+                                                    "type": "boolean"
+                                                }
+                                            ],
+                                            "expanded": true
+                                        },
+                                        {
+                                            "id": "ExtBox1-ext-gen9649",
+                                            "type": "button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": "refresh",
+                                                "text": "Reload",
+                                                "designer|userClassName": "MyButton27"
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen25666",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onFormResize",
+                                        "implHandler": [
+                                            "this.down('#logdetailx').setVisible(false);"
+                                        ],
+                                        "name": "resize",
+                                        "scope": "me",
+                                        "designer|userClassName": "onFormResize"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen9357",
+                    "type": "fieldset",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "border": 0,
+                        "height": 200,
+                        "hidden": true,
+                        "itemId": "logdetailx",
+                        "minHeight": 200,
+                        "maintainFlex": true,
+                        "title": "Detail log inforamtion",
+                        "designer|userClassName": "MyFieldSet8",
+                        "databind": "{\nmodel:'license',\nautoload:true\n}"
+                    },
+                    "customConfigs": [
+                        {
+                            "group": "(Custom Properties)",
+                            "name": "databind",
+                            "type": "object"
+                        }
+                    ],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen9362",
+                            "type": "form",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "border": 0,
+                                "itemId": "logdetail",
+                                "bodyCls": "x-border-layout-ct",
+                                "bodyPadding": null,
+                                "title": null,
+                                "method": "post",
+                                "designer|userClassName": "MyForm16",
+                                "databind": "{\nmodel:'license'\n}"
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen11897",
+                                    "type": "textfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "date",
+                                        "readOnly": true,
+                                        "fieldLabel": "Date",
+                                        "labelWidth": 60,
+                                        "designer|userClassName": "MyTextField25",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen12197",
+                                    "type": "textfield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "facility",
+                                        "readOnly": true,
+                                        "fieldLabel": "Facility",
+                                        "labelWidth": 60,
+                                        "designer|userClassName": "MyTextField26",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen12506",
+                                    "type": "textareafield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "height": 120,
+                                        "minHeight": null,
+                                        "maintainFlex": true,
+                                        "name": "message",
+                                        "readOnly": true,
+                                        "fieldLabel": "Message",
+                                        "labelWidth": 60,
+                                        "designer|userClassName": "MyTextArea1",
+                                        "layout|anchor": "100%"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "id": "ucmpTargetListField",
+    "type": "combobox",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "hidden": false,
+        "itemId": null,
+        "name": null,
+        "fieldLabel": "TargetID",
+        "allowBlank": false,
+        "displayField": "iqn",
+        "queryMode": "local",
+        "store": "targetlist",
+        "valueField": "iqn",
+        "designer|userClassName": "TargetListField",
+        "designer|userAlias": "targetlistfield"
+    },
+    "customConfigs": [],
+    "designerId": "9a7fa50d-27ab-416b-aa2e-1271e78f4921",
+    "$viewOrder": 13,
+    "expanded": true
+}

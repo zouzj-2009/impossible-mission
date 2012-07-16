@@ -1,0 +1,90 @@
+{
+    "id": "ExtBox1-ext-gen2293",
+    "type": "application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "login",
+            "language"
+        ],
+        "stores": [
+            "language"
+        ],
+        "views": [
+            "BigIconBtn",
+            "NetMaskField",
+            "TargetListField",
+            "changepassword",
+            "ChangePassword",
+            "Login",
+            "Messager"
+        ],
+        "autoCreateViewport": true,
+        "name": "ui_common",
+        "controllers": [
+            "EventMessager",
+            "Login",
+            "DataIndicator"
+        ],
+        "defaultlang": "zh_cn"
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "defaultlang",
+            "type": "string"
+        }
+    ],
+    "designerId": "application",
+    "$viewOrder": 0,
+    "iconCls": "icon-application",
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen4488",
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "launch",
+                "implHandler": [
+                    ""
+                ],
+                "designer|userClassName": "launch"
+            },
+            "customConfigs": [],
+            "iconCls": "icon-basic-function",
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen47713",
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "start",
+                "designer|params": [
+                    "config"
+                ],
+                "implHandler": [
+                    "if (!this.mainview)",
+                    "this.mainview = Ext.widget('mainview', config);",
+                    ""
+                ],
+                "designer|userClassName": "start"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

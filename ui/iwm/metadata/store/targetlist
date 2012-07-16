@@ -1,0 +1,18 @@
+{
+    "id": "ExtBox1-ext-gen14030",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "storeId": "targetlist",
+        "model": "targetlist",
+        "designer|userClassName": "targetlist"
+    },
+    "customConfigs": [],
+    "designerId": "076f8fd2-a8af-4981-bf12-2f02a27ff24a",
+    "$viewOrder": 6,
+    "expanded": true
+}

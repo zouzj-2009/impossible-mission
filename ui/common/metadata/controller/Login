@@ -1,0 +1,186 @@
+{
+    "id": "ExtBox1-ext-gen33244",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "ui_common.model.language",
+            "ui_common.model.login"
+        ],
+        "stores": [
+            "ui_common.store.language"
+        ],
+        "views": [
+            "ui_common.view.Login",
+            "ui_common.view.ChangePassword"
+        ],
+        "designer|userClassName": "Login"
+    },
+    "customConfigs": [],
+    "designerId": "72f976f6-31fa-4be1-b80a-5e44f2928b8f",
+    "$viewOrder": 1,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen41035",
+            "type": "applicationaction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onLoginok",
+                "designer|params": [
+                    "host",
+                    "login"
+                ],
+                "implHandler": [
+                    "var app = this,",
+                    "    lwin = Ext.getCmp('loginwindow');",
+                    "",
+                    "lwin.hide();",
+                    "lwin.logouted = false;",
+                    "this.logged = login;",
+                    "if (Ext.isFunction(app.start)) app.start({serverip:host});"
+                ],
+                "name": "loginok",
+                "designer|userClassName": "onLoginok"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen41379",
+            "type": "applicationaction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onLoginfail",
+                "designer|params": [
+                    "host"
+                ],
+                "implHandler": [
+                    "var lwin = Ext.getCmp('loginwindow');",
+                    "",
+                    "if (!lwin){",
+                    "    lwin = this.getView('ui_common.view.Login').create();",
+                    "    //\u001blwin = Ext.widget('login');",
+                    "}",
+                    "if (!lwin.isVisible()) lwin.show();"
+                ],
+                "name": "loginfail",
+                "designer|userClassName": "onLoginfail"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen8657",
+            "type": "applicationaction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onLoginloaded",
+                "designer|params": [
+                    "store",
+                    "form"
+                ],
+                "implHandler": [
+                    "var m = store.getAt(0);",
+                    "if (!m) return;",
+                    "//todo: get saved user from form.state?",
+                    "form.getForm().loadRecord(m);",
+                    "this.loginstore = store;"
+                ],
+                "name": "loginloaded",
+                "designer|userClassName": "onLoginloaded"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen30216",
+            "type": "applicationaction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onLogout",
+                "implHandler": [
+                    "var store = this.loginstore,",
+                    "    params = Ext.apply({_logout:true}, store.reloadParams);",
+                    "store.load({params:params});",
+                    "var lwin = Ext.getCmp('loginwindow');",
+                    "lwin.logouted = true;",
+                    "lwin.show();",
+                    "this.mainview.destroy();",
+                    "delete this.mainview;",
+                    ""
+                ],
+                "name": "logout",
+                "designer|userClassName": "onLogout"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen8979",
+            "type": "applicationaction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onChangePassword",
+                "designer|params": [
+                    "login"
+                ],
+                "implHandler": [
+                    "var user = login?login.username:this.logged.username,",
+                    "    form = this.getView('ChangePassword').create({user:user});",
+                    "form.show();"
+                ],
+                "name": "changepassword",
+                "designer|userClassName": "onChangePassword"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen39072",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onButtonClick",
+                "implHandler": [
+                    "this.application.fireEvent('changepassword', button.login);"
+                ],
+                "name": "click",
+                "scope": "me",
+                "designer|targetType": "Ext.button.Button",
+                "designer|controlQuery": "button#changepassword",
+                "designer|userClassName": "onButtonClick"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

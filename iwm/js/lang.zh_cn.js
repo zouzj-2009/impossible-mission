@@ -1,5 +1,6 @@
 Ext.ns('App.locale');
-App.locale.text = {
+if (!App.locale.text) App.locale.text = {};
+App.locale.text = Ext.apply(App.locale.text, {
 	'Access': '访问权限',
 	'Add New ...': '添加...',
 	'Are you sure to logout?': '确认退出么?',
@@ -141,4 +142,4 @@ App.locale.text = {
 	'reload portal info?': '重新载入虚拟IP设定?',
 	'{0} is not a valid date - it must be in the format {1}': '{0} 不是正确的日期格式，必须使用格式 {1}',
 'Would you like to download the chart as an image?<br/>Warning! This is a cloud service, Data will be sent to website:sencha.io)': '您希望将本图例保存为本地图像么?<br/>提示! 这是一项云服务，数据将发往网站:sencha.io.',
-};
+});
