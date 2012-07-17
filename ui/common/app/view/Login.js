@@ -40,6 +40,7 @@ Ext.define('ui_common.view.Login', {
                     xtype: 'form',
                     border: 0,
                     id: 'loginform',
+                    itemId: 'loginform',
                     padding: 10,
                     layout: {
                         align: 'center',
@@ -161,8 +162,8 @@ Ext.define('ui_common.view.Login', {
     onWindowShow: function(abstractcomponent, options) {
         var w = abstractcomponent,
             logon = '';
-        if (w.logonip) 
-        logon += w.logonip; 
+        if (w.serverip) 
+        logon += w.serverip; 
         else 
         logon += location.host;
         if (w.logonhost) logon += '('+w.logonhost+')';

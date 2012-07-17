@@ -105,7 +105,7 @@ try{
 
 		$params = !$env?$_REQUEST:json_decode(stripslashes(trim(getenv('params'), '"')), true);
 		$callback = $_REQUEST['callback'];
-		foreach(explode(',', 'seqid,callback,PHPSESSID') as $key){
+		foreach(explode(',', 'records,seqid,callback,PHPSESSID') as $key){
 			unset($params[$key]);
 		}
 

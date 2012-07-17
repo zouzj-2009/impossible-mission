@@ -38,6 +38,7 @@
             "userConfig": {
                 "border": 0,
                 "id": "loginform",
+                "itemId": "loginform",
                 "padding": 10,
                 "layout": "vbox",
                 "bodyCls": "x-border-layout-ct",
@@ -283,8 +284,8 @@
                 "implHandler": [
                     "var w = abstractcomponent,",
                     "    logon = '';",
-                    "if (w.logonip) ",
-                    "logon += w.logonip; ",
+                    "if (w.serverip) ",
+                    "logon += w.serverip; ",
                     "else ",
                     "logon += location.host;",
                     "if (w.logonhost) logon += '('+w.logonhost+')';",

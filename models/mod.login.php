@@ -10,7 +10,7 @@ var $logfiles = array(
 var $savechangeconfig = array(usingfile=>'adminusers');
 var $keyids = array('username');
 function read($params, $records=array()){
-	if (!$params){//get all
+	if (!$params && !$records){//get all
 		//todo: check login, only check in user, and have rights can do this!
 		if (!$_SESSION[loginuser]) throw new Exception ('user not login!', -1);
 		$r = $this->load_sysconfig();
@@ -21,12 +21,14 @@ function read($params, $records=array()){
 		return array(success=>true, data=>$r);
 	}else if ($records){//check login! or read old
 		if ($params[_readold]){
-			if (!$_SESSION[loginuser]) throw new Exception('user not login!', -1);
-			return array(
-				success=>true,
-				data=>$this->load_sysconfig('current', $records),
-			);
+			if ($_SESSION[loginuser]){
+				return array(
+					success=>true,
+					data=>$this->load_sysconfig('current', $records),
+				);
+			}
 		}
+		//if readold but not login, login here, so do_update will login first!
 		$users = $this->load_sysconfig();
 		if (!$users) $users = array(array(
 			username=>'admin',
@@ -54,7 +56,12 @@ function read($params, $records=array()){
 
 function do_update($params, $records, $olds){
 	$r = array_shift($records);
-	if (!$r['newpassword']) throw new Exception('new password not set!');
+	if (!$_SESSION[loginuser]) throw new Exception ('user not login!', -1);
+	if (!$r['newpassword']){
+		if (!$olds) throw new Exception('new password not set!');
+		//really login!
+		return array(success=>true, updated=>$olds, changes=>1, msg=>'login ok.');
+	}
 	$o = array_shift($olds);
 	if (!$o) throw new Exception("old user $r[username] not found!");
 	if ($o[password] != $r[password]) throw new Exception("old password mismatch!");

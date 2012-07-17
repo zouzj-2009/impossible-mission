@@ -43,12 +43,16 @@ Ext.define('ui_common.controller.Login', {
         if (Ext.isFunction(app.start)) app.start({serverip:host});
     },
 
-    onLoginfail: function(host) {
+    onLoginfail: function(cfg) {
         var lwin = Ext.getCmp('loginwindow');
 
         if (!lwin){
-            lwin = this.getView('ui_common.view.Login').create();
-            //lwin = Ext.widget('login');
+            lwin = this.getView('ui_common.view.Login').create({serverip:cfg.host});
+        }else{
+            if (lwin.serverip != cfg.host){
+                lwin.destroy();
+                lwin = this.getView('ui_common.view.Login').create({serverip:cfg.host});
+            }
         }
         if (!lwin.isVisible()) lwin.show();
     },
