@@ -1,0 +1,26 @@
+{
+    "id": "ucmpTargetListField-ExtBox1-ext-gen15706",
+    "type": "combobox",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "hidden": false,
+        "itemId": null,
+        "name": null,
+        "fieldLabel": "TargetID",
+        "allowBlank": false,
+        "displayField": "iqn",
+        "queryMode": "local",
+        "store": null,
+        "valueField": "iqn",
+        "designer|userClassName": "TargetListField",
+        "designer|userAlias": "targetlistfield"
+    },
+    "customConfigs": [],
+    "designerId": "6838c8f5-0b2c-4173-b47e-cb310014d427",
+    "$viewOrder": 6,
+    "expanded": true
+}

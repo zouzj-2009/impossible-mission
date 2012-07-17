@@ -1,0 +1,17 @@
+{
+    "id": "ExtBox1-ext-gen32296",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "iSCSIConn",
+        "designer|userAlias": "iscsiconn"
+    },
+    "customConfigs": [],
+    "designerId": "cd223f29-faf8-4bfd-9647-ef92c564cd02",
+    "$viewOrder": 1,
+    "expanded": true
+}

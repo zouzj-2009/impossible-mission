@@ -1,0 +1,78 @@
+{
+    "id": "ExtBox1-ext-gen13000",
+    "type": "datamodel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "gvirtportal"
+    },
+    "customConfigs": [],
+    "designerId": "430cc03e-d4f1-4d83-ac5d-797fd01914cb",
+    "$viewOrder": 6,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen13197",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "enabled",
+                "designer|userClassName": "MyField75"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen13370",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "portalip",
+                "designer|userClassName": "MyField76"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen13554",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "portalmask",
+                "designer|userClassName": "MyField77"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen13731",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "maxcount",
+                "designer|userClassName": "MyField78"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

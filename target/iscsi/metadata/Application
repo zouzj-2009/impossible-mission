@@ -1,0 +1,48 @@
+{
+    "id": "ExtBox1-ext-gen2293",
+    "type": "application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "iscsiconn",
+            "lunmap",
+            "access",
+            "glunmap"
+        ],
+        "stores": [
+            "Access"
+        ],
+        "views": [
+            "MainView",
+            "NetMaskField",
+            "LunMap",
+            "changepassword",
+            "MyGridPanel1",
+            "TargetListField"
+        ],
+        "autoCreateViewport": true,
+        "name": "target_iscsi",
+        "controllers": [
+            "LunMap"
+        ],
+        "designer|requires": [
+            "ui_common.controller.DataIndicator"
+        ],
+        "defaultlang": "zh_cn"
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "defaultlang",
+            "type": "string"
+        }
+    ],
+    "designerId": "application",
+    "$viewOrder": 0,
+    "iconCls": "icon-application",
+    "expanded": true
+}

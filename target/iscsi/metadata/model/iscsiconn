@@ -1,0 +1,138 @@
+{
+    "id": "ExtBox1-ext-gen3059",
+    "type": "datamodel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "iscsiconn"
+    },
+    "customConfigs": [],
+    "designerId": "b83d36a9-e0df-4343-bcef-6b83404a2211",
+    "$viewOrder": 0,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen3430",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "initiator",
+                "designer|userClassName": "MyField7"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen3604",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "targetid",
+                "designer|userClassName": "MyField8"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen3781",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "clientip",
+                "designer|userClassName": "MyField9"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen4621",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "targetip",
+                "designer|userClassName": "MyField10"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen4811",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "access",
+                "designer|userClassName": "MyField11"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen5006",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "readspeed",
+                "designer|userClassName": "MyField12"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen5204",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "writespeed",
+                "designer|userClassName": "MyField13"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen9138",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "txpid",
+                "designer|userClassName": "MyField8"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

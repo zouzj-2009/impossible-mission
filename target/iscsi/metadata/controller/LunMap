@@ -1,0 +1,16 @@
+{
+    "id": "ExtBox1-ext-gen39400",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "LunMap"
+    },
+    "customConfigs": [],
+    "designerId": "779504f6-2d1d-4a8a-9e26-dd2e28fc6c52",
+    "$viewOrder": 0,
+    "expanded": true
+}

@@ -62,7 +62,7 @@ Ext.define('app_unittest.controller.LoadTest', {
     loadunit: function(name, menable, tab, config, store) {
         var app = this.application;
         if (name.match(/\.view\./)){
-            return this.loadview(name, menable, tab);
+            return this.loadview(name, menable, tab, null, null);
         }
         if (!name.match(/\.controller\./)) return false;
         if (store && store.find('text', name)<0){
@@ -84,12 +84,16 @@ Ext.define('app_unittest.controller.LoadTest', {
         }
         for(var i=0;i<views.length; i++){
             var view = views[i];
-            if (!this.loadview(view, menable, tab, config)) return false;
+            if (!this.loadview(view, menable, tab, config, c)) return false;
         }
         return true;
     },
 
-    loadview: function(view, menable, tab, config) {
+    loadview: function(view, menable, tab, config, controller) {
+        if (controller && !view.match(/\.view\./)){
+            var ns = controller.self.getName().replace(/\.controller\..*/, '');
+            view = ns+'.view.'+view;
+        }
         var itemId = view.replace(/\.view\./, '_');
         if (!menable && tab.down('#'+itemId)){
             alert(view+': already created.');

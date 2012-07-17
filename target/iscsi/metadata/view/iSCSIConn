@@ -1,0 +1,207 @@
+{
+    "id": "ExtBox1-ext-gen17739",
+    "type": "gridpanel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "itemId": "iscsiconn",
+        "title": "iSCSI Connection$",
+        "store": null,
+        "designer|userClassName": "iSCSIConn",
+        "designer|userAlias": "iscsiconn",
+        "databind": "{\nautoload:true,\nmodel:'target_iscsi.model.iscsiconn'\n}"
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "databind",
+            "type": "object"
+        }
+    ],
+    "designerId": "633ad6e5-ccdc-4d4b-82a4-2c8d70685eea",
+    "$viewOrder": 1,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen17791",
+            "type": "gridview",
+            "reference": {
+                "name": "viewConfig",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "MyGridView1"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen185389",
+            "type": "toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "MyToolbar7",
+                "dock": "top"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen185709",
+                    "type": "button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "itemId": "delete",
+                        "text": "disconnect",
+                        "designer|userClassName": "MyButton30",
+                        "layout|flex": null
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen186077",
+                    "type": "button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "itemId": "refresh",
+                        "text": "refresh",
+                        "designer|userClassName": "MyButton31",
+                        "layout|flex": null
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                }
+            ]
+        },
+        {
+            "id": "ExtBox1-ext-gen6925",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "initiator",
+                "flex": 1,
+                "text": "Initiator",
+                "designer|userClassName": "MyColumn17"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6936",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "targetid",
+                "text": "Targetid",
+                "designer|userClassName": "MyColumn52"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6947",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "clientip",
+                "text": "Clientip",
+                "designer|userClassName": "MyColumn53"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6958",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "targetip",
+                "text": "Targetip",
+                "designer|userClassName": "MyColumn54"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6969",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "access",
+                "text": "Access",
+                "designer|userClassName": "MyColumn55"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6980",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "readspeed",
+                "text": "Readspeed",
+                "designer|userClassName": "MyColumn56"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen6991",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "writespeed",
+                "text": "Writespeed",
+                "designer|userClassName": "MyColumn57"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}
