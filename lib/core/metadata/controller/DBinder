@@ -98,7 +98,7 @@
                     "binder.application.fireEvent('loginfail', cfg.host);",
                     "if (!response){",
                     "    //todo:when batch op,say create/destroy if create fail, ...",
-                    "    alert('Fatal error, operation.'+operation.action+' no response! error:'+operation.error);",
+                    "    alert('Fatal error, operation.'+operation.action+'@\\n'+cfg.proto+'://'+cfg.host+':'+cfg.port+'/'+cfg.url+'\\nNo response! Error: '+operation.error);",
                     "    //todo: try to continue when first op in batch fail at 'callbackxxx not found'",
                     "    binder.application.fireEvent('indicatorchange', cfg, {success:false, msg:'proxy('+cfg.url+', no repsonse) '+operation.error}, operation);",
                     "    return;",
@@ -814,7 +814,7 @@
                     "    console.log(cfg);",
                     "    return ;",
                     "}",
-                    "    ",
+                    "",
                     "if (store){//just replace with old",
                     "    if (Ext.isFunction(dbc.bindStore)){",
                     "        dbc.bindStore(store);",
@@ -930,7 +930,8 @@
                     "        maskxtype: null",
                     "    });",
                     "}",
-                    "",
+                    "var cc = c.up('[serverip]');",
+                    "if (cc && !c.serverip) c.serverip = cc.serverip;",
                     "me.bindGroup(c, c.databind, c.serverip, c.rebind);",
                     "if (!c.databinded) return;",
                     "me.bindForm(c, c.store, c.databinded, me);",
@@ -956,7 +957,6 @@
             "userConfig": {
                 "fn": "onGridpanelAfterRender",
                 "implHandler": [
-                    "return;",
                     "var me=this, c=abstractcomponent, databind = c.databind;",
                     "if (!Ext.isObject(databind)) return;",
                     "",
@@ -968,7 +968,8 @@
                     "}else{",
                     "    databind.progress = {maskxtype: 'panel'};",
                     "}",
-                    "",
+                    "var cc = c.up('[serverip]');",
+                    "if (cc && !c.serverip) c.serverip = cc.serverip;",
                     "me.bindGroup(c, c.databind, c.serverip, c.rebind);",
                     "if (!c.databinded) return;",
                     "me.bindGrid(c, c.store, c.databinded, me);",
@@ -1145,47 +1146,6 @@
                 "designer|targetType": "Ext.form.Panel",
                 "designer|controlQuery": "form",
                 "designer|userClassName": "onFormBeforeRender"
-            },
-            "customConfigs": [],
-            "expanded": true
-        },
-        {
-            "id": "ExtBox1-ext-gen18324",
-            "type": "controlleraction",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "onGridpanelBeforeRender",
-                "implHandler": [
-                    "var me=this, c=abstractcomponent, databind = c.databind;",
-                    "if (!Ext.isObject(databind)) return;",
-                    "",
-                    "//grid's default mask selector is up('form').",
-                    "if (databind.progress){",
-                    "    Ext.applyIf(databind.progress, {",
-                    "        maskxtype: 'panel'",
-                    "    });",
-                    "}else{",
-                    "    databind.progress = {maskxtype: 'panel'};",
-                    "}",
-                    "",
-                    "me.bindGroup(c, c.databind, c.serverip, c.rebind);",
-                    "if (!c.databinded) return;",
-                    "me.bindGrid(c, c.store, c.databinded, me);",
-                    "if (c.databinded.bindform){",
-                    "    var form = c.up().down('#'+c.databinded.bindform);",
-                    "    if (!form) return;",
-                    "    me.bindGridForm(c, form, c.store, c.databinded);",
-                    "}"
-                ],
-                "name": "beforerender",
-                "scope": "me",
-                "designer|targetType": "Ext.grid.Panel",
-                "designer|controlQuery": "gridpanel",
-                "designer|userClassName": "onGridpanelBeforeRender"
             },
             "customConfigs": [],
             "expanded": true

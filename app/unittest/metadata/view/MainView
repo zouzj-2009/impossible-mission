@@ -34,7 +34,10 @@
                 "id": "menuarea",
                 "padding": "0px 50px ",
                 "shadow": null,
+                "layout": "vbox",
                 "designer|userClassName": "MyContainer",
+                "container|align": "stretch",
+                "container|padding": "0px 50px ",
                 "layout|floatable": false,
                 "layout|region": "north"
             },
@@ -42,75 +45,171 @@
             "expanded": true,
             "cn": [
                 {
-                    "id": "ExtBox1-ext-gen2949",
-                    "type": "combobox",
+                    "id": "ExtBox1-ext-gen17837",
+                    "type": "fieldcontainer",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "itemId": "testunitselector",
-                        "width": 337,
-                        "value": null,
-                        "fieldLabel": "Load Unit",
-                        "queryMode": "local",
-                        "store": "testunit",
-                        "valueField": "text",
-                        "designer|userClassName": "MyComboBox2"
+                        "height": null,
+                        "margin": null,
+                        "padding": 5,
+                        "layout": "table",
+                        "fieldLabel": "Label",
+                        "hideLabel": true,
+                        "designer|userClassName": "MyFieldContainer",
+                        "layout|flex": 1,
+                        "layout|margins": 5
                     },
                     "customConfigs": [],
-                    "expanded": true
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen2949",
+                            "type": "combobox",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "testunitselector",
+                                "width": 337,
+                                "value": null,
+                                "fieldLabel": "Load Unit",
+                                "queryMode": "local",
+                                "store": "testunit",
+                                "valueField": "text",
+                                "designer|userClassName": "MyComboBox2"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen16154",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "serverip",
+                                "fieldLabel": "serverip",
+                                "labelAlign": "right",
+                                "designer|userClassName": "MyTextField1"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen16365",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "unitconfig",
+                                "fieldLabel": "other config",
+                                "labelAlign": "right",
+                                "designer|userClassName": "MyTextField2"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
                 },
                 {
-                    "id": "ExtBox1-ext-gen10469",
-                    "type": "checkboxfield",
+                    "id": "ExtBox1-ext-gen19648",
+                    "type": "fieldcontainer",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "itemId": "multiinstance",
-                        "name": "multiinstance",
-                        "fieldLabel": "Multi Instance",
-                        "boxLabel": "Enable",
-                        "designer|userClassName": "MyCheckbox"
+                        "height": null,
+                        "padding": 5,
+                        "layout": "table",
+                        "fieldLabel": "Label",
+                        "hideLabel": true,
+                        "designer|userClassName": "MyFieldContainer1",
+                        "layout|flex": 1
                     },
                     "customConfigs": [],
-                    "expanded": true
-                },
-                {
-                    "id": "ExtBox1-ext-gen49826",
-                    "type": "button",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "itemId": "loadtest",
-                        "text": "Load All Units",
-                        "designer|userClassName": "MyButton"
-                    },
-                    "customConfigs": [],
-                    "expanded": true
-                },
-                {
-                    "id": "ExtBox1-ext-gen63919",
-                    "type": "button",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "id": "show_unlocalized",
-                        "text": "show unlocalized",
-                        "designer|userClassName": "MyButton37"
-                    },
-                    "customConfigs": [],
-                    "expanded": true
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen10469",
+                            "type": "checkboxfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "multiinstance",
+                                "name": "multiinstance",
+                                "fieldLabel": "Multi Instance",
+                                "boxLabel": "Enable",
+                                "designer|userClassName": "MyCheckbox"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen8623",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "loadoneunit",
+                                "text": "Load This Unit",
+                                "designer|userClassName": "MyButton2"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen49826",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "loadtest",
+                                "text": "Load All Units",
+                                "designer|userClassName": "MyButton"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen63919",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "show_unlocalized",
+                                "text": "show unlocalized",
+                                "designer|userClassName": "MyButton37"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
                 }
             ]
         },

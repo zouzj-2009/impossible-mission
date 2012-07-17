@@ -20,29 +20,15 @@ Ext.define('app_unittest.controller.LoadTest', {
         var app = this.application,
             r = app.uselibs,
             v = [],
-            em = button.up().down('#multiinstance').getValue(),
+            em = button.up().up().down('#multiinstance').getValue(),
             tp = Ext.getCmp('testpanel');
         //if (!em) button.disable();
         if (!tp) return;
         if (!Ext.isArray(r)) return;
+        var config = {serverip: button.up().up().down('#serverip').getValue()};
         Ext.Array.forEach(r, function(cn){
-            var c = app.getController(cn);
-            var views = c.views;
-            if (!Ext.isArray(views)) return;
-            Ext.Array.forEach(views, function(view){
-                var itemId = view.replace(/\.view\./, '_');
-                if (!em && tp.down('#'+itemId)){
-                    alert(view+': already created.');
-                    return;
-                }
-                var vv = c.getView(view).create({itemId:em?null:itemId, closable:true});
-                if (!vv){
-                    alert(view+' not found!');
-                    return;
-                }
-                tp.add(vv);
-            });
-        });
+            this.loadunit(cn, em, tp, config);
+        },this);
     },
 
     onComboboxBeforeRender: function(abstractcomponent, options) {
@@ -54,27 +40,71 @@ Ext.define('app_unittest.controller.LoadTest', {
 
     },
 
-    onComboboxChange: function(field, newValue, oldValue, options) {
-        if (!newValue) return;
-        var tp =Ext.getCmp('testpanel');
-        var c = this.application.getController(newValue),
-            em = field.up().down('#multiinstance').getValue();
-        if (!c) return;
+    onButtonClick1: function(button, e, options) {
+        var app = this.application,
+            em = button.up().up().down('#multiinstance').getValue(),
+            tp = Ext.getCmp('testpanel');
+        //if (!em) button.disable();
+        name = button.up().up().down('#testunitselector').getValue();
+        if (!name){
+            alert('unit not selected.');
+            return;
+        }
+        var config = {serverip: button.up().up().down('#serverip').getValue()};
+        if (this.loadunit(name, em, tp, config)){
+            var store = button.up().up().down('#testunitselector').getStore();
+            if (!store.find('text', name)){
+                store.add({text:name});
+            }   
+        }
+    },
+
+    loadunit: function(name, menable, tab, config) {
+        var app = this.application;
+        if (name.match(/\.view\./)){
+            return this.loadview(name, menable, tab);
+        }
+        if (!name.match(/\.controller\./)) return false;
+        c = app.getController(name);
+        if (!c){
+            alert(name+': not found!');
+            return false;
+        }
+
         var views = c.views;
-        if (!Ext.isArray(views)) return;
+        if (!Ext.isArray(views)){
+            alert(name+': no views!');
+            return false;
+        }
         Ext.Array.forEach(views, function(view){
-            var itemId = view.replace(/\.view\./, '_');
-            if (!em && tp.down('#'+itemId)){
-                alert(view+': already created.');
-                return;
-            }
-            var vv = c.getView(view).create({itemId:em?null:itemId, closable:true});
-            if (!vv){
-                alert(view+' not found!');
-                return;
-            }
-            tp.add(vv);
-        });
+            this.loadview(view, menable, tab, config);
+
+        }, this);
+        return true;
+    },
+
+    loadview: function(view, menable, tab, config) {
+        var itemId = view.replace(/\.view\./, '_');
+        if (!menable && tab.down('#'+itemId)){
+            alert(view+': already created.');
+            return false;
+        }
+        var vc = this.application.getView(view);
+        if (!vc){
+            alert(view+': not defined.');
+            return false;
+        }
+        var vv = vc.create(Ext.apply({itemId:menable?null:itemId, closable:true}, config));
+        if (!vv){
+            alert(view+' not found!');
+            return false;
+        }
+        return tab.add(vv);
+
+    },
+
+    onControllerClickStub: function() {
+
     },
 
     init: function() {
@@ -83,8 +113,10 @@ Ext.define('app_unittest.controller.LoadTest', {
                 click: this.onButtonClick
             },
             "combobox#testunitselector": {
-                beforerender: this.onComboboxBeforeRender,
-                change: this.onComboboxChange
+                beforerender: this.onComboboxBeforeRender
+            },
+            "button#loadoneunit": {
+                click: this.onButtonClick1
             }
         });
 
