@@ -162,7 +162,7 @@
                     "    alert(view+' not found!');",
                     "    return false;",
                     "}",
-                    "return tab.add(vv);",
+                    "return tab.setActiveTab(tab.add(vv));",
                     ""
                 ],
                 "designer|userClassName": "loadview"

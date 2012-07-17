@@ -109,7 +109,7 @@ Ext.define('app_unittest.controller.LoadTest', {
             alert(view+' not found!');
             return false;
         }
-        return tab.add(vv);
+        return tab.setActiveTab(tab.add(vv));
 
     },
 
