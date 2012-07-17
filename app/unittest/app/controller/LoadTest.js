@@ -65,7 +65,7 @@ Ext.define('app_unittest.controller.LoadTest', {
             return this.loadview(name, menable, tab, null, null);
         }
         if (!name.match(/\.controller\./)) return false;
-        if (store && store.find('text', name)<0){
+        if (!Ext.ClassManager.isCreated(name)){
             var n = name.split(/\.controller\./);
             Ext.Loader.setPath(n[0], '../../'+n[0].replace(/\.|_/g, '/')+'/app');
             c = app.getController(name);

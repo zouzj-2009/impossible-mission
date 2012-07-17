@@ -7,6 +7,16 @@
     },
     "codeClass": null,
     "userConfig": {
+        "models": [
+            "lunmap",
+            "glunmap"
+        ],
+        "stores": [
+            "Access"
+        ],
+        "views": [
+            "LunMap"
+        ],
         "designer|userClassName": "LunMap"
     },
     "customConfigs": [],

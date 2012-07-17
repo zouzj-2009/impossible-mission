@@ -23,18 +23,11 @@ Ext.application({
     ],
 
     models: [
-        'iscsiconn',
-        'lunmap',
-        'access',
-        'glunmap'
-    ],
-    stores: [
-        'Access'
+        'access'
     ],
     views: [
         'MainView',
         'NetMaskField',
-        'LunMap',
         'changepassword',
         'MyGridPanel1',
         'TargetListField'

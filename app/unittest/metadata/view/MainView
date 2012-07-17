@@ -80,11 +80,18 @@
                                 "value": null,
                                 "fieldLabel": "Load Unit",
                                 "queryMode": "local",
-                                "store": "testunit",
+                                "store": null,
                                 "valueField": "text",
-                                "designer|userClassName": "MyComboBox2"
+                                "designer|userClassName": "MyComboBox2",
+                                "databind": "{\nautoload:true,\nmodel:'testunit'\n}"
                             },
-                            "customConfigs": [],
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
                             "expanded": true
                         },
                         {

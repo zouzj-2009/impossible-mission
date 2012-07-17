@@ -14,5 +14,16 @@
  */
 
 Ext.define('target_iscsi.controller.LunMap', {
-    extend: 'Ext.app.Controller'
+    extend: 'Ext.app.Controller',
+
+    models: [
+        'lunmap',
+        'glunmap'
+    ],
+    stores: [
+        'Access'
+    ],
+    views: [
+        'LunMap'
+    ]
 });

@@ -18,13 +18,6 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-    requires: [
-        'net_utils.controller.NetConfig',
-        'net_utils.controller.NicInfo',
-        'net_utils.controller.NetSpeed',
-        'target_iscsi.controller.VirtPortal'
-    ],
-
     models: [
         'testunit'
     ],

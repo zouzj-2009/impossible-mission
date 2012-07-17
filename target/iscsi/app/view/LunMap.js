@@ -45,6 +45,7 @@ Ext.define('target_iscsi.view.LunMap', {
                         progress: {
                             create: 'newin'
                         },
+                        model: 'target_iscsi.model.lunmap',
                         autoload: true
                     },
                     region: 'center',
@@ -150,7 +151,7 @@ Ext.define('target_iscsi.view.LunMap', {
                             bodyCls: 'x-border-layout-ct',
                             databind: {
                                 maskxtype: null,
-                                model: 'glunmap',
+                                model: 'target_iscsi.model.glunmap',
                                 autoload: true
                             },
                             items: [
@@ -246,7 +247,7 @@ Ext.define('target_iscsi.view.LunMap', {
                                             fieldLabel: 'Access',
                                             allowBlank: false,
                                             queryMode: 'local',
-                                            store: 'Access',
+                                            store: 'target_iscsi.store.Access',
                                             valueField: 'value'
                                         },
                                         {

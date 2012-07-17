@@ -15,5 +15,12 @@
 
 Ext.define('target_iscsi.controller.iSCSIConn', {
     extend: 'Ext.app.Controller',
-    alias: 'controller.iscsiconn'
+    alias: 'controller.iscsiconn',
+
+    models: [
+        'iscsiconn'
+    ],
+    views: [
+        'iSCSIConn'
+    ]
 });

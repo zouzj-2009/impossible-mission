@@ -39,7 +39,7 @@
                 "titleCollapse": false,
                 "store": null,
                 "designer|userClassName": "MyGridPanel",
-                "databind": "{bindform:'newmap',\nprogress:{\ncreate:'newin'\n},\nautoload:true}",
+                "databind": "{bindform:'newmap',\nprogress:{\ncreate:'newin'\n},\nmodel:'target_iscsi.model.lunmap',\nautoload:true}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true
@@ -383,7 +383,7 @@
                         "bodyStyle": null,
                         "title": null,
                         "designer|userClassName": "MyForm10",
-                        "databind": "{\"maskxtype\":null,\nmodel:'glunmap',\nautoload:true}"
+                        "databind": "{\"maskxtype\":null,\nmodel:'target_iscsi.model.glunmap',\nautoload:true}"
                     },
                     "customConfigs": [
                         {
@@ -683,7 +683,7 @@
                                         "fieldLabel": "Access",
                                         "allowBlank": false,
                                         "queryMode": "local",
-                                        "store": "Access",
+                                        "store": "target_iscsi.store.Access",
                                         "valueField": "value",
                                         "designer|userClassName": "MyComboBox"
                                     },

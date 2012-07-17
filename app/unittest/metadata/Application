@@ -22,12 +22,7 @@
         "controllers": [
             "LoadTest"
         ],
-        "designer|requires": [
-            "net_utils.controller.NetConfig",
-            "net_utils.controller.NicInfo",
-            "net_utils.controller.NetSpeed",
-            "target_iscsi.controller.VirtPortal"
-        ],
+        "designer|requires": null,
         "defaultlang": "zh_cn"
     },
     "customConfigs": [

@@ -7,6 +7,12 @@
     },
     "codeClass": null,
     "userConfig": {
+        "models": [
+            "iscsiconn"
+        ],
+        "views": [
+            "iSCSIConn"
+        ],
         "designer|userClassName": "iSCSIConn",
         "designer|userAlias": "iscsiconn"
     },

@@ -58,8 +58,11 @@ Ext.define('app_unittest.view.MainView', {
                                     width: 337,
                                     fieldLabel: 'Load Unit',
                                     queryMode: 'local',
-                                    store: 'testunit',
-                                    valueField: 'text'
+                                    valueField: 'text',
+                                    databind: {
+                                        autoload: true,
+                                        model: 'testunit'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',

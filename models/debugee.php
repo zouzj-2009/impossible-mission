@@ -9,7 +9,7 @@ function trace_in($level, $msg, $varlist){
 	$trace = "";
 	foreach($args as $arg){
 		if (isset($arg[0])) $indexed = true; else $indexed = false;
-		if (is_array($args)){
+		if (is_array($arg)){
 			$vars .= "[";
 			foreach($arg as $k=>$v){
 				$av = "";
