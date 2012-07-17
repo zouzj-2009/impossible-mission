@@ -1,0 +1,26 @@
+Ext.ns('App.locale');
+if (!App.locale.text) App.locale.text = {};
+App.locale.text = Ext.apply(App.locale.text, {
+	'Add New ...': '添加...',
+	'DNS1': 'DNS1',
+	'DNS2': 'DNS2',
+	'Default GW1': '默认网关1',
+	'Default GW2': '默认网关2',
+	'Dev': '设备',
+	'Export ...': '导出图形...',
+	'GW & DNS': '网关和DNS',
+	'Global Setting': '全局设定',
+	'IP Address Configuration': 'IP地址配置',
+	'IP address of current visited server %ipaddress% will be deleted, you need restrart the web application, are you sure?': '正在访问的服务器IP %ipaddress% 将被删除，需要使用新的地址重新进入web应用，您确定么？',
+	'IPAddress': 'IP地址',
+	'Ipaddress': 'IP地址',
+	'Ipv6address': 'IPV6地址',
+	'NIC & IP Address': '网卡IP设定',
+	'NIC Setting': '网卡信息',
+	'NIC': '网卡',
+	'NetMask': '子网掩码',
+	'Netmask': '子网掩码',
+	'Network Bandwidth Monitor': '网络流量监视器',
+	'Network': '网络设定',
+'Would you like to download the chart as an image?<br/>Warning! This is a cloud service, Data will be sent to website:sencha.io)': '您希望将本图例保存为本地图像么?<br/>提示! 这是一项云服务，数据将发往网站:sencha.io.',
+});

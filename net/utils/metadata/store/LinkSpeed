@@ -1,0 +1,53 @@
+{
+    "id": "ExtBox1-ext-gen65871",
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "storeId": "linkspeed",
+        "model": "etherspeed",
+        "data": null,
+        "designer|userClassName": "LinkSpeed"
+    },
+    "customConfigs": [],
+    "designerId": "cc71364a-2756-4b62-9aa4-4609b65536cc",
+    "$viewOrder": 1,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen12547",
+            "type": "jsonpproxy",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "http://localhost/iwm/data/ifconfig.php",
+                "designer|userClassName": "MyJsonPProxy1"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen12802",
+                    "type": "jsonreader",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "data",
+                        "designer|userClassName": "MyJsonReader1"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                }
+            ]
+        }
+    ]
+}

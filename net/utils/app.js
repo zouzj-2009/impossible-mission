@@ -18,27 +18,30 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-    requires: [
-        'net_utils.controller.NetConfig',
-        'net_utils.controller.NicInfo',
-        'net_utils.controller.NetSpeed',
-        'target_iscsi.controller.VirtPortal'
-    ],
-
     models: [
-        'testunit'
+        'netconfig',
+        'etherspeed',
+        'niclist',
+        'dnsgw'
     ],
     stores: [
-        'testunit'
+        'netconfig',
+        'LinkSpeed'
     ],
     views: [
         'MainView',
-        'changepassword'
+        'NetMaskField',
+        'LinkSpeedBar',
+        'changepassword',
+        'NicInfo',
+        'NetConfig'
     ],
     autoCreateViewport: true,
-    name: 'app_unittest',
+    name: 'net_utils',
     controllers: [
-        'LoadTest'
+        'NetConfig',
+        'NicInfo',
+        'NetSpeed'
     ],
     defaultlang: 'zh_cn'
 });

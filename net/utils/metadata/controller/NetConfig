@@ -1,0 +1,27 @@
+{
+    "id": "ExtBox1-ext-gen16247",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "net_utils.model.netconfig",
+            "net_utils.model.dnsgw",
+            "net_utils.model.niclist"
+        ],
+        "stores": [
+            "net_utils.store.netconfig"
+        ],
+        "views": [
+            "net_utils.view.NetConfig"
+        ],
+        "designer|userClassName": "NetConfig"
+    },
+    "customConfigs": [],
+    "designerId": "ccb40bd6-bbbc-4405-8505-2fb183ca4dd0",
+    "$viewOrder": 0,
+    "expanded": true
+}

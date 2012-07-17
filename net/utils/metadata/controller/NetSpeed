@@ -1,0 +1,25 @@
+{
+    "id": "ExtBox1-ext-gen16439",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "net_utils.model.etherspeed"
+        ],
+        "stores": [
+            "net_utils.store.LinkSpeed"
+        ],
+        "views": [
+            "net_utils.view.LinkSpeedBar"
+        ],
+        "designer|userClassName": "NetSpeed"
+    },
+    "customConfigs": [],
+    "designerId": "8932762b-0e55-486a-a56f-b8400f014d69",
+    "$viewOrder": 2,
+    "expanded": true
+}
