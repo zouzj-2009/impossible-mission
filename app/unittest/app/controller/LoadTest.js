@@ -76,10 +76,10 @@ Ext.define('app_unittest.controller.LoadTest', {
             alert(name+': no views!');
             return false;
         }
-        Ext.Array.forEach(views, function(view){
-            this.loadview(view, menable, tab, config);
-
-        }, this);
+        for(var i=0;i<views.length; i++){
+            var view = views[i];
+            if (!this.loadview(view, menable, tab, config)) return false;
+        }
         return true;
     },
 
