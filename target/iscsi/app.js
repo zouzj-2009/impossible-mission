@@ -29,8 +29,7 @@ Ext.application({
         'MainView',
         'NetMaskField',
         'changepassword',
-        'MyGridPanel1',
-        'TargetListField'
+        'MyGridPanel1'
     ],
     autoCreateViewport: true,
     name: 'target_iscsi',

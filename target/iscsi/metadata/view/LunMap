@@ -1,5 +1,5 @@
 {
-    "id": "ExtBox1-ext-gen163536",
+    "id": "ExtBox1-ext-gen7598",
     "type": "panel",
     "reference": {
         "name": "items",
@@ -13,17 +13,16 @@
         "width": null,
         "layout": "border",
         "bodyPadding": 10,
-        "title": "LunMap",
-        "designer|userClassName": "LunMap",
-        "designer|userAlias": "lunmap"
+        "title": "LUN Map$",
+        "designer|userClassName": "LunMap"
     },
     "customConfigs": [],
-    "designerId": "31c39387-772c-4393-a015-cd5be86defd7",
-    "$viewOrder": 4,
+    "designerId": "258fdbc4-34bf-43d8-94b5-a80b4544d479",
+    "$viewOrder": 5,
     "expanded": false,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen16899",
+            "id": "ExtBox1-ext-gen7609",
             "type": "gridpanel",
             "reference": {
                 "name": "items",
@@ -39,7 +38,7 @@
                 "titleCollapse": false,
                 "store": null,
                 "designer|userClassName": "MyGridPanel",
-                "databind": "{bindform:'newmap',\nprogress:{\ncreate:'newin'\n},\nmodel:'target_iscsi.model.lunmap',\nautoload:true}",
+                "databind": "{bindform:'newmap',\nprogress:{\ncreate:'newin'\n},\nmodel: 'target_iscsi.model.lunmap',\nautoload:true}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true
@@ -51,10 +50,10 @@
                     "type": "object"
                 }
             ],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
-                    "id": "ExtBox1-ext-gen16912",
+                    "id": "ExtBox1-ext-gen7622",
                     "type": "gridview",
                     "reference": {
                         "name": "viewConfig",
@@ -68,7 +67,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen16947",
+                    "id": "ExtBox1-ext-gen7626",
                     "type": "checkboxselectionmodel",
                     "reference": {
                         "name": "selModel",
@@ -82,7 +81,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen16951",
+                    "id": "ExtBox1-ext-gen7630",
                     "type": "toolbar",
                     "reference": {
                         "name": "dockedItems",
@@ -97,7 +96,7 @@
                     "expanded": false,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen16958",
+                            "id": "ExtBox1-ext-gen7637",
                             "type": "button",
                             "reference": {
                                 "name": "items",
@@ -115,7 +114,7 @@
                             "expanded": true
                         },
                         {
-                            "id": "ExtBox1-ext-gen16970",
+                            "id": "ExtBox1-ext-gen7643",
                             "type": "button",
                             "reference": {
                                 "name": "items",
@@ -134,7 +133,7 @@
                     ]
                 },
                 {
-                    "id": "ExtBox1-ext-gen80916",
+                    "id": "ExtBox1-ext-gen7649",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -150,7 +149,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen80928",
+                    "id": "ExtBox1-ext-gen7653",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -166,7 +165,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen80940",
+                    "id": "ExtBox1-ext-gen7657",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -182,7 +181,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen80952",
+                    "id": "ExtBox1-ext-gen7661",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -198,7 +197,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen80964",
+                    "id": "ExtBox1-ext-gen7665",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -214,7 +213,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen80976",
+                    "id": "ExtBox1-ext-gen7669",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -230,7 +229,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen80988",
+                    "id": "ExtBox1-ext-gen7673",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -246,7 +245,7 @@
                     "expanded": true,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen87036",
+                            "id": "ExtBox1-ext-gen7677",
                             "type": "fixedfunction",
                             "reference": {
                                 "name": "items",
@@ -276,7 +275,7 @@
                     ]
                 },
                 {
-                    "id": "ExtBox1-ext-gen81000",
+                    "id": "ExtBox1-ext-gen7680",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -292,7 +291,7 @@
                     "expanded": true
                 },
                 {
-                    "id": "ExtBox1-ext-gen81012",
+                    "id": "ExtBox1-ext-gen7684",
                     "type": "gridcolumn",
                     "reference": {
                         "name": "columns",
@@ -308,7 +307,7 @@
                     "expanded": true,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen86320",
+                            "id": "ExtBox1-ext-gen7688",
                             "type": "fixedfunction",
                             "reference": {
                                 "name": "items",
@@ -340,7 +339,7 @@
             ]
         },
         {
-            "id": "ExtBox1-ext-gen59060",
+            "id": "ExtBox1-ext-gen7709",
             "type": "container",
             "reference": {
                 "name": "items",
@@ -362,7 +361,7 @@
             "expanded": true,
             "cn": [
                 {
-                    "id": "ExtBox1-ext-gen5082",
+                    "id": "ExtBox1-ext-gen7722",
                     "type": "form",
                     "reference": {
                         "name": "items",
@@ -392,10 +391,10 @@
                             "type": "object"
                         }
                     ],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen24302",
+                            "id": "ExtBox1-ext-gen7726",
                             "type": "fieldset",
                             "reference": {
                                 "name": "items",
@@ -414,7 +413,7 @@
                             "expanded": true,
                             "cn": [
                                 {
-                                    "id": "ExtBox1-ext-gen66099",
+                                    "id": "ExtBox1-ext-gen7733",
                                     "type": "checkboxfield",
                                     "reference": {
                                         "name": "items",
@@ -433,7 +432,7 @@
                                     "expanded": true
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen70030",
+                                    "id": "ExtBox1-ext-gen7739",
                                     "type": "fieldset",
                                     "reference": {
                                         "name": "items",
@@ -452,7 +451,7 @@
                                     "expanded": true,
                                     "cn": [
                                         {
-                                            "id": "ExtBox1-ext-gen6843",
+                                            "id": "ExtBox1-ext-gen7744",
                                             "type": "checkboxfield",
                                             "reference": {
                                                 "name": "items",
@@ -471,7 +470,7 @@
                                             "expanded": true
                                         },
                                         {
-                                            "id": "ExtBox1-ext-gen64220",
+                                            "id": "ExtBox1-ext-gen7750",
                                             "type": "textfield",
                                             "reference": {
                                                 "name": "items",
@@ -492,7 +491,7 @@
                                             "expanded": true,
                                             "cn": [
                                                 {
-                                                    "id": "ExtBox1-ext-gen9737",
+                                                    "id": "ExtBox1-ext-gen7755",
                                                     "type": "fixedfunction",
                                                     "reference": {
                                                         "name": "items",
@@ -518,7 +517,7 @@
                                             ]
                                         },
                                         {
-                                            "id": "ExtBox1-ext-gen71683",
+                                            "id": "ExtBox1-ext-gen7759",
                                             "type": "textfield",
                                             "reference": {
                                                 "name": "items",
@@ -540,7 +539,7 @@
                                             "expanded": true,
                                             "cn": [
                                                 {
-                                                    "id": "ExtBox1-ext-gen5019",
+                                                    "id": "ExtBox1-ext-gen7764",
                                                     "type": "fixedfunction",
                                                     "reference": {
                                                         "name": "items",
@@ -569,7 +568,7 @@
                                     ]
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen74524",
+                                    "id": "ExtBox1-ext-gen7769",
                                     "type": "button",
                                     "reference": {
                                         "name": "items",
@@ -587,7 +586,7 @@
                                     "expanded": true
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen11501",
+                                    "id": "ExtBox1-ext-gen7777",
                                     "type": "button",
                                     "reference": {
                                         "name": "items",
@@ -609,7 +608,7 @@
                     ]
                 },
                 {
-                    "id": "ExtBox1-ext-gen8233",
+                    "id": "ExtBox1-ext-gen7787",
                     "type": "form",
                     "reference": {
                         "name": "items",
@@ -637,7 +636,7 @@
                     "expanded": true,
                     "cn": [
                         {
-                            "id": "ExtBox1-ext-gen126259",
+                            "id": "ExtBox1-ext-gen7791",
                             "type": "fieldset",
                             "reference": {
                                 "name": "items",
@@ -652,7 +651,23 @@
                             "expanded": true,
                             "cn": [
                                 {
-                                    "id": "ExtBox1-ext-gen6991",
+                                    "id": "ExtBox1-ext-gen7908",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "sourceip"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ucmpIpField-ExtBox1-ext-gen11134"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen8021",
                                     "type": "linkedinstance",
                                     "reference": {
                                         "name": "items",
@@ -668,7 +683,24 @@
                                     "masterInstanceId": "ExtBox1-ext-gen64225"
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen64235",
+                                    "id": "ExtBox1-ext-gen16886",
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "targetid",
+                                        "valueField": "targetid"
+                                    },
+                                    "customConfigs": [],
+                                    "iconCls": "icon-linkedinstance",
+                                    "expanded": true,
+                                    "masterInstanceId": "ucmpTargetListField-ExtBox1-ext-gen15706"
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen8166",
                                     "type": "combobox",
                                     "reference": {
                                         "name": "items",
@@ -691,7 +723,7 @@
                                     "expanded": true
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen76711",
+                                    "id": "ExtBox1-ext-gen8172",
                                     "type": "fieldset",
                                     "reference": {
                                         "name": "items",
@@ -710,7 +742,7 @@
                                     "expanded": false,
                                     "cn": [
                                         {
-                                            "id": "ExtBox1-ext-gen76716",
+                                            "id": "ExtBox1-ext-gen8177",
                                             "type": "textfield",
                                             "reference": {
                                                 "name": "items",
@@ -729,7 +761,7 @@
                                             "expanded": true
                                         },
                                         {
-                                            "id": "ExtBox1-ext-gen76722",
+                                            "id": "ExtBox1-ext-gen8183",
                                             "type": "textfield",
                                             "reference": {
                                                 "name": "items",
@@ -749,7 +781,7 @@
                                             "expanded": true
                                         },
                                         {
-                                            "id": "ExtBox1-ext-gen76728",
+                                            "id": "ExtBox1-ext-gen8189",
                                             "type": "textfield",
                                             "reference": {
                                                 "name": "items",
@@ -768,7 +800,7 @@
                                             "expanded": true
                                         },
                                         {
-                                            "id": "ExtBox1-ext-gen76734",
+                                            "id": "ExtBox1-ext-gen8195",
                                             "type": "textfield",
                                             "reference": {
                                                 "name": "items",
@@ -790,7 +822,7 @@
                                     ]
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen64245",
+                                    "id": "ExtBox1-ext-gen8202",
                                     "type": "button",
                                     "reference": {
                                         "name": "items",

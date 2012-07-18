@@ -32,8 +32,7 @@ Ext.application({
         'TargetListField',
         'changepassword',
         'ChangePassword',
-        'Login',
-        'Messager'
+        'Login'
     ],
     autoCreateViewport: true,
     name: 'ui_common',

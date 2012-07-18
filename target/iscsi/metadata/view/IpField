@@ -1,5 +1,5 @@
 {
-    "id": "ucmpIpField-ExtBox1-ext-gen15705",
+    "id": "ucmpIpField-ExtBox1-ext-gen11134",
     "type": "textfield",
     "reference": {
         "name": "items",
@@ -16,7 +16,7 @@
         "designer|userAlias": "ipfield"
     },
     "customConfigs": [],
-    "designerId": "d1cb0b2f-1bcf-4190-807b-7ba3d2314840",
-    "$viewOrder": 5,
+    "designerId": "182e5a07-ab29-435c-a9ef-3ee76671878b",
+    "$viewOrder": 6,
     "expanded": true
 }

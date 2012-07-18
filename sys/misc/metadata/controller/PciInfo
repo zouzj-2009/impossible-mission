@@ -1,0 +1,22 @@
+{
+    "id": "ExtBox1-ext-gen20360",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "pciinfo"
+        ],
+        "views": [
+            "PciInfo"
+        ],
+        "designer|userClassName": "PciInfo"
+    },
+    "customConfigs": [],
+    "designerId": "edf1ca10-5aae-4ba2-8f50-99c3ed004ecb",
+    "$viewOrder": 0,
+    "expanded": true
+}

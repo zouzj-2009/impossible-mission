@@ -1,0 +1,16 @@
+{
+    "id": "ExtBox1-ext-gen35931",
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "url": "js/lang.zh_cn.js"
+    },
+    "customConfigs": [],
+    "designerId": "3d9cd8c7-4d49-4333-956a-49d9ff9190a7",
+    "$viewOrder": 2,
+    "expanded": true
+}

@@ -18,7 +18,8 @@ Ext.define('target_iscsi.controller.LunMap', {
 
     models: [
         'lunmap',
-        'glunmap'
+        'glunmap',
+        'targetlist'
     ],
     stores: [
         'Access'

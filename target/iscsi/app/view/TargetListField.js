@@ -27,6 +27,13 @@ Ext.define('target_iscsi.view.TargetListField', {
     initComponent: function() {
         var me = this;
 
+        Ext.applyIf(me, {
+            databind: {
+                autoload: true,
+                model: 'target_iscsi.model.targetlist'
+            }
+        });
+
         me.callParent(arguments);
     }
 

@@ -1,0 +1,23 @@
+{
+    "id": "ExtBox1-ext-gen4696",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "scsidisk",
+            "scsihost"
+        ],
+        "views": [
+            "DiskMgmt"
+        ],
+        "designer|userClassName": "ScsiDisks"
+    },
+    "customConfigs": [],
+    "designerId": "7b3dd018-974f-4c00-a3b0-23439582d4cd",
+    "$viewOrder": 0,
+    "expanded": true
+}

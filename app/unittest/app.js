@@ -18,6 +18,11 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
+    requires: [
+        'ui_common.controller.DataIndicator',
+        'ui_common.controller.EventMessager'
+    ],
+
     models: [
         'testunit'
     ],

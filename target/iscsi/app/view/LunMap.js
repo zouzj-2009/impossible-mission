@@ -15,9 +15,10 @@
 
 Ext.define('target_iscsi.view.LunMap', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.lunmap',
     requires: [
-        'target_iscsi.view.NetMaskField'
+        'target_iscsi.view.IpField',
+        'target_iscsi.view.NetMaskField',
+        'target_iscsi.view.TargetListField'
     ],
 
     border: 0,
@@ -25,7 +26,7 @@ Ext.define('target_iscsi.view.LunMap', {
         type: 'border'
     },
     bodyPadding: 10,
-    title: 'LunMap',
+    title: 'LUN Map$',
 
     initComponent: function() {
         var me = this;
@@ -236,8 +237,17 @@ Ext.define('target_iscsi.view.LunMap', {
                                     title: 'New Mapping',
                                     items: [
                                         {
+                                            xtype: 'ipfield',
+                                            name: 'sourceip'
+                                        },
+                                        {
                                             xtype: 'netmaskfield',
                                             name: 'netmask'
+                                        },
+                                        {
+                                            xtype: 'targetlistfield',
+                                            name: 'targetid',
+                                            valueField: 'targetid'
                                         },
                                         {
                                             xtype: 'combobox',

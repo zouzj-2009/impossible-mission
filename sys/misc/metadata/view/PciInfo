@@ -1,0 +1,182 @@
+{
+    "id": "ExtBox1-ext-gen18708",
+    "type": "gridpanel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "itemId": "sysinfo",
+        "title": "System Information$",
+        "store": null,
+        "designer|userClassName": "PciInfo",
+        "designer|userAlias": "pciinfo",
+        "databind": "{\"autoload\":true,\nmodel:'sys_misc.model.pciinfo'}"
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "databind",
+            "type": "object"
+        }
+    ],
+    "designerId": "3b759557-b2e1-4172-a4ea-744161557327",
+    "$viewOrder": 2,
+    "expanded": false,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen18752",
+            "type": "gridview",
+            "reference": {
+                "name": "viewConfig",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "MyGridView2"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen187528",
+            "type": "toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "MyToolbar9",
+                "dock": "top"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen189359",
+                    "type": "button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "itemId": "refresh",
+                        "text": "refresh",
+                        "designer|userClassName": "MyButton31",
+                        "layout|flex": null
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                }
+            ]
+        },
+        {
+            "id": "ExtBox1-ext-gen37179",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "width": 78,
+                "dataIndex": "busid",
+                "text": "Busid",
+                "designer|userClassName": "MyColumn51"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen37190",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "width": 177,
+                "dataIndex": "type",
+                "text": "Type",
+                "designer|userClassName": "MyColumn52",
+                "databind": "{\nautoload:true,\nmodel: 'pciinfo'\n}"
+            },
+            "customConfigs": [
+                {
+                    "group": "(Custom Properties)",
+                    "name": "databind",
+                    "type": "object"
+                }
+            ],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen5112",
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "renderer",
+                        "designer|params": [
+                            "value",
+                            "metaData",
+                            "record",
+                            "rowIndex",
+                            "colIndex",
+                            "store",
+                            "view"
+                        ],
+                        "implHandler": [
+                            "return '<span class=\"x-column-icon x-hardware-'+value.replace(/ +/g, '_').toLowerCase()+'\"> </span><span class=x-column-icon-text>'+value+'</span>';"
+                        ],
+                        "designer|userClassName": "renderer"
+                    },
+                    "customConfigs": [],
+                    "iconCls": "icon-basic-function",
+                    "expanded": true
+                }
+            ]
+        },
+        {
+            "id": "ExtBox1-ext-gen37201",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "width": 139,
+                "dataIndex": "vendor",
+                "text": "Vendor",
+                "designer|userClassName": "MyColumn53"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen37212",
+            "type": "gridcolumn",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "description",
+                "flex": 1,
+                "text": "Description",
+                "designer|userClassName": "MyColumn54"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

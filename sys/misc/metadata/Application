@@ -1,0 +1,32 @@
+{
+    "id": "ExtBox1-ext-gen2293",
+    "type": "application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "views": [
+            "MainView"
+        ],
+        "autoCreateViewport": true,
+        "name": "sys_misc",
+        "controllers": [
+            "PciInfo",
+            "SysSetting"
+        ],
+        "defaultlang": "zh_cn"
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "defaultlang",
+            "type": "string"
+        }
+    ],
+    "designerId": "application",
+    "$viewOrder": 0,
+    "iconCls": "icon-application",
+    "expanded": true
+}

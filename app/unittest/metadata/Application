@@ -22,7 +22,10 @@
         "controllers": [
             "LoadTest"
         ],
-        "designer|requires": null,
+        "designer|requires": [
+            "ui_common.controller.DataIndicator",
+            "ui_common.controller.EventMessager"
+        ],
         "defaultlang": "zh_cn"
     },
     "customConfigs": [

@@ -18,8 +18,7 @@ Ext.define('app_unittest.controller.LoadTest', {
 
     onButtonClick: function(button, e, options) {
         var app = this.application,
-            r = app.uselibs,
-            v = [],
+            r = button.up().up().down('#testunitselector').getStore().getRange(),
             em = button.up().up().down('#multiinstance').getValue(),
             tp = Ext.getCmp('testpanel');
         //if (!em) button.disable();
@@ -27,7 +26,8 @@ Ext.define('app_unittest.controller.LoadTest', {
         if (!Ext.isArray(r)) return;
         var config = {serverip: button.up().up().down('#serverip').getValue()};
         Ext.Array.forEach(r, function(cn){
-            this.loadunit(cn, em, tp, config);
+            if (cn.getData().text)
+            this.loadunit(cn.getData().text, em, tp, config);
         },this);
     },
 

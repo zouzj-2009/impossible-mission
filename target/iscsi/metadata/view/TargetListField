@@ -17,10 +17,17 @@
         "store": null,
         "valueField": "iqn",
         "designer|userClassName": "TargetListField",
-        "designer|userAlias": "targetlistfield"
+        "designer|userAlias": "targetlistfield",
+        "databind": "{\nautoload:true,\nmodel:'target_iscsi.model.targetlist'\n}"
     },
-    "customConfigs": [],
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "databind",
+            "type": "object"
+        }
+    ],
     "designerId": "6838c8f5-0b2c-4173-b47e-cb310014d427",
-    "$viewOrder": 6,
+    "$viewOrder": 4,
     "expanded": true
 }

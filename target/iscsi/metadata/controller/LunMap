@@ -9,7 +9,8 @@
     "userConfig": {
         "models": [
             "lunmap",
-            "glunmap"
+            "glunmap",
+            "targetlist"
         ],
         "stores": [
             "Access"

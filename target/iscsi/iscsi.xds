@@ -112,14 +112,6 @@
             ],
             "className": "glunmap"
         },
-        "31c39387-772c-4393-a015-cd5be86defd7": {
-            "paths": [
-                "metadata/view/LunMap",
-                "app/view/override/LunMap.js",
-                "app/view/LunMap.js"
-            ],
-            "className": "LunMap"
-        },
         "430cc03e-d4f1-4d83-ac5d-797fd01914cb": {
             "paths": [
                 "metadata/model/gvirtportal",
@@ -180,14 +172,6 @@
             ],
             "className": "VirtPortal"
         },
-        "d1cb0b2f-1bcf-4190-807b-7ba3d2314840": {
-            "paths": [
-                "metadata/view/IpField",
-                "app/view/override/IpField.js",
-                "app/view/IpField.js"
-            ],
-            "className": "IpField"
-        },
         "6838c8f5-0b2c-4173-b47e-cb310014d427": {
             "paths": [
                 "metadata/view/TargetListField",
@@ -195,6 +179,22 @@
                 "app/view/TargetListField.js"
             ],
             "className": "TargetListField"
+        },
+        "258fdbc4-34bf-43d8-94b5-a80b4544d479": {
+            "paths": [
+                "metadata/view/LunMap",
+                "app/view/override/LunMap.js",
+                "app/view/LunMap.js"
+            ],
+            "className": "LunMap"
+        },
+        "182e5a07-ab29-435c-a9ef-3ee76671878b": {
+            "paths": [
+                "metadata/view/IpField",
+                "app/view/override/IpField.js",
+                "app/view/IpField.js"
+            ],
+            "className": "IpField"
         }
     },
     "expandedState": {

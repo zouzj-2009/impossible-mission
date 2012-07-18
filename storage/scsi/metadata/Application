@@ -1,0 +1,36 @@
+{
+    "id": "ExtBox1-ext-gen2293",
+    "type": "application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": null,
+        "views": [
+            "MainView",
+            "changepassword"
+        ],
+        "autoCreateViewport": true,
+        "name": "storage_scsi",
+        "controllers": [
+            "ScsiDisks"
+        ],
+        "designer|requires": [
+            "ui_common.controller.DataIndicator"
+        ],
+        "defaultlang": "zh_cn"
+    },
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "defaultlang",
+            "type": "string"
+        }
+    ],
+    "designerId": "application",
+    "$viewOrder": 0,
+    "iconCls": "icon-application",
+    "expanded": true
+}

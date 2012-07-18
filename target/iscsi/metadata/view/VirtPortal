@@ -28,7 +28,7 @@
     ],
     "designerId": "6ffe2f79-4597-4ba0-99e3-45e4e62d1eaa",
     "$viewOrder": 2,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen19145",
@@ -46,7 +46,7 @@
                 "titleCollapse": false,
                 "store": "target_iscsi.store.virtportal",
                 "designer|userClassName": "MyGridPanel",
-                "databind": "{\nautoload: true,\nmodel:'target_iscsi.model.virtportal',\nbindform: 'newvirtentry'\n}",
+                "databind": "{\nautoload: true,\nmid:'virtportal',\nmodel:'target_iscsi.model.virtportal',\nbindform: 'newvirtentry'\n}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true
@@ -58,7 +58,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen19158",
@@ -299,7 +299,7 @@
                 "layout|split": true
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen19248",
@@ -397,7 +397,7 @@
                                     ]
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen19380",
+                                    "id": "ExtBox1-ext-gen12539",
                                     "type": "linkedinstance",
                                     "reference": {
                                         "name": "items",
@@ -405,14 +405,13 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "itemId": "portalip",
                                         "name": "portalip",
                                         "fieldLabel": "Portal IP"
                                     },
                                     "customConfigs": [],
                                     "iconCls": "icon-linkedinstance",
                                     "expanded": true,
-                                    "masterInstanceId": "ucmpIpField-ExtBox1-ext-gen15705"
+                                    "masterInstanceId": "ucmpIpField-ExtBox1-ext-gen11134"
                                 },
                                 {
                                     "id": "ExtBox1-ext-gen19493",
@@ -517,7 +516,7 @@
                         "designer|userClassName": "MyForm12"
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen19523",
@@ -547,7 +546,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "databind": "{\nautoload: true,\nmodel:'target_iscsi.model.targetlist'\n}",
+                                        "databind": null,
                                         "name": "targetname",
                                         "value": "'default'",
                                         "fieldLabel": "TargetName",
@@ -567,7 +566,7 @@
                                     "masterInstanceId": "ucmpTargetListField-ExtBox1-ext-gen15706"
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen19781",
+                                    "id": "ExtBox1-ext-gen8699",
                                     "type": "linkedinstance",
                                     "reference": {
                                         "name": "items",
@@ -581,10 +580,10 @@
                                     "customConfigs": [],
                                     "iconCls": "icon-linkedinstance",
                                     "expanded": true,
-                                    "masterInstanceId": "ucmpIpField-ExtBox1-ext-gen15705"
+                                    "masterInstanceId": "ucmpIpField-ExtBox1-ext-gen11134"
                                 },
                                 {
-                                    "id": "ExtBox1-ext-gen19894",
+                                    "id": "ExtBox1-ext-gen10088",
                                     "type": "linkedinstance",
                                     "reference": {
                                         "name": "items",
@@ -593,12 +592,12 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "name": "excludesource",
-                                        "fieldLabel": "Exclude Client"
+                                        "fieldLabel": "Exclude IP"
                                     },
                                     "customConfigs": [],
                                     "iconCls": "icon-linkedinstance",
                                     "expanded": true,
-                                    "masterInstanceId": "ucmpIpField-ExtBox1-ext-gen15705"
+                                    "masterInstanceId": "ucmpIpField-ExtBox1-ext-gen11134"
                                 },
                                 {
                                     "id": "ExtBox1-ext-gen19899",

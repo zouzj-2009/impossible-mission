@@ -44,6 +44,7 @@ Ext.define('target_iscsi.view.VirtPortal', {
                     store: 'target_iscsi.store.virtportal',
                     databind: {
                         autoload: true,
+                        mid: 'virtportal',
                         model: 'target_iscsi.model.virtportal',
                         bindform: 'newvirtentry'
                     },
@@ -160,7 +161,6 @@ Ext.define('target_iscsi.view.VirtPortal', {
                                         },
                                         {
                                             xtype: 'ipfield',
-                                            itemId: 'portalip',
                                             name: 'portalip',
                                             fieldLabel: 'Portal IP'
                                         },
@@ -207,10 +207,6 @@ Ext.define('target_iscsi.view.VirtPortal', {
                                     items: [
                                         {
                                             xtype: 'targetlistfield',
-                                            databind: {
-                                                autoload: true,
-                                                model: 'target_iscsi.model.targetlist'
-                                            },
                                             name: 'targetname',
                                             value: 'default',
                                             fieldLabel: 'TargetName',
@@ -225,7 +221,7 @@ Ext.define('target_iscsi.view.VirtPortal', {
                                         {
                                             xtype: 'ipfield',
                                             name: 'excludesource',
-                                            fieldLabel: 'Exclude Client'
+                                            fieldLabel: 'Exclude IP'
                                         },
                                         {
                                             xtype: 'button',

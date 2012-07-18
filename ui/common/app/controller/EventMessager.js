@@ -18,7 +18,7 @@ Ext.define('ui_common.controller.EventMessager', {
     alias: 'controller.eventmessager',
 
     views: [
-        'ui_common.view.Messager'
+        'Messager'
     ],
 
     refs: [
@@ -32,7 +32,7 @@ Ext.define('ui_common.controller.EventMessager', {
         var m = this.getMessager();
 
         if (!m){
-            this.getView('Messager').create();
+            this.getView('ui_common.view.Messager').create();
             m = this.getMessager();
         }
         m.showPopup('datadone', info);

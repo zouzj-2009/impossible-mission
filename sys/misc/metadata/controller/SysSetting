@@ -1,0 +1,26 @@
+{
+    "id": "ExtBox1-ext-gen20436",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "syslog",
+            "logfiles",
+            "hostsetting",
+            "license",
+            "timezone"
+        ],
+        "views": [
+            "SysMaintain"
+        ],
+        "designer|userClassName": "SysSetting"
+    },
+    "customConfigs": [],
+    "designerId": "ef6b96d7-3431-4503-a2b5-0e9e036cbce9",
+    "$viewOrder": 1,
+    "expanded": true
+}

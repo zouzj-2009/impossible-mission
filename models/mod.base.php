@@ -505,6 +505,7 @@ function read($params, $records=null){
 		}else{
 			if ($cmd){//get read result by cmd
 				$r = $this->callcmd($cmd, $cmderror, $params, $records);
+				if ($cmderror) throw new Exception('read fail:'.$r[msg]);
 			}else{// get read result by do_read of sub_classes
 				$r = $this->do_read($params, $records);
 				$r = $r[data];
