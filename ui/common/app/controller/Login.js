@@ -62,25 +62,39 @@ Ext.define('ui_common.controller.Login', {
         if (!m) return;
         //todo: get saved user from form.state?
         form.getForm().loadRecord(m);
-        this.loginstore = store;
+        if (!this.allLogged) this.allLogged = [];
+        this.allLogged.push(store);
     },
 
     onLogout: function() {
-        var store = this.loginstore,
-            params = Ext.apply({_logout:true}, store.reloadParams);
-        store.load({params:params});
         var lwin = Ext.getCmp('loginwindow');
-        lwin.logouted = true;
-        lwin.show();
-        this.mainview.destroy();
-        delete this.mainview;
 
+        if (!lwin){
+            lwin = this.getView('ui_common.view.Login').create();
+        }
+        if (!lwin.isVisible()) lwin.show();
+
+        this.getController('ui_common.controller.Login').cleanLogged();
     },
 
     onChangePassword: function(login) {
         var user = login?login.username:this.logged.username,
             form = this.getView('ChangePassword').create({user:user});
         form.show();
+    },
+
+    cleanLogged: function() {
+        var app = this.application;
+        if (!app.allLogged){
+            app.allLogged = [];
+            var lwin = Ext.getCmp('loginwindow');
+            if (!lwin) return; //do nothing! only for close window!
+            app.allLogged.push(lwin.down('#loginform').databinded.store);
+        }
+        Ext.Array.forEach(app.allLogged, function(store){
+            params = Ext.apply({_logout:true}, store.reloadParams);
+            store.load({params:params});
+        });
     },
 
     init: function() {

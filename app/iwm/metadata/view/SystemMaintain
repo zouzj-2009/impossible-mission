@@ -19,23 +19,23 @@
     "expanded": true,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen41461",
-            "type": "linkedinstance",
+            "id": "ExtBox1-ext-gen29442",
+            "type": "panel",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "height": 250,
-                "id": null,
-                "itemId": "syslog",
+                "border": 0,
+                "padding": 20,
+                "layout": "fit",
+                "title": null,
+                "designer|userClassName": "MyPanel3",
                 "layout|region": "center"
             },
             "customConfigs": [],
-            "iconCls": "icon-linkedinstance",
-            "expanded": true,
-            "masterInstanceId": "ExtBox1-ext-gen40028"
+            "expanded": true
         }
     ]
 }

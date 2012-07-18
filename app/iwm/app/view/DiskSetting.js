@@ -16,9 +16,6 @@
 Ext.define('app_iwm.view.DiskSetting', {
     extend: 'Ext.container.Container',
     alias: 'widget.disksetting',
-    requires: [
-        'app_iwm.view.DiskMgmt'
-    ],
 
     height: 250,
     layout: {
@@ -31,7 +28,12 @@ Ext.define('app_iwm.view.DiskSetting', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'diskmgmt',
+                    xtype: 'panel',
+                    border: 0,
+                    padding: 20,
+                    layout: {
+                        type: 'fit'
+                    },
                     region: 'center'
                 }
             ]

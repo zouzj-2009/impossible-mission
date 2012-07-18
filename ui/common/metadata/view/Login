@@ -58,7 +58,7 @@
                     "type": "object"
                 }
             ],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen12848",

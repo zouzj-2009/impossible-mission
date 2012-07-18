@@ -16,10 +16,6 @@
 Ext.define('app_iwm.view.iSCSISetting', {
     extend: 'Ext.container.Container',
     alias: 'widget.iscsisetting',
-    requires: [
-        'app_iwm.view.LunMap',
-        'app_iwm.view.VirtPortal'
-    ],
 
     height: 600,
     width: 600,
@@ -34,19 +30,9 @@ Ext.define('app_iwm.view.iSCSISetting', {
             items: [
                 {
                     xtype: 'tabpanel',
-                    cls: 'shadowpanel',
-                    padding: 10,
+                    padding: 20,
                     activeTab: 0,
-                    region: 'center',
-                    items: [
-                        {
-                            xtype: 'lunmap',
-                            bodyBorder: false
-                        },
-                        {
-                            xtype: 'virtportal'
-                        }
-                    ]
+                    region: 'center'
                 }
             ]
         });

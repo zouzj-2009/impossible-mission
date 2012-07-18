@@ -16,9 +16,6 @@
 Ext.define('app_iwm.view.NetworkSetting', {
     extend: 'Ext.container.Container',
     alias: 'widget.networksetting',
-    requires: [
-        'app_iwm.view.NetConfig'
-    ],
 
     height: 250,
     layout: {
@@ -34,7 +31,12 @@ Ext.define('app_iwm.view.NetworkSetting', {
             },
             items: [
                 {
-                    xtype: 'netconfig',
+                    xtype: 'panel',
+                    border: 0,
+                    padding: 20,
+                    layout: {
+                        type: 'fit'
+                    },
                     region: 'center'
                 }
             ]

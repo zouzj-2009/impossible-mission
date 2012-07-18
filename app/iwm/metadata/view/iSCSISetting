@@ -16,10 +16,10 @@
     "customConfigs": [],
     "designerId": "bbf359ba-866f-451d-b91e-79048cf99449",
     "$viewOrder": 4,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
-            "id": "ExtBox1-ext-gen78753",
+            "id": "ExtBox1-ext-gen24417",
             "type": "tabpanel",
             "reference": {
                 "name": "items",
@@ -27,48 +27,13 @@
             },
             "codeClass": null,
             "userConfig": {
-                "border": null,
-                "cls": "shadowpanel",
-                "padding": 10,
-                "bodyPadding": null,
+                "padding": 20,
                 "activeTab": 0,
                 "designer|userClassName": "MyTabPanel",
                 "layout|region": "center"
             },
             "customConfigs": [],
-            "expanded": true,
-            "cn": [
-                {
-                    "id": "ExtBox1-ext-gen167066",
-                    "type": "linkedinstance",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "bodyBorder": false
-                    },
-                    "customConfigs": [],
-                    "iconCls": "icon-linkedinstance",
-                    "expanded": true,
-                    "masterInstanceId": "ExtBox1-ext-gen163536"
-                },
-                {
-                    "id": "ExtBox1-ext-gen82781",
-                    "type": "linkedinstance",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {},
-                    "customConfigs": [],
-                    "iconCls": "icon-linkedinstance",
-                    "expanded": true,
-                    "masterInstanceId": "ExtBox1-ext-gen47428"
-                }
-            ]
+            "expanded": true
         }
     ]
 }

@@ -16,9 +16,6 @@
 Ext.define('app_iwm.view.SystemMaintain', {
     extend: 'Ext.container.Container',
     alias: 'widget.systemmaintain',
-    requires: [
-        'app_iwm.view.SysMaintain'
-    ],
 
     height: 250,
     layout: {
@@ -31,9 +28,12 @@ Ext.define('app_iwm.view.SystemMaintain', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'sysmaintain',
-                    height: 250,
-                    itemId: 'syslog',
+                    xtype: 'panel',
+                    border: 0,
+                    padding: 20,
+                    layout: {
+                        type: 'fit'
+                    },
                     region: 'center'
                 }
             ]

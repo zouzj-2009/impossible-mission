@@ -28,6 +28,19 @@ Ext.define('app_iwm.controller.MainMenu', {
             });
             return;
         }
+        if (!button.UILoaded){//load UI
+            button.UILoaded = true;
+            var UI = app.UISetting[id],
+                c = Ext.getCmp('content').down('#'+id),
+                cc = UI.length==1?c.down('>panel'):c.down('>tabpanel');
+            for(var i=0; i<UI.length; i++){
+                var vc = app.getView(UI[i]);
+                if (!vc) throw 'fail to crete view '+UI[i];
+                cc.add(vc.create());
+            }
+            if (UI.length>1) cc.getLayout().setActiveItem(0);
+        }
+
         Ext.getCmp('content').getLayout().setActiveItem(id);
     },
 

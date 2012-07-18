@@ -19,49 +19,19 @@ Ext.Loader.setConfig({
 
 Ext.application({
     requires: [
-        'ui_common.controller.DataIndicator'
+        'ui_common.controller.DataIndicator',
+        'ui_common.controller.EventMessager',
+        'sys_misc.controller.PciInfo',
+        'sys_misc.controller.SysSetting',
+        'net_utils.controller.NetConfig',
+        'net_utils.controller.NicInfo',
+        'target_iscsi.controller.iSCSIConn',
+        'target_iscsi.controller.LunMap',
+        'target_iscsi.controller.VirtPortal',
+        'storage_scsi.controller.ScsiDisks',
+        'net_utils.controller.NetSpeed'
     ],
 
-    models: [
-        'netconfig',
-        'iscsiconn',
-        'pciinfo',
-        'targetlist',
-        'lunmap',
-        'access',
-        'virtportal',
-        'scsidisk',
-        'scsihost',
-        'syslog',
-        'etherspeed',
-        'glunmap',
-        'dnsgw',
-        'gvirtportal',
-        'niclist',
-        'logfiles',
-        'hostsetting',
-        'license',
-        'timezone',
-        'login',
-        'language'
-    ],
-    stores: [
-        'networkinfo',
-        'netconfig',
-        'physicinfo',
-        'iscsiconn',
-        'sysinfo',
-        'targetlist',
-        'LunMap',
-        'Access',
-        'VirtPortal',
-        'DiskList',
-        'ScsiHost',
-        'SysLog',
-        'LinkSpeed',
-        'General',
-        'language'
-    ],
     views: [
         'MainView',
         'BigIconBtn',
@@ -70,14 +40,6 @@ Ext.application({
         'iSCSISetting',
         'DiskSetting',
         'SystemMaintain',
-        'NetMaskField',
-        'TargetListField',
-        'NetConfig',
-        'VirtPortal',
-        'DiskMgmt',
-        'SysMaintain',
-        'LinkSpeedBar',
-        'LunMap',
         'changepassword'
     ],
     autoCreateViewport: true,
@@ -88,7 +50,16 @@ Ext.application({
     defaultlang: 'zh_cn',
 
     launch: function() {
-
+        this.UISetting = {
+            sysinfo:['sys_misc.view.PciInfo', 'net_utils.view.NicInfo', 'target_iscsi.view.iSCSIConn', 'net_utils.view.LinkSpeedBar'],
+            network:['net_utils.view.NetConfig'],
+            disks:['storage_scsi.view.DiskMgmt'],
+            iscsi:['target_iscsi.view.LunMap', 'target_iscsi.view.VirtPortal'],
+            maintain:['sys_misc.view.SysMaintain'],
+            logout:[]
+        };
+        var btn = Ext.getCmp('sysinfo');
+        btn.fireEvent('click', btn);
     }
 
 });

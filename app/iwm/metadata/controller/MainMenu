@@ -13,7 +13,7 @@
     "customConfigs": [],
     "designerId": "f1f29fd6-c384-4dc8-8c23-ea89658d8ed7",
     "$viewOrder": 0,
-    "expanded": false,
+    "expanded": true,
     "cn": [
         {
             "id": "ExtBox1-ext-gen70896",
@@ -36,6 +36,19 @@
                     "    });",
                     "    return;",
                     "}",
+                    "if (!button.UILoaded){//load UI",
+                    "    button.UILoaded = true;",
+                    "    var UI = app.UISetting[id],",
+                    "        c = Ext.getCmp('content').down('#'+id),",
+                    "        cc = UI.length==1?c.down('>panel'):c.down('>tabpanel');",
+                    "    for(var i=0; i<UI.length; i++){",
+                    "        var vc = app.getView(UI[i]);",
+                    "        if (!vc) throw 'fail to crete view '+UI[i];",
+                    "        cc.add(vc.create());",
+                    "    }",
+                    "    if (UI.length>1) cc.getLayout().setActiveItem(0);",
+                    "}",
+                    "        ",
                     "Ext.getCmp('content').getLayout().setActiveItem(id);"
                 ],
                 "name": "click",

@@ -106,7 +106,8 @@
                     "if (!m) return;",
                     "//todo: get saved user from form.state?",
                     "form.getForm().loadRecord(m);",
-                    "this.loginstore = store;"
+                    "if (!this.allLogged) this.allLogged = [];",
+                    "this.allLogged.push(store);"
                 ],
                 "name": "loginloaded",
                 "designer|userClassName": "onLoginloaded"
@@ -125,15 +126,14 @@
             "userConfig": {
                 "fn": "onLogout",
                 "implHandler": [
-                    "var store = this.loginstore,",
-                    "    params = Ext.apply({_logout:true}, store.reloadParams);",
-                    "store.load({params:params});",
                     "var lwin = Ext.getCmp('loginwindow');",
-                    "lwin.logouted = true;",
-                    "lwin.show();",
-                    "this.mainview.destroy();",
-                    "delete this.mainview;",
-                    ""
+                    "",
+                    "if (!lwin){",
+                    "    lwin = this.getView('ui_common.view.Login').create();",
+                    "}",
+                    "if (!lwin.isVisible()) lwin.show();",
+                    "",
+                    "this.getController('ui_common.controller.Login').cleanLogged();"
                 ],
                 "name": "logout",
                 "designer|userClassName": "onLogout"
@@ -183,6 +183,34 @@
                 "designer|targetType": "Ext.button.Button",
                 "designer|controlQuery": "button#changepassword",
                 "designer|userClassName": "onButtonClick"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen33904",
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "cleanLogged",
+                "implHandler": [
+                    "var app = this.application;",
+                    "if (!app.allLogged){",
+                    "    app.allLogged = [];",
+                    "    var lwin = Ext.getCmp('loginwindow');",
+                    "    if (!lwin) return; //do nothing! only for close window!",
+                    "    app.allLogged.push(lwin.down('#loginform').databinded.store);",
+                    "}",
+                    "Ext.Array.forEach(app.allLogged, function(store){",
+                    "    params = Ext.apply({_logout:true}, store.reloadParams);",
+                    "    store.load({params:params});",
+                    "});"
+                ],
+                "designer|userClassName": "cleanLogged"
             },
             "customConfigs": [],
             "expanded": true
