@@ -41,16 +41,5 @@ Ext.application({
         'Login',
         'DataIndicator'
     ],
-    defaultlang: 'zh_cn',
-
-    launch: function() {
-
-    },
-
-    start: function(config) {
-        if (!this.mainview)
-        this.mainview = Ext.widget('mainview', config);
-
-    }
-
+    defaultlang: 'zh_cn'
 });

@@ -24,12 +24,12 @@ function trace_in($level, $msg, $varlist){
 		}else{
 			if (is_object($arg)){
 				$vars .= 'Object '.get_class($arg).","; 
-			}
+			}else $vars .= "$arg,";
 		}
 	}
 	$vars = trim($vars, ",");
 	$class = get_class($this);
-	echo "DBG@$level $class:$msg $vars\n";
+	echo "DBG@$level $class:$msg($vars)\n";
 }
 
 //end of class

@@ -78,8 +78,9 @@ Ext.define('ui_common.controller.Login', {
     },
 
     onChangePassword: function(login) {
-        var user = login?login.username:this.logged.username,
-            form = this.getView('ChangePassword').create({user:user});
+        //todo: get login username when app started!
+        var user = login?login.username:'admin';
+        form = this.getView('ui_common.view.ChangePassword').create({user:user});
         form.show();
     },
 

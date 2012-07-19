@@ -265,6 +265,7 @@ function save_sysconfig($type='current'){
 }
 
 function savechanges($action, $params, $changed, $oldif=null){
+	$this->trace_in(DBG, __FUNCTION__, $action, $params, $changed, $oldif);
 //we just read current config and save!
 //sub class can override this.
 	//not save to sysconfig, should be done by subclass's savechanges or before/do/after_$action
@@ -277,13 +278,16 @@ function savechanges($action, $params, $changed, $oldif=null){
 	}
 	$r = $this->read(array(), array());//get all and store it!
 	$new = $r[data];
+	$this->trace_in(DBG, __FUNCTION__." readout old", $new);
 	//merge with changed
 	//do we need this? or just read from updated above?
 	//we not save change yet, so, ... these is need
-	if ($action == 'upate'){
+	if ($action == 'update'){
 		foreach($new as $k=>$record){
 			foreach ($changed as $c){
-				if ($this->get_record_id($c) == $this->get_record_id($record)){
+				$newid = $this->get_record_id($c);
+				$oldid = $this->get_record_id($record);
+				if ($oldid == $newid){
 					$new[$k] = $c; 
 					break;
 				}
