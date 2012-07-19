@@ -41,7 +41,7 @@ function read($params, $records=array()){
 				return array(success=>true, data=>array($login), msg=>'login ok.');
 			}
 		}
-		return array(success=>false, authfail=>true, msg=>'login fail.', login=>$login, users=>$users);
+		return array(success=>false, authfail=>true, msg=>'login fail.', login=>$login);
 	}else if ($params[_logout]){
 		unset($_SESSION['loginuser']);
 	}

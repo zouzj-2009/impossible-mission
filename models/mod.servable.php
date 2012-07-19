@@ -15,7 +15,7 @@ function __construct($mid, $jobid=null){
 			title=>str_replace("MOD_", "", get_class($this)).".".$jobid,
 			number=>0,
 		);
-		$this->begintime = microtime(true);
+		$this->begintime = microtime(true)-1;
 	}
 	parent::__construct($mid);
 }
@@ -24,14 +24,14 @@ function __construct($mid, $jobid=null){
 function getOutput(){
 	$t = microtime(true);
 	$output = ob_get_contents();
-	$during = $t-$this->lastflushtime;
-	$elapsed = $t-$this->begintime;
+	$during = $this->lastflushtime?$t-$this->lastflushtime:0;
+	$elapsed = $this->begintime?$t-$this->begintime:0;
 	if (1||$t-$this->lastflushtime>1) ob_flush();
 	$this->lastflushtime = $t;
 	return array(
 		output=>$output,
-		during=>$during,
-		elapsed=>$elapsed,
+		during=>number_format($during,2),
+		elapsed=>number_format($elapsed,2),
 	);
 }
 

@@ -5,7 +5,7 @@ class MOD_jobtest extends MOD_servable{
 var $useservice=array(read=>true);
 function read($params, $records){
 	$count = 0;
-	$max = 1000;
+	$max = 5; //1000;
 	while (++$count < $max){
 		echo "runing 5x$count\n";
 		$this->sendPending("Running 5 x $count seconds ...", $count/$max);
