@@ -54,7 +54,6 @@ function check_args($s, $l, $retarray=false, $kvsep=','){
 
 $o = getopt($shortopts, $longopts);
 if (!$o) help();
-var_dump($o);
 $act = $o[a];
 $mod = $o[m];
 $p = $o[p];
