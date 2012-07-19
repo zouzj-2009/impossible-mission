@@ -16,7 +16,7 @@ var $tracepending = false;
 var $loginbanner = "
 Authorication fail, need Login\n";
 
-function __construct($host, $port=80, $user=null, $pass=null, $ssl=false){
+function __construct($host, $port=80, $user=null, $pass=null, $ssl=false, $debug=false){
 	$this->host = $host;
 	$this->port = $port;
 	$this->user = $user;
@@ -27,6 +27,8 @@ function __construct($host, $port=80, $user=null, $pass=null, $ssl=false){
 	if (getenv(PHPSESSID)){
 		$this->cookies = array(PHPSESSID=>getenv(PHPSESSID));
 	}
+	parent::__construct($debug?true:false, $debug);
+	$this->trace(DBG, "debugsetting: $debug");
 }
 
 function prompt_silent($prompt = "Enter Password: ") {
@@ -70,19 +72,25 @@ function login($username, $password){
 	return true;
 }
 
-function showpending($mod, $action, $pending, $during, $elapsed){
+function showpending($mod, $action, $r){
+	$pending = $r[pending];
+	$during = $r[during];
+	$elapsed = $r[elapsed];
 	if (!$elapsed)
 		$msg = "$mod.$action/$pending[title]: $pending[text]";
 	else
 		$msg = "$mod.$action/$pending[title]: $pending[text] (".number_format($pending[number]*100,0)."%, $during's/$elapsed's EST)";
 	echo "$msg\n";
+	if ($this->__debugon && $r[output]) echo "\t".trim(str_replace("\n", "\n\t", $r[output]), "\t");
 }
 function request_mod($mod, $action, $params=array(), $records=array(), $post=false, $isretry=false){
 	//note! post will only accept one_record! this is a limit of get.php
 	$this->trace_in(DBG, __FUNCTION__, $mod, $action, $params, $records);
 	if ($this->cookies) $this->httprequest->setCookies($this->cookies);
 	$this->httprequest->setMethod($post?HttpRequest::METH_POST:HttpRequest::METH_GET);
-	$this->httprequest->setUrl($this->baseurl."&mid=$mod&_act=$action&_debug=");
+	$this->httprequest->setUrl($this->baseurl."&mid=$mod&_act=$action");
+	$params[_debugsetting] = $this->__debugsetting;
+	$params[_debugon] = $this->__debugon;
 	$this->httprequest->setQueryData($params);
 	if ($post) $this->httprequest->setPostFields($records); else {
 		if (!$isretry){
@@ -114,7 +122,7 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 			$params[jid] = $jid;
 			while ($jid && !$r[success] && is_array($r[pending])){
 				if (!$this->suspendpendingmsg){
-					$this->showpending($mod, $action, $r[pending], $r[during], $r[elapsed]);
+					$this->showpending($mod, $action, $r);
 				}
 				$params[_seq] = $seq++;
 				$this->httprequest->setQueryData($params);

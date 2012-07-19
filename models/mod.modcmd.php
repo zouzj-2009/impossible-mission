@@ -2,7 +2,7 @@
 include_once('../models/mod.base.php');
 class MOD_modcmd extends MOD_base{
 
-function read($params, $records){
+function do_read($params, $records){
 //valid params:
 //	_mod:	mod name
 //	_cmd:	cmd defined in mod's pconfig

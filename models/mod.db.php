@@ -10,8 +10,10 @@ function run_as_service($params, $records){
 	return $this->useservice[$act];
 }
 
-function __construct($mid){
+function __construct($mid, $jid=null, $modconfig=array()){
 	$this->mid = $mid;
+	parent::__construct($modconfig[debugon], $modconfig[debugsetting]);
+	$this->trace_in(DBG, 'modconfig', $modconfig);
 }
 
 private function exopen($mode, $dbpath=null){

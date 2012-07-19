@@ -11,10 +11,12 @@ $env = getenv('MODTEST');
 $preq = getenv("_PREQ_");
 if ($env){
 	$env = explode(',', $env);
-	//print_r($env);
+	//debug_print($env);
 	$_REQUEST['_act'] = $env[0];
 	$_REQUEST['mid'] = $env[1];
 	$_REQUEST['jid'] = $env[2];
+	$_REQUEST['_debugsetting'] = getenv('_DEBUG_');
+	$_REQUEST['__debugon'] = true; //getenv('_DEBUGON_'); //or just open
 	$_SESSION['loginuser'] = array(username=>'admin');
 	$debugpreq = $env[3];
 	if ($debugpreq){
@@ -31,8 +33,14 @@ if ($env){
 }
 
 $output = null;
+function debug_print($var){
+	global $debugon;
+	if (!$debugon) return;
+	print_r($var);
+}
 function shut_down_catcher(){
-	global $callback;
+	global $callback; 	
+	global $preq;
 	$error = error_get_last();
 	if (!$error) return;
 	if ($error[type] != 1) return;
@@ -75,12 +83,11 @@ try{
 		}else{
 			include_once("../models/mod.db.php");
 		}
-		echo "start service of $mid.$action@$jid ...\n";
-		if ($debugon){
-			print_r($preq);
-		}
+		echo "start service of $mid.$action@$jid by $caller ...\n";
+		//debug_print($preq);
 		//usleep(200);
-		$mod = new $modname($mid, $jid);
+		sleep(1);
+		$mod = new $modname($mid, $jid, $preq[modconfig]);
 		$mod->sendPending("$mid $action xstarted ...", 0);
 		//usleep(200);
 		if ($action == 'read')
@@ -105,7 +112,8 @@ try{
 
 		$params = !$env?$_REQUEST:json_decode(stripslashes(trim(getenv('params'), '"')), true);
 		$callback = $_REQUEST['callback'];
-		foreach(explode(',', 'records,seqid,callback,PHPSESSID') as $key){
+		$modconfig = array(debugsetting=>$params[_debugsetting], debugon=>$params[_debugon]);
+		foreach(explode(',', '_debugsetting,_debugon,records,seqid,callback,PHPSESSID') as $key){
 			unset($params[$key]);
 		}
 
@@ -140,7 +148,7 @@ try{
 			}else{
 				include_once("../models/mod.db.php");
 			}
-			$mod = new $modname($mid);
+			$mod = new $modname($mid, null, $modconfig);
 			if (is_a($mod, 'MOD_servable') && $mod->run_as_service($params, $records)){
 		//		$jid =  md5($modname.$action.date('D M j G:i:s T Y'));
 				$jid = 'abcd';
@@ -149,6 +157,7 @@ try{
 					mid=>$mid,
 					records=>$records,
 					params=>$params,
+					modconfig=>$modconfig,
 					jid=>$jid,
 					sid=>$_REQUEST[PHPSESSID],
 					caller=>$_SERVER['REMOTE_ADDR'],
@@ -164,8 +173,14 @@ try{
 						jid=>$jid,
 					),
 				);
-				//system("../models/fork.sh php ../models/get.php $mid $action $jid");
-				system("/usr/bin/php ../models/get.php service $mid $action $jid >/dev/null 2>/dev/null&");
+				if ($mod->test_debug(BGTRACE)){
+					//system("mkdir -p /tmp/.trace");
+					$traceout = "/tmp/.trace.out.$action.$mid.$jid";
+					$traceerr = "/tmp/.trace.err.$action.$mid.$jid";
+				}else{
+					$traceout = $traceerr = "/dev/null";
+				}
+				system("/usr/bin/php ../models/get.php service by $preq[caller] $mid $action $jid >$traceout 2>$traceerr &");
 				if ($env){
 					echo "_PREQ_=\"".addslashes($preq)."\"\n";
 				}
@@ -201,24 +216,27 @@ try{
 			$timeout = 60000;
 			$t = 0;
 			while ($t<$timeout && !$output) {
-			if (1){
-				$s = $dbus->waitLoopx(1000);
-				if (!$s) continue;
-				foreach($s as $signal){
+				if (1){
+					$s = $dbus->waitLoopx(1000);
+					$t += 1000;
+					if (!$s) continue;
+					foreach($s as $signal){
+						if (!$signal->matches("mod.$mid.j$jid", "msg0")
+							&& !$signal->matches("mod.$mid.j$jid", "done")) continue;
+						$output = unserialize($signal->getData());
+						echo $output[output];
+						break;
+					}
+				}else{
+					$signal = $dbus->waitLoop(1000);
+					$t += 1000;
+					if (!$signal) continue;
 					if (!$signal->matches("mod.$mid.j$jid", "msg0")
 						&& !$signal->matches("mod.$mid.j$jid", "done")) continue;
 					$output = unserialize($signal->getData());
+					echo $output[output];
 					break;
 				}
-			}else{
-				$signal = $dbus->waitLoop(1000);
-				$t += 1000;
-				if (!$signal) continue;
-				if (!$signal->matches("mod.$mid.j$jid", "msg0")
-					&& !$signal->matches("mod.$mid.j$jid", "done")) continue;
-				$output = unserialize($signal->getData());
-				break;
-			}
 			}
 			if (!$output){
 				$output = array(
@@ -236,9 +254,9 @@ try{
 				$donesignal->send(serialize($output));
 				if ($env){
 					echo "send ack done.\n";
-					print_r($output);
+					debug_print($output);
 				}
-			}else if ($env){ print_r ($output[output]); }
+			}else if ($env){ debug_print ($output[output]); }
 		}
 	}
 }catch(Exception $e){
@@ -247,7 +265,7 @@ try{
 		msg=>$e->getMessage(),
 		authfail=>$e->getCode()==-1,
 	);
-	if ($env) print_r($output);
+	if ($env) debug_print($output);
 }
 $output[output] = ob_get_flush();
 @ob_end_clean();
@@ -265,10 +283,10 @@ if ($callback) {
 }
 if ($env){
 	echo "\n\nparams:\n";
-	print_r($params);
+	debug_print($params);
 	echo "\n\nrecords:\n";
-	print_r($records);
+	debug_print($records);
 	echo "\n\noutput:\n";
-	print_r($output);
+	debug_print($output);
 }
 ?>

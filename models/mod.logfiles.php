@@ -2,7 +2,7 @@
 include_once('../models/mod.base.php');
 class MOD_logfiles extends MOD_base{
 
-function read($params){
+function do_read($params){
 	$mod = $this->getmod('syslog');
 	$syslogs = explode("\n", shell_exec("ls /var/log/messages*|awk '{print \$1}'"));
 	foreach ($syslogs as $i=>$syslog){

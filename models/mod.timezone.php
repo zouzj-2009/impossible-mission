@@ -2,7 +2,7 @@
 include_once('../models/mod.base.php');
 class MOD_timezone extends MOD_base{
 
-function read($params){
+function do_read($params){
 	$tzs = DateTimeZone::listIdentifiers();
 	$r = array();
 	foreach($tzs as $tz){

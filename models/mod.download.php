@@ -1,6 +1,6 @@
 <?php
-include_once('../models/mod.base.php');
-class MOD_download extends MOD_base{
+include_once('../models/debugee.php');
+class MOD_download extends DEBUGEE{
 
 var $logfiles = array(
 //	raidlog=>'/var/log/hptlog',

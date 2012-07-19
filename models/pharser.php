@@ -73,6 +73,7 @@ if [ $ret -ne 0 ];then
 	cat /tmp/.cmderr.$$
 	echo 
 fi
+rm /tmp/.cmderr.$$
 exit $ret
 )';
 	if ($executor){

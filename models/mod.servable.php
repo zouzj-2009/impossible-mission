@@ -7,7 +7,7 @@ var $lastpending = array();
 var $lastflushtime = 0;
 var $begintime = 0;
 
-function __construct($mid, $jobid=null){
+function __construct($mid, $jobid=null, $modconfig){
 	if ($jobid){
 		$this->dbconnector = new DBConnector('SERVER', $mid, $jobid);
 		$this->lastpending = array(
@@ -17,16 +17,17 @@ function __construct($mid, $jobid=null){
 		);
 		$this->begintime = microtime(true)-1;
 	}
-	parent::__construct($mid);
+	parent::__construct($mid, $jobid, $modconfig);
 }
 
 
 function getOutput(){
 	$t = microtime(true);
-	$output = ob_get_contents();
+	$output = @ob_get_contents();
+	@ob_start();
 	$during = $this->lastflushtime?$t-$this->lastflushtime:0;
 	$elapsed = $this->begintime?$t-$this->begintime:0;
-	if (1||$t-$this->lastflushtime>1) ob_flush();
+	//if (1||$t-$this->lastflushtime>1) ob_flush();
 	$this->lastflushtime = $t;
 	return array(
 		output=>$output,

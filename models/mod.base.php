@@ -512,6 +512,7 @@ function read($params, $records=null){
 				if ($cmderror) throw new Exception('read fail:'.$r[msg]);
 			}else{// get read result by do_read of sub_classes
 				$r = $this->do_read($params, $records);
+				if (!$r[success]) throw new Exception('read fail:'.$r[msg]);
 				$r = $r[data];
 			}
 			//todo: howto

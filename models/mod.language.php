@@ -7,7 +7,7 @@ var $logfiles = array(
 //	pcilog=>'/var/log/env_lspci',
 );
 
-function read($params){
+function do_read($params){
 	return array(
 		success=>true,
 		data=>array(

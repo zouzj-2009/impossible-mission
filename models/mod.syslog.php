@@ -7,19 +7,20 @@ var $logfiles = array(
 //	pcilog=>'/var/log/env_lspci',
 );
 
-function read($params){
+function do_read($params){
 	if ($params[_download]) return $this->callmod('download', 'read', array(_id=>'syslog'));
-	$logname = $params[_logname];
-	$fn = $this->logfiles[$logname];
-	if (!$fn && !strstr($logname, 'syslog')) return array(
+	$logfn = $params[_logname]?$params[_logname]:"";
+	if (!$logfn) throw new Exception("no logname specified.");
+	$logn = $this->logfiles[$logfn];
+	if (!$logn && !preg_match('/syslog/', $logfn)) return array(
 		success=>false,
-		msg=>"visit log $logname not supported.",
+		msg=>"visit log '$logfn' not supported.",
 	);
-	if (!$fn){
-		$fn = preg_replace("/[^0-9]/", "", $logname);
-		$fn = $fn?"messages.$fn":"messages";
-		exec("cat /var/log/$fn", $out, $ret);
-		if ($ret) return array(success=>false, msg=>"log $logname($fn) not found.");
+	if (!$logn){
+		$logn = preg_replace("/[^0-9]/", "", $logfn);
+		$logn = $logn?"messages.$logn":"messages";
+		exec("cat /var/log/$logn", $out, $ret);
+		if ($ret) return array(success=>false, msg=>"log $logfn($logn) not found.");
 		$r = array();
 		$last = array();
 		foreach($out as $i=>$line){
@@ -40,7 +41,7 @@ function read($params){
 		//todo: cmd pharser for other patter, and autocolumn in return data's meta
 		return array(
 			success=>false,
-			msg=>"visit log $logname not implemented.",
+			msg=>"visit log $logfn not implemented.",
 		);
 	}
 }
