@@ -85,7 +85,6 @@ function showpending($mod, $action, $r){
 function request_mod($mod, $action, $params=array(), $records=array(), $post=false, $isretry=false){
 	//note! post will only accept one_record! this is a limit of get.php
 	$this->trace_in(DBG, __FUNCTION__, $mod, $action, $params, $records);
-	$this->tracemsg(DBG, __FUNCTION__."$mod/$action >>>>>>>>>>>>>>>>>>.");
 	if ($this->cookies) $this->httprequest->setCookies($this->cookies);
 	$this->httprequest->setMethod($post?HttpRequest::METH_POST:HttpRequest::METH_GET);
 	$this->httprequest->setUrl($this->baseurl."&mid=$mod&_act=$action");
@@ -118,9 +117,9 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 				return $this->request_mod($mod, $action, $params, $records, $post, true);
 			}
 			$seq = 1;
-			$jid = $r[pending][jid];
-			$params[jid] = $jid;
-			while ($jid && !$r[success] && is_array($r[pending])){
+			$taskid = $r[pending][taskid];
+			$params[taskid] = $taskid;
+			while ($taskid && !$r[success] && is_array($r[pending])){
 				if (!$this->suspendpendingmsg){
 					$this->showpending($mod, $action, $r);
 				}
@@ -133,7 +132,7 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 					$resp = $this->httprequest->getResponseBody();
 					$r = json_decode($resp, true);
 				}else{ 
-					if ($jid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action job $jid done.");
+					if ($taskid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action task $taskid done.");
 					return array(
 					success=>false,
 					msg=>"request fail: ". $this->httprequest->getResponseCode(),
@@ -142,7 +141,7 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 				}
 			}
 			//debugee
-			if ($jid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action job $jid done.");
+			if ($taskid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action task $taskid done.");
 			return $r;
 		}
 		return array(

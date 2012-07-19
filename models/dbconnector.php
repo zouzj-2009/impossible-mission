@@ -8,7 +8,7 @@ var $obj;
 var $path;
 var $failmsg;
 var $modname;
-var $jid;
+var $taskid;
 
 var $msgsignal = array();
 var $msgpoolcount = 1;
@@ -17,10 +17,11 @@ var $unread = array(); //unreadmsgs;
 var $msgdone;
 var $datadone;
 static $lastsend;
-function __construct($type, $modname, $jid){
+function __construct($type, $modname, $taskid){
 	$this->modname = $modname;
-	$this->jid = $jid;
-	$ifname = "mod.$modname.j$jid";
+	$this->taskid = $taskid;
+	//$ifname = "mod.$modname.j$taskid";
+	$ifname = "mod.task_$taskid";
 	$this->if = $ifname;
 	$this->obj = $ifname;
 	$this->path = "/".str_replace('.', '/', $ifname);
@@ -113,7 +114,7 @@ function waitDone($data, $timeount=null){
 }
 
 function ackDone($data){
-	$this->lastsend = serialize($this->modname.".".$this->jid);
+	$this->lastsend = serialize($this->modname.".".$this->taskid);
 	$this->msgdone->send($this->lastsend);
 }
 

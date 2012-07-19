@@ -7,17 +7,17 @@ var $lastpending = array();
 var $lastflushtime = 0;
 var $begintime = 0;
 
-function __construct($mid, $jobid=null, $modconfig){
-	if ($jobid){
-		$this->dbconnector = new DBConnector('SERVER', $mid, $jobid);
+function __construct($mid, $taskid=null, $modconfig){
+	if ($taskid){
+		$this->dbconnector = new DBConnector('SERVER', $mid, $taskid);
 		$this->lastpending = array(
 			msg=>null,
-			title=>str_replace("MOD_", "", get_class($this)).".".$jobid,
+			title=>str_replace("MOD_", "", get_class($this)).".".$taskid,
 			number=>0,
 		);
 		$this->begintime = microtime(true)-1;
 	}
-	parent::__construct($mid, $jobid, $modconfig);
+	parent::__construct($mid, $taskid, $modconfig);
 }
 
 

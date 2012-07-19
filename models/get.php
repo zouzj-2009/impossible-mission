@@ -14,7 +14,7 @@ if ($env){
 	//debug_print($env);
 	$_REQUEST['_act'] = $env[0];
 	$_REQUEST['mid'] = $env[1];
-	$_REQUEST['jid'] = $env[2];
+	$_REQUEST['taskid'] = $env[2];
 	$_REQUEST['_debugsetting'] = getenv('_DEBUG_');
 	$_REQUEST['__debugon'] = true; //getenv('_DEBUGON_'); //or just open
 	$_SESSION['loginuser'] = array(username=>'admin');
@@ -23,7 +23,7 @@ if ($env){
 		$preq = serialize(array(
 			action=>$env[0],
 			mid=>$env[1],
-			jid=>$env[2],
+			taskid=>$env[2],
 			params=>json_decode(stripslashes(getenv('params'))),
 			records=>json_decode(stripslashes(getenv('records'))),
 			caller=>'localconsole',
@@ -41,6 +41,9 @@ function debug_print($var){
 function shut_down_catcher(){
 	global $callback; 	
 	global $preq;
+	if ($preq && $preq[taskid]){
+		system("rm /tmp/.tdb/$preq[taskid]/ -rf");
+	}
 	$error = error_get_last();
 	if (!$error) return;
 	if ($error[type] != 1) return;
@@ -74,7 +77,7 @@ try{
 		$params = $preq[params];
 		$caller = $preq[clientip];
 		$sid = $preq[sid];
-		$jid = $preq[jid];
+		$taskid = $preq[taskid];
 		//do security check?
 		$modname="MOD_db";
 		if (file_exists("../models/mod.$mid.php")){
@@ -83,20 +86,24 @@ try{
 		}else{
 			include_once("../models/mod.db.php");
 		}
-		echo "start service of $mid.$action@$jid by $caller ...\n";
+		system("mkdir -p /tmp/.tdb/$taskid/");
+		echo "start service of $mid.$action@$taskid by $preq[caller] ...\n";
 		//debug_print($preq);
 		//usleep(200);
-		sleep(1);
-		$mod = new $modname($mid, $jid, $preq[modconfig]);
+		//sleep(1);
+		$modconfig = $preq[modconfig];
+		$modconfig[_runastask] = true;
+		$mod = new $modname($mid, $taskid, $modconfig);
 		$mod->sendPending("$mid $action xstarted ...", 0);
 		//usleep(200);
 		if ($action == 'read')
 			$output = $mod->$action($params, $records);
 		else
 			$output = $mod->$action($params, $records);
-		echo "$mid.$action.$jid done.\n";
+		echo "$mid.$action.$taskid done.\n";
 		$mod->sendDone($output);
 		ob_end_flush();
+		system("rm /tmp/.tdb/$taskid/ -rf");
 	}else{
 		$action = $_REQUEST['_act'];
 		$mid = strtolower($_REQUEST['mid']);
@@ -123,24 +130,24 @@ try{
 			}
 		}
 
-		$jid=$_REQUEST['jid'];
+		$taskid=$_REQUEST['taskid'];
 		//for test purpose
 		if ($env && getenv('COND')){
 			$params[_condition] = getenv('COND');
 		}
 //for debug 
-		if ($env && $jid && $mid == 'modcmd'){
-			$params[_cmd] = $jid;
-			$jid = '';
+		if ($env && $taskid && $mid == 'modcmd'){
+			$params[_cmd] = $taskid;
+			$taskid = '';
 		}
-		if ($env && $jid && $mid == 'sysconfig'){
-			$params[_mod] = $jid;
-			$jid = '';
+		if ($env && $taskid && $mid == 'sysconfig'){
+			$params[_mod] = $taskid;
+			$taskid = '';
 		}
 //end for debug
 		ob_implicit_flush(true);
 		//todo: do security check, or will be DOSed!
-		if (!$jid){//todo: service maybe exit before we request, so check existense must be done.
+		if (!$taskid){//todo: service maybe exit before we request, so check existense must be done.
 			$modname="MOD_db";
 			if (file_exists("../models/mod.$mid.php")){
 				include_once("../models/mod.$mid.php");
@@ -150,15 +157,15 @@ try{
 			}
 			$mod = new $modname($mid, null, $modconfig);
 			if (is_a($mod, 'MOD_servable') && $mod->run_as_service($params, $records)){
-		//		$jid =  md5($modname.$action.date('D M j G:i:s T Y'));
-				$jid = 'abcd';
+				$taskid =  md5($modname.$action.date('D M j G:i:s T Y').rand());
+				if (is_a($mod, 'MOD_jobtest')) $taskid = 'abcd';
 				$preq = serialize(array(
 					action=>$action,
 					mid=>$mid,
 					records=>$records,
 					params=>$params,
 					modconfig=>$modconfig,
-					jid=>$jid,
+					taskid=>$taskid,
 					sid=>$_REQUEST[PHPSESSID],
 					caller=>$_SERVER['REMOTE_ADDR'],
 				));
@@ -170,19 +177,19 @@ try{
 						text=>"$modname is $action"."ing, wait please ...",
 						title=>"$modname $action",
 						number=>0,
-						jid=>$jid,
+						taskid=>$taskid,
 					),
 				);
 				$caller = $_SERVER[REMOTE_ADDR];
 				if ($mod->test_debug(TASKLOG)){
 					//for persistent stor trace, link /tmp/.trace to stor dir
 					system("mkdir -p /tmp/.trace/$caller/");
-					$traceout = "/tmp/.trace/$caller/trace.out.$action.$mid.$jid";
-					$traceerr = "/tmp/.trace/$caller/trace.err.$action.$mid.$jid";
+					$traceout = "/tmp/.trace/$caller/trace.out.$action.$mid.$taskid";
+					$traceerr = "/tmp/.trace/$caller/trace.err.$action.$mid.$taskid";
 				}else{
 					$traceout = $traceerr = "/dev/null";
 				}
-				system("/usr/bin/php ../models/get.php service by $preq[caller] $mid $action $jid >$traceout 2>$traceerr &");
+				system("/usr/bin/php ../models/get.php service by $preq[caller] $mid $action $taskid >$traceout 2>$traceerr &");
 				if ($env){
 					echo "_PREQ_=\"".addslashes($preq)."\"\n";
 				}
@@ -194,10 +201,10 @@ try{
 			}
 		}else{
 			if ($env){
-				echo "wait pending for $mid.$action.$jid ...\n";
+				echo "wait pending for $mid.$action.$taskid ...\n";
 			}
 /*
-			$dbc = new DBConnector('CLIENT', $mid, $jid);
+			$dbc = new DBConnector('CLIENT', $mid, $taskid);
 			$output = $dbc->watch();
 			if (!$output){
 				$output = array(
@@ -210,10 +217,10 @@ try{
 				$dbc->ackDone($output);
 			}
 */
-			$dif = "mod.$mid.j$jid";
-			$dpath = "/mod/$mid/j$jid";
+			$dif = "mod.task_$taskid";
+			$dpath = "/mod/task_$taskid";
 			$dbus = new Dbus( Dbus::BUS_SYSTEM );
-			$dbus->addWatch( "mod.$mid.j$jid" );
+			$dbus->addWatch($dif);
 			$output = null;
 			$timeout = 60000;
 			$t = 0;
@@ -223,8 +230,7 @@ try{
 					$t += 1000;
 					if (!$s) continue;
 					foreach($s as $signal){
-						if (!$signal->matches("mod.$mid.j$jid", "msg0")
-							&& !$signal->matches("mod.$mid.j$jid", "done")) continue;
+						if (!$signal->matches($dif, "msg0") && !$signal->matches($dif, "done")) continue;
 						$output = unserialize($signal->getData());
 						echo $output[output];
 						break;
@@ -233,8 +239,7 @@ try{
 					$signal = $dbus->waitLoop(1000);
 					$t += 1000;
 					if (!$signal) continue;
-					if (!$signal->matches("mod.$mid.j$jid", "msg0")
-						&& !$signal->matches("mod.$mid.j$jid", "done")) continue;
+					if (!$signal->matches($dif, "msg0") && !$signal->matches($dif, "done")) continue;
 					$output = unserialize($signal->getData());
 					echo $output[output];
 					break;

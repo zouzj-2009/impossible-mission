@@ -9,7 +9,8 @@ function do_read($params, $records){
 	while (++$count < $max){
 		echo "output test runing 5x$count\n";
 		$this->sendPending("Running 5 x $count seconds ...", $count/$max);
-		for($i =0; $i<100; $i++) $this->callmod('netconfig', 'read', $params, $records);
+		for($i =0; $i<10; $i++) $this->callmod('netconfig', 'read', $params, $records);
+		sleep(1);
 	}
 	$r = array(
 		success=>true,

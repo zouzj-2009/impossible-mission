@@ -1,0 +1,93 @@
+#!/usr/bin/php
+<?php
+$dir = dirname($argv[0]);
+chdir($dir);
+$prog = basename($argv[0]);
+
+function help(){
+global $prog;
+	echo "
+Usage: 
+$prog	-l [-a] | -t TASKID | -w [-t TASKID]
+	-l: list all running tasks.
+	-a: monit the newest one.
+	-t: monit the TASKID one.
+	-w: wait and monit the to be running one.
+";
+	die(1);
+}
+
+$o = getopt("lawt:");
+if (!$o) help();
+$tracetid = false;
+if (isset($o[l])){//list
+	exec("ls -t /tmp/.tdb/ 2>/dev/null", $out);
+	if ($out){
+		echo "\nRuning task IDs:\n";
+		foreach($out as $jid) echo "\t$jid\n";
+	}else{
+		die("\nNo task running.\n");
+	}
+	if (isset($o[a])){//auto trace newest one
+		$tracetid = $out[0];
+	}
+}else if (isset($o[w])){
+	if (!$o[t]){
+		echo "Wait some task to run ...\n";
+		$tracetid = shell_exec('(
+touch /tmp/.taskwait
+while [ -z "$newone" ]
+do
+	newone=`find /tmp/.tdb -newer /tmp/.taskwait 2>/dev/null`
+	sleep 1
+done
+echo -n $newone
+)');
+		$tracetid = trim(basename($tracetid));
+	}
+}
+
+if ($o[t]){ $tracetid = $o[t]; }
+if (!isset($o[w]) && !file_exists("/tmp/.tdb/$tracetid")){
+	die("Task '$tracetid' not running now!");
+}
+
+if (isset($o[w]) && $tracetid){
+	echo "\nWait task $tracetid ...\n";
+}else{
+	echo "\nTracing task $tracetid ...\n";
+}
+$bus = new Dbus( Dbus::BUS_SYSTEM );
+$ifid = "mod.task_$tracetid";
+$bus->addWatch($ifid);
+$title = '';
+while (true) {
+	$s = $bus->waitLoop(1000);
+	if (!$s) continue;
+	if (!$s->matches($ifid, 'msg0') &&!$s->matches($ifid, 'done')){
+		echo "Unknown Signal:\n";
+		print_r($s);
+		continue;
+	}
+	$o = unserialize($s->getData());
+	$pending = $o[pending];
+	if ($pending && !$title) $title = $pending[title];
+	$during = $o[during];
+	$elapsed = $o[elapsed];
+	if (!$elapsed)
+		$msg = "$title: $pending[text]";
+	else
+		$msg = "$title: $pending[text] (".number_format($pending[number]*100,0)."%, $during's/$elapsed's EST)";
+	echo "$msg\n";
+	if ($o[output]) echo "\t".trim(str_replace("\n", "\n\t", $o[output]), "\t");
+	if (!$o[pending]){//done
+		unset($o[output]);
+		echo "Result:\n";
+		print_r($o);
+		break;
+	}
+	//echo $o[output];
+}
+
+ 
+?>

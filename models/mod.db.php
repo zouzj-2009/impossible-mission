@@ -10,7 +10,7 @@ function run_as_service($params, $records){
 	return $this->useservice[$act];
 }
 
-function __construct($mid, $jid=null, $modconfig=array()){
+function __construct($mid, $taskid=null, $modconfig=array()){
 	$this->mid = $mid;
 	parent::__construct($modconfig[debugon], $modconfig[debugsetting]);
 	$this->trace_in(DBG, 'modconfig', $modconfig);
@@ -337,11 +337,11 @@ function pending_test($params, $records){
 	$count = 2;
 	if ($_REQUEST['seqid']) sleep(2);
 	if (0 || $_REQUEST['seqid'] >= $count)
-		$output=array(success=>false, msg=>'server job fail.');
+		$output=array(success=>false, msg=>'server task fail.');
 	else
 		$output=array(success=>false, pending=>array(
 			seq=>$_REQUEST['seqid'],
-			msg=>'big job pending...'.$_REQUEST['seqid'],
+			msg=>'big task pending...'.$_REQUEST['seqid'],
 			text=>'server doing '.$_REQUEST['_act'].' '.($_REQUEST['seqid']/$count*100).'%',
 			title=>'Server Doing Title',
 			number=>$_REQUEST['seqid']/$count
