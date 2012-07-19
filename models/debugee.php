@@ -4,10 +4,11 @@ var $__debugon = false;
 var $__debuglevel = 0;
 var $__debugsetting = '';
 var $__levelmap = array(
-	DBG 	=> 0x80000000,
-	INFO	=> 0x00000001,
-	TRACE	=> 0x00000002,
-	BGTRACE	=> 0x00000004,
+	DBG 	=> 0x80000000,		//debug purpose
+	INFO	=> 0x00000001,		//info, should be logged
+	TRACE	=> 0x00000002,		//trace in,out,process
+	TASK	=> 0x00000004,		//service task
+      	TASKLOG	=> 0x00000008,		//log service task to file
 );
 
 function __construct($debugon, $level='INFO'){
@@ -51,21 +52,23 @@ function test_debug($level){
 	$ll = 0;
 	foreach($ls as $l){
 		$ln = $this->__levelmap[$l];
-		$ll |= $ln?$ln:0;
+		if ($this->__debuglevel & $ln) return $l;
 	}
-	return $this->__debuglevel & $ll;
+	return false;
 }
 
-function trace($leve, $msg){
+function tracemsg($level, $msg){
 	if (!$this->__debugon) return;
-	if (!$this->test_debug($level)) return;
+	$dl = $this->test_debug($level);
+	if (!$dl) return;
 	$class = get_class($this);
-	echo "DBGEE@$level $class: $msg\n";
+	echo "DBGEE@$dl $class: $msg\n";
 }
 
 function trace_in($level, $msg, $varlist){
 	if (!$this->__debugon) return;
-	if (!$this->test_debug($level)) return;
+	$dl = $this->test_debug($level);
+	if (!$dl) return;
 	//if (!($level & $this->dbglevel))  return;
 	$args = func_get_args();
 	array_shift($args);
@@ -73,7 +76,7 @@ function trace_in($level, $msg, $varlist){
 	$trace = "";
 	$vars = $this->args_to_string($args);
 	$class = get_class($this);
-	echo "DBGEE@$level $class: $msg($vars)\n";
+	echo "DBGEE@$dl $class: $msg($vars)\n";
 }
 
 //end of class

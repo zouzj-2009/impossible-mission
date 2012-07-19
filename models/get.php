@@ -173,10 +173,12 @@ try{
 						jid=>$jid,
 					),
 				);
-				if ($mod->test_debug(BGTRACE)){
-					//system("mkdir -p /tmp/.trace");
-					$traceout = "/tmp/.trace.out.$action.$mid.$jid";
-					$traceerr = "/tmp/.trace.err.$action.$mid.$jid";
+				$caller = $_SERVER[REMOTE_ADDR];
+				if ($mod->test_debug(TASKLOG)){
+					//for persistent stor trace, link /tmp/.trace to stor dir
+					system("mkdir -p /tmp/.trace/$caller/");
+					$traceout = "/tmp/.trace/$caller/trace.out.$action.$mid.$jid";
+					$traceerr = "/tmp/.trace/$caller/trace.err.$action.$mid.$jid";
 				}else{
 					$traceout = $traceerr = "/dev/null";
 				}

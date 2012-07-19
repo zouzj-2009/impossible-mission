@@ -28,7 +28,6 @@ function __construct($host, $port=80, $user=null, $pass=null, $ssl=false, $debug
 		$this->cookies = array(PHPSESSID=>getenv(PHPSESSID));
 	}
 	parent::__construct($debug?true:false, $debug);
-	$this->trace(DBG, "debugsetting: $debug");
 }
 
 function prompt_silent($prompt = "Enter Password: ") {
@@ -86,6 +85,7 @@ function showpending($mod, $action, $r){
 function request_mod($mod, $action, $params=array(), $records=array(), $post=false, $isretry=false){
 	//note! post will only accept one_record! this is a limit of get.php
 	$this->trace_in(DBG, __FUNCTION__, $mod, $action, $params, $records);
+	$this->tracemsg(DBG, __FUNCTION__."$mod/$action >>>>>>>>>>>>>>>>>>.");
 	if ($this->cookies) $this->httprequest->setCookies($this->cookies);
 	$this->httprequest->setMethod($post?HttpRequest::METH_POST:HttpRequest::METH_GET);
 	$this->httprequest->setUrl($this->baseurl."&mid=$mod&_act=$action");
@@ -132,13 +132,17 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 				if ($this->httprequest->getResponseCode() == 200){
 					$resp = $this->httprequest->getResponseBody();
 					$r = json_decode($resp, true);
-				}else return array(
+				}else{ 
+					if ($jid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action job $jid done.");
+					return array(
 					success=>false,
 					msg=>"request fail: ". $this->httprequest->getResponseCode(),
 					output=>$this->httprequest->getResponseBody(),
-				);
+					);
+				}
 			}
 			//debugee
+			if ($jid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action job $jid done.");
 			return $r;
 		}
 		return array(
