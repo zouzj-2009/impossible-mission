@@ -100,8 +100,10 @@ function format_short($data){
 		return;
 	}
 	$h = implode("|", array_keys($data[0]));
-	echo $h."\n";
-	foreach($data as $d) echo implode("|", array_values($d))."\n";
+	echo count($data). " records total.\n";
+	echo sprintf("%5s|%s", "N", $h)."\n";
+	foreach($data as $i=>$d) echo sprintf("%5s|%s", $i, implode("|", array_values($d)))."\n";
+	echo count($data). " records total.\n";
 }
 
 function format_long($data){
@@ -118,12 +120,16 @@ function format_long($data){
 	echo count($data). " records total.\n";
 }
 
+function ident_string($string){
+	return "\t".trim(str_replace("\n", "\n\t", $string), "\t");
+}
 function do_cmd($mod, $act, $params, $records){
 	$this->trace_in(DBG, __FUNCTION__, $mod, $act, $params, $records);
 	$ret = $this->proxy->request_mod($mod, $act, $params, $records);
-	if ($this->debug) print_r($ret);
 	if (!$ret[success]){
-		echo "$act $mod fail(". $this->args_to_string(array($params, $records)). ")\n";
+		echo "\nFailt to $act $mod (". $this->args_to_string(array($params, $records)). ")\n";
+		echo "Error:".$this->ident_string($ret[msg]."\n");
+		if ($this->debug) echo "Trace:".$this->ident_string($ret[output]."\n");
 		return false;
 	}
 	$format = $this->format;
