@@ -1,12 +1,8 @@
 <?php
 class DEBUGEE{
 
-function trace_in($level, $msg, $varlist){
-	//if (!($level & $this->dbglevel))  return;
-	$args = func_get_args();
-	array_shift($args);
-	array_shift($args);
-	$trace = "";
+function args_to_string($args){
+	$vars = "";
 	foreach($args as $arg){
 		if (isset($arg[0])) $indexed = true; else $indexed = false;
 		if (is_array($arg)){
@@ -28,6 +24,16 @@ function trace_in($level, $msg, $varlist){
 		}
 	}
 	$vars = trim($vars, ",");
+	return $vars;
+}
+
+function trace_in($level, $msg, $varlist){
+	//if (!($level & $this->dbglevel))  return;
+	$args = func_get_args();
+	array_shift($args);
+	array_shift($args);
+	$trace = "";
+	$vars = $this->args_to_string($args);
 	$class = get_class($this);
 	echo "DBG@$level $class:$msg($vars)\n";
 }

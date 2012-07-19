@@ -15,8 +15,8 @@ Type:   Direct-Access                    ANSI SCSI revision: 02
 		recordstart=>'/^Target:/',
 		recordid=>'/^Target: *([0-9]*) /',
 		fieldstype=>'mixed',
-		debug=>true,
-		debugall=>true,
+		//debug=>true,
+		//debugall=>true,
 		fieldsmode=>array(
 			'line1_3'=>array(
 				gmatcher=>'/^Target:|^ *Type:/',

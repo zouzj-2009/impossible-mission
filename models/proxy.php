@@ -9,6 +9,7 @@ var $ssl;
 var $httprequest;
 var $baseurl;
 var $cookies;
+var $debug = false;
 var $autologin = false;
 var $suspendpendingmsg = false;
 var $tracepending = false;
