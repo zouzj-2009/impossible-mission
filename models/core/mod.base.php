@@ -385,7 +385,7 @@ function get_pconfig($class, $cmd)
 	if (is_object($class)) $modname = get_class($class); else $modname = $class;
 	$pconfigs = $modname::$pconfigs;
 	$pconfig = $pconfigs[$cmd];
-	$refcmd = $pconfig['refcmd'];
+	$refcmd = $pconfig['refcmd']; //ref&call(ed) class must already included by caller
 	$callcmd = $pconfig['callcmd'];
 	if (!$refcmd && !$callcmd) return $pconfig;
 	if ($callcmd) $refcmd = $callcmd;

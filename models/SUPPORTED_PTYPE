@@ -1,0 +1,16 @@
+csv			: CSV format
+
+just_output		: just output the rest(or specified lines by count)
+
+record_in_one_line	: 
+
+one_record_per_line	: multi-lines input, each line contain one record.
+
+keyvalues_in_one_line	: key-value pairs in one line, regexp matcher used to find the key-value pair.
+
+keyvalues_span_lines	: key-value pairs span multiple lines(but just one record), regexp matcher to find the key-value pair.
+
+records_in_one_line	: multiple records in one line, a spliter or matcher regexp specified to find the record(s).
+
+records_span_lines
+one_record_span_lines
