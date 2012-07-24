@@ -39,7 +39,7 @@
                 "titleCollapse": false,
                 "store": "net_utils.store.netconfig",
                 "designer|userClassName": "MyGridPanel",
-                "databind": "{\nbindform:'nic',\nmid:'netconfig',\nautoload:'true'\n}",
+                "databind": "{\nbindform:'nic',\nmid:'net_utils.netconfig',\nautoload:'true'\n}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true

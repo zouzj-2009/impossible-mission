@@ -22,7 +22,7 @@ function __construct($host, $port=80, $user=null, $pass=null, $ssl=false, $debug
 	$this->user = $user;
 	$this->pass = $pass;
 	$this->ssl = $ssl;
-	$this->baseurl = ($ssl?'https://':'http://').($user?"$user:$pass@":'')."$host:$port/models/get.php?";
+	$this->baseurl = ($ssl?'https://':'http://').($user?"$user:$pass@":'')."$host:$port/models/core/get.php?";
 	$this->httprequest = new HttpRequest($this->baseurl, HttpRequest::METH_POST);
 	if (getenv(PHPSESSID)){
 		$this->cookies = array(PHPSESSID=>getenv(PHPSESSID));

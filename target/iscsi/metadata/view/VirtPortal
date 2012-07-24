@@ -46,7 +46,7 @@
                 "titleCollapse": false,
                 "store": "target_iscsi.store.virtportal",
                 "designer|userClassName": "MyGridPanel",
-                "databind": "{\nautoload: true,\nmid:'virtportal',\nmodel:'target_iscsi.model.virtportal',\nbindform: 'newvirtentry'\n}",
+                "databind": "{\nautoload: true,\nmid:'target_iscsi.virtportal',\nmodel:'target_iscsi.model.virtportal',\nbindform: 'newvirtentry'\n}",
                 "layout|collapseMode": null,
                 "layout|region": "center",
                 "layout|split": true

@@ -45,7 +45,7 @@ Ext.define('net_utils.view.NetConfig', {
                     store: 'net_utils.store.netconfig',
                     databind: {
                         bindform: 'nic',
-                        mid: 'netconfig',
+                        mid: 'net_utils.netconfig',
                         autoload: 'true'
                     },
                     region: 'center',

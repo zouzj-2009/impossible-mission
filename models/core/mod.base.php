@@ -373,9 +373,9 @@ function getmod($modname, $loadonly=false, $newinstance=false){
 		throw new Exception("mod $modname not found");
 	}
 	include_once($modfile);
-	$name = "MOD_$class";
+	$name = "$class";
 	if ($loadonly) return $name;
-	$mod = new $name($class);
+	$mod = new $name($modname);
 	$mod->caller = $this;
 	return $mod;
 }

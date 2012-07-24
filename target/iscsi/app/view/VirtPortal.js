@@ -44,7 +44,7 @@ Ext.define('target_iscsi.view.VirtPortal', {
                     store: 'target_iscsi.store.virtportal',
                     databind: {
                         autoload: true,
-                        mid: 'virtportal',
+                        mid: 'target_iscsi.virtportal',
                         model: 'target_iscsi.model.virtportal',
                         bindform: 'newvirtentry'
                     },

@@ -126,7 +126,10 @@ try{
 			unset($params[$key]);
 		}
 
-		if (1 && $mid != 'login' && $mid != 'language'){
+		$modname="MOD_db";
+		$modfile = mid2modfile($mid, $modname); 
+
+		if (1 && $mid != 'misc.login' && $mid != 'misc.language'){
 			if (1&& !$_SESSION['loginuser']){
 				throw new Exception("user not login!", -1);
 			}
@@ -150,8 +153,6 @@ try{
 		ob_implicit_flush(true);
 		//todo: do security check, or will be DOSed!
 		if (!$taskid){//todo: service maybe exit before we request, so check existense must be done.
-			$modname="MOD_db";
-			$modfile = mid2modfile($mid, $modname); 
 			if (file_exists($modfile)){
 				include_once($modfile);
 			}else{
