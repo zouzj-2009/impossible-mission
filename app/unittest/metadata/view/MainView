@@ -83,7 +83,7 @@
                                 "store": null,
                                 "valueField": "text",
                                 "designer|userClassName": "MyComboBox2",
-                                "databind": "{\nautoload:true,\nmodel:'testunit'\n}"
+                                "databind": "{\nautoload:true,\nmodel:'testunit',\nmid:'test.testunit'\n}"
                             },
                             "customConfigs": [
                                 {

@@ -54,14 +54,6 @@
             ],
             "className": "LoadTest"
         },
-        "d863695e-b201-4d1a-903f-e4a091254df2": {
-            "paths": [
-                "metadata/store/testunit",
-                "app/store/override/testunit.js",
-                "app/store/testunit.js"
-            ],
-            "className": "testunit"
-        },
         "471c3cec-f9c1-4f90-b84b-414f4c70409c": {
             "paths": [
                 "metadata/model/testunit",

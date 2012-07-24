@@ -7,6 +7,9 @@
     },
     "codeClass": null,
     "userConfig": {
+        "models": [
+            "testunit"
+        ],
         "designer|userClassName": "LoadTest"
     },
     "customConfigs": [],

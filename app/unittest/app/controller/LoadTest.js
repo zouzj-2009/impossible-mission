@@ -16,6 +16,10 @@
 Ext.define('app_unittest.controller.LoadTest', {
     extend: 'Ext.app.Controller',
 
+    models: [
+        'testunit'
+    ],
+
     onButtonClick: function(button, e, options) {
         var app = this.application,
             r = button.up().up().down('#testunitselector').getStore().getRange(),

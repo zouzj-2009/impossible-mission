@@ -23,12 +23,6 @@ Ext.application({
         'ui_common.controller.EventMessager'
     ],
 
-    models: [
-        'testunit'
-    ],
-    stores: [
-        'testunit'
-    ],
     views: [
         'MainView',
         'changepassword'

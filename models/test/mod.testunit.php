@@ -4,8 +4,8 @@ class MOD_testunit extends MOD_base{
 static $pconfigs = array(
 	'list'=>array(
 		cmd=>'(
-find ../|grep controller|grep js$|grep -v /lib/core|grep -v ../iwm/app|grep -v ../app/unittest|grep -v ../ui/common/|sed "s/app\/controller/controller/"|sed "s/^..\//text: /"|sed "s/\//_/"|sed "s/\//./g"|sed "s/\.js$//"
-	)', 
+find ../../|grep controller|grep js$|grep -v /lib/core|grep -v ../iwm/app|grep -v ../app/unittest|grep -v ../ui/common/|sed "s/app\/controller/controller/"|sed "s/^..\/..\//text: /"|sed "s/\//_/"|sed "s/\//./g"|sed "s/\.js$//"
+)', 
 		type=>'records_span_lines',
 		recordstart=>'/^/',
 		fieldstype=>'simple',

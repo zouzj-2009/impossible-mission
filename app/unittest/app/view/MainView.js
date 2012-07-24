@@ -61,7 +61,8 @@ Ext.define('app_unittest.view.MainView', {
                                     valueField: 'text',
                                     databind: {
                                         autoload: true,
-                                        model: 'testunit'
+                                        model: 'testunit',
+                                        mid: 'test.testunit'
                                     }
                                 },
                                 {

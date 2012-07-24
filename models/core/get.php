@@ -1,5 +1,4 @@
 <?php
-@ob_start();
 ob_implicit_flush(true);
 if ($_GET['sid']) session_id($_GET['sid']);
 session_start();
@@ -31,6 +30,8 @@ if ($env){
 			sid=>'justfortest',
 		));
 	}
+}else{
+	@ob_start();
 }
 
 $output = null;
@@ -109,7 +110,7 @@ try{
 	}else{
 		$action = $_REQUEST['_act'];
 		$mid = strtolower($_REQUEST['mid']);
-		@ob_start();
+		//@ob_start();
 		$data = array();
 		if (getenv('REQUEST_METHOD') == 'POST'){
 			$r = $_POST;

@@ -648,6 +648,8 @@ function p_records_span_lines(&$in, $pconfig){
 			$cur_record = array();
 			$cur_needexpand = array();
 			$cur_id = false;
+			//clean borrowed to avoid endless loop!
+			$borrowed = null;
 		}
 		if (!$started) continue;
 		if ($pconfig[recordignore] && preg_match($pconfig[recordignore], $line)){
