@@ -1,10 +1,10 @@
 #!/usr/bin/php
 <?php
 $dir = dirname($argv[0]);
-chdir($dir);
+chdir("$dir/../models/core");
 $prog = basename($argv[0]);
-include_once('../models/proxy.php');
-include_once('../models/debugee.php');
+include_once('../../models/core/proxy.php');
+include_once('../../models/core/debugee.php');
 
 $shortopts = 'a:m:d::s:p:r:o:h:l';
 $longopts = array(
