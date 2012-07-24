@@ -369,8 +369,7 @@ function getmod($modname, $loadonly=false, $newinstance=false){
 	//create new one!
 	$modfile = mid2modfile($modname, $class);
 	if (!file_exists($modfile)){
-		//error!
-		throw new Exception("mod $modname not found");
+		throw new Exception(__FUNCTION__.": mod $modname not found");
 	}
 	include_once($modfile);
 	$name = "$class";

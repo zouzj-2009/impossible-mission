@@ -1,5 +1,5 @@
 <?php
-include_once('../models/mod.base.php');
+include_once('../../models/core/mod.base.php');
 /*
 
 This is skeleton mod for advanced mode: 

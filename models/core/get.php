@@ -195,7 +195,7 @@ try{
 				}else{
 					$traceout = $traceerr = "/dev/null";
 				}
-				system("/usr/bin/php ../models/get.php task $action $mid by $caller#$taskid >$traceout 2>$traceerr &");
+				system("/usr/bin/php ../../models/core/get.php task $action $mid by $caller#$taskid >$traceout 2>$traceerr &");
 				if ($env){
 					echo "_PREQ_=\"".addslashes($preq)."\"\n";
 				}

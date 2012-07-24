@@ -1,5 +1,5 @@
 <?php
-include_once('../models/mod.base.php');
+include_once('../../models/core/mod.base.php');
 /*
 
 This is skeleton mod for advanced mode: 
@@ -78,14 +78,14 @@ static $pconfigs = array(
 
 	//we reference other mod's command here
 	'update'=>array(
-		callcmd=>'netconfig::updconfig', //use that whole config, including cmd itself.
+		callcmd=>'network.netconfig::updconfig', //use that whole config, including cmd itself.
 	),
 );
 
 function do_read($params, $records){
 	$cmderror = '';
 	//$r = $this->callcmd('netconfig::ifconfig', $cmderror, $params, $records, $extra=array());
-	$r = $this->callcmd('netconfig::ifconfig');
+	$r = $this->callcmd('network.netconfig::ifconfig');
 	return array(
 		success=>true,
 		data=>$r,
@@ -98,7 +98,7 @@ function do_create($params, $records, $created){
 	$record = array_shift($records);
 	//the changes of netconfig will also be recorded in sysconfig!
 	//need recordS not recorD send in
-	$r = $this->callmod('netconfig', 'create', $params, array(array(
+	$r = $this->callmod('network.netconfig', 'create', $params, array(array(
 			dev=>'eth0:test',
 			ipaddress=>'192.168.0.111',
 		)), $simpleresult=false, $throwerror=true);
@@ -110,7 +110,7 @@ function do_create($params, $records, $created){
 function do_destroy($params, $records){
 	$record = array_shift($records);
 	//this change will not be recorded in sysconfig!
-	$this->callcmd('netconfig::delconfig', $params, $record);
+	$this->callcmd('network.netconfig::delconfig', $params, $record);
 	return array(
 		success=>true,
 		destroied=>$records,
