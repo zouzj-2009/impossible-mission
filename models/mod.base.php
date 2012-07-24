@@ -1,6 +1,7 @@
 <?php
 include_once('../models/mod.db.php');
 include_once('../models/pharser.php');
+include_once('../models/exec.ssh.php');
 //todo:
 //cool feature!
 //run as ... using an other db and read,update,create,destroy on that database only?
@@ -406,6 +407,32 @@ function log($level, $log){
 	echo "LOG@$level $log";
 }
 
+function get_executor(&$cmd, &$pconfig, &$args){
+	$this->trace_in(DBG, __FUNCTION__, $cmd, $pconfig[executor], $args);
+	//only ssh supported now!
+	if ($this->exectype != 'ssh' && !$pconfig[executor]) return null;
+	//strange, erhn?
+	if ($pconfig[executor] && $pconfig[executor][type] != 'ssh') return null;
+	if (!is_numeric($args[hostid])){
+		$this->trace_in(DBG, __FUNCTION__, $cmd, $args);
+		throw new Exception ("exec $cmd by ssh executor need numeric hostid as initial config.");
+	}
+	//find global cache first!
+	global $__executorcaches;
+	$hostid = $args[hostid];
+	if (is_object($__executorcaches[$hostid])) return $__executorcaches[$hostid];
+	//get hostinfo;
+	if ($pconfig[executor]){
+		$__executorcaches[$hostid] = new EXEC_ssh($pconfig[executor]);
+	}else{
+		$host = array_shift($this->callmod('host', 'read', array(condition=>"hostid='$hostid'")));
+		if (!$host) throw new Exception("exec $cmd fail, can't find specified host($hostid).");
+		$__executorcaches[$hostid] = new EXEC_ssh(array(ip=>$host[hostip], port=>$host[port], username=>$host[username], password=>$host[password]));
+	}
+	return $__executorcaches[$hostid];
+	
+}
+
 function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 //call internal cmd in pconfigs
 //extra args using array('prefix'=>array_data or 'key'=>value);
@@ -443,7 +470,7 @@ function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 	}
 
 	$logs = array();
-	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderr, $mod, $logs);
+	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderr, $mod, $logs, $mod->get_executor($c, $pconfig, $p));
 	$cmderror = $cmderr;
 	if ($logs){
 		foreach($logs as $log){

@@ -20,6 +20,10 @@ function __construct($mid, $taskid=null, $modconfig){
 	parent::__construct($mid, $taskid, $modconfig);
 }
 
+//subclass can override it to assign a well-known taskid
+function get_taskid(){
+	return md5($modname.$action.date('D M j G:i:s T Y').rand());
+}
 
 function getOutput(){
 	$t = microtime(true);

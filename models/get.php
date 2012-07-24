@@ -87,7 +87,7 @@ try{
 			include_once("../models/mod.db.php");
 		}
 		system("mkdir -p /tmp/.tdb/$taskid/");
-		echo "start service of $mid.$action@$taskid by $preq[caller] ...\n";
+		echo "start task on $action $mid @$preq[caller]#$taskid ...\n";
 		//debug_print($preq);
 		//usleep(200);
 		//sleep(1);
@@ -157,7 +157,8 @@ try{
 			}
 			$mod = new $modname($mid, null, $modconfig);
 			if (is_a($mod, 'MOD_servable') && $mod->run_as_service($params, $records)){
-				$taskid =  md5($modname.$action.date('D M j G:i:s T Y').rand());
+				$taskid = $mod->get_taskid();
+				//$taskid =  md5($modname.$action.date('D M j G:i:s T Y').rand());
 				if (is_a($mod, 'MOD_jobtest')) $taskid = 'abcd';
 				$preq = serialize(array(
 					action=>$action,
@@ -178,6 +179,7 @@ try{
 						title=>"$modname $action",
 						number=>0,
 						taskid=>$taskid,
+						caller=>$preq[caller],
 					),
 				);
 				$caller = $_SERVER[REMOTE_ADDR];
@@ -189,7 +191,7 @@ try{
 				}else{
 					$traceout = $traceerr = "/dev/null";
 				}
-				system("/usr/bin/php ../models/get.php service by $preq[caller] $mid $action $taskid >$traceout 2>$traceerr &");
+				system("/usr/bin/php ../models/get.php task $action $mid by $caller#$taskid >$traceout 2>$traceerr &");
 				if ($env){
 					echo "_PREQ_=\"".addslashes($preq)."\"\n";
 				}

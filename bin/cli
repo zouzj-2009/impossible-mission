@@ -6,7 +6,7 @@ $prog = basename($argv[0]);
 include_once('../models/proxy.php');
 include_once('../models/debugee.php');
 
-$shortopts = 'a:m:d::s:p:r:o:h:';
+$shortopts = 'a:m:d::s:p:r:o:h:l';
 $longopts = array(
 	'debug:',
 	'param:',
@@ -18,10 +18,10 @@ function help(){
 global $prog;
 	echo "
 Usage: 
-$prog -a read    -m MOD [-d] [-o json|xml|short|long] [-s|--fieldsep SEPCHAR] [-p|--param PARAM] [-r|--record RECORD]
-$prog -a update  -m MOD [-d] [-o json|xml|short|long] [-s|--fieldsep SEPCHAR] [-p|--param PARAM] -r|--record RECORD
-$prog -a create  -m MOD [-d] [-o json|xml|short|long] [-s|--fieldsep SEPCHAR] [-p|--param PARAM] -r|--record RECORD
-$prog -a destroy -m MOD [-d] [-o json|xml|short|long] [-s|--fieldsep SEPCHAR] {-p|--param PARAM}|{-r|--record RECORD}
+$prog -a read    -m MOD [-d] [-l|-o json|xml|short|long] [-s|--fieldsep SEPCHAR] [-p|--param PARAM] [-r|--record RECORD]
+$prog -a update  -m MOD [-d] [-l|-o json|xml|short|long] [-s|--fieldsep SEPCHAR] [-p|--param PARAM] -r|--record RECORD
+$prog -a create  -m MOD [-d] [-l|-o json|xml|short|long] [-s|--fieldsep SEPCHAR] [-p|--param PARAM] -r|--record RECORD
+$prog -a destroy -m MOD [-d] [-l|-o json|xml|short|long] [-s|--fieldsep SEPCHAR] {-p|--param PARAM}|{-r|--record RECORD}
 
 * using [-h HOSTIP] [--port PORT] to specify other host:port than localhost:80.
 * multiple -p|--param|-r|--record will be accepted.
@@ -70,6 +70,7 @@ $format = $o[o];
 $host = $o[h]?$o[h]:'localhost';
 $port = $o[port]?$o[port]:'80';
 if (!preg_match('/^(json|xml|short|long)$/', $format)) $format = $act=='read'?'short':'long';
+if (isset($o[l])) $format='long';
 
 if (!$act || !$mod) help();
 if ($act=='create' && !$r && !$record) help();

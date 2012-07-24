@@ -42,7 +42,7 @@ function pharse_type(&$in, $pconfig){
 		throw new Exception(__FUNCTION__." type $type not supported!");
 	}
 	if ($pconfig[debug]) PHARSER::debug("pharsing type", $type);
-	$r = call_user_func("PHARSER::p_$type", &$in, $pconfig);
+	$r = call_user_func("PHARSER::p_$type", $in, $pconfig);
 	if ($pconfig[skiprecord]){
 		$t = array();
 		foreach($r as $record){
@@ -77,7 +77,7 @@ rm /tmp/.cmderr.$$
 exit $ret
 )';
 	if ($executor){
-		$executor->exec($cmd, $out, $retvar);
+		$executor->exec($name, $pconfig[errorignore]?$cmd:$xcmd, $out, $retvar, $error);
 	}else{
 		exec($pconfig[errorignore]?$cmd:$xcmd, $out, $retvar);
 	}

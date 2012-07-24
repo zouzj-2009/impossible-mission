@@ -9,6 +9,7 @@ Features:
 	2. using requires in other application to include the full path of this controller, such as iwm.controller.NetConfig
 	3. using appx.html, include appx.js before app.js
 	4. include DBinder/Login in all application as default(in app.js)
+* semophore for data change (in savechanges?)
 
 
 
