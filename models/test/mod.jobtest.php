@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.servable.php');
-class MOD_jobtest extends MOD_servable{
+class MOD_test_jobtest extends MOD_servable{
 
 var $useservice=array(read=>true);
 function do_read($params, $records){

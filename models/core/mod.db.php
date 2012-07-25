@@ -155,7 +155,7 @@ function read($params, $records=null){
 
 	$db = $this->opendb();
 	$cond = $params[_condition];
-	$table = str_replace(".", "_", $this->mid);
+	$table = str_replace('misc_', '', str_replace(".", "_", $this->mid));
 	try{
 		if (!$cond){
 			if ($records){
@@ -208,7 +208,7 @@ private function get_cond_from_records($db, $records, $params){
 function update($params, $records){
 	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$db = $this->opendb(true);
-	$table = str_replace(".", "_", $this->mid);
+	$table = str_replace('misc_', '', str_replace(".", "_", $this->mid));
 	if ($params[_writetable]) $table = $params[_writetable];
 	$gcond = $params[_condition];
 	$updated = array();
@@ -259,7 +259,7 @@ function destroy($params, $records){
 	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$db = $this->opendb(true);
 	$cond = $params[_condition];
-	$table = str_replace(".", "_", $this->mid);
+	$table = str_replace('misc_', '', str_replace(".", "_", $this->mid));
 	if ($params[_writetable]) $table = $params[_writetable];
 	$changes = 0;
 	$old = array();
@@ -303,7 +303,7 @@ function destroy($params, $records){
 function create($params, $records){
 	$this->trace_in(TRACE, __FUNCTION__, $params, $records);
 	$db = $this->opendb(true);
-	$table = str_replace(".", "_", $this->mid);
+	$table = str_replace('misc_', '', str_replace(".", "_", $this->mid));
 	if ($params[_writetable]) $table = $params[_writetable];
 	$changes = 0;
 	$created = array();

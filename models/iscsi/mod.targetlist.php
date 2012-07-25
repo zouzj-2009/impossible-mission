@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_targetlist extends MOD_base{
+class MOD_iscsi_targetlist extends MOD_base{
 static $pconfigs = array(
 	'read'=>array(
 		cmd=>'(
@@ -45,14 +45,14 @@ Type:   Direct-Access                    ANSI SCSI revision: 02
 				mergeup=>true,
 				newkeys=>array('Vendor,Model,Rev'=>'product'),
 				newvalues=>array(
-					product=>'MOD_targetlist::get_product',
+					product=>'MOD_iscsi_targetlist::get_product',
 				),
 			),
 		),
 		newkeys=>array('record_id'=>array('targetid', 'targetname', 'shortname')),
 		newvalues=>array(
-			targetname=>'MOD_targetlist::get_targetname',
-			shortname=>'MOD_targetlist::get_shortname',
+			targetname=>'MOD_iscsi_targetlist::get_targetname',
+			shortname=>'MOD_iscsi_targetlist::get_shortname',
 		),
 
 	),

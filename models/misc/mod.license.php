@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_license extends MOD_base{
+class MOD_misc_license extends MOD_base{
 
 static $pconfigs = array(
 	'get'=>array(

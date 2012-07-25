@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_scsihost extends MOD_base{
+class MOD_storage_scsihost extends MOD_base{
 static $pconfigs = array(
 	'read'=>array(
 		cmd=>'(
@@ -66,7 +66,7 @@ Type:   Direct-Access                    ANSI SCSI revision: 02
 			'SCSI storage controller'=>'model', 'proc_name'=>'driver',
 		),
 		newvalues=>array(
-			'shortname'=>'MOD_scsihost::get_shortname',
+			'shortname'=>'MOD_storage_scsihost::get_shortname',
 			'mac'=>'tolower',
 		),
 	),

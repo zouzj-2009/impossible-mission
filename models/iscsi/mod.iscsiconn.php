@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_iscsiconn extends MOD_base{
+class MOD_iscsi_iscsiconn extends MOD_base{
 static $pconfigs = array(
 	'disconnect'=>array(
 		cmd=>'(
@@ -89,8 +89,8 @@ Total of 1 sessions
 			),
 				
 		),
-		debug=>true,
-		debugall=>true,
+		//debug=>true,
+		//debugall=>true,
 /*
             [record_id] => 0
             [CID] => 1: 192.168.101.204:2135 -> 192.168.101.101:3260, active = 1

@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_niclist extends MOD_base{
+class MOD_network_niclist extends MOD_base{
 static $pconfigs = array(
 	'read'=>array(
 		cmd=>'(
@@ -29,7 +29,7 @@ Type:   Direct-Access                    ANSI SCSI revision: 02
 			'Speed'=>'speed', 'Duplex'=>'duplex', 'Link detected'=>'linkup',
 		),
 		newvalues=>array(
-			'shortname'=>'MOD_niclist::get_shortname',
+			'shortname'=>'MOD_network_niclist::get_shortname',
 			'mac'=>'tolower',
 		),
 /*

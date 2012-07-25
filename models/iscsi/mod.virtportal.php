@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_virtportal extends MOD_base{
+class MOD_iscsi_virtportal extends MOD_base{
 
 static $pconfigs = array(
 	'get'=>array(
@@ -67,7 +67,7 @@ tgn: default
 		echo " ex: %excludesource%"
 	fi
 )',
-		refcmd=>'virtportal::get',
+		refcmd=>'MOD_iscsi_virtportal::get',
 	),	
 
 	'delete'=>array(

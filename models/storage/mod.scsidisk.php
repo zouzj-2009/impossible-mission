@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_scsidisk extends MOD_base{
+class MOD_storage_scsidisk extends MOD_base{
 static $pconfigs = array(
 	'list'=>array(
 		cmd=>'(
@@ -52,8 +52,8 @@ Type:   Direct-Access                    ANSI SCSI revision: 02
 			'removable'=>'fixed',
 		),
 		newvalues=>array(
-			'shortname'=>'MOD_scsidisk::get_shortname',
-			'host'=>'MOD_scsidisk::get_host',
+			'shortname'=>'MOD_storage_scsidisk::get_shortname',
+			'host'=>'MOD_storage_scsidisk::get_host',
 			'capacity'=>'filesize',
 			'IORequested'=>'todec',
 			'IODone'=>'todec',

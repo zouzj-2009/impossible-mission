@@ -355,6 +355,7 @@ function check_need_vars($arr, $needles, $title='read params'){
 }
 
 function getmod($modname, $loadonly=false, $newinstance=false){
+	if ($modname == 'self') return $this;
 	global $__caches;
 	if (!$modname){
 		throw new Exception(get_class($this).' call getmod without modname.');
@@ -392,7 +393,7 @@ function get_pconfig($class, $cmd)
 	$r = explode('::', $refcmd);
 	$rconfig = null;
 	if (count($r)==2){
-		if (!preg_match('/^MOD_/', $r[0])) $r[0] = "MOD_".$r[0];
+		if ($r[0] == 'self') $r[0] = $modname; else if (!preg_match('/^MOD_/', $r[0])) $r[0] = "MOD_".$r[0];
 		$rconfig = $this->get_pconfig($r[0], $r[1]); //can get from other class, rescurively
 	}else{
 		$rconfig = $pconfigs[$refcmd];

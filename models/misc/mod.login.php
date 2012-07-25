@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_login extends MOD_base{
+class MOD_misc_login extends MOD_base{
 
 var $logfiles = array(
 //	raidlog=>'/var/log/hptlog',

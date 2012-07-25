@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_testunit extends MOD_base{
+class MOD_test_testunit extends MOD_base{
 static $pconfigs = array(
 	'list'=>array(
 		cmd=>'(

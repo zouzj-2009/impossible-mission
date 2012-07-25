@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_lunmap extends MOD_base{
+class MOD_iscsi_lunmap extends MOD_base{
 
 static $pconfigs = array(
 	'get'=>array(
@@ -28,7 +28,7 @@ static $pconfigs = array(
 	cat /proc/scsi_target/iscsi_target/lunmapping >/etc/sysconfig/lunmapsaving
 	exit $ret
 )',
-		refcmd=>'lunmap::get',
+		refcmd=>'MOD_iscsi_lunmap::get',
 	),	
 
 	'delete'=>array(

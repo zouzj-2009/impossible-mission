@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_pciinfo extends MOD_base{
+class MOD_hardware_pciinfo extends MOD_base{
 static $pconfigs = array(
 	'get'=>array(
 		cmd=>'(
@@ -30,7 +30,7 @@ static $pconfigs = array(
 		newkeys=>array(
 		),
 		newvalues=>array(
-			longname=>'MOD_pciinfo::get_longname',
+			longname=>'MOD_hardware_pciinfo::get_longname',
 		),
 		skiprecord=>array(
 			type=>array('PCI bridge'),

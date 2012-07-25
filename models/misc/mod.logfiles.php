@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_logfiles extends MOD_base{
+class MOD_misc_logfiles extends MOD_base{
 
 function do_read($params){
 	$mod = $this->getmod('syslog');

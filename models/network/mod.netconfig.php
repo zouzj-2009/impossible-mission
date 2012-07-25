@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_netconfig extends MOD_base{
+class MOD_network_netconfig extends MOD_base{
 static $pconfigs = array(
 	'addconfig'=>array(
 		cmd=>'(
@@ -15,7 +15,7 @@ static $pconfigs = array(
 	busybox ifconfig %dev%
 	exit $ret
 )',
-		refcmd=>'netconfig::ifconfig', //use ifconfig's output pharser config!
+		refcmd=>'MOD_network_netconfig::ifconfig', //use ifconfig's output pharser config!
 	),
 	'updconfig'=>array(
 		cmd=>'(

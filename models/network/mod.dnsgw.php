@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_dnsgw extends MOD_base{
+class MOD_network_dnsgw extends MOD_base{
 
 static $pconfigs = array(
 	'get'=>array(

@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/debugee.php');
-class MOD_download extends DEBUGEE{
+class MOD_misc_download extends DEBUGEE{
 
 var $logfiles = array(
 //	raidlog=>'/var/log/hptlog',

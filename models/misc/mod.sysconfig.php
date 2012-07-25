@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_sysconfig extends MOD_base{
+class MOD_misc_sysconfig extends MOD_base{
 
 function before_read($params, &$records){
 	if (!$params[_mod]) return;

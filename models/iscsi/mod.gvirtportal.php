@@ -1,6 +1,6 @@
 <?php
 include_once('../../models/core/mod.base.php');
-class MOD_gvirtportal extends MOD_base{
+class MOD_iscsi_gvirtportal extends MOD_base{
 
 static $pconfigs = array(
 	'get'=>array(
@@ -24,7 +24,7 @@ tgn: default
 			'maxweight'=>'maxcount',
 		),
 		newvalues=>array(
-			'enabled'=>'MOD_gvirtportal::get_enabled',
+			'enabled'=>'MOD_iscsi_gvirtportal::get_enabled',
 		),
 	),	
 	'update'=>array(
