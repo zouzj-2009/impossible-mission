@@ -102,6 +102,11 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 		$this->httprequest->send();
 		if ($this->httprequest->getResponseCode() == 200) {
 			$resp = $this->httprequest->getResponseBody();
+			if ($this->test_debug(NETWORK)){
+				fwrite(STDERR, "<<<<< response start:<<<<<\n");
+				fwrite(STDERR, $resp);
+				fwrite(STDERR, "\n<<<<< response end.<<<<<\n");
+			}
 			$o = $this->httprequest->getResponseHeader();
 			$c = explode(";", $o['Set-Cookie']);
 			if ($c){
@@ -130,14 +135,24 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 				$this->trace_in(DBG, __FUNCTION__.".pending", $mod, $action, $params, $records, $r);
 				$this->httprequest->send();
 				if ($this->httprequest->getResponseCode() == 200){
+					if ($this->test_debug(NETWORK)){
+						fwrite(STDERR, "<<<<< response start:<<<<<\n");
+						fwrite(STDERR, $resp);
+						fwrite(STDERR, "\n<<<<< response end.<<<<<\n");
+					}
 					$resp = $this->httprequest->getResponseBody();
 					$r = json_decode($resp, true);
+					if ($r === NULL) return array(
+						success=>false,
+						msg=>"response can't be decode.",
+						output=>$resp,
+					);
 				}else{ 
-					if ($taskid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action task $taskid done.");
+					if ($taskid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action task $taskid fail.");
 					return array(
-					success=>false,
-					msg=>"request fail: ". $this->httprequest->getResponseCode(),
-					output=>$this->httprequest->getResponseBody(),
+						success=>false,
+						msg=>"request fail: ". $this->httprequest->getResponseCode(),
+						output=>$this->httprequest->getResponseBody(),
 					);
 				}
 			}
@@ -147,11 +162,19 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 		}
 		return array(
 			success=>false,
-			msg=>"request fail: ". $this->httprequest->getResponseCode(),
+			msg=>"response fail: ". $this->httprequest->getResponseCode(),
 			output=>$this->httprequest->getResponseBody(),
 		);
-	} catch (Exception $e) {
-		throw $e;
+	} catch (HttpException $ex) {
+		return array(
+			success=>false,
+			msg=>"proxy error: ".$ex,
+		);
+	} catch (Exception $e){
+		return array(
+			success=>false,
+			msg=>"unknown error: ".$e->getMessage(),
+		);
 	}
 }
 

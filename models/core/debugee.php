@@ -10,6 +10,10 @@ var $__levelmap = array(
 	TASK	=> 0x00000004,		//service task
       	TASKLOG	=> 0x00000008,		//log service task to file
       	TASKDBG	=> 0x00000010,		//debug task using taskid 'taskdebug'
+	PHDBG	=> 0x00000020,		//debug pharser (change pconfig)
+	PHDBGALL=> 0x00000040,		//debug pharser all(change pconfig)
+	NETWORK	=> 0x00000080,		//show network request/response in proxy
+	CMDDBG	=> 0x00000100,		//show cmd output for debug purpose
 );
 
 function __construct($debugon, $level='INFO'){

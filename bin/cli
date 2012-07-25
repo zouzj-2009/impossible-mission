@@ -134,7 +134,7 @@ function do_cmd($mod, $act, $params, $records){
 	$this->trace_in(DBG, __FUNCTION__, $mod, $act, $params, $records);
 	$ret = $this->proxy->request_mod($mod, $act, $params, $records);
 	if (!$ret[success]){
-		echo "\nFailt to $act $mod (". $this->args_to_string(array($params, $records)). ")\n";
+		echo "\nFail to $act $mod (". $this->args_to_string(array($params, $records)). ")\n";
 		echo "Error:".$this->ident_string($ret[msg]."\n");
 		if ($this->debug) echo "\nTrace:".$this->ident_string($ret[output]."\n");
 		return false;

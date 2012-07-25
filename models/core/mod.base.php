@@ -454,6 +454,9 @@ function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 	}
 	$pconfig = $this->get_pconfig($mod, $c);
 	if (!$pconfig) throw new Exception(get_class($this)." callcmd $cmd fail: cmd not configurated.");
+	if ($this->test_debug(PHDBG)) $pconfig[debug] = true;
+	if ($this->test_debug(PHDBGALL)) $pconfig[debugall] = true;
+	if ($this->test_debug(CMDDBG)) $pconfig[debugcmd] = true;
 	$p = $params?$params:array();
 	if (is_array($records)) $p = array_merge($p, $records);
 	if ($extra && is_array($extra)) foreach($extra as $k=>$v){

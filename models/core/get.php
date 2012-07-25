@@ -9,6 +9,13 @@ declare(ticks=1);
 $debugon = true;
 $env = getenv('MODTEST');
 $preq = getenv("_PREQ_");
+$outbuffer = "";
+function ob_checker($string){
+	global $outbuffer;
+	$outbuffer .= $string;
+	return '';
+}
+@ob_start(ob_checker);
 if ($env){
 	$env = explode(',', $env);
 	//debug_print($env);
@@ -31,7 +38,6 @@ if ($env){
 		));
 	}
 }else{
-	@ob_start();
 }
 
 $output = null;
@@ -43,6 +49,7 @@ function debug_print($var){
 function shut_down_catcher(){
 	global $callback; 	
 	global $preq;
+	global $outbuffer;
 	if ($preq && $preq[taskid]){
 		system("rm /tmp/.tdb/$preq[taskid]/ -rf");
 	}
@@ -57,7 +64,7 @@ function shut_down_catcher(){
 		success=>false,
 		msg=>$error[message],
 		trace=>$trace,
-		output=>$o,
+		output=>$outbuffer.$o,
 	);
 	if ($callback) {
 	    header('Content-Type: text/javascript');
@@ -126,6 +133,15 @@ try{
 
 		$params = !$env?$_REQUEST:json_decode(stripslashes(trim(getenv('params'), '"')), true);
 		$callback = $_REQUEST['callback'];
+		if ($callback) {
+			header('Content-Type: text/javascript');
+		} else {
+			if (getenv('REQUEST_METHOD') == 'POST'){
+				header('Content-Type: text/html');
+			}else{
+				header('Content-Type: application/x-json');
+			}
+		}
 		$modconfig = array(debugsetting=>$params[_debugsetting], debugon=>$params[_debugon]);
 		foreach(explode(',', '_debugsetting,_debugon,records,seqid,callback,PHPSESSID') as $key){
 			unset($params[$key]);
@@ -185,9 +201,9 @@ try{
 				$output = array(
 					success=>false,
 					pending=>array(
-						msg=>"$modname $action started",
-						text=>"$modname is $action"."ing, wait please ...",
-						title=>"$modname $action",
+						msg=>"$mid $action started",
+						text=>"$action $mid is running, wait please ...",
+						title=>"$mid $action",
 						number=>0,
 						taskid=>$taskid,
 						caller=>$preq[caller],
@@ -291,26 +307,35 @@ try{
 		echo "TASKLOG: trace info in /tmp/.trace/$preq[caller]/trace.*.$preq[action].$preq[mid].$preq[taskid]\n";
 	}
 }
-$output[output] = ob_get_flush();
-@ob_end_clean();
-//start output
-if ($callback) {
-	header('Content-Type: text/javascript');
-	echo $callback . '(' . json_encode($output) . ');';
-} else {
-	if (getenv('REQUEST_METHOD') == 'POST'){
-		header('Content-Type: text/html');
-	}else{
-		header('Content-Type: application/x-json');
+try{
+	ob_get_flush();
+	@ob_end_clean();
+	$output[output] = $outbuffer;
+	//start output
+	$o = json_encode($output);
+	if ($callback) {
+		echo "$callback($o);";
+	} else {
+		echo $o;
 	}
-	echo json_encode($output);
-}
-if ($env){
-	echo "\n\nparams:\n";
-	debug_print($params);
-	echo "\n\nrecords:\n";
-	debug_print($records);
-	echo "\n\noutput:\n";
-	debug_print($output);
+	if ($env){
+		echo "\n\nparams:\n";
+		debug_print($params);
+		echo "\n\nrecords:\n";
+		debug_print($records);
+		echo "\n\noutput:\n";
+		debug_print($output);
+	}
+}catch(Exception $e){
+	$output = array(
+		success=>false,
+		msg=>$e->getMessage(),
+		
+	);
+	if ($callback) {
+		echo $callback . '(' . json_encode($output) . ');';
+	} else {
+		echo json_encode($output);
+	}
 }
 ?>

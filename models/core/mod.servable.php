@@ -27,9 +27,15 @@ function get_taskid(){
 }
 
 function getOutput(){
+	global $outbuffer;
 	$t = microtime(true);
+/*
 	$output = @ob_get_contents();
 	@ob_start();
+*/
+	@ob_flush();
+	$output = $outbuffer;
+	$outbuffer = "";
 	$during = $this->lastflushtime?$t-$this->lastflushtime:0;
 	$elapsed = $this->begintime?$t-$this->begintime:0;
 	//if (1||$t-$this->lastflushtime>1) ob_flush();

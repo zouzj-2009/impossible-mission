@@ -30,15 +30,15 @@ static $default_log_pharser = array(
 );
 
 function debug($tag, $info){
-	echo "$tag: ";
-	if (is_array($info)) print_r($info);
-	else echo "$info\n";
+	if (is_array($info)) $info = "$tag:\n".print_r($info, true);
+	else $info = "$tag: $info";
+	echo $info."\n";
 }
 
 function pharse_type(&$in, $pconfig){
 	$type = $pconfig[type];
 	if (!method_exists('PHARSER', "p_$type")){
-		PHARSER::debug("PHARSER::debug", "wrong pharse type '$type'!");
+		PHARSER::debug("pharse_type", "wrong pharse type '$type'!");
 		throw new Exception(__FUNCTION__." type $type not supported!");
 	}
 	if ($pconfig[debug]) PHARSER::debug("pharsing type", $type);
@@ -82,7 +82,7 @@ exit $ret
 		exec($pconfig[errorignore]?$cmd:$xcmd, $out, $retvar);
 	}
 
-	echo "$name: $cmd return $retvar\n";
+	if($pconfig[debug] || $pconfig[debugcmd]) PHARSER::debug("cmd $name", "$cmd return $retvar\n");
 	$cmdresult = $retvar;
 	if ($raw!==null) $raw = $out;
 	if (!$pconfig['errpharse'] &&!$pconfig['skiperror']){
@@ -92,31 +92,27 @@ exit $ret
 	if (!$pconfig['logpharser'] && !$pconfig['skiplog']){
 		$pconfig['logpharser'] = PHARSER::$default_log_pharser;
 	}
-	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- config ------------------');
-	if ($pconfig[debug]) PHARSER::debug("$name.pconfig", $pconfig);
+	if ($pconfig[debug]) PHARSER::debug("----- $name.pconfig -----", $pconfig);
 	if ($pconfig['logpharser']){
 		if ($log!==null){
 			$o = $out;
-			if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd logx -----------------');
 			$log = PHARSER::pharse_type($o, $pconfig['logpharser']);
-			if ($pconfig[debug]) PHARSER::debug("PHARSER::logx", $log);
+			if ($pconfig[debug]) PHARSER::debug("----- $name.logx ------", $log);
 		}
 	}
 //	non 0 is error
-	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd output---------------');
-	if ($pconfig[debug]) PHARSER::debug("$name.output", $out);
+	if ($pconfig[debug] || $pconfig[debugcmd]) PHARSER::debug("------ $name.output ------", $out);
 	if (($retvar||$pconfig[getmsg]) && $pconfig['errpharser']){
-		if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- cmd fail -----------------');
 		$r = PHARSER::pharse_type($out, $pconfig['errpharser']);
 		$r = array_shift($r);
-		if ($pconfig[debug]) PHARSER::debug("PHARSER::failmsg", $r);
+		if ($pconfig[debug]) PHARSER::debug("----- $name.failmsg ------", $r);
 		return $r;
 	}
 	if (!$pconfig[type]){
-	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- no type configed, direct out -----');
+	if ($pconfig[debug]) PHARSER::debug("----- $name: no type configed, direct out -----", $out);
 		return $out;	//directly out;
 	}
-	if ($pconfig[debug]) PHARSER::debug("PHARSER::debug", '------------- pharser trace -----------');
+	if ($pconfig[debug]) PHARSER::debug("----- $name: pharser trace -----", "");
 	return PHARSER::pharse_type($out, $pconfig);
 }
 
