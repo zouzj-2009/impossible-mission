@@ -136,26 +136,26 @@ function do_cmd($mod, $act, $params, $records){
 	if (!$ret[success]){
 		echo "\nFailt to $act $mod (". $this->args_to_string(array($params, $records)). ")\n";
 		echo "Error:".$this->ident_string($ret[msg]."\n");
-		if ($this->debug) echo "Trace:".$this->ident_string($ret[output]."\n");
+		if ($this->debug) echo "\nTrace:".$this->ident_string($ret[output]."\n");
 		return false;
 	}
-	if ($this->debug) echo "Trace:".$this->ident_string($ret[output]."\n");
+	if ($this->debug) echo "\nTrace:".$this->ident_string($ret[output]."\n");
 	if ($ret[elapsed]) $te = " ($ret[elapsed]'s EST)"; else $te = "";
 	$format = $this->format;
 	if ($act == 'read'){
-		echo "Read $mod ok$te, data:\n";
+		echo "\nRead $mod OK$te, data:\n";
 		$of = "format_$format";
 		$this->$of($ret[data]);
 	}else if ($act == 'create'){
-		echo "Create $mod ok$te, created:\n";
+		echo "\nCreate $mod OK$te, created:\n";
 		$of = "format_$format";
 		$this->$of($ret[created]);
 	}else if ($act == 'update'){
-		echo "Update $mod ok$te, updated:\n";
+		echo "\nUpdate $mod OK$te, updated:\n";
 		$of = "format_$format";
 		$this->$of($ret[updated]);
 	}else if ($act == 'destroy'){
-		echo "Destroy $mod ok$te, destroied:";
+		echo "\nDestroy $mod OK$te, destroied:";
 		$of = "format_$format";
 		$this->$of($ret[destroied]);
 	}

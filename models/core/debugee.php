@@ -9,6 +9,7 @@ var $__levelmap = array(
 	TRACE	=> 0x00000002,		//trace in,out,process
 	TASK	=> 0x00000004,		//service task
       	TASKLOG	=> 0x00000008,		//log service task to file
+      	TASKDBG	=> 0x00000010,		//debug task using taskid 'taskdebug'
 );
 
 function __construct($debugon, $level='INFO'){

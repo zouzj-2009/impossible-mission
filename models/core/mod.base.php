@@ -423,12 +423,13 @@ function get_executor(&$cmd, &$pconfig, &$args){
 	$hostid = $args[hostid];
 	if (is_object($__executorcaches[$hostid])) return $__executorcaches[$hostid];
 	//get hostinfo;
+	$modconfig = $this->modconfig;
 	if ($pconfig[executor]){
-		$__executorcaches[$hostid] = new EXEC_ssh($pconfig[executor]);
+		$__executorcaches[$hostid] = new EXEC_ssh(array_merge($modconfig, $pconfig[executor]));
 	}else{
-		$host = array_shift($this->callmod('host', 'read', array(condition=>"hostid='$hostid'")));
+		$host = array_shift($this->dbquery("SELECT rowid,* FROM host WHERE rowid='$hostid'"));
 		if (!$host) throw new Exception("exec $cmd fail, can't find specified host($hostid).");
-		$__executorcaches[$hostid] = new EXEC_ssh(array(ip=>$host[hostip], port=>$host[port], username=>$host[username], password=>$host[password]));
+		$__executorcaches[$hostid] = new EXEC_ssh(array_merge($modconfig, array(ip=>$host[hostip], port=>$host[hostport], username=>$host[username], password=>$host[password])));
 	}
 	return $__executorcaches[$hostid];
 	
@@ -471,7 +472,10 @@ function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 	}
 
 	$logs = array();
-	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderr, $mod, $logs, $mod->get_executor($c, $pconfig, $p));
+	$executor = $mod->get_executor($c, $pconfig, $p);
+	if ($executor && is_a($mod, 'MOD_servable')){ $mod->sendCmdStart($c, $p); }
+	$r = PHARSER::pharse_cmd($c, $pconfig, $p, $cmderr, $mod, $logs, $executor);
+	if ($executor && is_a($mod, 'MOD_servable')){ $mod->sendCmdEnd($c, $p, $cmderr); }
 	$cmderror = $cmderr;
 	if ($logs){
 		foreach($logs as $log){

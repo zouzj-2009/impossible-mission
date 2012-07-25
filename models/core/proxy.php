@@ -75,12 +75,13 @@ function showpending($mod, $action, $r){
 	$pending = $r[pending];
 	$during = $r[during];
 	$elapsed = $r[elapsed];
-	if (!$elapsed)
-		$msg = "$mod.$action/$pending[title]: $pending[text]";
-	else
-		$msg = "$mod.$action/$pending[title]: $pending[text] (".number_format($pending[number]*100,0)."%, $during's/$elapsed's EST)";
-	echo "$msg\n";
+//print_r($r);
 	if ($this->__debugon && $r[output]) echo "\t".trim(str_replace("\n", "\n\t", $r[output]), "\t");
+	if (!$elapsed)
+		$msg = ">>>$pending[text]";
+	else
+		$msg = ">>>$pending[text] (".number_format($pending[number]*100,0)."%, $during's/$elapsed's EST)";
+	echo "$msg\n";
 }
 function request_mod($mod, $action, $params=array(), $records=array(), $post=false, $isretry=false){
 	//note! post will only accept one_record! this is a limit of get.php

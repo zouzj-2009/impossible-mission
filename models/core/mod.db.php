@@ -3,6 +3,7 @@ include_once("../../models/core/debugee.php");
 class MOD_db extends DEBUGEE{
 
 var $mid;
+var $modconfig;
 var $useservice=array(read=>false, create=>false, update=>false, destroy=>false);
 
 function run_as_service($params, $records){
@@ -12,6 +13,7 @@ function run_as_service($params, $records){
 
 function __construct($mid, $taskid=null, $modconfig=array()){
 	$this->mid = $mid;
+	$this->modconfig = $modconfig;
 	parent::__construct($modconfig[debugon], $modconfig[debugsetting]);
 	$this->trace_in(DBG, 'modconfig', $modconfig);
 }
@@ -22,7 +24,8 @@ private function exopen($mode, $dbpath=null){
 }
 
 function loginfo($level, $tag, $info){
-	echo "LOG@$level $tag $info\n";
+	//todo: LOG in syslog?
+	$this->tracemsg($level, "$tag: $info");
 }
 
 private function removeunused(&$array){

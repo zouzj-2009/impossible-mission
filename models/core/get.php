@@ -97,13 +97,17 @@ try{
 		$modconfig = $preq[modconfig];
 		$modconfig[_runastask] = true;
 		$mod = new $modname($mid, $taskid, $modconfig);
-		$mod->sendPending("$mid $action xstarted ...", 0);
+		//$mod->sendPending("$mid $action xstarted ...", 0);
+		echo "$mid $action xstarted ...\n";
 		//usleep(200);
 		if ($action == 'read')
 			$output = $mod->$action($params, $records);
 		else
 			$output = $mod->$action($params, $records);
-		echo "$mid.$action.$taskid done.\n";
+		echo "$action.$mid.$taskid done.\n";
+		if ($mod->test_debug(TASKLOG)){
+			echo "TASKLOG: trace info in /tmp/.trace/$preq[caller]/trace.*.$action.$mid.$taskid\n";
+		}
 		$mod->sendDone($output);
 		ob_end_flush();
 		system("rm /tmp/.tdb/$taskid/ -rf");
@@ -165,6 +169,8 @@ try{
 				$taskid = $mod->get_taskid();
 				//$taskid =  md5($modname.$action.date('D M j G:i:s T Y').rand());
 				if (is_a($mod, 'MOD_jobtest')) $taskid = 'abcd';
+				unset($params[mid]);
+				unset($params[_act]);
 				$preq = serialize(array(
 					action=>$action,
 					mid=>$mid,
@@ -193,6 +199,7 @@ try{
 					system("mkdir -p /tmp/.trace/$caller/");
 					$traceout = "/tmp/.trace/$caller/trace.out.$action.$mid.$taskid";
 					$traceerr = "/tmp/.trace/$caller/trace.err.$action.$mid.$taskid";
+					echo "TASKLOG: trace info in /tmp/.trace/$preq[caller]/trace.*.$action.$mid.$taskid\n";
 				}else{
 					$traceout = $traceerr = "/dev/null";
 				}
@@ -280,6 +287,9 @@ try{
 		authfail=>$e->getCode()==-1,
 	);
 	if ($env) debug_print($output);
+	if ($preq && is_object($mod) && $mod->test_debug(TASKLOG)){
+		echo "TASKLOG: trace info in /tmp/.trace/$preq[caller]/trace.*.$preq[action].$preq[mid].$preq[taskid]\n";
+	}
 }
 $output[output] = ob_get_flush();
 @ob_end_clean();

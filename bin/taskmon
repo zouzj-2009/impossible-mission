@@ -86,15 +86,15 @@ while (!$done) {
 		if ($pending && !$title) $title = $pending[title];
 		$during = $o[during];
 		$elapsed = $o[elapsed];
-		if (!$elapsed)
-			$msg = "$title: $pending[text]";
-		else
-			$msg = "$title: $pending[text] (".number_format($pending[number]*100,0)."%, $during's/$elapsed's EST)";
-		echo "$msg\n";
 		if ($o[output]) echo "\t".trim(str_replace("\n", "\n\t", $o[output]), "\t");
+		if (!$elapsed)
+			$msg = ">>>$title: $pending[text]";
+		else
+			$msg = ">>>$title: $pending[text] (".number_format($pending[number]*100,0)."%, $during's/$elapsed's EST)";
+		echo "$msg\n";
 		if (!$o[pending]){//done
 			unset($o[output]);
-			echo "Result:\n";
+			echo ">>>Result:\n";
 			print_r($o);
 			$done = true;
 		}

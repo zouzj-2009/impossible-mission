@@ -12,7 +12,7 @@ function __construct($mid, $taskid=null, $modconfig){
 		$this->dbconnector = new DBConnector('SERVER', $mid, $taskid);
 		$this->lastpending = array(
 			msg=>null,
-			title=>str_replace("MOD_", "", get_class($this)).".".$taskid,
+			title=>str_replace("_", ".", str_replace("MOD_", "", get_class($this))),
 			number=>0,
 		);
 		$this->begintime = microtime(true)-1;
@@ -22,6 +22,7 @@ function __construct($mid, $taskid=null, $modconfig){
 
 //subclass can override it to assign a well-known taskid
 function get_taskid(){
+	if ($this->test_debug(TASKDBG)) return 'taskdbg';
 	return md5($modname.$action.date('D M j G:i:s T Y').rand());
 }
 
@@ -40,7 +41,19 @@ function getOutput(){
 	);
 }
 
+function sendCmdStart($cmd, $params){
+	//todo: show by predefined info...
+	if ($this->test_debug(TASKLOG)) $info = "start $cmd(".$this->args_to_string(array($params)).") ...";
+	else $info = "running $cmd";
+	$this->sendPending($info);
+}
+function sendCmdEnd($cmd, $params, $cmderr){
+	if (!$this->test_debug(TASKLOG)) return ;
+	$info = "endof $cmd, return $cmderr.";  
+	$this->sendPending($info);
+}
 function sendPending($text, $number=null, $title=null, $msg=null){	
+	$this->tracemsg(TASKLOG, "$text, $number, $title, $msg");
 	if ($number) $this->lastpending[number] = $number;
 	if ($title) $this->lastpending[title] = $title;
 	if ($msg) $this->lastpending[msg] = $msg;

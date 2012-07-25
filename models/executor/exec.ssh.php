@@ -15,12 +15,12 @@ function __construct ($config){
 	$c = $this->defcfg;
 	$config = array_merge($c, $config);
 	$this->config = $config;
-	parent::__construct($config[_debugon], $config[_debugsetting]);
-	$this->trace_in(DBG, "exec.ssh", $config);
+	parent::__construct($config[debugon], $config[debugsetting]);
 }
 
 function login($username=null, $password=null, $mode=null){
 	if ($this->logged) return true;
+	$this->trace_in(TASKLOG, __FUNCTION__, $this->config, $username, $password, $mode);
 	$this->ssh_conn = ssh2_connect($this->config[ip], $this->config[port]);
 	if ($username) $this->config[username] = $username;
 	if ($password) $this->config[password] = $password;
