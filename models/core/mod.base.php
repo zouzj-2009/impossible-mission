@@ -1,6 +1,7 @@
 <?php
 include_once('../../models/core/mod.db.php');
 include_once('../../models/core/pharser.php');
+include_once('../../models/core/proxy.php');
 include_once('../../models/executor/exec.ssh.php');
 //todo:
 //cool feature!
@@ -375,7 +376,7 @@ function getmod($modname, $loadonly=false, $newinstance=false){
 	include_once($modfile);
 	$name = "$class";
 	if ($loadonly) return $name;
-	$mod = new $name($modname);
+	$mod = new $name($modname, null, $this->modconfig);
 	$mod->caller = $this;
 	return $mod;
 }
@@ -436,6 +437,7 @@ function get_executor(&$cmd, &$pconfig, &$args){
 }
 
 function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
+	$this->trace_in(TRACEALL, __FUNCTION__, $cmd, $params, $records, $extra);
 //call internal cmd in pconfigs
 //extra args using array('prefix'=>array_data or 'key'=>value);
 //$cmd canbe "MOD::cmd"
@@ -490,15 +492,73 @@ function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 }
 
 //todo: call mod on other server!
+function get_proxy($server, $debug){
+	global $__proxycaches;
+	$proxy = $__proxycaches["$server[host]:$server[port]"];
+	if ($proxy) return $proxy;
+	$proxy = new PROXY($server[host], $server[port], $server[user], $server[pass], $ssl=false, $debug);
+	$proxy->autologin = $server[autologin];
+	$proxy->callback = array($this, 'rmcallback');
+	echo "REMOTE: login on $server[host]:$server[port]\n";
+	$proxy->login($server[user], $server[pass]);
+	$__proxycaches["$server[host]:$server[port]"] = $proxy;
+	return $proxy;
+}
+
+//These functions should be override by MOD_servable
+function sendPending($msg){ echo ">>>$msg"; }
+function sendModStart($modname, &$mod, &$params, &$records, $remote=false){}
+function sendModEnd($modname, &$mod, &$params, &$records, $remote=false){}
+function sendCmdStart($name, &$args){}
+function sendCmdEnd($name, &$args, &$result){}
+
+function rmcallback($mod, $action, $r){
+	$pending = $r[pending];
+	$during = $r[during];
+	$elapsed = $r[elapsed];
+	if ($this->__debugon && $r[output]){
+		//We need a CR here, or something strange occuring ...
+		//Maybe ob_flush will not flush un-CR'ed strings?
+		echo "REMOTE: ".str_replace("\n", "\nREMOTE: ", trim($r[output],"\n"))."\n";
+	}
+	if (!$elapsed){
+		$msg = "\tremote: $pending[text]";
+	}else{
+		$msg = "\tremote: $pending[text] [".number_format($pending[number]*100,0)."%, $during's/$elapsed's EST]";
+	}
+	$this->sendPending($msg);
+}
+
 function callmod_remote($serverconfig, $modname, $action, $params, $records, $simpleresult=true){
+	$this->trace_in(TRACE, __FUNCTION__, $serverconfig, $modname, $action, $params, $records);
+	//should I use $this as check condition?
+	$proxy = $this->get_proxy($serverconfig, $this->modconfig[debugsetting]);
+	if (is_a($mod, 'MOD_servable')){ $mod->sendModStart("$modname.$action", $mod, $params, $records, $remote=true); }
+	$r = $proxy->request_mod($modname, $action, $params, $records);
+	$this->trace_in(DBG, __FUNCTION__." got", $r);
+	if (is_a($mod, 'MOD_servable')){ $mod->sendModEnd("$modname.$action", $mod, $params, $records, $r, $remote=true); }
+	if (!$simpleresult) return $r;
+	if (!$r[success]){
+		if ($throw) throw new Exception("callmod $modname::$action@$serverconfig[host] unsuccessful, $r[msg]");
+		return false;
+	}
+	if ($action == 'read') return $r[data];
+	if ($action == 'create') return $r[created];
+	if ($action == 'update') return $r[updated];
+	if ($action == 'destroy') return $r[destroied];
 }
 
 function callmod($modname, $action, $params, $records, $simpleresult=true, $throw=false){
+	$this->trace_in(TRACEALL, __FUNCTION__, $modname, $action, $params, $records);
 	$mod = $this->getmod($modname);
+	//should I use $this as check condition?
+	if (is_a($mod, 'MOD_servable')){ $mod->sendModStart("$modname.$action", $mod, $params, $records); }
 	$r = $mod->$action($params, $records);
+	$this->trace_in(DBG, __FUNCTION__." got", $r);
+	if (is_a($mod, 'MOD_servable')){ $mod->sendModEnd("$modname.$action", $mod, $params, $records, $r); }
 	if (!$simpleresult) return $r;
 	if (!$r[success]){
-		if ($throw) throw new Exception("callmod $modname::$action unsuccessful.");
+		if ($throw) throw new Exception("callmod $modname::$action unsuccessful, $r[msg]");
 		return false;
 	}
 	if ($action == 'read') return $r[data];

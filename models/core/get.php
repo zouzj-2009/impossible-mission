@@ -13,7 +13,7 @@ $outbuffer = "";
 function ob_checker($string){
 	global $outbuffer;
 	$outbuffer .= $string;
-	return '';
+	return $string;
 }
 @ob_start(ob_checker);
 if ($env){
@@ -184,7 +184,7 @@ try{
 			if (is_a($mod, 'MOD_servable') && $mod->run_as_service($params, $records)){
 				$taskid = $mod->get_taskid();
 				//$taskid =  md5($modname.$action.date('D M j G:i:s T Y').rand());
-				if (is_a($mod, 'MOD_jobtest')) $taskid = 'abcd';
+				if (is_a($mod, 'MOD_test_jobtest') && !$params[called]) $taskid = 'taskdbg';
 				unset($params[mid]);
 				unset($params[_act]);
 				$preq = serialize(array(

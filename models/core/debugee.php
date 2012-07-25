@@ -14,6 +14,7 @@ var $__levelmap = array(
 	PHDBGALL=> 0x00000040,		//debug pharser all(change pconfig)
 	NETWORK	=> 0x00000080,		//show network request/response in proxy
 	CMDDBG	=> 0x00000100,		//show cmd output for debug purpose
+	TRACEALL=> 0x00000200,		//show cmd output for debug purpose
 );
 
 function __construct($debugon, $level='INFO'){
@@ -26,7 +27,7 @@ function __construct($debugon, $level='INFO'){
 	$this->__debugsetting = $level;
 }
 
-function args_to_string($args){
+function args_to_string(&$args){
 	$vars = "";
 	foreach($args as $arg){
 		if (is_array($arg)){
@@ -70,7 +71,7 @@ function tracemsg($level, $msg){
 	echo "DBGEE@$dl $class: $msg\n";
 }
 
-function trace_in($level, $msg, $varlist){
+function trace_in($level, $msg){
 	if (!$this->__debugon) return;
 	$dl = $this->test_debug($level);
 	if (!$dl) return;

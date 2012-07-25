@@ -47,6 +47,11 @@ function getOutput(){
 	);
 }
 
+function sendModStart(&$mod, $action, &$params, &$records, $remote=false){
+}
+function sendModEnd(&$mod, $action, &$params, &$records, &$result, $remote=false){
+}
+
 function sendCmdStart($cmd, $params){
 	//todo: show by predefined info...
 	if ($this->test_debug(TASKLOG)) $info = "start $cmd(".$this->args_to_string(array($params)).") ...";
