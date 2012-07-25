@@ -164,6 +164,12 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 			if ($taskid) $this->tracemsg('DBG,BGTRACE,TRACE,INFO', "$mod $action task $taskid done.");
 			return $r;
 		}
+		$r = json_decode($this->httprequest->getResponseBody(), true);
+		if ($r){
+			$r[msg] = "response fail: ".$this->httprequest->getResponseCode()."\n".$r[msg];
+			if ($r[trace]) $r[msg].="($r[trace])";
+			return $r;
+		}
 		return array(
 			success=>false,
 			msg=>"response fail: ". $this->httprequest->getResponseCode(),

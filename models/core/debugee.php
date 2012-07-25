@@ -27,7 +27,7 @@ function __construct($debugon, $level='INFO'){
 	$this->__debugsetting = $level;
 }
 
-function args_to_string(&$args){
+function args_to_string($args){
 	$vars = "";
 	foreach($args as $arg){
 		if (is_array($arg)){

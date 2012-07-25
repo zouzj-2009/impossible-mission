@@ -67,12 +67,11 @@ function shut_down_catcher(){
 		output=>$outbuffer.$o,
 	);
 	if ($callback) {
-	    header('Content-Type: text/javascript');
 	    echo $callback . '(' . json_encode($output) . ');';
 	} else {
-	    header('Content-Type: application/x-json');
 	    echo json_encode($output);
 	}
+	die (0);
 }
 
 register_shutdown_function('shut_down_catcher');

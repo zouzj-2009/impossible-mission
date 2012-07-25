@@ -8,14 +8,13 @@ var $logfiles = array(
 );
 
 function do_read($params){
-	exec(" find ../../models/|grep -v skeleton|grep 'mod\..*\.php$' ", $out);
+	exec(" find ../../models/|grep -v skeleton|grep -v core|grep 'mod\..*\.php$' ", $out);
 	$r = array();
 	foreach ($out as $modfn){
 		$modn = basename($modfn);
 		$moddir = basename(dirname($modfn));
-		echo "aaa: $moddir.$modn\n";
 		if (!$moddir) continue;
-		$modname = "MOD_".preg_replace("/^mod\.|\.php$/", '', $modn);
+		$modname = "MOD_$moddir"."_".preg_replace("/^mod\.|\.php$/", '', $modn);
 		include_once ($modfn);
 		$mod = new $modname();
 		$r[] = array(
