@@ -22,10 +22,9 @@ function mid2modfile(&$mid, &$class){
 	}
 	$mod = array_pop($m);
 	$mp = implode(".", $m);
-	$mc = implode("_", $m);
-	$class = "MOD_$mc"."_$mod";
 	$mdir = $modmap[$mp];
 	if (!$mdir) $mdir=implode("/", $m);
 	$mid = str_replace("/", ".", "$mdir.$mod");
+	$class = "MOD_".str_replace("/", "_", "$mdir"."_$mod");
 	return "../../models/$mdir/mod.$mod.php";
 }
