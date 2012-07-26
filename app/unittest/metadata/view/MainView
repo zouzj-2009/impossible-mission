@@ -42,7 +42,7 @@
                 "layout|region": "north"
             },
             "customConfigs": [],
-            "expanded": true,
+            "expanded": false,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen17837",
@@ -257,7 +257,145 @@
                         "designer|userClassName": "MyTabPanel"
                     },
                     "customConfigs": [],
-                    "expanded": true
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen2916",
+                            "type": "gridpanel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "title": "My Grid Panel",
+                                "designer|userClassName": "MyGridPanel",
+                                "databind": "{\nprogress:{\ntype: 'newin'\n},\nmodel: 'app_unittest.model.jobtest'\n}"
+                            },
+                            "customConfigs": [
+                                {
+                                    "group": "(Custom Properties)",
+                                    "name": "databind",
+                                    "type": "object"
+                                }
+                            ],
+                            "expanded": false,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen2929",
+                                    "type": "gridcolumn",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "string",
+                                        "text": "String",
+                                        "designer|userClassName": "MyColumn"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen2938",
+                                    "type": "numbercolumn",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "number",
+                                        "text": "Number",
+                                        "designer|userClassName": "MyNumberColumn"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen2947",
+                                    "type": "datecolumn",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "date",
+                                        "text": "Date",
+                                        "designer|userClassName": "MyDateColumn"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen2956",
+                                    "type": "booleancolumn",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "bool",
+                                        "text": "Boolean",
+                                        "designer|userClassName": "MyBooleanColumn"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen2965",
+                                    "type": "gridview",
+                                    "reference": {
+                                        "name": "viewConfig",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|userClassName": "MyGridView"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen4439",
+                            "type": "toolbar",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|userClassName": "MyToolbar",
+                                "dock": "top"
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen4680",
+                                    "type": "button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "itemId": "refresh",
+                                        "text": "reload",
+                                        "designer|userClassName": "MyButton3",
+                                        "layout|flex": null
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

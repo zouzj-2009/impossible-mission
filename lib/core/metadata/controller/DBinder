@@ -108,7 +108,7 @@
                     "    if (response.pending){",
                     "        binder.application.fireEvent('indicatorchange', cfg, response, operation);",
                     "        Ext.applyIf(operation, {params:{}, seq:0});",
-                    "        var params = Ext.applyIf({seqid: ++operation.seq, jid: response.pending.jid, pending:Ext.encode(response.pending)}, operation.params);",
+                    "        var params = Ext.applyIf({seqid: ++operation.seq, taskid: response.pending.taskid, pending:Ext.encode(response.pending)}, operation.params);",
                     "        operation.params = params;",
                     "        cfg.store.getProxy().doRequest(operation, operation.origincallback, operation.originscope);",
                     "    }else{//fail",

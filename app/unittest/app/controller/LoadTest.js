@@ -17,7 +17,8 @@ Ext.define('app_unittest.controller.LoadTest', {
     extend: 'Ext.app.Controller',
 
     models: [
-        'testunit'
+        'testunit',
+        'jobtest'
     ],
 
     onButtonClick: function(button, e, options) {

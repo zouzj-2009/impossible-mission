@@ -131,7 +131,57 @@ Ext.define('app_unittest.view.MainView', {
                             xtype: 'tabpanel',
                             id: 'testpanel',
                             closable: false,
-                            activeTab: 0
+                            activeTab: 0,
+                            items: [
+                                {
+                                    xtype: 'gridpanel',
+                                    title: 'My Grid Panel',
+                                    databind: {
+                                        progress: {
+                                            type: 'newin'
+                                        },
+                                        model: 'app_unittest.model.jobtest'
+                                    },
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'string',
+                                            text: 'String'
+                                        },
+                                        {
+                                            xtype: 'numbercolumn',
+                                            dataIndex: 'number',
+                                            text: 'Number'
+                                        },
+                                        {
+                                            xtype: 'datecolumn',
+                                            dataIndex: 'date',
+                                            text: 'Date'
+                                        },
+                                        {
+                                            xtype: 'booleancolumn',
+                                            dataIndex: 'bool',
+                                            text: 'Boolean'
+                                        }
+                                    ],
+                                    viewConfig: {
+
+                                    }
+                                }
+                            ],
+                            dockedItems: [
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'refresh',
+                                            text: 'reload'
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }

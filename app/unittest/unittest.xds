@@ -61,12 +61,20 @@
                 "app/model/testunit.js"
             ],
             "className": "testunit"
+        },
+        "dbcf2ee9-e00c-4d03-b08e-aceddd2119f3": {
+            "paths": [
+                "metadata/model/jobtest",
+                "app/model/override/jobtest.js",
+                "app/model/jobtest.js"
+            ],
+            "className": "jobtest"
         }
     },
     "expandedState": {
         "data": true,
         "model": true,
-        "component": false,
+        "component": true,
         "controller": true,
         "resource": true
     }

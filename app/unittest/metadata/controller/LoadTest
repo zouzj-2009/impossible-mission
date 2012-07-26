@@ -8,14 +8,15 @@
     "codeClass": null,
     "userConfig": {
         "models": [
-            "testunit"
+            "testunit",
+            "jobtest"
         ],
         "designer|userClassName": "LoadTest"
     },
     "customConfigs": [],
     "designerId": "604dd598-4ba5-4593-b598-b72498e2ab8d",
     "$viewOrder": 0,
-    "expanded": true,
+    "expanded": false,
     "cn": [
         {
             "id": "ExtBox1-ext-gen50448",

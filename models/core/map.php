@@ -7,6 +7,7 @@ $modmap = array(
 	'target_iscsi' => 'iscsi',
 	'storage_scsi' => 'storage',
 	'sys_misc' => 'misc',
+	'app_unittest'=>'test',
 );
 
 function mid2modfile(&$mid, &$class){
