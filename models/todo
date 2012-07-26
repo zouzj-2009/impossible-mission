@@ -12,6 +12,26 @@ Features:
 * semophore for data change (in savechanges?)
 * cli call-remote login fail, need prompt for login
 
+* databinded component need these features:
+	> can do reload(), load(params), create(records), update(records), destroy(records)
+	> fireEvent when these action finished or fail.
+	> abstract(invisable) component, may be a container,  to do these things? we do business on server, so, maybe it's not nesseray?
+	> OR, just an outstanding read/write for proxy to do extra operation than op on store?
+
+* confirmation implementation
+	> task MOD send a confirmation response with data and meta-data in pending info.
+	> task MOD move it's state to waiting-msg state.
+	> when task MOD waiting, JS send back pending request with a heartbeat counter.
+	> when get.php receive the heartbeat pending, send a heartbeat signal to task MOD, and just wait new pending or done signal as usual, and if timeout>HEARTBEAT_INTERVAL(60s maybe), send heartbeat pending to JS.  
+	> if task MOD found that heartbeat exceeds HEARTBEAT_INTERVAL+2s, throw an exception, task will be terminated as usual, and 'done' signal will be send.
+	> JS do request again same as pending stuff, fire out this confirmation request.
+	> JS Controller show confirmation dialog by refered data and meta-data.
+	> When confirmation made, JS make a new pending request, by binded confirmation form?
+	> When get.php receive the pending with confirmation request, send a 'confirm' signal to task MOD, and just wait new pending or done signal as usual, no new heartbeart timeout sending are need now.
+	> when task MOD got the 'confirm' signal, it's jump out the waiting loop, things are continued.
+
+	So, by this protocol, server can wait endless(or by specified timeout), until, client send a confirmation or heartbeat timeout(client shutdown, network break , or ...); mean while, client can also send 'cancle confirm' to quit this message exchange loop.
+	And, now, in server side coding, just '$this->waitClientConfirm($data, $meteta, $timeout)', have fun.
 
 Bugs:
 * pharser::p_one_record_span_lines, bug, errormsg can't be pharsed out

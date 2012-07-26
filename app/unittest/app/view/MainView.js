@@ -137,6 +137,9 @@ Ext.define('app_unittest.view.MainView', {
                                     xtype: 'gridpanel',
                                     title: 'My Grid Panel',
                                     databind: {
+                                        loadparams: {
+                                            callremote: true
+                                        },
                                         progress: {
                                             type: 'bar'
                                         },

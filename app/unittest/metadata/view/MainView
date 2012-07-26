@@ -270,7 +270,7 @@
                             "userConfig": {
                                 "title": "My Grid Panel",
                                 "designer|userClassName": "MyGridPanel",
-                                "databind": "{\nprogress:{\ntype: 'bar'\n},\nmodel: 'app_unittest.model.jobtest'\n}"
+                                "databind": "{\nloadparams:{\ncallremote:true\n},\nprogress:{\ntype: 'bar'\n},\nmodel: 'app_unittest.model.jobtest'\n}"
                             },
                             "customConfigs": [
                                 {
