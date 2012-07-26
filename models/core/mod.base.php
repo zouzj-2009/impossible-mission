@@ -488,6 +488,10 @@ function callcmd($cmd, &$cmderror, &$params=null, &$records=null, &$extra=null){
 			$this->loginfo($level, str_replace("MOD_", "", get_class($mod))."::$c", $log['log']);
 		}
 	}
+	if ($this->test_debug(CMDRET)){
+		if ($cmderror) $this->tracemsg(CMDRET, "exec $c return error: $cmderror.");
+		else $this->trace_in(CMDRET, "$c return=", $r);
+	}
 	return $r;
 }
 
@@ -542,10 +546,12 @@ function callmod_remote($serverconfig, $modname, $action, $params, $records, $si
 		if ($throw) throw new Exception("callmod $modname::$action@$serverconfig[host] unsuccessful, $r[msg]");
 		return false;
 	}
-	if ($action == 'read') return $r[data];
-	if ($action == 'create') return $r[created];
-	if ($action == 'update') return $r[updated];
-	if ($action == 'destroy') return $r[destroied];
+	if ($action == 'read') $ret = $r[data];
+	else if ($action == 'create') $ret = $r[created];
+	else if ($action == 'update') $ret = $r[updated];
+	else if ($action == 'destroy') $ret = $r[destroied];
+	$this->trace_in(MODRET, "$action $modname, return=", $ret);
+	return $ret;
 }
 
 function callmod($modname, $action, $params, $records, $simpleresult=true, $throw=false){
@@ -561,10 +567,12 @@ function callmod($modname, $action, $params, $records, $simpleresult=true, $thro
 		if ($throw) throw new Exception("callmod $modname::$action unsuccessful, $r[msg]");
 		return false;
 	}
-	if ($action == 'read') return $r[data];
-	if ($action == 'create') return $r[created];
-	if ($action == 'update') return $r[updated];
-	if ($action == 'destroy') return $r[destroied];
+	if ($action == 'read') $ret = $r[data];
+	else if ($action == 'create') $ret = $r[created];
+	else if ($action == 'update') $ret = $r[updated];
+	else if ($action == 'destroy') $ret = $r[destroied];
+	$this->trace_in(MODRET, "$action $modname, return=", $ret);
+	return $ret;
 }
 
 /*

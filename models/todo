@@ -10,7 +10,7 @@ Features:
 	3. using appx.html, include appx.js before app.js
 	4. include DBinder/Login in all application as default(in app.js)
 * semophore for data change (in savechanges?)
-
+* cli call-remote login fail, need prompt for login
 
 
 Bugs:

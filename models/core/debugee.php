@@ -15,6 +15,9 @@ var $__levelmap = array(
 	NETWORK	=> 0x00000080,		//show network request/response in proxy
 	CMDDBG	=> 0x00000100,		//show cmd output for debug purpose
 	TRACEALL=> 0x00000200,		//show cmd output for debug purpose
+	TRACEDB	=> 0x00000400,		//show db sql state
+	MODRET	=> 0x00000800,		//show callmod return
+	CMDRET	=> 0x00001000,		//show callcmd return
 );
 
 function __construct($debugon, $level='INFO'){

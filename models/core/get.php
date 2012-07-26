@@ -307,7 +307,6 @@ try{
 	}
 }
 try{
-	ob_get_flush();
 	@ob_end_clean();
 	$output[output] = $outbuffer;
 	//start output

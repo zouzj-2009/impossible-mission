@@ -25,7 +25,7 @@ private function exopen($mode, $dbpath=null){
 
 function loginfo($level, $tag, $info){
 	//todo: LOG in syslog?
-	$this->tracemsg($level, "$tag: $info");
+	$this->tracemsg($level, "$tag($info)");
 }
 
 private function removeunused(&$array){
@@ -59,17 +59,17 @@ private function _dbquery($db, $state, $maxretry=3){
 	$errmsg = "";
 	$retry = 0;
 	$ret = false;
-	$this->loginfo(TRACE, 'dbop', $state);
+	$this->loginfo(TRACEDB, __FUNCTION__, $state);
 	do{
 		$result = $db->query($state);
 		if (!$result){
 			$errmsg = $db->lastErrorMsg();
 			if (!preg_match("/database is locked/", $errmsg)){
-				$this->loginfo(ERROR, 'dbop', "$state fail: $errmsg");
+				$this->loginfo(ERROR, __FUNCTION__, "$state fail: $errmsg");
 				throw new Exception("dbquery $state fail: $errmsg");
 			}
 			$retry++;
-			$this->loginfo(INFO, 'dbop', "'$state' fail($errmsg), retryleft:".($maxretry-$retry));
+			$this->loginfo(TRACEDB, __FUNCTION__, "'$state' fail($errmsg), retryleft:".($maxretry-$retry));
 			$ret = false;
 		}else{ 
 			$rows = array();
@@ -96,7 +96,7 @@ private function _dbexec($db,$state, &$newrecord=null, $maxretry=3){
 	$errmsg = "";
 	$retry = 0;
 	$ret = false;
-	$this->loginfo(TRACE, 'dbop', $state);
+	$this->loginfo(TRACEDB, __FUNCTION__, $state);
 	do{
 		$ret = $db->exec($state);
 		if ($ret){
@@ -109,11 +109,11 @@ private function _dbexec($db,$state, &$newrecord=null, $maxretry=3){
 		}else{
 			$errmsg = $db->lastErrorMsg();
 			if (!preg_match("/database is locked/", $errmsg)){
-				$this->loginfo(ERROR, 'dbop', "$state fail: $errmsg");
+				$this->loginfo(ERROR, __FUNCTION__, "$state fail: $errmsg");
 				throw new Exception("dbexec $state fail: $errmsg");
 			}
 			$retry++;
-			$this->loginfo(INFO, 'dbop', "'$state' fail($errmsg), retryleft:".($maxretry-$retry));
+			$this->loginfo(TRACEDB, __FUNCTION__, "'$state' fail($errmsg), retryleft:".($maxretry-$retry));
 			$ret = false;
 		}
 	} while(preg_match("/database is locked/", $errmsg) && $retry <= $maxretry && !sleep(2));
@@ -163,8 +163,8 @@ function read($params, $records=null){
 		if (!$cond){
 			if ($records){
 				$cond = $this->get_cond_from_records($db, $records, $params);
-				if (!$cond) $this->loginfo(WARN, 'dbop', "records supplied for db.read, but no condition made.") ;
-				else $this->loginfo(TRACE, 'dbop', "read specified records: $cond");
+				if (!$cond) $this->loginfo(TRACEDB, __FUNCTION__, "records supplied for db.read, but no condition made.") ;
+				else $this->loginfo(TRACEDB, __FUNCTION__, "read specified records: $cond");
 			}
 		}
 		if ($cond){

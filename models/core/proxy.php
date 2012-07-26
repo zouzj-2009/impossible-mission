@@ -31,6 +31,18 @@ function __construct($host, $port=80, $user=null, $pass=null, $ssl=false, $debug
 	parent::__construct($debug?true:false, $debug);
 }
 
+function get_json_error(){
+	switch (json_last_error()) {
+		case JSON_ERROR_NONE: return ' - No errors';
+		case JSON_ERROR_DEPTH: return ' - Maximum stack depth exceeded';
+		case JSON_ERROR_STATE_MISMATCH: return ' - Underflow or the modes mismatch';
+		case JSON_ERROR_CTRL_CHAR: return ' - Unexpected control character found';
+		case JSON_ERROR_SYNTAX: return ' - Syntax error, malformed JSON';
+		case JSON_ERROR_UTF8: return ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+		default: return ' - Unknown error';
+	}
+}
+
 function prompt_silent($prompt = "Enter Password: ") {
   if (preg_match('/^win/i', PHP_OS)) {
     $vbscript = sys_get_temp_dir() . 'prompt_password.vbs';
@@ -148,7 +160,7 @@ function request_mod($mod, $action, $params=array(), $records=array(), $post=fal
 					$r = json_decode($resp, true);
 					if ($r === NULL) return array(
 						success=>false,
-						msg=>"response can't be decode.",
+						msg=>"response can't be decode:".$this->get_json_error(),
 						output=>$resp,
 					);
 				}else{ 
