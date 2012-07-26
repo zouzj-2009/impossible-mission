@@ -131,14 +131,14 @@ Ext.define('app_unittest.view.MainView', {
                             xtype: 'tabpanel',
                             id: 'testpanel',
                             closable: false,
-                            activeTab: 0,
+                            activeTab: 1,
                             items: [
                                 {
                                     xtype: 'gridpanel',
                                     title: 'My Grid Panel',
                                     databind: {
                                         progress: {
-                                            type: 'newin'
+                                            type: 'bar'
                                         },
                                         model: 'app_unittest.model.jobtest'
                                     },
@@ -166,18 +166,18 @@ Ext.define('app_unittest.view.MainView', {
                                     ],
                                     viewConfig: {
 
-                                    }
-                                }
-                            ],
-                            dockedItems: [
-                                {
-                                    xtype: 'toolbar',
-                                    dock: 'top',
-                                    items: [
+                                    },
+                                    dockedItems: [
                                         {
-                                            xtype: 'button',
-                                            itemId: 'refresh',
-                                            text: 'reload'
+                                            xtype: 'toolbar',
+                                            dock: 'top',
+                                            items: [
+                                                {
+                                                    xtype: 'button',
+                                                    itemId: 'refresh',
+                                                    text: 'reload'
+                                                }
+                                            ]
                                         }
                                     ]
                                 }

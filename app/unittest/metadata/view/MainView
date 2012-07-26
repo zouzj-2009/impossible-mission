@@ -253,7 +253,7 @@
                     "userConfig": {
                         "id": "testpanel",
                         "closable": false,
-                        "activeTab": 0,
+                        "activeTab": 1,
                         "designer|userClassName": "MyTabPanel"
                     },
                     "customConfigs": [],
@@ -270,7 +270,7 @@
                             "userConfig": {
                                 "title": "My Grid Panel",
                                 "designer|userClassName": "MyGridPanel",
-                                "databind": "{\nprogress:{\ntype: 'newin'\n},\nmodel: 'app_unittest.model.jobtest'\n}"
+                                "databind": "{\nprogress:{\ntype: 'bar'\n},\nmodel: 'app_unittest.model.jobtest'\n}"
                             },
                             "customConfigs": [
                                 {
@@ -279,7 +279,7 @@
                                     "type": "object"
                                 }
                             ],
-                            "expanded": false,
+                            "expanded": true,
                             "cn": [
                                 {
                                     "id": "ExtBox1-ext-gen2929",
@@ -358,40 +358,40 @@
                                     },
                                     "customConfigs": [],
                                     "expanded": true
-                                }
-                            ]
-                        },
-                        {
-                            "id": "ExtBox1-ext-gen4439",
-                            "type": "toolbar",
-                            "reference": {
-                                "name": "dockedItems",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "designer|userClassName": "MyToolbar",
-                                "dock": "top"
-                            },
-                            "customConfigs": [],
-                            "expanded": true,
-                            "cn": [
+                                },
                                 {
-                                    "id": "ExtBox1-ext-gen4680",
-                                    "type": "button",
+                                    "id": "ExtBox1-ext-gen4439",
+                                    "type": "toolbar",
                                     "reference": {
-                                        "name": "items",
+                                        "name": "dockedItems",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "itemId": "refresh",
-                                        "text": "reload",
-                                        "designer|userClassName": "MyButton3",
-                                        "layout|flex": null
+                                        "designer|userClassName": "MyToolbar",
+                                        "dock": "top"
                                     },
                                     "customConfigs": [],
-                                    "expanded": true
+                                    "expanded": true,
+                                    "cn": [
+                                        {
+                                            "id": "ExtBox1-ext-gen4680",
+                                            "type": "button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "itemId": "refresh",
+                                                "text": "reload",
+                                                "designer|userClassName": "MyButton3",
+                                                "layout|flex": null
+                                            },
+                                            "customConfigs": [],
+                                            "expanded": true
+                                        }
+                                    ]
                                 }
                             ]
                         }

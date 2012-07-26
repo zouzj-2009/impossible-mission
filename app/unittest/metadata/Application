@@ -7,7 +7,6 @@
     },
     "codeClass": null,
     "userConfig": {
-        "models": null,
         "views": [
             "MainView",
             "changepassword"
