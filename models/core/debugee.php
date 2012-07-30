@@ -18,6 +18,7 @@ var $__levelmap = array(
 	TRACEDB	=> 0x00000400,		//show db sql state
 	MODRET	=> 0x00000800,		//show callmod return
 	CMDRET	=> 0x00001000,		//show callcmd return
+	EXECUTOR=> 0x00002000,		//show callcmd return
 );
 
 function __construct($debugon, $level='INFO'){

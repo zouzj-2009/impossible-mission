@@ -3,6 +3,7 @@ include_once('../../models/core/mod.db.php');
 include_once('../../models/core/pharser.php');
 include_once('../../models/core/proxy.php');
 include_once('../../models/executor/exec.ssh.php');
+include_once('../../models/executor/exec.telnet.php');
 //todo:
 //cool feature!
 //run as ... using an other db and read,update,create,destroy on that database only?
@@ -411,28 +412,35 @@ function log($level, $log){
 
 function get_executor(&$cmd, &$pconfig, &$args){
 	$this->trace_in(DBG, __FUNCTION__, $cmd, $pconfig[executor], $args);
-	//only ssh supported now!
-	if ($this->exectype != 'ssh' && !$pconfig[executor]) return null;
-	//strange, erhn?
-	if ($pconfig[executor] && $pconfig[executor][type] != 'ssh') return null;
+	//only ssh,telnet supported now!
+	$exectype = $this->exectype?$this->exectype:($pconfig[executor]?$pconfig[executor][type]:null);
+	if (!$exectype) return null;
 	if (!is_numeric($args[hostid])){
 		$this->trace_in(DBG, __FUNCTION__, $cmd, $args);
-		throw new Exception ("exec $cmd by ssh executor need numeric hostid as initial config.");
+		throw new Exception ("exec $cmd by executor need numeric hostid as initial config.");
 	}
 	//find global cache first!
 	global $__executorcaches;
+	if ($__executorcaches === null) $__executorcaches = array();
+	if ($__executorcaches[$exectype] === null) $__executorcaches[$exectype] = array();
 	$hostid = $args[hostid];
-	if (is_object($__executorcaches[$hostid])) return $__executorcaches[$hostid];
+	if (is_object($__executorcaches[$exectype][$hostid])) return $__executorcaches[$exectype][$hostid];
 	//get hostinfo;
 	$modconfig = $this->modconfig;
+	$execmod = "EXEC_$exectype";
 	if ($pconfig[executor]){
-		$__executorcaches[$hostid] = new EXEC_ssh(array_merge($modconfig, $pconfig[executor]));
+		$__executorcaches[$exectype][$hostid] = new $execmod(array_merge($modconfig, $pconfig[executor]));
 	}else{
 		$host = array_shift($this->dbquery("SELECT rowid,* FROM host WHERE rowid='$hostid'"));
 		if (!$host) throw new Exception("exec $cmd fail, can't find specified host($hostid).");
-		$__executorcaches[$hostid] = new EXEC_ssh(array_merge($modconfig, array(ip=>$host[hostip], port=>$host[hostport], username=>$host[username], password=>$host[password])));
+		if ($exectype != $host[executor] && $host[executor] != 'auto'){
+			$this->tracemsg(TASKLOG, "$cmd on $host($hostid, $host[hostname]) using $host[executor] instead of $exectype.");
+			$exectype = $host[executor];
+			$execmod = "EXEC_$host[executor]";
+		}
+		$__executorcaches[$exectype][$hostid] = new $execmod(array_merge($modconfig, array(ip=>$host[hostip], port=>$host[hostport], username=>$host[username], password=>$host[password])));
 	}
-	return $__executorcaches[$hostid];
+	return $__executorcaches[$exectype][$hostid];
 	
 }
 

@@ -20,7 +20,7 @@ function __construct ($config){
 
 function login($username=null, $password=null, $mode=null){
 	if ($this->logged) return true;
-	$this->trace_in(TASKLOG, __FUNCTION__, $this->config, $username, $password, $mode);
+	$this->trace_in('TASKLOG,EXECUTOR', __FUNCTION__, $this->config, $username, $password, $mode);
 	$this->ssh_conn = ssh2_connect($this->config[ip], $this->config[port]);
 	if ($username) $this->config[username] = $username;
 	if ($password) $this->config[password] = $password;
@@ -121,6 +121,9 @@ function copy_from_remote($remote, $local){
 		throw new Exception("scp $local to remote fail: ssh login fail.");
 	}
 	return ssh2_scp_recv($this->ssh_conn, $remote, $this->config[scpdir]."/".$local);
+}
+
+function shutdown(){
 }
 
 //end of EXEC_ssh class 

@@ -17,6 +17,7 @@ function ob_checker($string){
 }
 @ob_start(ob_checker);
 if ($env){
+	@ob_end_clean();//stop ob in debug mode!
 	$env = explode(',', $env);
 	//debug_print($env);
 	$_REQUEST['_act'] = $env[0];
@@ -54,22 +55,31 @@ function shut_down_catcher(){
 		system("rm /tmp/.tdb/$preq[taskid]/ -rf");
 	}
 	$error = error_get_last();
-	if (!$error) return;
-	if ($error[type] != 1) return;
-	$o = @ob_get_flush();
-	@ob_clean();
-	$trace = "File: ".basename($error['file'])."(line-".$error['line'].")";
-	//start output
-	$output = array(
-		success=>false,
-		msg=>$error[message],
-		trace=>$trace,
-		output=>$outbuffer.$o,
-	);
-	if ($callback) {
-	    echo $callback . '(' . json_encode($output) . ');';
-	} else {
-	    echo json_encode($output);
+	if ($error && $error[type] ==1){//fatal
+		$o = @ob_get_flush();
+		@ob_clean();
+		$trace = "File: ".basename($error['file'])."(line-".$error['line'].")";
+		//start output
+		$output = array(
+			success=>false,
+			msg=>$error[message],
+			trace=>$trace,
+			output=>$outbuffer.$o,
+		);
+		if ($callback) {
+		    echo $callback . '(' . json_encode($output) . ');';
+		} else {
+		    echo json_encode($output);
+		}
+	}
+	//do cleanup
+	global $__executorcaches;
+	if ($__executorcaches){//clean up ssh/telnet connections
+		foreach($__executorcaches as $bytype){
+			foreach($bytype as $e){
+				$e->shutdown();
+			}
+		}
 	}
 	die (0);
 }
@@ -141,7 +151,8 @@ try{
 				header('Content-Type: application/x-json');
 			}
 		}
-		$modconfig = array(debugsetting=>$params[_debugsetting], debugon=>$params[_debugon]);
+		if ($env) $modconfig = array(debugsetting=>getenv('_DEBUG_'), debugon=>true);
+		else $modconfig = array(debugsetting=>$params[_debugsetting], debugon=>$params[_debugon]);
 		foreach(explode(',', '_debugsetting,_debugon,records,seqid,callback,PHPSESSID') as $key){
 			unset($params[$key]);
 		}
@@ -180,7 +191,8 @@ try{
 				$modname = "MOD_db";
 			}
 			$mod = new $modname($mid, null, $modconfig);
-			if (is_a($mod, 'MOD_servable') && $mod->run_as_service($params, $records)){
+			//when debug mod not run as service!
+			if (!$env && is_a($mod, 'MOD_servable') && $mod->run_as_service($params, $records)){
 				$taskid = $mod->get_taskid();
 				//$taskid =  md5($modname.$action.date('D M j G:i:s T Y').rand());
 				if (is_a($mod, 'MOD_test_jobtest') && !$params[called]) $taskid = 'taskdbg';
