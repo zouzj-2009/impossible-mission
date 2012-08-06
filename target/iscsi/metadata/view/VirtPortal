@@ -405,6 +405,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "itemId": "portalip",
                                         "name": "portalip",
                                         "fieldLabel": "Portal IP"
                                     },

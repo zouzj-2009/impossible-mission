@@ -161,6 +161,7 @@ Ext.define('target_iscsi.view.VirtPortal', {
                                         },
                                         {
                                             xtype: 'ipfield',
+                                            itemId: 'portalip',
                                             name: 'portalip',
                                             fieldLabel: 'Portal IP'
                                         },
