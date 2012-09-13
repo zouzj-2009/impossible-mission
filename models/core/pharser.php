@@ -680,8 +680,11 @@ function p_records_span_lines(&$in, $pconfig){
 		}else{ //for mixed models, try each group
 			foreach($pconfig[fieldsmode] as $group=>$gpconfig){
 				if (preg_match($gpconfig[gmatcher], $line)){
-					if (!$borrowed) array_unshift($in, $line);
-print_r($in);
+					if (preg_match($pconfig[recordstart], $line)){
+						//to avoid dead loop
+						array_unshift($in, preg_replace($pconfig[recordstart], '', $line));
+//print_r($in);
+					}
 					if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." gmatch [$group]", $pconfig[recordignore]);
 					//try this group;
 					if (!$gpconfig[parentend]) $gpconfig[parentend] = $pconfig[recordend];
