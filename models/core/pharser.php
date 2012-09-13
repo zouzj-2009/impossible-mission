@@ -42,7 +42,7 @@ function pharse_type(&$in, $pconfig){
 		throw new Exception(__FUNCTION__." type $type not supported!");
 	}
 	if ($pconfig[debug]) PHARSER::debug("pharsing type", $type);
-	$r = call_user_func("PHARSER::p_$type", $in, $pconfig);
+	$r = call_user_func("PHARSER::p_$type", &$in, $pconfig);
 	if ($pconfig[skiprecord]){
 		$t = array();
 		foreach($r as $record){
@@ -684,7 +684,7 @@ function p_records_span_lines(&$in, $pconfig){
 						//to avoid dead loop
 						array_unshift($in, preg_replace($pconfig[recordstart], '', $line));
 //print_r($in);
-					}
+					}else array_unshift($in, $line);
 					if ($pconfig[debug]) PHARSER::debug(__FUNCTION__." gmatch [$group]", $pconfig[recordignore]);
 					//try this group;
 					if (!$gpconfig[parentend]) $gpconfig[parentend] = $pconfig[recordend];
